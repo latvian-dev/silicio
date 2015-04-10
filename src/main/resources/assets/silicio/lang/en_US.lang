@@ -1,0 +1,67 @@
+itemGroup.silicio:tab=Silicio
+
+### Blocks ###
+
+silicio:tile.machine.name=Machine Block
+silicio:tile.cable.name=Circuit Board Cable
+silicio:tile.controller.name=Circuit Board Controller
+
+### Items ###
+
+silicio:item.mat.gemSilicon.name=Silicon
+silicio:item.mat.dustSilicon.name=Silicon Dust
+silicio:item.mat.gearSilicon.name=Silicon Gear
+silicio:item.mat.emptyModule.name=Empty Module
+silicio:item.mat.inputModule.name=Empty Input Module
+silicio:item.mat.outputModule.name=Empty Output Module
+silicio:item.mat.circuit.name=Integrated Circuit
+silicio:item.mat.laserCrystal.name=Laser Crystal
+
+silicio:item.circuitBoard.name=Circuit Board
+silicio:item.battery.name=Battery
+
+# Modules #
+silicio:item.mod.desc=Circuit Board Module
+
+silicio:item.mod.commandBlock.name=Command Block
+silicio:item.mod.lightSensor.name=Light Sensor
+silicio:item.mod.signOut.name=Sign Output
+silicio:item.mod.chatOut.name=Chat Output
+silicio:item.mod.crafting.name=Item Crafting
+silicio:item.mod.painter.name=Cable Painter
+
+silicio:item.mod.redstoneIn.name=Redstone Input
+silicio:item.mod.redstoneOut.name=Redstone Output
+silicio:item.mod.energyIn.name=Energy Input
+silicio:item.mod.energyOut.name=Energy Output
+
+silicio:item.mod.itemStorage.name=Item Storage
+silicio:item.mod.itemInput.name=Item Input
+silicio:item.mod.itemOutput.name=Item Output
+
+silicio:item.mod.fluidStorage.name=Fluid Storage
+silicio:item.mod.fluidInput.name=Fluid Input
+silicio:item.mod.fluidOutput.name=Fluid Output
+
+silicio:item.mod.gateNot.name=NOT Gate
+silicio:item.mod.gateAnd.name=AND Gate
+silicio:item.mod.gateOr.name=OR Gate
+silicio:item.mod.gateXOr.name=XOR Gate
+
+### Lang ###
+
+# Module Types #
+silicio:type.module=Toggable Module
+silicio:type.side=Side
+silicio:type.color=Color
+silicio:type.text=Text
+silicio:type.int=Integer
+silicio:type.float=Float
+
+# Module Titles #
+silicio:side.front=Front
+silicio:side.back=Back
+silicio:side.up=Up
+silicio:side.down=Down
+silicio:side.left=Left
+silicio:side.right=Right

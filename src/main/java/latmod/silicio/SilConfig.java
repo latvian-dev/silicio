@@ -1,0 +1,46 @@
+package latmod.silicio;
+import latmod.core.*;
+import net.minecraft.nbt.NBTTagCompound;
+import cpw.mods.fml.common.event.FMLPreInitializationEvent;
+
+public class SilConfig extends LMConfig implements IServerConfig
+{
+	public SilConfig(FMLPreInitializationEvent e)
+	{ super(e, "/LatMod/Silicio.cfg"); }
+	
+	public void load()
+	{
+		General.load(get("general"));
+	}
+	
+	public void readConfig(NBTTagCompound tag)
+	{
+		General.coverBlock = tag.getString("CB");
+		
+		//boolean[] b = readBools(tag, "C");
+		//General.bool = b[0];
+		
+		SilMat.updateCoverBlock();
+	}
+	
+	public void writeConfig(NBTTagCompound tag)
+	{
+		tag.setString("CB", General.coverBlock);
+		//writeBools(tag, "C",
+		//General.bool);
+	}
+	
+	public static class General
+	{
+		public static boolean disableAllCrafting;
+		public static String coverBlock;
+		
+		public static void load(Category c)
+		{
+			disableAllCrafting = c.getBool("disableAllCrafting", false);
+			c.setComment("disableAllCrafting", "Set to true to disable all crafting recipes");
+			
+			coverBlock = c.getString("coverBlock", "LatBlocks:paintable");
+		}
+	}
+}

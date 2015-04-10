@@ -1,0 +1,20 @@
+[
+{
+  "modid": "Silicio",
+  "name": "Silicio",
+  "description": "",
+  "version": "${version}",
+  "url": "http://minecraft.curseforge.com/mc-mods/229131-silicio",
+  "updateUrl": "",
+  "authorList": [
+    "LatvianModder"
+  ],
+  "credits": "",
+  "logoFile": "assets/silicio/textures/logo.png",
+  "screenshots": [
+  ],
+  "parent":"",
+  "dependencies": [
+  ]
+}
+]
