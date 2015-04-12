@@ -14,21 +14,19 @@ public class CircuitBoard implements IInventory
 {
 	public final TileCBCable cable;
 	public final ForgeDirection side;
+	public final ForgeDirection sideOpposite;
 	
 	public ItemStack items[] = new ItemStack[12];
 	public boolean dropItems = true;
 	public long tick = 0L;
 	public boolean redstoneOut = false;
 	private Boolean prevRedstoneOut = null;
-	public final CBChannel[] channels;
-	public final CBChannel[] prevChannels;
 	
 	public CircuitBoard(TileCBCable t, ForgeDirection f)
 	{
 		cable = t;
 		side = f;
-		channels = CBChannel.create(16, CBChannel.Type.LOCAL);
-		prevChannels = CBChannel.create(16, CBChannel.Type.LOCAL);
+		sideOpposite = side.getOpposite();
 	}
 	
 	public void readTileData(NBTTagCompound tag)
@@ -36,7 +34,6 @@ public class CircuitBoard implements IInventory
 		InvUtils.readItemsFromNBT(items, tag, "Items");
 		tick = tag.getLong("Tick");
 		redstoneOut = tag.getBoolean("RSOut");
-		CBChannel.readFromNBT(tag, "Channels", channels);
 	}
 	
 	public void writeTileData(NBTTagCompound tag)
@@ -44,7 +41,6 @@ public class CircuitBoard implements IInventory
 		if(items != null) InvUtils.writeItemsToNBT(items, tag, "Items");
 		tag.setLong("Tick", tick);
 		tag.setBoolean("RSOut", redstoneOut);
-		CBChannel.writeToNBT(tag, "Channels", channels);
 	}
 	
 	public FastMap<Integer, ICBModule> getAllModules()
@@ -63,8 +59,6 @@ public class CircuitBoard implements IInventory
 	public void preUpdate()
 	{
 		redstoneOut = false;
-		CBChannel.copy(channels, prevChannels);
-		CBChannel.clear(channels);
 	}
 	
 	public void postUpdate()
@@ -75,39 +69,6 @@ public class CircuitBoard implements IInventory
 			cable.markDirty();
 			cable.getWorldObj().notifyBlocksOfNeighborChange(cable.xCoord, cable.yCoord, cable.zCoord, cable.blockType);
 		}
-		
-		/*
-		
-		for(int i = 0; i < items.length; i++)
-		{
-			if(items[i] != null && items[i].getItem() instanceof IToggable)
-				;
-		}
-		
-		for(int i = 0; i < allModules.size(); i++)
-		{
-			CircuitBoard cb = allModules.keys.get(i);
-			FastMap<Integer, ICBModule> modules = allModules.values.get(i);
-			
-			for(int j = 0; j < modules.size(); j++)
-			{
-				ICBModule m = modules.values.get(j);
-				
-				if(m instanceof IToggable)
-				{
-					ItemStack is = cb.items[modules.keys.get(j)];
-					
-					for(int k = 0; k < channels.length; k++)
-					{
-						if(prevChannels[k].isEnabled() != channels[k].isEnabled())
-						{
-							((IToggable)is.getItem()).onChannelToggled(is, cb, channels[k]);
-							markDirty();
-						}
-					}
-				}
-			}
-		}*/
 		
 		tick++;
 	}

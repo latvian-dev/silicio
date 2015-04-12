@@ -37,13 +37,23 @@ public class ItemModuleSignOutput extends ItemModuleIO implements IToggable
 		
 		TileEntity te = t.getFacingTile();
 		
-		if(te != null && te instanceof TileEntitySign)
+		if(t.cable.isServer() && te != null && te instanceof TileEntitySign)
 		{
-			int line = 1;
-			String text = "Hello!";
+			TileEntitySign tes = (TileEntitySign)te;
 			
-			((TileEntitySign)te).signText[line] = text;
-			te.markDirty();
+			String[] s =
+			{
+				"",
+				"Test",
+				"",
+				"",
+			};
+			
+			for(int i = 0; i < 4; i++)
+				tes.signText[i] = s[i];
+			
+			tes.markDirty();
+			tes.getWorldObj().markBlockForUpdate(tes.xCoord, tes.yCoord, tes.zCoord);
 		}
 	}
 }

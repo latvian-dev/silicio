@@ -7,9 +7,6 @@ import latmod.silicio.item.modules.*;
 import latmod.silicio.tile.*;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ResourceLocation;
-
-import org.lwjgl.opengl.GL11;
-
 import cpw.mods.fml.relauncher.*;
 
 @SideOnly(Side.CLIENT)
@@ -20,6 +17,7 @@ public class GuiSelectChannels extends GuiModule
 	public static final TextureCoords iconInput = new TextureCoords(thisTex, 168, 10);
 	public static final TextureCoords iconOutput = new TextureCoords(thisTex, 168, 18);
 	public static final TextureCoords iconIOPressed = new TextureCoords(thisTex, 168, 26);
+	public static final TextureCoords iconChannelEnabled = new TextureCoords(thisTex, 168, 34);
 	
 	public CircuitBoard board;
 	public ICBModule module;
@@ -50,6 +48,8 @@ public class GuiSelectChannels extends GuiModule
 			}
 		});
 		
+		buttonBack.title = LC.mod.translate("button.back");
+		
 		int chCount = m.getChannelCount();
 		if(chCount > 16) chCount = 16;
 		
@@ -67,6 +67,7 @@ public class GuiSelectChannels extends GuiModule
 			};
 			
 			buttonSelectChannel[i].customID = i;
+			buttonSelectChannel[i].title = module.getChannelName(i);
 			widgets.add(buttonSelectChannel[i]);
 		}
 		
@@ -79,7 +80,8 @@ public class GuiSelectChannels extends GuiModule
 			}
 		});
 		
-		buttonNoChannel.customID = 0;
+		buttonNoChannel.customID = -1;
+		buttonNoChannel.title = CBChannel.channelToString(-1);
 		allChannels.add(buttonNoChannel);
 		
 		for(int i = 0; i < 16; i++)
@@ -93,7 +95,8 @@ public class GuiSelectChannels extends GuiModule
 				}
 			};
 			
-			b.customID = -(i + 1);
+			b.customID = i;
+			b.title = CBChannel.channelToString(b.customID);
 			
 			widgets.add(b);
 			allChannels.add(b);
@@ -113,7 +116,8 @@ public class GuiSelectChannels extends GuiModule
 				}
 			};
 			
-			b.customID = i + 1;
+			b.customID = i + 16;
+			b.title = CBChannel.channelToString(b.customID);
 			
 			widgets.add(b);
 			allChannels.add(b);
@@ -134,7 +138,7 @@ public class GuiSelectChannels extends GuiModule
 			else buttonSelectChannel[i].render(iconOutput);
 			
 			if(selectedChannel == i)
-				buttonSelectChannel[i].render(iconIOPressed);
+				iconIOPressed.render(this, buttonSelectChannel[i].posX, buttonSelectChannel[i].posY, 8, 8);
 		}
 		
 		for(int i = 0; i < allChannels.size(); i++)
@@ -142,9 +146,20 @@ public class GuiSelectChannels extends GuiModule
 			ButtonLM b = allChannels.get(i);
 			
 			if(b.customID == ItemModule.getChannelID(module, board.items[moduleID], selectedChannel))
-			{
 				iconSelChannel.render(this, b.posX - 1, b.posY - 1, 10, 10);
-				return;
+			
+			if(b.customID >= 0)
+			{
+				if(b.customID < 16)
+				{
+					if(board.cable.channels[b.customID].isEnabled())
+						iconChannelEnabled.render(this, b.posX, b.posY, 8, 8);
+				}
+				else if(board.cable.controller != null)
+				{
+					if(board.cable.controller.channels[b.customID - 16].isEnabled())
+						iconChannelEnabled.render(this, b.posX, b.posY, 8, 8);
+				}
 			}
 		}
 	}
@@ -155,31 +170,5 @@ public class GuiSelectChannels extends GuiModule
 		module = (ICBModule)board.items[moduleID].getItem();
 		
 		super.drawScreen(mx, my, f);
-		
-		GL11.glDisable(GL11.GL_LIGHTING);
-		
-		FastList<String> al = new FastList<String>();
-		
-		for(int i = 0; i < buttonSelectChannel.length; i++)
-		{
-			if(buttonSelectChannel[i].mouseOver(mx, my))
-				al.add(module.getChannelName(i));
-		}
-		
-		if(buttonBack.mouseOver(mx, my))
-			al.add(LC.mod.translate("back"));
-		
-		else for(int i = 0; i < allChannels.size(); i++)
-		{
-			ButtonLM b = allChannels.get(i);
-			
-			if(b.mouseOver(mx, my))
-			{
-				al.add(CBChannel.channelToString(b.customID));
-				break;
-			}
-		}
-		
-		if(!al.isEmpty()) drawHoveringText(al, mx, my, fontRendererObj);
 	}
 }

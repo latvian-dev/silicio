@@ -1,17 +1,35 @@
 package latmod.silicio.item.modules.config;
 
+import latmod.core.util.FastList;
+import latmod.silicio.tile.CircuitBoard;
 import net.minecraft.client.Minecraft;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import cpw.mods.fml.relauncher.*;
 
-public abstract class ModuleConfigSegment<T>
+public abstract class ModuleConfigSegment
 {
+	public final int ID;
+	public final String SID;
+	public final String title;
+	
+	public ModuleConfigSegment(int i, String s)
+	{ ID = i; SID = "" + ID; title = s; }
+	
+	public NBTTagCompound data(ItemStack is)
+	{
+		if(is.stackTagCompound == null)
+			is.stackTagCompound = new NBTTagCompound();
+		return is.stackTagCompound.getCompoundTag("Config");
+	}
+	
 	@SideOnly(Side.CLIENT)
-	public abstract void openGui(Minecraft mc);
+	public abstract void buttonClicked(CircuitBoard cb, int MID, Minecraft mc);
+	public abstract void addButtonDesc(CircuitBoard cb, int MID, FastList<String> s);
 	
-	public abstract void setData(NBTTagCompound data, int ID, T t);
-	public abstract T getData(NBTTagCompound data, int ID);
+	public final int hashCode()
+	{ return ID; }
 	
-	public boolean isValid(T o)
-	{ return true; }
+	public final boolean equals(Object o)
+	{ return o != null && (o == this || o.hashCode() == hashCode()); }
 }

@@ -1,6 +1,6 @@
 package latmod.silicio;
 
-import latmod.core.InvUtils;
+import latmod.core.*;
 import net.minecraft.block.Block;
 import net.minecraft.item.ItemStack;
 import cofh.thermalexpansion.block.simple.BlockFrame;
@@ -42,6 +42,7 @@ public class SilMat
 		{
 			coverBlock = InvUtils.singleCopy(InvUtils.parseItem(SilConfig.General.coverBlock));
 			if(coverBlock != null) coverBlockB = Block.getBlockFromItem(coverBlock.getItem());
+			else LatCoreMC.logger.warn("Block " + SilConfig.General.coverBlock + " not found!");
 		}
 	}
 }

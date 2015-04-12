@@ -91,9 +91,21 @@ public class RenderCBCable extends BlockRendererLM
 		renderBlocks.renderBlockAsItem(block, metadata, 1F);
 	}
 	
+	private boolean renderCables(TileCBCable t)
+	{
+		for(int i = 0; i < 6; i++)
+		{
+			if(t.paint[i] != null && t.paint[i].block != null)
+				if(!t.paint[i].block.renderAsNormalBlock() || !t.paint[i].block.isOpaqueCube())
+					return true;
+		}
+		
+		return false;
+	}
+	
 	public boolean renderWorldBlock(IBlockAccess iba, int x, int y, int z, Block block, int modelId, RenderBlocks renderer0)
 	{
-		updateBoxes();
+		//updateBoxes();
 		
 		renderBlocks.blockAccess = iba;
 		
@@ -111,29 +123,32 @@ public class RenderCBCable extends BlockRendererLM
 			
 			//renderBlocks.renderAllFaces = true;
 			
-			renderBlocks.setOverrideBlockTexture(SilItems.b_cbcable.getBlockIcon());
-			
-			for(int i = 0; i < 6; i++)
+			if(!renderCables(t))
 			{
-				if(TileCBCable.connectCable(t, ForgeDirection.VALID_DIRECTIONS[i]))
+				renderBlocks.setOverrideBlockTexture(SilItems.b_cbcable.getBlockIcon());
+				
+				for(int i = 0; i < 6; i++)
 				{
-					renderBlocks.setRenderBounds(cableFlatBoxes[i]);
-					renderBlocks.renderStandardBlock(Blocks.stone, x, y, z);
+					if(TileCBCable.connectCable(t, ForgeDirection.VALID_DIRECTIONS[i]))
+					{
+						renderBlocks.setRenderBounds(cableFlatBoxes[i]);
+						renderBlocks.renderStandardBlock(Blocks.stone, x, y, z);
+					}
 				}
-			}
-			
-			renderBlocks.setOverrideBlockTexture(SilItems.b_cbcable.icon_board);
-			
-			for(int i = 0; i < 6; i++)
-			{
-				if(t.boards[i] != null)
+				
+				renderBlocks.setOverrideBlockTexture(SilItems.b_cbcable.icon_board);
+				
+				for(int i = 0; i < 6; i++)
 				{
-					renderBlocks.setRenderBounds(boardFlatBoxes[i]);
-					renderBlocks.renderStandardBlock(Blocks.stone, x, y, z);
+					if(t.boards[i] != null)
+					{
+						renderBlocks.setRenderBounds(boardFlatBoxes[i]);
+						renderBlocks.renderStandardBlock(Blocks.stone, x, y, z);
+					}
 				}
+				
+				return true;
 			}
-			
-			return true;
 		}
 		
 		renderBlocks.renderAllFaces = true;

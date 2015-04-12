@@ -63,6 +63,6 @@ public class ItemMaterialsSil extends ItemMaterials
 				'S', SilMat.SILICON,
 				'I', ODItems.IRON);
 		
-		SilRecipes.addSmelter(SilMat.LASER_CRYSTAL, new ItemStack(Items.dye, 1, 4), new ItemStack(Blocks.glass, 4, ODItems.ANY), 48000);
+		SilRecipes.addSmelter(SilMat.LASER_CRYSTAL, new ItemStack(Items.dye, 1, 4), new ItemStack(Blocks.glass, 4), 48000);
 	}
 }

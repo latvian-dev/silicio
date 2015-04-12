@@ -13,7 +13,6 @@ public class SilItems
 	public static BlockCBController b_cbcontroller;
 	
 	public static ItemMaterialsSil i_mat;
-	public static ItemBattery i_battery;
 	public static ItemCircuitBoard i_circuit_board;
 	
 	public static void init()
@@ -22,7 +21,6 @@ public class SilItems
 		b_cbcontroller = new BlockCBController("controller").register();
 		
 		i_mat = new ItemMaterialsSil("materials").register();
-		i_battery = new ItemBattery("battery").register();
 		i_circuit_board = new ItemCircuitBoard("circuitBoard").register();
 		
 		Modules.init();

@@ -1,30 +1,46 @@
 package latmod.silicio.item.modules.config;
 
+import latmod.core.util.FastList;
+import latmod.silicio.tile.CircuitBoard;
 import net.minecraft.client.Minecraft;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import cpw.mods.fml.relauncher.*;
 
-public class ModuleCSItem extends ModuleConfigSegment<ItemStack>
+public class ModuleCSItem extends ModuleConfigSegment
 {
+	public ItemStack defaultItem = null;
+	
+	public ModuleCSItem(int i, String s)
+	{ super(i, s); }
+
 	@SideOnly(Side.CLIENT)
-	public void openGui(Minecraft mc)
+	public void buttonClicked(CircuitBoard cb, int MID, Minecraft mc)
 	{
 	}
 	
-	public void setData(NBTTagCompound data, int ID, ItemStack t)
+	public ItemStack get(ItemStack is)
 	{
-		if(t != null)
-		{
-			NBTTagCompound tag = new NBTTagCompound();
-			t.writeToNBT(tag);
-			data.setTag("" + ID, tag);
-		}
+		NBTTagCompound tag = data(is);
+		if(!tag.hasKey(SID)) set(is, defaultItem);
+		
+		NBTTagCompound tag1 = (NBTTagCompound)tag.getTag(SID);
+		if(tag1 == null || tag1.hasNoTags()) return null;
+		return ItemStack.loadItemStackFromNBT(tag1);
 	}
 	
-	public ItemStack getData(NBTTagCompound data, int ID)
+	public void set(ItemStack is, ItemStack item)
 	{
-		NBTTagCompound tag = (NBTTagCompound)data.getTag("" + ID);
-		return (tag == null) ? null : ItemStack.loadItemStackFromNBT(tag);
+		NBTTagCompound tag = data(is);
+		
+		NBTTagCompound tag1 = new NBTTagCompound();
+		if(item != null) item.writeToNBT(tag1);
+		tag.setTag(SID, tag1);
 	}
+	
+	public void addButtonDesc(CircuitBoard cb, int MID, FastList<String> s)
+	{ ItemStack item = get(cb.items[MID]); if(item != null) s.add(item.getDisplayName()); }
+	
+	public boolean isValid(ItemStack is)
+	{ return true; }
 }

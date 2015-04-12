@@ -1,14 +1,10 @@
 package latmod.silicio.gui;
 import latmod.core.gui.*;
 import latmod.core.mod.LC;
-import latmod.core.util.FastList;
 import latmod.silicio.Silicio;
 import latmod.silicio.gui.container.ContainerCircuitBoardSettings;
 import latmod.silicio.item.modules.ICBModule;
 import latmod.silicio.tile.CircuitBoard;
-
-import org.lwjgl.opengl.GL11;
-
 import cpw.mods.fml.relauncher.*;
 
 @SideOnly(Side.CLIENT)
@@ -34,6 +30,8 @@ public class GuiCircuitBoardSettings extends GuiLM
 			}
 		});
 		
+		buttonBack.title = LC.mod.translate("button.back");
+		
 		itemButtons = new ItemButtonLM[board.items.length];
 		
 		for(int y = 0; y < 2; y++)
@@ -53,6 +51,7 @@ public class GuiCircuitBoardSettings extends GuiLM
 				};
 				
 				itemButtons[id].setItem(board.items[id]);
+				itemButtons[id].title = itemButtons[id].item.getDisplayName();
 				//itemButtons[id].setBackground(button_pressed);
 				widgets.add(itemButtons[id]);
 			}
@@ -70,25 +69,5 @@ public class GuiCircuitBoardSettings extends GuiLM
 			if(itemButtons[i] != null)
 				itemButtons[i].render();
 		}
-	}
-	
-	public void drawScreen(int mx, int my, float f)
-	{
-		super.drawScreen(mx, my, f);
-		
-		GL11.glDisable(GL11.GL_LIGHTING);
-		
-		FastList<String> al = new FastList<String>();
-		
-		if(buttonBack.mouseOver(mx, my))
-			al.add(LC.mod.translate("back"));
-		
-		for(int i = 0; i < itemButtons.length; i++)
-		{
-			if(itemButtons[i] != null && itemButtons[i].item != null && itemButtons[i].mouseOver(mx, my))
-				al.add(itemButtons[i].item.getDisplayName());
-		}
-		
-		if(!al.isEmpty()) drawHoveringText(al, mx, my, fontRendererObj);
 	}
 }

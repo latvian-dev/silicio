@@ -1,13 +1,25 @@
 package latmod.silicio.item.modules.logic;
 
-import latmod.silicio.item.modules.IOType;
-import latmod.silicio.tile.CircuitBoard;
+import latmod.silicio.item.modules.*;
+import latmod.silicio.item.modules.config.ModuleCSString;
+import latmod.silicio.tile.*;
+import net.minecraft.command.*;
 import net.minecraft.item.ItemStack;
+import net.minecraft.server.MinecraftServer;
+import net.minecraft.util.*;
+import net.minecraft.world.World;
 
-public class ItemModuleCommandBlock extends ItemModuleLogic
+public class ItemModuleCommandBlock extends ItemModuleLogic implements IToggable
 {
+	public static final ModuleCSString cs_command = new ModuleCSString(0, "Command");
+	
 	public ItemModuleCommandBlock(String s)
-	{ super(s); }
+	{
+		super(s);
+		
+		moduleConfig.add(cs_command);
+		cs_command.defaultString = "say Hello!";
+	}
 	
 	public int getChannelCount()
 	{ return 1; }
@@ -21,9 +33,47 @@ public class ItemModuleCommandBlock extends ItemModuleLogic
 	
 	public void onUpdate(ItemStack is, CircuitBoard t)
 	{
-		if(is.hasTagCompound())
+	}
+	
+	public void onChannelToggled(ItemStack is, CircuitBoard t, CBChannel c)
+	{
+		String cmd = cs_command.get(is);
+		
+		if(!cmd.isEmpty())
 		{
-			//String cmd = is.stackTagCompound.getString("Cmd");
+			MinecraftServer ms = MinecraftServer.getServer();
+
+			if (ms != null && ms.isCommandBlockEnabled())
+			{
+				ICommandManager icm = ms.getCommandManager();
+				icm.executeCommand(new CmdModuleICS(t), cmd);
+			}
 		}
+	}
+	
+	public static class CmdModuleICS implements ICommandSender // TileEntityCommandBlock
+	{
+		public final CircuitBoard board;
+		
+		public CmdModuleICS(CircuitBoard t)
+		{ board = t; }
+
+		public String getCommandSenderName()
+		{ return "@"; }
+		
+		public IChatComponent func_145748_c_()
+		{ return null; }
+		
+		public void addChatMessage(IChatComponent c)
+		{ }
+		
+		public boolean canCommandSenderUseCommand(int i, String s)
+		{ return true; }
+		
+		public ChunkCoordinates getPlayerCoordinates()
+		{ return new ChunkCoordinates(board.cable.xCoord, board.cable.yCoord, board.cable.zCoord); }
+		
+		public World getEntityWorld()
+		{ return board.cable.getWorldObj(); }
 	}
 }

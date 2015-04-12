@@ -18,7 +18,6 @@ silicio:item.mat.circuit.name=Integrated Circuit
 silicio:item.mat.laserCrystal.name=Laser Crystal
 
 silicio:item.circuitBoard.name=Circuit Board
-silicio:item.battery.name=Battery
 
 # Modules #
 silicio:item.mod.desc=Circuit Board Module

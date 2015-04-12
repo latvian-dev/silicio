@@ -16,5 +16,5 @@ public interface ICBModule // ItemModule
 	public IOType getModuleType();
 	public IOType getChannelType(int c);
 	public String getChannelName(int c);
-	public FastList<ModuleConfigSegment<?>> getModuleConfig();
+	public FastList<ModuleConfigSegment> getModuleConfig();
 }

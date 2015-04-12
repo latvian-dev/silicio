@@ -6,7 +6,7 @@ import net.minecraft.nbt.NBTTagCompound;
 
 public final class CBChannel
 {
-	public static final CBChannel NONE = new CBChannel(0);
+	public static final CBChannel NONE = new CBChannel(-1);
 	
 	public static enum Type
 	{
@@ -21,8 +21,8 @@ public final class CBChannel
 		
 		public static Type getFromID(int id)
 		{
-			if(id == 0) return NONE;
-			return (id > 0) ? GLOBAL : LOCAL;
+			if(id < 0) return NONE;
+			return (id >= 16) ? GLOBAL : LOCAL;
 		}
 	}
 	
@@ -61,27 +61,25 @@ public final class CBChannel
 	
 	public static String channelToString(int id)
 	{
-		if(id == 0) return "IO Disabled";
-		String s = (id < 0) ? "Local " : "Global ";
+		Type t = Type.getFromID(id);
+		if(t == Type.NONE) return "IO Disabled";
+		String s = (t == Type.LOCAL) ? "Local " : "Global ";
 		s += CBChannel.getColor(id).toString();
-		if(id > 0) s += " #" + (CBChannel.getWarppedID(id) / 16 + 1);
+		if(t == Type.GLOBAL) s += " #" + (id / 16 + 1);
 		return s;
 	}
 	
-	public static int getWarppedID(int id)
-	{
-		if(id == 0) return 0;
-		return Math.abs(id) - 1;
-	}
-	
 	public static EnumDyeColor getColor(int id)
-	{ return EnumDyeColor.VALUES[getWarppedID(id) % 16]; }
+	{
+		if(id < 0) return EnumDyeColor.BLACK;
+		return EnumDyeColor.VALUES[id % 16];
+	}
 	
 	public static CBChannel[] create(int i, Type t)
 	{
 		CBChannel[] c = new CBChannel[i];
 		for(int j = 0; j < c.length; j++)
-		c[j] = new CBChannel((t == Type.LOCAL) ? -j : j);
+		c[j] = new CBChannel((t == Type.LOCAL) ? j : (j + 16));
 		return c;
 	}
 	

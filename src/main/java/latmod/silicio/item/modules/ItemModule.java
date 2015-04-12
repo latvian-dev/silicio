@@ -21,7 +21,7 @@ public abstract class ItemModule extends ItemSil implements ICBModule
 	
 	public static final String NBT_TAG = "Channels";
 	
-	protected final FastList<ModuleConfigSegment<?>> moduleConfig = new FastList<ModuleConfigSegment<?>>();
+	public final FastList<ModuleConfigSegment> moduleConfig = new FastList<ModuleConfigSegment>();
 	
 	public ItemModule(String s)
 	{
@@ -42,7 +42,7 @@ public abstract class ItemModule extends ItemSil implements ICBModule
 	public String getChannelName(int c)
 	{ return (getChannelType(c).isInput() ? "Input" : "Output") + " #" + (c + 1); }
 	
-	public final FastList<ModuleConfigSegment<?>> getModuleConfig()
+	public final FastList<ModuleConfigSegment> getModuleConfig()
 	{ return moduleConfig; }
 	
 	public boolean isItemTool(ItemStack is)
@@ -95,7 +95,7 @@ public abstract class ItemModule extends ItemSil implements ICBModule
 		{
 			channels = new byte[m.getChannelCount()];
 			for(int i = 0; i < channels.length; i++)
-				channels[i] = 0;
+				channels[i] = -1;
 			
 			is.stackTagCompound.setByteArray(NBT_TAG, channels);
 		}
@@ -106,15 +106,17 @@ public abstract class ItemModule extends ItemSil implements ICBModule
 	public final CBChannel getChannel(ItemStack is, CircuitBoard t, int c)
 	{
 		int ch = getChannelID(this, is, c);
-		if(ch == 0) return CBChannel.NONE;
+		if(ch < 0) return CBChannel.NONE;
+		if(ch < 16) return t.cable.channels[ch];
 		if(t.cable.controller == null) return CBChannel.NONE;
-		int wid = CBChannel.getWarppedID(ch);
-		return (ch > 0) ? t.cable.controller.channels[wid] : t.channels[wid];
+		return t.cable.controller.channels[ch - 16];
 	}
 	
 	public final void setChannel(ItemStack is, CircuitBoard t, int c, byte ch)
 	{
-		getChannel(is, t, c); byte[] channels = is.stackTagCompound.getByteArray(NBT_TAG);
-		channels[c] = ch; is.stackTagCompound.setByteArray(NBT_TAG, channels);
+		getChannel(is, t, c);
+		byte[] channels = is.stackTagCompound.getByteArray(NBT_TAG);
+		channels[c] = ch;
+		is.stackTagCompound.setByteArray(NBT_TAG, channels);
 	}
 }

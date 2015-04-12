@@ -1,13 +1,9 @@
 package latmod.silicio.gui;
 import latmod.core.gui.*;
 import latmod.core.mod.LC;
-import latmod.core.util.FastList;
 import latmod.silicio.Silicio;
 import latmod.silicio.gui.container.ContainerCircuitBoard;
 import latmod.silicio.tile.CircuitBoard;
-
-import org.lwjgl.opengl.GL11;
-
 import cpw.mods.fml.relauncher.*;
 
 @SideOnly(Side.CLIENT)
@@ -31,6 +27,8 @@ public class GuiCircuitBoard extends GuiLM
 				board.cable.clientOpenGui(1);
 			}
 		});
+		
+		buttonSettings.title = LC.mod.translate("button.settings");
 	}
 	
 	public void drawGuiContainerBackgroundLayer(float f, int mx, int my)
@@ -38,19 +36,5 @@ public class GuiCircuitBoard extends GuiLM
 		super.drawGuiContainerBackgroundLayer(f, mx, my);
 		
 		buttonSettings.render(Icons.settings);
-	}
-	
-	public void drawScreen(int mx, int my, float f)
-	{
-		super.drawScreen(mx, my, f);
-		
-		GL11.glDisable(GL11.GL_LIGHTING);
-		
-		FastList<String> al = new FastList<String>();
-		
-		if(buttonSettings.mouseOver(mx, my))
-			al.add(LC.mod.translate("settings"));
-		
-		if(!al.isEmpty()) drawHoveringText(al, mx, my, fontRendererObj);
 	}
 }

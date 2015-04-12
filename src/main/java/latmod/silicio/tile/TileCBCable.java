@@ -9,6 +9,7 @@ import latmod.silicio.*;
 import latmod.silicio.gui.*;
 import latmod.silicio.gui.container.*;
 import latmod.silicio.item.modules.ICBModule;
+import latmod.silicio.item.modules.io.ItemModuleEnergyInput;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
@@ -18,9 +19,10 @@ import net.minecraft.nbt.*;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraftforge.common.util.ForgeDirection;
+import cofh.api.energy.IEnergyReceiver;
 import cpw.mods.fml.relauncher.*;
 
-public class TileCBCable extends TileLM implements IPaintable, ICBNetTile, IGuiTile
+public class TileCBCable extends TileLM implements IPaintable, ICBNetTile, IGuiTile, IEnergyReceiver
 {
 	public static final String ACTION_SET_CHANNEL = "setCBChannel";
 	
@@ -28,9 +30,25 @@ public class TileCBCable extends TileLM implements IPaintable, ICBNetTile, IGuiT
 	public final Paint[] paint = new Paint[6];
 	public boolean hasCover;
 	public TileCBController controller;
+	public final CBChannel[] channels;
+	public final CBChannel[] prevChannels;
+	private final boolean[] canReceive;
+	
+	public TileCBCable()
+	{
+		channels = CBChannel.create(16, CBChannel.Type.LOCAL);
+		prevChannels = CBChannel.create(16, CBChannel.Type.LOCAL);
+		canReceive = new boolean[6];
+	}
 	
 	public boolean rerenderBlock()
 	{ return true; }
+	
+	public void preUpdate()
+	{
+		CBChannel.copy(channels, prevChannels);
+		CBChannel.clear(channels);
+	}
 	
 	public void readTileData(NBTTagCompound tag)
 	{
@@ -49,6 +67,7 @@ public class TileCBCable extends TileLM implements IPaintable, ICBNetTile, IGuiT
 		
 		hasCover = tag.getBoolean("HasCover");
 		Paint.readFromNBT(tag, "Paint", paint);
+		CBChannel.readFromNBT(tag, "Channels", channels);
 	}
 	
 	public void writeTileData(NBTTagCompound tag)
@@ -69,13 +88,11 @@ public class TileCBCable extends TileLM implements IPaintable, ICBNetTile, IGuiT
 		
 		tag.setBoolean("HasCover", hasCover);
 		Paint.writeToNBT(tag, "Paint", paint);
+		CBChannel.writeToNBT(tag, "Channels", channels);
 	}
 	
 	public boolean setPaint(PaintData p)
 	{
-		if(paint == null) return false;
-		if(p.paint != null && !p.paint.block.renderAsNormalBlock()) return false;
-		
 		if(p.player.isSneaking())
 		{
 			for(int i = 0; i < 6; i++)
@@ -110,6 +127,25 @@ public class TileCBCable extends TileLM implements IPaintable, ICBNetTile, IGuiT
 			for(int i = 0; i < boards.length; i++)
 			if(boards[i] != null) boards[i].redstoneOut = false;
 		}
+		
+		for(int s = 0; s < 6; s++)
+		{
+			canReceive[s] = false;
+			
+			if(controller != null)
+			{
+				CircuitBoard cb = getBoard(s);
+				
+				if(cb != null)
+				{
+					for(int i = 0; i < cb.items.length; i++)
+					{
+						if(cb.items[i] != null && cb.items[i].getItem() instanceof ItemModuleEnergyInput)
+							canReceive[s] = ((ItemModuleEnergyInput)cb.items[i].getItem()).canReceive(cb.items[i], cb);
+					}
+				}
+			}
+		}
 	}
 
 	public boolean isOutputtingRS(int s)
@@ -130,6 +166,13 @@ public class TileCBCable extends TileLM implements IPaintable, ICBNetTile, IGuiT
 	
 	public void onUpdate()
 	{
+		if(!isServer()) return;
+		
+		if(controller != null && tick % 20 == 0)
+		{
+			if(!controller.network.contains(this))
+				onNetworkChanged(null);
+		}
 	}
 	
 	public boolean onRightClick(EntityPlayer ep, ItemStack is, int side, float x, float y, float z)
@@ -209,7 +252,7 @@ public class TileCBCable extends TileLM implements IPaintable, ICBNetTile, IGuiT
 				if(isServer())
 				{
 					if(!ep.capabilities.isCreativeMode && SilMat.coverBlock != null)
-						InvUtils.dropItem(ep, SilMat.coverBlock);
+						InvUtils.dropItem(ep, new ItemStack(SilItems.i_circuit_board));
 					
 					for(int i = 0; i < boards[id].items.length; i++)
 					{
@@ -350,4 +393,16 @@ public class TileCBCable extends TileLM implements IPaintable, ICBNetTile, IGuiT
 		data.setByte("Channel", (byte)ch);
 		sendClientAction(ACTION_SET_CHANNEL, data);
 	}
+	
+	public boolean canConnectEnergy(ForgeDirection f)
+	{ return canReceive[f.ordinal()]; }
+	
+	public int getEnergyStored(ForgeDirection f)
+	{ return (controller == null) ? 0 : controller.getEnergyStored(f); }
+	
+	public int getMaxEnergyStored(ForgeDirection f)
+	{ return (controller == null) ? 0 : controller.getMaxEnergyStored(f); }
+	
+	public int receiveEnergy(ForgeDirection f, int e, boolean b)
+	{ return (controller == null || !canConnectEnergy(f)) ? 0 : controller.receiveEnergy(f, e, b); }
 }

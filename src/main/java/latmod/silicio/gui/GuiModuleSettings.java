@@ -4,12 +4,10 @@ import latmod.core.gui.*;
 import latmod.core.mod.LC;
 import latmod.core.util.FastList;
 import latmod.silicio.item.modules.ICBModule;
+import latmod.silicio.item.modules.config.*;
 import latmod.silicio.tile.CircuitBoard;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.util.ResourceLocation;
-
-import org.lwjgl.opengl.GL11;
-
+import net.minecraft.util.*;
 import cpw.mods.fml.relauncher.*;
 
 @SideOnly(Side.CLIENT)
@@ -21,7 +19,7 @@ public class GuiModuleSettings extends GuiModule
 	public static final TextureCoords icon_cfg_text = new TextureCoords(thisTex, 21 * 1, 62);
 	public static final TextureCoords icon_cfg_num = new TextureCoords(thisTex, 21 * 2, 62);
 	public static final TextureCoords icon_cfg_item = new TextureCoords(thisTex, 21 * 3, 62);
-	public static final TextureCoords icon_cfg_side = new TextureCoords(thisTex, 21 * 4, 62);
+	public static final TextureCoords icon_cfg_bool = new TextureCoords(thisTex, 21 * 4, 62);
 	
 	public CircuitBoard board;
 	public ICBModule module;
@@ -48,6 +46,8 @@ public class GuiModuleSettings extends GuiModule
 			}
 		};
 		
+		buttonChannels.title = "Select Channels";
+		
 		if(module.getChannelCount() > 0)
 			widgets.add(buttonChannels);
 		
@@ -59,6 +59,35 @@ public class GuiModuleSettings extends GuiModule
 				board.cable.clientOpenGui(1);
 			}
 		});
+		
+		buttonBack.title = LC.mod.translate("button.back");
+		
+		for(final ModuleConfigSegment mcs : m.getModuleConfig())
+		{
+			ButtonLM b = new ButtonLM(this, 31 + 23 * (mcs.ID % 6), 9 + 23 * (mcs.ID / 6), 21, 21)
+			{
+				public void onButtonPressed(int b)
+				{
+					playClickSound();
+					mcs.buttonClicked(board, moduleID, mc);
+				}
+				
+				public void addMouseOverText(FastList<String> l)
+				{
+					l.add(mcs.title);
+					FastList<String> l1 = new FastList<String>();
+					mcs.addButtonDesc(board, moduleID, l);
+					for(String s : l1) l.add(EnumChatFormatting.GRAY + s);
+				}
+			};
+			
+			if(mcs instanceof ModuleCSBool) b.background = icon_cfg_bool;
+			else if(mcs instanceof ModuleCSInt || mcs instanceof ModuleCSFloat) b.background = icon_cfg_bool;
+			else if(mcs instanceof ModuleCSItem) b.background = icon_cfg_item;
+			else b.background = icon_cfg_text;
+			
+			widgets.add(b);
+		}
 	}
 	
 	public void drawGuiContainerBackgroundLayer(float f, int mx, int my)
@@ -67,22 +96,5 @@ public class GuiModuleSettings extends GuiModule
 		
 		if(module.getChannelCount() > 0)
 			buttonChannels.render(icon_channels);
-	}
-	
-	public void drawScreen(int mx, int my, float f)
-	{
-		super.drawScreen(mx, my, f);
-		
-		GL11.glDisable(GL11.GL_LIGHTING);
-		
-		FastList<String> al = new FastList<String>();
-		
-		if(buttonChannels.mouseOver(mx, my))
-			al.add("Select Channels");
-		
-		if(buttonBack.mouseOver(mx, my))
-			al.add(LC.mod.translate("back"));
-		
-		if(!al.isEmpty()) drawHoveringText(al, mx, my, fontRendererObj);
 	}
 }

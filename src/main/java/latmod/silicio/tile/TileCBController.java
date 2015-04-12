@@ -96,27 +96,42 @@ public class TileCBController extends TileLM implements ICBNetTile, IEnergyHandl
 	
 	public void addWailaBody(IWailaDataAccessor data, IWailaConfigHandler config, List<String> info)
 	{
-		int e = storage.getEnergyStored();
-		String s = "" + e;
-		
-		if(e > 1000)
+		if(hasConflict) info.add("Conflicting Controller found!");
+		else
 		{
-			if(e > 1000000)
-				s = (e / 1000000) + "M";
-			else s = (e / 1000) + "K";
+			int cables = 0;
+			int otherDevices = 0;
+			
+			for(int i = 0; i < network.size(); i++)
+			{
+				ICBNetTile t = network.get(i);
+				
+				if(t instanceof TileCBCable) cables++;
+			}
+			
+			otherDevices = network.size() - cables;
+			
+			info.add("Cables: " + cables);
+			if(otherDevices > 0) info.add("Other Devices: " + otherDevices);
+			if(!circuitBoards.isEmpty()) info.add("CircuitBoards: " + circuitBoards.size());
+			if(!allModules.isEmpty()) info.add("Modules: " + allModules.size());
+			if(!invNetwork.isEmpty()) info.add("IInventories: " + invNetwork.size());
+			if(!tankNetwork.isEmpty()) info.add("IFluidHandlers: " + tankNetwork.size());
 		}
-		
-		info.add("Energy Stored: " + s + " RF");
 	}
 	
 	public boolean canConnect(ForgeDirection side)
 	{ return true; }
 	
+	public void preUpdate()
+	{
+		CBChannel.copy(channels, prevChannels);
+		CBChannel.clear(channels);
+	}
+	
 	public void onUpdate()
 	{
-		if(!isServer()) return;
-		
-		if(energyChanged && tick % 5 == 0)
+		if(isServer() && energyChanged && tick % 5 == 0)
 		{
 			energyChanged = false;
 			markDirty();
@@ -153,10 +168,12 @@ public class TileCBController extends TileLM implements ICBNetTile, IEnergyHandl
 			}
 		}
 		
-		if(hasConflict) return;
+		if(!isServer() || hasConflict) return;
 		
-		CBChannel.copy(channels, prevChannels);
-		CBChannel.clear(channels);
+		preUpdate();
+		
+		for(int i = 0; i < network.size(); i++)
+			network.get(i).preUpdate();
 		
 		for(int i = 0; i < allModules.size(); i++)
 		{

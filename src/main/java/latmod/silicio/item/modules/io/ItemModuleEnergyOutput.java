@@ -4,7 +4,7 @@ import latmod.silicio.item.modules.IOType;
 import latmod.silicio.tile.*;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
-import cofh.api.energy.IEnergyHandler;
+import cofh.api.energy.IEnergyReceiver;
 
 public class ItemModuleEnergyOutput extends ItemModuleIO
 {
@@ -38,14 +38,19 @@ public class ItemModuleEnergyOutput extends ItemModuleIO
 			
 			if(t.cable.controller.hasEnergy(1) && te != null && !te.isInvalid())
 			{
-				if(te instanceof IEnergyHandler)
+				if(te instanceof IEnergyReceiver)
 				{
-					IEnergyHandler ie = (IEnergyHandler)te;
+					IEnergyReceiver ie = (IEnergyReceiver)te;
 					
 					if(ie.canConnectEnergy(t.side.getOpposite()))
 					{
 						int i = ie.receiveEnergy(t.side.getOpposite(), Math.min(t.cable.controller.storage.getMaxExtract(), t.cable.controller.storage.getEnergyStored()), false);
-						t.cable.controller.storage.extractEnergy(i, false);
+						
+						if(i != 0)
+						{
+							t.cable.controller.storage.extractEnergy(i, false);
+							t.cable.controller.energyChanged = true;
+						}
 					}
 				}
 			}
