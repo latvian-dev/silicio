@@ -3,15 +3,14 @@ package latmod.silicio.item.modules;
 import latmod.core.util.FastList;
 import latmod.silicio.item.modules.config.ModuleConfigSegment;
 import latmod.silicio.tile.*;
-import net.minecraft.item.ItemStack;
 
 public interface ICBModule // ItemModule
 {
-	public void onUpdate(ItemStack is, CircuitBoard t);
-	public void updateInvNet(ItemStack is, CircuitBoard t, FastList<InvEntry> list);
-	public void updateTankNet(ItemStack is, CircuitBoard t, FastList<TankEntry> list);
-	public CBChannel getChannel(ItemStack is, CircuitBoard t, int c);
-	public void setChannel(ItemStack is, CircuitBoard t, int c, byte ch);
+	public void onUpdate(CircuitBoard cb, int MID);
+	public void updateInvNet(CircuitBoard cb, int MID, FastList<InvEntry> list);
+	public void updateTankNet(CircuitBoard cb, int MID, FastList<TankEntry> list);
+	public CBChannel getChannel(CircuitBoard cb, int MID, int c);
+	public void setChannel(CircuitBoard cb, int MID, int c, byte ch);
 	public int getChannelCount();
 	public IOType getModuleType();
 	public IOType getChannelType(int c);

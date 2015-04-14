@@ -28,6 +28,8 @@ public class GuiModuleSettings extends GuiModule
 	public ButtonLM buttonChannels;
 	public ButtonLM buttonBack;
 	
+	public FastList<ButtonLM> buttonsConfig;
+	
 	public GuiModuleSettings(EntityPlayer ep, CircuitBoard cb, ICBModule m, int id)
 	{
 		super(ep, thisTex);
@@ -62,6 +64,8 @@ public class GuiModuleSettings extends GuiModule
 		
 		buttonBack.title = LC.mod.translate("button.back");
 		
+		buttonsConfig = new FastList<ButtonLM>();
+		
 		for(final ModuleConfigSegment mcs : m.getModuleConfig())
 		{
 			ButtonLM b = new ButtonLM(this, 31 + 23 * (mcs.ID % 6), 9 + 23 * (mcs.ID / 6), 21, 21)
@@ -76,16 +80,17 @@ public class GuiModuleSettings extends GuiModule
 				{
 					l.add(mcs.title);
 					FastList<String> l1 = new FastList<String>();
-					mcs.addButtonDesc(board, moduleID, l);
-					for(String s : l1) l.add(EnumChatFormatting.GRAY + s);
+					mcs.addButtonDesc(board, moduleID, l1);
+					for(String s : l1) l.add(EnumChatFormatting.DARK_GRAY + s);
 				}
 			};
 			
 			if(mcs instanceof ModuleCSBool) b.background = icon_cfg_bool;
-			else if(mcs instanceof ModuleCSInt || mcs instanceof ModuleCSFloat) b.background = icon_cfg_bool;
+			else if(mcs instanceof ModuleCSInt || mcs instanceof ModuleCSFloat) b.background = icon_cfg_num;
 			else if(mcs instanceof ModuleCSItem) b.background = icon_cfg_item;
 			else b.background = icon_cfg_text;
 			
+			buttonsConfig.add(b);
 			widgets.add(b);
 		}
 	}
@@ -96,5 +101,8 @@ public class GuiModuleSettings extends GuiModule
 		
 		if(module.getChannelCount() > 0)
 			buttonChannels.render(icon_channels);
+		
+		for(ButtonLM b : buttonsConfig)
+			b.render(b.background);
 	}
 }

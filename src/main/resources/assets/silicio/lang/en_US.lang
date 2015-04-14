@@ -17,35 +17,35 @@ silicio:item.mat.outputModule.name=Empty Output Module
 silicio:item.mat.circuit.name=Integrated Circuit
 silicio:item.mat.laserCrystal.name=Laser Crystal
 
-silicio:item.circuitBoard.name=Circuit Board
+silicio:item.circuit_board.name=Circuit Board
 
 # Modules #
-silicio:item.mod.desc=Circuit Board Module
+silicio:item.cbm_desc=Circuit Board Module
 
-silicio:item.mod.commandBlock.name=Command Block
-silicio:item.mod.lightSensor.name=Light Sensor
-silicio:item.mod.signOut.name=Sign Output
-silicio:item.mod.chatOut.name=Chat Output
-silicio:item.mod.crafting.name=Item Crafting
-silicio:item.mod.painter.name=Cable Painter
+silicio:item.cbm_command_block.name=Command Block
+silicio:item.cbm_light_sensor.name=Light Sensor
+silicio:item.cbm_sign_out.name=Sign Output
+silicio:item.cbm_chat_out.name=Chat Output
+silicio:item.cbm_crafting.name=Item Crafting
+silicio:item.cbm_painter.name=Cable Painter
 
-silicio:item.mod.redstoneIn.name=Redstone Input
-silicio:item.mod.redstoneOut.name=Redstone Output
-silicio:item.mod.energyIn.name=Energy Input
-silicio:item.mod.energyOut.name=Energy Output
+silicio:item.cbm_rs_in.name=Redstone Input
+silicio:item.cbm_rs_out.name=Redstone Output
+silicio:item.cbm_energy_in.name=Energy Input
+silicio:item.cbm_energy_out.name=Energy Output
 
-silicio:item.mod.itemStorage.name=Item Storage
-silicio:item.mod.itemInput.name=Item Input
-silicio:item.mod.itemOutput.name=Item Output
+silicio:item.cbm_item_storage.name=Item Storage
+silicio:item.cbm_item_in.name=Item Input
+silicio:item.cbm_item_out.name=Item Output
 
-silicio:item.mod.fluidStorage.name=Fluid Storage
-silicio:item.mod.fluidInput.name=Fluid Input
-silicio:item.mod.fluidOutput.name=Fluid Output
+silicio:item.cbm_fluid_storage.name=Fluid Storage
+silicio:item.cbm_fluid_in.name=Fluid Input
+silicio:item.cbm_fluid_out.name=Fluid Output
 
-silicio:item.mod.gateNot.name=NOT Gate
-silicio:item.mod.gateAnd.name=AND Gate
-silicio:item.mod.gateOr.name=OR Gate
-silicio:item.mod.gateXOr.name=XOR Gate
+silicio:item.cbm_gate_not.name=NOT Gate
+silicio:item.cbm_gate_and.name=AND Gate
+silicio:item.cbm_gate_or.name=OR Gate
+silicio:item.cbm_gate_xor.name=XOR Gate
 
 ### Lang ###
 

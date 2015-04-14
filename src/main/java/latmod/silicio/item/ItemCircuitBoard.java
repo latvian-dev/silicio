@@ -1,7 +1,5 @@
 package latmod.silicio.item;
-import latmod.core.recipes.LMRecipes;
 import latmod.core.util.FastList;
-import latmod.silicio.*;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import cpw.mods.fml.relauncher.*;
@@ -16,7 +14,6 @@ public class ItemCircuitBoard extends ItemSil
 	
 	public void loadRecipes()
 	{
-		SilRecipes.addSmelter(new ItemStack(this), SilItems.Modules.EMPTY, LMRecipes.size(SilMat.SILICON, 8), 1200);
 	}
 	
 	@SideOnly(Side.CLIENT)

@@ -15,7 +15,7 @@ public abstract class ItemModuleIO extends ItemModule
 	public ItemModuleIO(String s)
 	{ super(s); }
 	
-	public void onUpdate(ItemStack is, CircuitBoard t)
+	public void onUpdate(CircuitBoard cb, int MID)
 	{
 	}
 	

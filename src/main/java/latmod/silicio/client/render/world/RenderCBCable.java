@@ -129,7 +129,7 @@ public class RenderCBCable extends BlockRendererLM
 				
 				for(int i = 0; i < 6; i++)
 				{
-					if(TileCBCable.connectCable(t, ForgeDirection.VALID_DIRECTIONS[i]))
+					if(t.boards[i] != null || TileCBCable.connectCable(t, i))
 					{
 						renderBlocks.setRenderBounds(cableFlatBoxes[i]);
 						renderBlocks.renderStandardBlock(Blocks.stone, x, y, z);
@@ -152,7 +152,6 @@ public class RenderCBCable extends BlockRendererLM
 		}
 		
 		renderBlocks.renderAllFaces = true;
-		
 		renderBlocks.setOverrideBlockTexture(SilItems.b_cbcable.getBlockIcon());
 		
 		double s = BlockCBCable.pipeBorder;
@@ -161,7 +160,7 @@ public class RenderCBCable extends BlockRendererLM
 		
 		for(int i = 0; i < 6; i++)
 		{
-			if(TileCBCable.connectCable(t, ForgeDirection.VALID_DIRECTIONS[i]))
+			if(t.boards[i] != null || TileCBCable.connectCable(t, i))
 			{
 				renderBlocks.setRenderBounds(cableBoxes[i]);
 				renderBlocks.renderStandardBlock(Blocks.stone, x, y, z);

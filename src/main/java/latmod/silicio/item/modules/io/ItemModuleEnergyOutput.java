@@ -2,7 +2,6 @@ package latmod.silicio.item.modules.io;
 
 import latmod.silicio.item.modules.IOType;
 import latmod.silicio.tile.*;
-import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import cofh.api.energy.IEnergyReceiver;
 
@@ -27,29 +26,29 @@ public class ItemModuleEnergyOutput extends ItemModuleIO
 	{
 	}
 	
-	public void onUpdate(ItemStack is, CircuitBoard t)
+	public void onUpdate(CircuitBoard cb, int MID)
 	{
-		if(t.cable.isServer())
+		if(cb.cable.isServer())
 		{
-			CBChannel c = getChannel(is, t, 0);
+			CBChannel c = getChannel(cb, MID, 0);
 			if(c != CBChannel.NONE && !c.isEnabled()) return;
 			
-			TileEntity te = t.getFacingTile();
+			TileEntity te = cb.getFacingTile();
 			
-			if(t.cable.controller.hasEnergy(1) && te != null && !te.isInvalid())
+			if(cb.cable.controller.hasEnergy(1) && te != null && !te.isInvalid())
 			{
 				if(te instanceof IEnergyReceiver)
 				{
 					IEnergyReceiver ie = (IEnergyReceiver)te;
 					
-					if(ie.canConnectEnergy(t.side.getOpposite()))
+					if(ie.canConnectEnergy(cb.sideOpposite))
 					{
-						int i = ie.receiveEnergy(t.side.getOpposite(), Math.min(t.cable.controller.storage.getMaxExtract(), t.cable.controller.storage.getEnergyStored()), false);
+						int i = ie.receiveEnergy(cb.sideOpposite, Math.min(cb.cable.controller.storage.getMaxExtract(), cb.cable.controller.storage.getEnergyStored()), false);
 						
 						if(i != 0)
 						{
-							t.cable.controller.storage.extractEnergy(i, false);
-							t.cable.controller.energyChanged = true;
+							cb.cable.controller.storage.extractEnergy(i, false);
+							cb.cable.controller.energyChanged = true;
 						}
 					}
 				}

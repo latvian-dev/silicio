@@ -25,9 +25,9 @@ public class ItemModuleEnergyInput extends ItemModuleIO
 	{
 	}
 	
-	public boolean canReceive(ItemStack is, CircuitBoard t)
+	public boolean canReceive(CircuitBoard cb, int MID)
 	{
-		CBChannel c = getChannel(is, t, 0);
+		CBChannel c = getChannel(cb, MID, 0);
 		return c == CBChannel.NONE || c.isEnabled();
 	}
 	

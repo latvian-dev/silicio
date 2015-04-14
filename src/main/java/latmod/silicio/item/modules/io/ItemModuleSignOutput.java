@@ -2,6 +2,7 @@ package latmod.silicio.item.modules.io;
 
 import latmod.silicio.SilItems;
 import latmod.silicio.item.modules.*;
+import latmod.silicio.item.modules.config.ModuleCSString;
 import latmod.silicio.tile.*;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
@@ -9,10 +10,23 @@ import net.minecraft.tileentity.*;
 
 public class ItemModuleSignOutput extends ItemModuleIO implements IToggable
 {
+	public static final ModuleCSString[] cs_text = new ModuleCSString[4];
+	
 	public ItemModuleSignOutput(String s)
 	{
 		super(s);
 		setTextureName("sign");
+		
+		for(int i = 0; i < 4; i++)
+		{
+			cs_text[i] = new ModuleCSString(i, "Line #" + (i + 1))
+			{
+				public boolean isValid(String s)
+				{ return s.length() <= 20; }
+			};
+		}
+		
+		cs_text[1].defaultString = "Test";
 	}
 	
 	public int getChannelCount()
@@ -31,26 +45,18 @@ public class ItemModuleSignOutput extends ItemModuleIO implements IToggable
 				'S', Items.sign);
 	}
 	
-	public void onChannelToggled(ItemStack is, CircuitBoard t, CBChannel c)
+	public void onChannelToggled(CircuitBoard cb, int MID, CBChannel c)
 	{
-		if(!c.isEnabled() || c != getChannel(is, t, 0)) return;
+		if(!c.isEnabled() || c != getChannel(cb, MID, 0)) return;
 		
-		TileEntity te = t.getFacingTile();
+		TileEntity te = cb.getFacingTile();
 		
-		if(t.cable.isServer() && te != null && te instanceof TileEntitySign)
+		if(cb.cable.isServer() && te != null && te instanceof TileEntitySign)
 		{
 			TileEntitySign tes = (TileEntitySign)te;
 			
-			String[] s =
-			{
-				"",
-				"Test",
-				"",
-				"",
-			};
-			
 			for(int i = 0; i < 4; i++)
-				tes.signText[i] = s[i];
+				tes.signText[i] = cs_text[i].get(cb.items[MID]);
 			
 			tes.markDirty();
 			tes.getWorldObj().markBlockForUpdate(tes.xCoord, tes.yCoord, tes.zCoord);

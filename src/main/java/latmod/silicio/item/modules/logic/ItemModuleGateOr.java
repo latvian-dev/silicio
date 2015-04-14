@@ -2,10 +2,11 @@ package latmod.silicio.item.modules.logic;
 
 import latmod.core.ODItems;
 import latmod.silicio.*;
-import latmod.silicio.item.modules.IOType;
+import latmod.silicio.item.modules.*;
+import latmod.silicio.tile.CircuitBoard;
 import net.minecraft.item.ItemStack;
 
-public class ItemModuleGateOr extends ItemModuleLogic
+public class ItemModuleGateOr extends ItemModuleLogic implements ISignalProvider
 {
 	public ItemModuleGateOr(String s)
 	{
@@ -21,5 +22,9 @@ public class ItemModuleGateOr extends ItemModuleLogic
 	public void loadRecipes()
 	{
 		mod.recipes.addShapelessRecipe(new ItemStack(this), SilItems.Modules.EMPTY, SilMat.SILICON, ODItems.REDSTONE, ODItems.REDSTONE);
+	}
+	
+	public void provideSignals(CircuitBoard cb, int MID)
+	{
 	}
 }

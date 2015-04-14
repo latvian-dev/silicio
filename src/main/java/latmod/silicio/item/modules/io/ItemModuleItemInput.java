@@ -33,19 +33,19 @@ public class ItemModuleItemInput extends ItemModuleIO
 				'F', SilItems.Modules.i_item_storage);
 	}
 	
-	public void onUpdate(ItemStack is, CircuitBoard t)
+	public void onUpdate(CircuitBoard cb, int MID)
 	{
-		if(t.tick % 4 == 0 && t.cable.isServer())
+		if(cb.tick % 4 == 0 && cb.cable.isServer())
 		{
-			CBChannel c = getChannel(is, t, 0);
+			CBChannel c = getChannel(cb, MID, 0);
 			if(c != CBChannel.NONE && !c.isEnabled()) return;
 			
-			TileEntity te = t.getFacingTile();
+			TileEntity te = cb.getFacingTile();
 			
 			if(te != null && !te.isInvalid() && te instanceof IInventory)
 			{
 				IInventory inv = (IInventory)te;
-				ForgeDirection side = t.side.getOpposite();
+				ForgeDirection side = cb.side.getOpposite();
 				int slots[] = InvUtils.getAllSlots(inv, side.ordinal());
 				
 				for(int i = 0; i < slots.length; i++)
@@ -57,7 +57,7 @@ public class ItemModuleItemInput extends ItemModuleIO
 						if(inv instanceof ISidedInventory && !((ISidedInventory)inv).canExtractItem(slots[i], is1, side.ordinal()))
 							continue;
 						
-						InvEntry ie = t.cable.controller.getInventoryFor(is1);
+						InvEntry ie = cb.cable.controller.getInventoryFor(is1);
 						
 						if(ie != null && InvUtils.addSingleItemToInv(is1, ie.inv, ie.side, true))
 						{

@@ -25,7 +25,7 @@ public abstract class ItemModule extends ItemSil implements ICBModule
 	
 	public ItemModule(String s)
 	{
-		super("mod." + s);
+		super("cbm_" + s);
 		setMaxStackSize(8);
 		setTextureName(s);
 	}
@@ -79,8 +79,8 @@ public abstract class ItemModule extends ItemSil implements ICBModule
 		return is;
 	}
 	
-	public void updateInvNet(ItemStack is, CircuitBoard t, FastList<InvEntry> list) { }
-	public void updateTankNet(ItemStack is, CircuitBoard t, FastList<TankEntry> list) { }
+	public void updateInvNet(CircuitBoard cb, int MID, FastList<InvEntry> list) { }
+	public void updateTankNet(CircuitBoard cb, int MID, FastList<TankEntry> list) { }
 	
 	public static final int getChannelID(ICBModule m, ItemStack is, int c)
 	{
@@ -103,20 +103,20 @@ public abstract class ItemModule extends ItemSil implements ICBModule
 		return channels[c];
 	}
 	
-	public final CBChannel getChannel(ItemStack is, CircuitBoard t, int c)
+	public final CBChannel getChannel(CircuitBoard cb, int MID, int c)
 	{
-		int ch = getChannelID(this, is, c);
+		int ch = getChannelID(this, cb.items[MID], c);
 		if(ch < 0) return CBChannel.NONE;
-		if(ch < 16) return t.cable.channels[ch];
-		if(t.cable.controller == null) return CBChannel.NONE;
-		return t.cable.controller.channels[ch - 16];
+		if(ch < 16) return cb.cable.channels[ch];
+		if(cb.cable.controller == null) return CBChannel.NONE;
+		return cb.cable.controller.channels[ch - 16];
 	}
 	
-	public final void setChannel(ItemStack is, CircuitBoard t, int c, byte ch)
+	public final void setChannel(CircuitBoard cb, int MID, int c, byte ch)
 	{
-		getChannel(is, t, c);
-		byte[] channels = is.stackTagCompound.getByteArray(NBT_TAG);
+		getChannel(cb, MID, c);
+		byte[] channels = cb.items[MID].stackTagCompound.getByteArray(NBT_TAG);
 		channels[c] = ch;
-		is.stackTagCompound.setByteArray(NBT_TAG, channels);
+		cb.items[MID].stackTagCompound.setByteArray(NBT_TAG, channels);
 	}
 }

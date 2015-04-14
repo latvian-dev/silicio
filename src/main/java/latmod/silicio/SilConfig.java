@@ -33,14 +33,16 @@ public class SilConfig extends LMConfig implements IServerConfig
 	public static class General
 	{
 		public static boolean disableAllCrafting;
+		public static boolean enableTERecipes;
 		public static String coverBlock;
 		
 		public static void load(Category c)
 		{
 			disableAllCrafting = c.getBool("disableAllCrafting", false);
-			c.setComment("disableAllCrafting", "Set to true to disable all crafting recipes");
-			
+			enableTERecipes = c.getBool("enableTERecipes", true);
 			coverBlock = c.getString("coverBlock", "LatBlocks:paintable");
+			
+			c.setComment("disableAllCrafting", "Set to true to disable all crafting recipes");
 		}
 	}
 }

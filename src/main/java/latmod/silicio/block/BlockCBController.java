@@ -1,10 +1,8 @@
 package latmod.silicio.block;
 import latmod.core.tile.TileLM;
-import latmod.silicio.*;
 import latmod.silicio.tile.TileCBController;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
-import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.*;
 import cpw.mods.fml.relauncher.*;
@@ -24,11 +22,6 @@ public class BlockCBController extends BlockSil
 	
 	public void loadRecipes()
 	{
-		mod.recipes.addRecipe(new ItemStack(this), "SIS", "CFC", "SIS",
-				'S', SilMat.SILICON,
-				'F', SilMat.FRAME[3],
-				'C', SilItems.b_cbcable,
-				'I', SilMat.CIRCUIT);
 	}
 	
 	public TileLM createNewTileEntity(World w, int m)

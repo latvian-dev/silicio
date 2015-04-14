@@ -3,7 +3,6 @@ package latmod.silicio;
 import latmod.core.*;
 import net.minecraft.block.Block;
 import net.minecraft.item.ItemStack;
-import cofh.thermalexpansion.block.simple.BlockFrame;
 
 public class SilMat
 {
@@ -15,21 +14,8 @@ public class SilMat
 	public static ItemStack CIRCUIT;
 	public static ItemStack LASER_CRYSTAL;
 	
-	public static ItemStack FRAME[];
-	public static ItemStack FRAME_TESSERACT;
-	
 	public static void init()
 	{
-		FRAME = new ItemStack[]
-		{
-				BlockFrame.frameMachineBasic,
-				BlockFrame.frameMachineHardened,
-				BlockFrame.frameMachineReinforced,
-				BlockFrame.frameMachineResonant,
-		};
-		
-		FRAME_TESSERACT = BlockFrame.frameTesseractFull;
-		
 		updateCoverBlock();
 	}
 

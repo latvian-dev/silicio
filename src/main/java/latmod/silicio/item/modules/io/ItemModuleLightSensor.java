@@ -27,9 +27,9 @@ public class ItemModuleLightSensor extends ItemModuleIO implements ISignalProvid
 				'M', SilItems.Modules.EMPTY);
 	}
 	
-	public void provideSignals(ItemStack is, CircuitBoard t)
+	public void provideSignals(CircuitBoard cb, int MID)
 	{
-		if(t.cable.isServer() && t.cable.getWorldObj().getBlockLightValue(t.cable.xCoord + t.side.offsetX, t.cable.yCoord + t.side.offsetY, t.cable.zCoord + t.side.offsetZ) >= 9)
-			getChannel(is, t, 0).enable();
+		if(cb.cable.isServer() && cb.cable.getWorldObj().getBlockLightValue(cb.cable.xCoord + cb.side.offsetX, cb.cable.yCoord + cb.side.offsetY, cb.cable.zCoord + cb.side.offsetZ) >= 9)
+			getChannel(cb, MID, 0).enable();
 	}
 }

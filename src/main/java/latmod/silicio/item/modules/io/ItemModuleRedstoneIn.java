@@ -30,9 +30,9 @@ public class ItemModuleRedstoneIn extends ItemModuleIO implements ISignalProvide
 				'M', SilItems.Modules.INPUT);
 	}
 	
-	public void provideSignals(ItemStack is, CircuitBoard t)
+	public void provideSignals(CircuitBoard cb, int MID)
 	{
-		if(t.cable.getWorldObj().isBlockProvidingPowerTo(t.cable.xCoord + t.side.offsetX, t.cable.yCoord + t.side.offsetY, t.cable.zCoord + t.side.offsetZ, t.side.ordinal()) > 0)
-			getChannel(is, t, 0).enable();
+		if(cb.cable.getWorldObj().isBlockProvidingPowerTo(cb.cable.xCoord + cb.side.offsetX, cb.cable.yCoord + cb.side.offsetY, cb.cable.zCoord + cb.side.offsetZ, cb.side.ordinal()) > 0)
+			getChannel(cb, MID, 0).enable();
 	}
 }

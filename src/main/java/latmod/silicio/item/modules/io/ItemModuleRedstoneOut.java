@@ -30,9 +30,9 @@ public class ItemModuleRedstoneOut extends ItemModuleIO
 				'M', SilItems.Modules.OUTPUT);
 	}
 	
-	public void onUpdate(ItemStack is, CircuitBoard t)
+	public void onUpdate(CircuitBoard cb, int MID)
 	{
-		if(t.cable.isServer() && getChannel(is, t, 0).isEnabled())
-			t.redstoneOut = true;
+		if(cb.cable.isServer() && getChannel(cb, MID, 0).isEnabled())
+			cb.redstoneOut = true;
 	}
 }

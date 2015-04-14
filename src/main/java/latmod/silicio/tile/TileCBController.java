@@ -10,6 +10,7 @@ import mcp.mobius.waila.api.*;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.Facing;
 import net.minecraftforge.common.util.ForgeDirection;
 import cofh.api.energy.*;
 
@@ -187,11 +188,7 @@ public class TileCBController extends TileLM implements ICBNetTile, IEnergyHandl
 				ICBModule m = modules.values.get(j);
 				
 				if(m instanceof ISignalProvider)
-				{
-					ItemStack is = cb.items[modules.keys.get(j)];
-					
-					((ISignalProvider)m).provideSignals(is, cb);
-				}
+					((ISignalProvider)m).provideSignals(cb, modules.keys.get(j));
 			}
 		}
 		
@@ -202,12 +199,7 @@ public class TileCBController extends TileLM implements ICBNetTile, IEnergyHandl
 			
 			if(cb.cable != null && cb.cable.controller == this)
 			for(int j = 0; j < modules.size(); j++)
-			{
-				ItemStack is = cb.items[modules.keys.get(j)];
-				ICBModule m = modules.values.get(j);
-				
-				m.onUpdate(is, cb);
-			}
+				modules.values.get(j).onUpdate(cb, modules.keys.get(j));
 		}
 		
 		for(int i = 0; i < allModules.size(); i++)
@@ -221,15 +213,12 @@ public class TileCBController extends TileLM implements ICBNetTile, IEnergyHandl
 				{
 					if(prevChannels[k].isEnabled() != channels[k].isEnabled())
 					{
-						markDirty();
-						
 						ICBModule m = modules.values.get(j);
 						
 						if(m instanceof IToggable)
-						{
-							ItemStack is = cb.items[modules.keys.get(j)];
-							((IToggable)is.getItem()).onChannelToggled(is, cb, channels[k]);
-						}
+							((IToggable)m).onChannelToggled(cb, modules.keys.get(j), channels[k]);
+						
+						markDirty();
 					}
 				}
 			}
@@ -256,10 +245,9 @@ public class TileCBController extends TileLM implements ICBNetTile, IEnergyHandl
 	{
 		for(int i = 0; i < 6; i++)
 		{
-			ForgeDirection dir = ForgeDirection.VALID_DIRECTIONS[i];
-			int px = x + dir.offsetX;
-			int py = y + dir.offsetY;
-			int pz = z + dir.offsetZ;
+			int px = x + Facing.offsetsXForSide[i];
+			int py = y + Facing.offsetsYForSide[i];
+			int pz = z + Facing.offsetsZForSide[i];
 			
 			TileEntity te = worldObj.getTileEntity(px, py, pz);
 			
@@ -272,6 +260,9 @@ public class TileCBController extends TileLM implements ICBNetTile, IEnergyHandl
 				}
 				
 				ICBNetTile ec = (ICBNetTile)te;
+				
+				if(ec.isDisabled(Facing.oppositeSide[i])) continue;
+				
 				if(ec != null && !network.contains(te))
 				{
 					network.add(ec);
@@ -289,10 +280,10 @@ public class TileCBController extends TileLM implements ICBNetTile, IEnergyHandl
 							for(int j = 0; j < modules.size(); j++)
 							{
 								ICBModule m = modules.values.get(j);
-								ItemStack is = cb.items[modules.keys.get(j)];
+								int MID = modules.keys.get(j);
 								
-								m.updateInvNet(is, cb, invNetwork);
-								m.updateTankNet(is, cb, tankNetwork);
+								m.updateInvNet(cb, MID, invNetwork);
+								m.updateTankNet(cb, MID, tankNetwork);
 							}
 						}
 					}
@@ -340,4 +331,7 @@ public class TileCBController extends TileLM implements ICBNetTile, IEnergyHandl
 	
 	public int getMaxEnergyStored(ForgeDirection dir)
 	{ return storage.getMaxEnergyStored(); }
+	
+	public boolean isDisabled(int side)
+	{ return false; }
 }

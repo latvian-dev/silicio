@@ -18,39 +18,19 @@ import cpw.mods.fml.relauncher.*;
 public class BlockCBCable extends BlockSil
 {
 	public static final float pipeBorder = 1F / 32F * 12F;
-	private static final FastList<AxisAlignedBB> boxes = new FastList<AxisAlignedBB>();
+	private static final AxisAlignedBB boxes[] = new AxisAlignedBB[7];
 	
-	static { updateBoxes(); }
-	
-	private static void updateBoxes()
+	static
 	{
-		boxes.clear();
-		
 		double d = pipeBorder;
-		
-		addBB(d, d, d, 1D - d, 1D - d, 1D - d);
-		
-		//addBB(f, 0D, f, 1D - f, h, 1D - f);
-		addBB(d, 0D, d, 1D - d, d, 1D - d);
-		
-		//addBB(f, 1D - h, f, 1D - f, 1D, 1D - f);
-		addBB(d, 1D - d, d, 1D - d, 1D, 1D - d);
-		
-		//addBB(f, f, 0D, 1D - f, 1D - f, h);
-		addBB(d, d, 0D, 1D - d, 1D - d, d);
-		
-		//addBB(f, f, 1D - h, 1D - f, 1D - f, 1D);
-		addBB(d, d, 1D - d, 1D - d, 1D - d, 1D);
-		
-		//addBB(0D, f, f, h, 1D - f, 1D - f);
-		addBB(0D, d, d, d, 1D - d, 1D - d);
-		
-		//addBB(1D - h, f, f, 1D, 1D - f, 1D - f);
-		addBB(1D - d, d, d, 1D, 1D - d, 1D - d);
+		boxes[0] = AxisAlignedBB.getBoundingBox(d, 0D, d, 1D - d, d, 1D - d);
+		boxes[1] = AxisAlignedBB.getBoundingBox(d, 1D - d, d, 1D - d, 1D, 1D - d);
+		boxes[2] = AxisAlignedBB.getBoundingBox(d, d, 0D, 1D - d, 1D - d, d);
+		boxes[3] = AxisAlignedBB.getBoundingBox(d, d, 1D - d, 1D - d, 1D - d, 1D);
+		boxes[4] = AxisAlignedBB.getBoundingBox(0D, d, d, d, 1D - d, 1D - d);
+		boxes[5] = AxisAlignedBB.getBoundingBox(1D - d, d, d, 1D, 1D - d, 1D - d);
+		boxes[6] = AxisAlignedBB.getBoundingBox(d, d, d, 1D - d, 1D - d, 1D - d);
 	}
-	
-	private static void addBB(double x1, double y1, double z1, double x2, double y2, double z2)
-	{ boxes.add(AxisAlignedBB.getBoundingBox(x1, y1, z1, x2, y2, z2)); }
 	
 	@SideOnly(Side.CLIENT)
 	public IIcon icon_board, icon_cover;
@@ -71,15 +51,20 @@ public class BlockCBCable extends BlockSil
 	
 	public void loadRecipes()
 	{
-		mod.recipes.addRecipe(new ItemStack(this, 32), "RRR", "SES", "RRR",
-				'R', ODItems.RUBBER,
-				'E', ODItems.SILVER,
-				'S', ODItems.REDSTONE);
-		
-		mod.recipes.addRecipe(new ItemStack(this, 32), "RRR", "SES", "RRR",
-				'R', ODItems.SLIMEBALL,
-				'E', ODItems.SILVER,
-				'S', ODItems.REDSTONE);
+		if(ODItems.hasOre(ODItems.RUBBER))
+		{
+			mod.recipes.addRecipe(new ItemStack(this, 16), "RRR", "SES", "RRR",
+					'R', ODItems.RUBBER,
+					'E', ODItems.SILVER,
+					'S', ODItems.REDSTONE);
+		}
+		else
+		{
+			mod.recipes.addRecipe(new ItemStack(this, 16), "RRR", "SES", "RRR",
+					'R', ODItems.SLIMEBALL,
+					'E', ODItems.SILVER,
+					'S', ODItems.REDSTONE);
+		}
 	}
 	
 	public void setBlockBoundsForItemRender()
@@ -104,12 +89,12 @@ public class BlockCBCable extends BlockSil
 			
 			float s = pipeBorder;// - 1 / 16F;
 			
-			boolean x0 = TileCBCable.connectCable(t, ForgeDirection.WEST);
-			boolean x1 = TileCBCable.connectCable(t, ForgeDirection.EAST);
-			boolean y0 = TileCBCable.connectCable(t, ForgeDirection.DOWN);
-			boolean y1 = TileCBCable.connectCable(t, ForgeDirection.UP);
-			boolean z0 = TileCBCable.connectCable(t, ForgeDirection.NORTH);
-			boolean z1 = TileCBCable.connectCable(t, ForgeDirection.SOUTH);
+			boolean x0 = TileCBCable.connectCable(t, 4);
+			boolean x1 = TileCBCable.connectCable(t, 5);
+			boolean y0 = TileCBCable.connectCable(t, 0);
+			boolean y1 = TileCBCable.connectCable(t, 1);
+			boolean z0 = TileCBCable.connectCable(t, 2);
+			boolean z1 = TileCBCable.connectCable(t, 3);
 			
 			setBlockBounds(x0 ? 0F : s, y0 ? 0F : s, z0 ? 0F: s, x1 ? 1F : 1F - s, y1 ? 1F: 1F - s, z1 ? 1F : 1F - s);
 		}
@@ -164,13 +149,11 @@ public class BlockCBCable extends BlockSil
 				return AxisAlignedBB.getBoundingBox(x, y, z, x + 1D, y + 1D, z + 1D);
 			}
 			
-			updateBoxes();
-			
 			MovingObjectPosition mop = Minecraft.getMinecraft().objectMouseOver;
 			
-			if(mop != null && mop.subHit >= 0 && mop.subHit < boxes.size())
+			if(mop != null && mop.subHit >= 0 && mop.subHit < boxes.length)
 			{
-				AxisAlignedBB aabb = boxes.get(mop.subHit).copy();
+				AxisAlignedBB aabb = boxes[mop.subHit].copy();
 				aabb.minX += x; aabb.maxX += x;
 				aabb.minY += y; aabb.maxY += y;
 				aabb.minZ += z; aabb.maxZ += z;
@@ -192,15 +175,15 @@ public class BlockCBCable extends BlockSil
 				return super.collisionRayTrace(w, x, y, z, start, end);
 			}
 			
-			updateBoxes();
+			AxisAlignedBB[] boxes1 = boxes.clone();
 			
-			for(int i = 0; i < boxes.size(); i++)
+			for(int i = 0; i < boxes.length; i++)
 			{
 				if(!((TileCBCable)te).isAABBEnabled(i))
-					boxes.set(i, null);
+					boxes1[i] = null;
 			}
 			
-			return MathHelperLM.collisionRayTrace(w, x, y, z, start, end, boxes);
+			return MathHelperLM.collisionRayTrace(w, x, y, z, start, end, boxes1);
 		}
 		
 		return null;

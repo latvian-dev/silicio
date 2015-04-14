@@ -1,30 +1,33 @@
 package latmod.silicio.tile;
-import java.util.Arrays;
+import java.util.*;
 
 import latmod.core.*;
 import latmod.core.mod.LC;
 import latmod.core.tile.*;
-import latmod.core.util.MathHelperLM;
+import latmod.core.util.*;
 import latmod.silicio.*;
 import latmod.silicio.gui.*;
 import latmod.silicio.gui.container.*;
 import latmod.silicio.item.modules.ICBModule;
+import latmod.silicio.item.modules.config.ModuleConfigSegment;
 import latmod.silicio.item.modules.io.ItemModuleEnergyInput;
+import mcp.mobius.waila.api.*;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Blocks;
 import net.minecraft.inventory.Container;
 import net.minecraft.item.*;
 import net.minecraft.nbt.*;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.MovingObjectPosition;
+import net.minecraft.util.*;
 import net.minecraftforge.common.util.ForgeDirection;
 import cofh.api.energy.IEnergyReceiver;
 import cpw.mods.fml.relauncher.*;
 
-public class TileCBCable extends TileLM implements IPaintable, ICBNetTile, IGuiTile, IEnergyReceiver
+// BlockCBCable //
+public class TileCBCable extends TileLM implements IPaintable, ICBNetTile, IGuiTile, IEnergyReceiver, IWailaTile.Body
 {
-	public static final String ACTION_SET_CHANNEL = "setCBChannel";
+	public static final String ACTION_SET_CHANNEL = "silicio.channel";
+	public static final String ACTION_MODULE_CONFIG = "silicio.mconfig";
 	
 	public final CircuitBoard[] boards = new CircuitBoard[6];
 	public final Paint[] paint = new Paint[6];
@@ -33,12 +36,14 @@ public class TileCBCable extends TileLM implements IPaintable, ICBNetTile, IGuiT
 	public final CBChannel[] channels;
 	public final CBChannel[] prevChannels;
 	private final boolean[] canReceive;
+	private final boolean[] isDisabled;
 	
 	public TileCBCable()
 	{
 		channels = CBChannel.create(16, CBChannel.Type.LOCAL);
 		prevChannels = CBChannel.create(16, CBChannel.Type.LOCAL);
 		canReceive = new boolean[6];
+		isDisabled = new boolean[6];
 	}
 	
 	public boolean rerenderBlock()
@@ -68,6 +73,8 @@ public class TileCBCable extends TileLM implements IPaintable, ICBNetTile, IGuiT
 		hasCover = tag.getBoolean("HasCover");
 		Paint.readFromNBT(tag, "Paint", paint);
 		CBChannel.readFromNBT(tag, "Channels", channels);
+
+		Converter.toBools(isDisabled, tag.getIntArray("Disabled"), true);
 	}
 	
 	public void writeTileData(NBTTagCompound tag)
@@ -89,6 +96,9 @@ public class TileCBCable extends TileLM implements IPaintable, ICBNetTile, IGuiT
 		tag.setBoolean("HasCover", hasCover);
 		Paint.writeToNBT(tag, "Paint", paint);
 		CBChannel.writeToNBT(tag, "Channels", channels);
+		
+		int[] idx = Converter.fromBools(isDisabled, true);
+		if(idx.length > 0) tag.setIntArray("Disabled", idx);
 	}
 	
 	public boolean setPaint(PaintData p)
@@ -111,11 +121,11 @@ public class TileCBCable extends TileLM implements IPaintable, ICBNetTile, IGuiT
 		return false;
 	}
 	
-	public static boolean connectCable(TileCBCable c, ForgeDirection f)
+	public static boolean connectCable(TileCBCable c, int s)
 	{
-		if(c.boards[f.ordinal()] != null) return true;
-		TileEntity te = c.worldObj.getTileEntity(c.xCoord + f.offsetX, c.yCoord + f.offsetY, c.zCoord + f.offsetZ);
-		return (te != null && te instanceof TileCBController || te instanceof TileCBCable);
+		if(c.boards[s] != null || c.isDisabled(s)) return false;
+		TileEntity te = c.worldObj.getTileEntity(c.xCoord + Facing.offsetsXForSide[s], c.yCoord + Facing.offsetsYForSide[s], c.zCoord + Facing.offsetsZForSide[s]);
+		return (te != null && te instanceof ICBNetTile && !((ICBNetTile)te).isDisabled(Facing.oppositeSide[s]));
 	}
 	
 	public void onNetworkChanged(TileCBController c)
@@ -125,7 +135,10 @@ public class TileCBCable extends TileLM implements IPaintable, ICBNetTile, IGuiT
 		if(controller == null)
 		{
 			for(int i = 0; i < boards.length; i++)
-			if(boards[i] != null) boards[i].redstoneOut = false;
+			if(boards[i] != null) boards[i].preUpdate();
+			
+			markDirty();
+			onNeighborBlockChange();
 		}
 		
 		for(int s = 0; s < 6; s++)
@@ -141,7 +154,13 @@ public class TileCBCable extends TileLM implements IPaintable, ICBNetTile, IGuiT
 					for(int i = 0; i < cb.items.length; i++)
 					{
 						if(cb.items[i] != null && cb.items[i].getItem() instanceof ItemModuleEnergyInput)
-							canReceive[s] = ((ItemModuleEnergyInput)cb.items[i].getItem()).canReceive(cb.items[i], cb);
+						{
+							if(((ItemModuleEnergyInput)cb.items[i].getItem()).canReceive(cb, i))
+							{
+								canReceive[s] = true;
+								continue;
+							}
+						}
 					}
 				}
 			}
@@ -188,26 +207,52 @@ public class TileCBCable extends TileLM implements IPaintable, ICBNetTile, IGuiT
 		{
 			if(is != null && SilMat.coverBlock != null && InvUtils.itemsEquals(is, SilMat.coverBlock, false, true))
 			{
-				hasCover = true;
+				if(isServer())
+				{
+					hasCover = true;
+					
+					if(!ep.capabilities.isCreativeMode)
+						is.stackSize--;
+					
+					markDirty();
+				}
 				
-				if(!ep.capabilities.isCreativeMode)
-					is.stackSize--;
-				
-				markDirty();
 				return true;
 			}
 			else
 			{
 				MovingObjectPosition mop = MathHelperLM.rayTrace(ep);
 				
-				if(mop != null)
+				if(mop != null && mop.subHit >= 0 && mop.subHit <= 6)
 				{
-					if(mop.subHit > 0)
+					int s = (mop.subHit == 6) ? mop.sideHit : mop.subHit;
+					
+					if(LatCoreMC.isWrench(is))
 					{
-						int id1 = (mop.subHit - 1);
+						if(boards[s] != null || !isServer()) return true;
 						
-						if(MathHelperLM.getDir(id1) != ForgeDirection.UNKNOWN)
-							return onBoardClicked(ep, is, id1);
+						isDisabled[s] = !isDisabled[s];
+						notifyNeighbors();
+						markDirty();
+						
+						TileEntity te = worldObj.getTileEntity(xCoord + Facing.offsetsXForSide[s], yCoord + Facing.offsetsYForSide[s], zCoord + Facing.offsetsZForSide[s]);
+						if(te != null && !te.isInvalid() && te instanceof TileCBCable)
+						{
+							TileCBCable t = (TileCBCable)te;
+							if(t.isDisabled[Facing.oppositeSide[s]] != isDisabled[s])
+							{
+								t.isDisabled[Facing.oppositeSide[s]] = isDisabled[s];
+								t.notifyNeighbors();
+								t.markDirty();
+							}
+						}
+						
+						return true;
+					}
+					else
+					{
+						if(!isDisabled[s]) return onBoardClicked(ep, is, s);
+						return true;
 					}
 				}
 			}
@@ -300,16 +345,16 @@ public class TileCBCable extends TileLM implements IPaintable, ICBNetTile, IGuiT
 	
 	public boolean isAABBEnabled(int i)
 	{
-		if(i == 0) return true;
+		if(i == 6) return true;
 		
 		//int id1 = (i - 1) / 2;
 		
-		ForgeDirection fd = MathHelperLM.getDir(i - 1);
+		ForgeDirection fd = ForgeDirection.VALID_DIRECTIONS[i];
 		if(fd == ForgeDirection.UNKNOWN) return true;
 		
-		if(boards[fd.ordinal()] != null) return true;
+		if(boards[i] != null) return true;
 		
-		if(worldObj.getBlock(xCoord + fd.offsetX, yCoord + fd.offsetY, zCoord + fd.offsetZ) != Blocks.air) return true;
+		if(worldObj.getBlock(xCoord + Facing.offsetsXForSide[i], yCoord + Facing.offsetsYForSide[i], zCoord + Facing.offsetsZForSide[i]) == SilItems.b_cbcable) return true;
 		
 		EntityPlayer clientP = LC.proxy.getClientPlayer();
 		
@@ -335,7 +380,7 @@ public class TileCBCable extends TileLM implements IPaintable, ICBNetTile, IGuiT
 			CircuitBoard cb = null;
 			
 			if(hasCover) cb = getBoard(mop.sideHit);
-			else if(mop.subHit > 0) cb = getBoard(mop.subHit - 1);
+			else if(mop.subHit < 6) cb = getBoard(mop.subHit);
 			
 			if(cb != null)
 			{
@@ -357,7 +402,7 @@ public class TileCBCable extends TileLM implements IPaintable, ICBNetTile, IGuiT
 			CircuitBoard cb = null;
 			
 			if(hasCover) cb = getBoard(mop.sideHit);
-			else if(mop.subHit > 0) cb = getBoard(mop.subHit - 1);
+			else if(mop.subHit < 6) cb = getBoard(mop.subHit);
 			
 			if(cb != null)
 			{
@@ -373,25 +418,52 @@ public class TileCBCable extends TileLM implements IPaintable, ICBNetTile, IGuiT
 	{
 		if(action.equals(ACTION_SET_CHANNEL))
 		{
-			int side = data.getByte("Side");
-			int slot = data.getByte("Slot");
-			int id = data.getByte("ID");
-			byte ch = data.getByte("Channel");
+			int side = data.getByte("F");
+			int moduleID = data.getByte("M");
+			int id = data.getByte("I");
+			byte ch = data.getByte("C");
 			
-			((ICBModule)boards[side].items[slot].getItem()).setChannel(boards[side].items[slot], boards[side], id, ch);
+			ICBModule m = boards[side].getModule(moduleID);
+			m.setChannel(boards[side], moduleID, id, ch);
 			markDirty();
+		}
+		else if(action.equals(ACTION_MODULE_CONFIG))
+		{
+			int side = data.getByte("F");
+			int moduleID = data.getByte("M");
+			int id = data.getByte("I");
+			NBTTagCompound tag = (NBTTagCompound)data.getTag("D");
+			
+			for(ModuleConfigSegment mcs : ((ICBModule)boards[side].items[moduleID].getItem()).getModuleConfig())
+			{
+				if(mcs.ID == id)
+				{
+					mcs.onConfigReceived(boards[side], moduleID, tag);
+					return;
+				}
+			}
 		}
 		else super.onClientAction(ep, action, data);
 	}
 	
-	public void clientSetChannel(int side, int slot, int id, int ch)
+	public void clientSetChannel(int side, int moduleID, int id, int ch)
 	{
 		NBTTagCompound data = new NBTTagCompound();
-		data.setByte("Side", (byte)side);
-		data.setByte("Slot", (byte)slot);
-		data.setByte("ID", (byte)id);
-		data.setByte("Channel", (byte)ch);
+		data.setByte("F", (byte)side);
+		data.setByte("M", (byte)moduleID);
+		data.setByte("I", (byte)id);
+		data.setByte("C", (byte)ch);
 		sendClientAction(ACTION_SET_CHANNEL, data);
+	}
+	
+	public void clientModuleConfig(CircuitBoard cb, int moduleID, int c, NBTTagCompound tag)
+	{
+		NBTTagCompound data = new NBTTagCompound();
+		data.setByte("F", (byte)cb.side.ordinal());
+		data.setByte("M", (byte)moduleID);
+		data.setByte("I", (byte)c);
+		if(tag != null) data.setTag("D", tag);
+		sendClientAction(ACTION_MODULE_CONFIG, data);
 	}
 	
 	public boolean canConnectEnergy(ForgeDirection f)
@@ -405,4 +477,13 @@ public class TileCBCable extends TileLM implements IPaintable, ICBNetTile, IGuiT
 	
 	public int receiveEnergy(ForgeDirection f, int e, boolean b)
 	{ return (controller == null || !canConnectEnergy(f)) ? 0 : controller.receiveEnergy(f, e, b); }
+	
+	public boolean isDisabled(int side)
+	{ return isDisabled[side]; }
+	
+	public void addWailaBody(IWailaDataAccessor data, IWailaConfigHandler config, List<String> info)
+	{
+		int i = data.getPosition().subHit;
+		if(i < 6) { if(isDisabled(i)) info.add("Disabled"); }
+	}
 }

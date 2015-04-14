@@ -10,29 +10,20 @@ import net.minecraft.item.*;
 
 public class ItemModulePainter extends ItemModuleIO implements IToggable
 {
-	public static final ModuleCSItem cs_paint_1 = new ModuleCSItem(0, "Paint [High]")
+	public static final ModuleCSItem cs_paint = new ModuleCSItem(0, "Paint")
 	{
 		public boolean isValid(ItemStack is)
 		{ return is == null || (is.getItem() instanceof ItemBlock && !Block.getBlockFromItem(is.getItem()).hasTileEntity(is.getItemDamage())); }
 	};
 	
-	public static final ModuleCSItem cs_paint_0 = new ModuleCSItem(1, "Paint [Low]")
-	{
-		public boolean isValid(ItemStack is)
-		{ return is == null || (is.getItem() instanceof ItemBlock && !Block.getBlockFromItem(is.getItem()).hasTileEntity(is.getItemDamage())); }
-	};
-	
-	public static final ModuleCSBool cs_paint_all = new ModuleCSBool(2, "Paint all block");
+	public static final ModuleCSBool cs_paint_all = new ModuleCSBool(1, "Paint all block");
 	
 	public ItemModulePainter(String s)
 	{
 		super(s);
 		
-		cs_paint_1.defaultItem = new ItemStack(Blocks.wool, 1, 5);
-		moduleConfig.add(cs_paint_1);
-		
-		cs_paint_0.defaultItem = new ItemStack(Blocks.wool, 1, 14);
-		moduleConfig.add(cs_paint_0);
+		cs_paint.defaultItem = new ItemStack(Blocks.planks, 1, 0);
+		moduleConfig.add(cs_paint);
 		
 		moduleConfig.add(cs_paint_all);
 	}
@@ -50,19 +41,21 @@ public class ItemModulePainter extends ItemModuleIO implements IToggable
 	{
 	}
 	
-	public void onChannelToggled(ItemStack is, CircuitBoard t, CBChannel c)
+	public void onChannelToggled(CircuitBoard cb, int MID, CBChannel c)
 	{
-		if(t.cable.hasCover && c == getChannel(is, t, 0))
+		if(cb.cable.hasCover && c.isEnabled() && c == getChannel(cb, MID, 0))
 		{
 			Paint p = null;
 			
-			ItemStack isp = c.isEnabled() ? cs_paint_1.get(is) : cs_paint_0.get(is);
+			ItemStack isp = cs_paint.get(cb.items[MID]);
 			
 			if(isp != null && isp.getItem() instanceof ItemBlock)
 				p = new Paint(Block.getBlockFromItem(isp.getItem()), isp.getItemDamage());
 			
-			t.cable.paint[t.side.ordinal()] = p;
-			t.cable.markDirty();
+			if(cs_paint_all.get(cb.items[MID]))
+			{ for(int i = 0; i < 6; i++) cb.cable.paint[i] = p; }
+			else cb.cable.paint[cb.side.ordinal()] = p;
+			cb.cable.markDirty();
 		}
 	}
 }

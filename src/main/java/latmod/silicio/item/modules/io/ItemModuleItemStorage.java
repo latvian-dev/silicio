@@ -37,18 +37,18 @@ public class ItemModuleItemStorage extends ItemModuleIO
 				'W', Blocks.chest);
 	}
 	
-	public void updateInvNet(ItemStack is, CircuitBoard t, FastList<InvEntry> list)
+	public void updateInvNet(CircuitBoard cb, int MID, FastList<InvEntry> list)
 	{
-		CBChannel c = getChannel(is, t, 0);
+		CBChannel c = getChannel(cb, MID, 0);
 		if(c != CBChannel.NONE && !c.isEnabled()) return;
 		
-		TileEntity te = t.getFacingTile();
+		TileEntity te = cb.getFacingTile();
 		
 		if(te != null && !te.isInvalid() && te instanceof IInventory)
 		{
 			InvEntry e = new InvEntry();
 			e.inv = (IInventory)te;
-			e.side = t.side.getOpposite().ordinal();
+			e.side = cb.sideOpposite.ordinal();
 			e.priority = 1;
 			list.add(e);
 		}

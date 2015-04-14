@@ -43,17 +43,24 @@ public class CircuitBoard implements IInventory
 		tag.setBoolean("RSOut", redstoneOut);
 	}
 	
+	public ICBModule getModule(int moduleID)
+	{
+		if(moduleID < 0 || moduleID >= items.length || items[moduleID] == null) return null;
+		if(items[moduleID].getItem() instanceof ICBModule) return (ICBModule)items[moduleID].getItem();
+		return null;
+	}
+	
 	public FastMap<Integer, ICBModule> getAllModules()
 	{
-		FastMap<Integer, ICBModule> m = new FastMap<Integer, ICBModule>();
+		FastMap<Integer, ICBModule> map = new FastMap<Integer, ICBModule>();
 		
 		for(int i = 0; i < items.length; i++)
 		{
-			if(items[i] != null && items[i].getItem() instanceof ICBModule)
-				m.put(i, (ICBModule) items[i].getItem());
+			ICBModule m = getModule(i);
+			if(map != null) map.put(i, m);
 		}
 		
-		return m;
+		return map;
 	}
 	
 	public void preUpdate()

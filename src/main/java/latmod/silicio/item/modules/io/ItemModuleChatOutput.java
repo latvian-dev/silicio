@@ -8,7 +8,10 @@ import net.minecraft.item.ItemStack;
 public class ItemModuleChatOutput extends ItemModuleIO
 {
 	public ItemModuleChatOutput(String s)
-	{ super(s); }
+	{
+		super(s);
+		setTextureName("chat");
+	}
 	
 	public int getChannelCount()
 	{ return 1; }

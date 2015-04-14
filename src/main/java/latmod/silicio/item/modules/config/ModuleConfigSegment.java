@@ -23,9 +23,20 @@ public abstract class ModuleConfigSegment
 		return is.stackTagCompound.getCompoundTag("Config");
 	}
 	
+	public void setData(ItemStack is, NBTTagCompound tag)
+	{
+		if(is.stackTagCompound == null)
+			is.stackTagCompound = new NBTTagCompound();
+		is.stackTagCompound.setTag("Config", tag);
+	}
+	
 	@SideOnly(Side.CLIENT)
 	public abstract void buttonClicked(CircuitBoard cb, int MID, Minecraft mc);
+	public abstract void onConfigReceived(CircuitBoard cb, int MID, NBTTagCompound data);
 	public abstract void addButtonDesc(CircuitBoard cb, int MID, FastList<String> s);
+	
+	public final void clientConfig(CircuitBoard cb, int MID, NBTTagCompound tag)
+	{ cb.cable.clientModuleConfig(cb, MID, ID, tag); }
 	
 	public final int hashCode()
 	{ return ID; }

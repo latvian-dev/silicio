@@ -21,7 +21,7 @@ public class SilItems
 		b_cbcontroller = new BlockCBController("controller").register();
 		
 		i_mat = new ItemMaterialsSil("materials").register();
-		i_circuit_board = new ItemCircuitBoard("circuitBoard").register();
+		i_circuit_board = new ItemCircuitBoard("circuit_board").register();
 		
 		Modules.init();
 	}
@@ -39,8 +39,8 @@ public class SilItems
 		public static ItemModule i_crafting;
 		public static ItemModule i_painter;
 		
-		public static ItemModule i_redstone_in;
-		public static ItemModule i_redstone_out;
+		public static ItemModule i_rs_in;
+		public static ItemModule i_rs_out;
 		public static ItemModule i_energy_in;
 		public static ItemModule i_energy_out;
 		
@@ -57,32 +57,36 @@ public class SilItems
 		public static ItemModule i_gate_or;
 		public static ItemModule i_gate_xor;
 		
+		public static ItemModule i_timer;
+		
 		public static void init()
 		{
-			i_command_block = new ItemModuleCommandBlock("commandBlock").register();
-			i_light_sensor = new ItemModuleLightSensor("lightSensor").register();
-			i_sign_out = new ItemModuleSignOutput("signOut").register();
-			i_chat_out = new ItemModuleChatOutput("chatOut").register();
+			i_command_block = new ItemModuleCommandBlock("command_block").register();
+			i_light_sensor = new ItemModuleLightSensor("light_sensor").register();
+			i_sign_out = new ItemModuleSignOutput("sign_out").register();
+			i_chat_out = new ItemModuleChatOutput("chat_out").register();
 			i_crafting = new ItemModuleCrafting("crafting").register();
 			i_painter = new ItemModulePainter("painter").register();
 			
-			i_redstone_in = new ItemModuleRedstoneIn("redstoneIn").register();
-			i_redstone_out = new ItemModuleRedstoneOut("redstoneOut").register();
-			i_energy_in = new ItemModuleEnergyInput("energyIn").register();
-			i_energy_out = new ItemModuleEnergyOutput("energyOut").register();
+			i_rs_in = new ItemModuleRedstoneIn("rs_in").register();
+			i_rs_out = new ItemModuleRedstoneOut("rs_out").register();
+			i_energy_in = new ItemModuleEnergyInput("energy_in").register();
+			i_energy_out = new ItemModuleEnergyOutput("energy_out").register();
 			
-			i_item_storage = new ItemModuleItemStorage("itemStorage").register();
-			i_item_in = new ItemModuleItemInput("itemInput").register();
-			i_item_out = new ItemModuleItemOutput("itemOutput").register();
+			i_item_storage = new ItemModuleItemStorage("item_storage").register();
+			i_item_in = new ItemModuleItemInput("item_in").register();
+			i_item_out = new ItemModuleItemOutput("item_out").register();
 			
-			i_fluid_storage = new ItemModuleFluidStorage("fluidStorage").register();
-			i_fluid_in = new ItemModuleFluidInput("fluidInput").register();
-			i_fluid_out = new ItemModuleFluidOutput("fluidOutput").register();
+			i_fluid_storage = new ItemModuleFluidStorage("fluid_storage").register();
+			i_fluid_in = new ItemModuleFluidInput("fluid_in").register();
+			i_fluid_out = new ItemModuleFluidOutput("fluid_out").register();
 			
-			i_gate_not = new ItemModuleGateNot("gateNot").register();
-			i_gate_and = new ItemModuleGateAnd("gateAnd").register();
-			i_gate_or = new ItemModuleGateOr("gateOr").register();
-			i_gate_xor = new ItemModuleGateXOr("gateXOr").register();
+			i_gate_not = new ItemModuleGateNot("gate_not").register();
+			i_gate_and = new ItemModuleGateAnd("gate_and").register();
+			i_gate_or = new ItemModuleGateOr("gate_or").register();
+			i_gate_xor = new ItemModuleGateXOr("gate_xor").register();
+			
+			i_timer = new ItemModuleTimer("timer").register();
 		}
 	}
 }

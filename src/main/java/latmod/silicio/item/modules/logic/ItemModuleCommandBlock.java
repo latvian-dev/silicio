@@ -35,9 +35,11 @@ public class ItemModuleCommandBlock extends ItemModuleLogic implements IToggable
 	{
 	}
 	
-	public void onChannelToggled(ItemStack is, CircuitBoard t, CBChannel c)
+	public void onChannelToggled(CircuitBoard cb, int MID, CBChannel c)
 	{
-		String cmd = cs_command.get(is);
+		if(!c.isEnabled() || c != getChannel(cb, MID, 0)) return;
+		
+		String cmd = cs_command.get(cb.items[MID]);
 		
 		if(!cmd.isEmpty())
 		{
@@ -46,7 +48,7 @@ public class ItemModuleCommandBlock extends ItemModuleLogic implements IToggable
 			if (ms != null && ms.isCommandBlockEnabled())
 			{
 				ICommandManager icm = ms.getCommandManager();
-				icm.executeCommand(new CmdModuleICS(t), cmd);
+				icm.executeCommand(new CmdModuleICS(cb), cmd);
 			}
 		}
 	}
@@ -57,7 +59,7 @@ public class ItemModuleCommandBlock extends ItemModuleLogic implements IToggable
 		
 		public CmdModuleICS(CircuitBoard t)
 		{ board = t; }
-
+		
 		public String getCommandSenderName()
 		{ return "@"; }
 		
