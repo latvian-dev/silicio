@@ -1,4 +1,6 @@
 package latmod.silicio.block;
+import java.util.List;
+
 import latmod.core.ODItems;
 import latmod.core.tile.TileLM;
 import latmod.core.util.*;
@@ -7,6 +9,7 @@ import latmod.silicio.tile.TileCBCable;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.texture.IIconRegister;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
@@ -71,6 +74,12 @@ public class BlockCBCable extends BlockSil
 	{
 		float s = pipeBorder;
 		setBlockBounds(0F, s, s, 1F, 1F - s, 1F - s);
+	}
+	
+	@SuppressWarnings("all")
+	public void addCollisionBoxesToList(World w, int x, int y, int z, AxisAlignedBB bb, List l, Entity e)
+	{
+		super.addCollisionBoxesToList(w, x, y, z, bb, l, e);
 	}
 	
 	public void setBlockBoundsBasedOnState(IBlockAccess iba, int x, int y, int z)

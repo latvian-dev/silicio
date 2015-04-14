@@ -12,8 +12,10 @@ import latmod.silicio.item.modules.ICBModule;
 import latmod.silicio.item.modules.config.ModuleConfigSegment;
 import latmod.silicio.item.modules.io.ItemModuleEnergyInput;
 import mcp.mobius.waila.api.*;
+import net.minecraft.block.Block;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Blocks;
 import net.minecraft.inventory.Container;
 import net.minecraft.item.*;
 import net.minecraft.nbt.*;
@@ -296,7 +298,7 @@ public class TileCBCable extends TileLM implements IPaintable, ICBNetTile, IGuiT
 			{
 				if(isServer())
 				{
-					if(!ep.capabilities.isCreativeMode && SilMat.coverBlock != null)
+					if(!ep.capabilities.isCreativeMode)
 						InvUtils.dropItem(ep, new ItemStack(SilItems.i_circuit_board));
 					
 					for(int i = 0; i < boards[id].items.length; i++)
@@ -347,14 +349,10 @@ public class TileCBCable extends TileLM implements IPaintable, ICBNetTile, IGuiT
 	{
 		if(i == 6) return true;
 		
-		//int id1 = (i - 1) / 2;
-		
-		ForgeDirection fd = ForgeDirection.VALID_DIRECTIONS[i];
-		if(fd == ForgeDirection.UNKNOWN) return true;
-		
 		if(boards[i] != null) return true;
 		
-		if(worldObj.getBlock(xCoord + Facing.offsetsXForSide[i], yCoord + Facing.offsetsYForSide[i], zCoord + Facing.offsetsZForSide[i]) == SilItems.b_cbcable) return true;
+		Block block = worldObj.getBlock(xCoord + Facing.offsetsXForSide[i], yCoord + Facing.offsetsYForSide[i], zCoord + Facing.offsetsZForSide[i]);
+		if(block == SilItems.b_cbcable) return true;
 		
 		EntityPlayer clientP = LC.proxy.getClientPlayer();
 		
@@ -362,7 +360,7 @@ public class TileCBCable extends TileLM implements IPaintable, ICBNetTile, IGuiT
 		{
 			Item item = clientP.getHeldItem().getItem();
 			
-			if(item == SilItems.i_circuit_board || (SilMat.coverBlock != null && InvUtils.itemsEquals(clientP.getHeldItem(), SilMat.coverBlock, false, true))) return true;
+			if((item == SilItems.i_circuit_board && block != Blocks.air) || (SilMat.coverBlock != null && InvUtils.itemsEquals(clientP.getHeldItem(), SilMat.coverBlock, false, true))) return true;
 		}
 		
 		return false;
