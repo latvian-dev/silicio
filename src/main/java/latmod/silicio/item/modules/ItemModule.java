@@ -21,13 +21,17 @@ public abstract class ItemModule extends ItemSil implements ICBModule
 	
 	public static final String NBT_TAG = "Channels";
 	
-	public final FastList<ModuleConfigSegment> moduleConfig = new FastList<ModuleConfigSegment>();
+	public final FastList<ModuleConfigSegment> moduleConfig;
+	protected final String[] channelNames;
 	
 	public ItemModule(String s)
 	{
 		super("cbm_" + s);
 		setMaxStackSize(8);
 		setTextureName(s);
+		
+		moduleConfig = new FastList<ModuleConfigSegment>();
+		channelNames = new String[getChannelCount()];
 	}
 	
 	public int getChannelCount()
@@ -40,7 +44,8 @@ public abstract class ItemModule extends ItemSil implements ICBModule
 	{ return IOType.NONE; }
 	
 	public String getChannelName(int c)
-	{ return (getChannelType(c).isInput() ? "Input" : "Output") + " #" + (c + 1); }
+	{ if(channelNames[c] != null) return channelNames[c];
+	return "#" + (c + 1) + (getChannelType(c).isInput() ? " [Input]" : " [Output]"); }
 	
 	public final FastList<ModuleConfigSegment> getModuleConfig()
 	{ return moduleConfig; }
@@ -57,7 +62,7 @@ public abstract class ItemModule extends ItemSil implements ICBModule
 	@SideOnly(Side.CLIENT)
 	public void addInfo(ItemStack is, EntityPlayer ep, FastList<String> l)
 	{
-		l.add(StatCollector.translateToLocal(mod.assets + "item.mod.desc"));
+		l.add(StatCollector.translateToLocal(mod.assets + "item.cbm_desc"));
 		if(is.stackTagCompound != null)
 		{
 			l.add("Preconfigured");

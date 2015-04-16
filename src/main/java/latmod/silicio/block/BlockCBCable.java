@@ -3,7 +3,8 @@ import java.util.List;
 
 import latmod.core.ODItems;
 import latmod.core.tile.TileLM;
-import latmod.core.util.*;
+import latmod.core.util.MathHelperLM;
+import latmod.silicio.SilMat;
 import latmod.silicio.client.render.world.RenderCBCable;
 import latmod.silicio.tile.TileCBCable;
 import net.minecraft.block.material.Material;
@@ -59,14 +60,14 @@ public class BlockCBCable extends BlockSil
 			mod.recipes.addRecipe(new ItemStack(this, 16), "RRR", "SES", "RRR",
 					'R', ODItems.RUBBER,
 					'E', ODItems.SILVER,
-					'S', ODItems.REDSTONE);
+					'S', SilMat.SILICON_DUST);
 		}
 		else
 		{
 			mod.recipes.addRecipe(new ItemStack(this, 16), "RRR", "SES", "RRR",
 					'R', ODItems.SLIMEBALL,
 					'E', ODItems.SILVER,
-					'S', ODItems.REDSTONE);
+					'S', SilMat.SILICON_DUST);
 		}
 	}
 	

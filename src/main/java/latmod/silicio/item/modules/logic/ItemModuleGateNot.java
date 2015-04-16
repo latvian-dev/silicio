@@ -11,6 +11,9 @@ public class ItemModuleGateNot extends ItemModuleLogic implements ISignalProvide
 	public ItemModuleGateNot(String s)
 	{
 		super(s);
+		
+		channelNames[0] = "Input";
+		channelNames[1] = "Output";
 	}
 	
 	public int getChannelCount()

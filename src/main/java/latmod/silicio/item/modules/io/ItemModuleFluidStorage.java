@@ -1,8 +1,12 @@
 package latmod.silicio.item.modules.io;
 
+import latmod.core.ODItems;
 import latmod.core.util.FastList;
+import latmod.silicio.SilItems;
 import latmod.silicio.item.modules.IOType;
 import latmod.silicio.tile.*;
+import net.minecraft.init.Items;
+import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.fluids.IFluidHandler;
 
@@ -25,6 +29,12 @@ public class ItemModuleFluidStorage extends ItemModuleIO
 	
 	public void loadRecipes()
 	{
+		mod.recipes.addRecipe(new ItemStack(this), "RWT", "PMP",
+				'R', ODItems.REDSTONE,
+				'P', ODItems.IRON,
+				'M', SilItems.Modules.EMPTY,
+				'T', SilItems.b_cbcable,
+				'W', Items.bucket);
 	}
 	
 	public void updateTankNet(CircuitBoard cb, int MID, FastList<TankEntry> list)

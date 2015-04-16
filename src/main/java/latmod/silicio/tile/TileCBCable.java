@@ -26,7 +26,7 @@ import cofh.api.energy.IEnergyReceiver;
 import cpw.mods.fml.relauncher.*;
 
 // BlockCBCable //
-public class TileCBCable extends TileLM implements IPaintable, ICBNetTile, IGuiTile, IEnergyReceiver, IWailaTile.Body
+public class TileCBCable extends TileLM implements IPaintable, ICBNetTile, IGuiTile, IEnergyReceiver, IWailaTile.Body, ISecureTile
 {
 	public static final String ACTION_SET_CHANNEL = "silicio.channel";
 	public static final String ACTION_MODULE_CONFIG = "silicio.mconfig";
@@ -125,7 +125,7 @@ public class TileCBCable extends TileLM implements IPaintable, ICBNetTile, IGuiT
 	
 	public static boolean connectCable(TileCBCable c, int s)
 	{
-		if(c.boards[s] != null || c.isDisabled(s)) return false;
+		if(c.isDisabled(s)) return false;
 		TileEntity te = c.worldObj.getTileEntity(c.xCoord + Facing.offsetsXForSide[s], c.yCoord + Facing.offsetsYForSide[s], c.zCoord + Facing.offsetsZForSide[s]);
 		return (te != null && te instanceof ICBNetTile && !((ICBNetTile)te).isDisabled(Facing.oppositeSide[s]));
 	}
@@ -198,130 +198,94 @@ public class TileCBCable extends TileLM implements IPaintable, ICBNetTile, IGuiT
 	
 	public boolean onRightClick(EntityPlayer ep, ItemStack is, int side, float x, float y, float z)
 	{
-		if(hasCover)
-		{
-			if(is != null && is.getItem() instanceof IPaintable.IPainterItem)
-				return false;
-			
-			return onBoardClicked(ep, is, side);
-		}
-		else
+		if(is != null && is.getItem() == SilItems.b_cbcable.getItem()) return false;
+		
+		if(is != null && is.getItem() instanceof IPaintable.IPainterItem)
+			return false;
+		
+		MovingObjectPosition mop = MathHelperLM.rayTrace(ep);
+		
+		if(mop == null) return false;
+		
+		if(!isServer()) return true;
+		
+		int id = -1;
+		
+		if(!hasCover)
 		{
 			if(is != null && SilMat.coverBlock != null && InvUtils.itemsEquals(is, SilMat.coverBlock, false, true))
 			{
-				if(isServer())
-				{
-					hasCover = true;
-					
-					if(!ep.capabilities.isCreativeMode)
-						is.stackSize--;
-					
-					markDirty();
-				}
+				hasCover = true;
 				
+				if(!ep.capabilities.isCreativeMode)
+					is.stackSize--;
+				
+				markDirty();
 				return true;
 			}
-			else
-			{
-				MovingObjectPosition mop = MathHelperLM.rayTrace(ep);
-				
-				if(mop != null && mop.subHit >= 0 && mop.subHit <= 6)
-				{
-					int s = (mop.subHit == 6) ? mop.sideHit : mop.subHit;
-					
-					if(LatCoreMC.isWrench(is))
-					{
-						if(boards[s] != null || !isServer()) return true;
-						
-						isDisabled[s] = !isDisabled[s];
-						notifyNeighbors();
-						markDirty();
-						
-						TileEntity te = worldObj.getTileEntity(xCoord + Facing.offsetsXForSide[s], yCoord + Facing.offsetsYForSide[s], zCoord + Facing.offsetsZForSide[s]);
-						if(te != null && !te.isInvalid() && te instanceof TileCBCable)
-						{
-							TileCBCable t = (TileCBCable)te;
-							if(t.isDisabled[Facing.oppositeSide[s]] != isDisabled[s])
-							{
-								t.isDisabled[Facing.oppositeSide[s]] = isDisabled[s];
-								t.notifyNeighbors();
-								t.markDirty();
-							}
-						}
-						
-						return true;
-					}
-					else
-					{
-						if(!isDisabled[s]) return onBoardClicked(ep, is, s);
-						return true;
-					}
-				}
-			}
+			
+			if(mop != null && mop.subHit >= 0 && mop.subHit <= 6)
+				id = (mop.subHit == 6) ? mop.sideHit : mop.subHit;
+		}
+		else id = side;
+		
+		if(id < 0 || id >= 6) return true;
+		
+		if(LatCoreMC.isWrench(is) && !ep.isSneaking())
+		{
+			if(boards[id] != null) return true;
+			setDisabled(id, !isDisabled[id]);
+			return true;
 		}
 		
-		return false;
-	}
-	
-	private boolean onBoardClicked(EntityPlayer ep, ItemStack is, int id)
-	{
 		if(boards[id] == null)
 		{
 			if(is != null && is.getItem() == SilItems.i_circuit_board)
 			{
-				if(isServer())
+				setDisabled(id, false);
+				boards[id] = new CircuitBoard(this, ForgeDirection.VALID_DIRECTIONS[id]);
+				if(!ep.capabilities.isCreativeMode) is.stackSize--;
+				markDirty();
+			}
+			else if(LatCoreMC.isWrench(is))
+			{
+				if(!ep.isSneaking())
 				{
-					boards[id] = new CircuitBoard(this, ForgeDirection.VALID_DIRECTIONS[id]);
-					if(!ep.capabilities.isCreativeMode)
-						is.stackSize--;
+					isDisabled[id] = !isDisabled[id];
 					markDirty();
 				}
-				
-				return true;
-			}
-			else if(hasCover && is != null && ep.isSneaking() && LatCoreMC.isWrench(is))
-			{
-				if(!worldObj.isRemote)
+				else if(hasCover)
 				{
 					hasCover = false;
 					if(!ep.capabilities.isCreativeMode && SilMat.coverBlock != null)
 						InvUtils.dropItem(ep, SilMat.coverBlock);
 					markDirty();
 				}
-				
-				return true;
 			}
 		}
 		else
 		{
 			if(is != null && ep.isSneaking() && LatCoreMC.isWrench(is))
 			{
-				if(isServer())
+				if(!ep.capabilities.isCreativeMode)
+					InvUtils.dropItem(ep, new ItemStack(SilItems.i_circuit_board));
+				
+				for(int i = 0; i < boards[id].items.length; i++)
 				{
-					if(!ep.capabilities.isCreativeMode)
-						InvUtils.dropItem(ep, new ItemStack(SilItems.i_circuit_board));
-					
-					for(int i = 0; i < boards[id].items.length; i++)
-					{
-						if(boards[id].items[i] != null && boards[id].items[i].stackSize > 0)
-							InvUtils.dropItem(ep, boards[id].items[i]);
-					}
-					
-					boards[id] = null;
-					markDirty();
+					if(boards[id].items[i] != null && boards[id].items[i].stackSize > 0)
+						InvUtils.dropItem(ep, boards[id].items[i]);
 				}
 				
-				return true;
+				boards[id] = null;
+				markDirty();
 			}
 			else
 			{
-				if(isServer())
-					LatCoreMC.openGui(ep, this, 0);
-				return true;
+				LatCoreMC.openGui(ep, this, 0);
 			}
 		}
 		
-		return false;
+		return true;
 	}
 	
 	public void onBroken()
@@ -476,12 +440,40 @@ public class TileCBCable extends TileLM implements IPaintable, ICBNetTile, IGuiT
 	public int receiveEnergy(ForgeDirection f, int e, boolean b)
 	{ return (controller == null || !canConnectEnergy(f)) ? 0 : controller.receiveEnergy(f, e, b); }
 	
+	public void setDisabled(int side, boolean b)
+	{
+		if(isDisabled[side] != b)
+		{
+			isDisabled[side] = b;
+			notifyNeighbors();
+			markDirty();
+			
+			TileEntity te = worldObj.getTileEntity(xCoord + Facing.offsetsXForSide[side], yCoord + Facing.offsetsYForSide[side], zCoord + Facing.offsetsZForSide[side]);
+			if(te != null && !te.isInvalid() && te instanceof TileCBCable)
+			{
+				TileCBCable t = (TileCBCable)te;
+				if(t.isDisabled[Facing.oppositeSide[side]] != b)
+				{
+					t.isDisabled[Facing.oppositeSide[side]] = b;
+					t.notifyNeighbors();
+					t.markDirty();
+				}
+			}
+		}
+	}
+	
 	public boolean isDisabled(int side)
-	{ return isDisabled[side]; }
+	{
+		if(side < 0 || side >= 6) return true;
+		return isDisabled[side];
+	}
 	
 	public void addWailaBody(IWailaDataAccessor data, IWailaConfigHandler config, List<String> info)
 	{
 		int i = data.getPosition().subHit;
 		if(i < 6) { if(isDisabled(i)) info.add("Disabled"); }
 	}
+	
+	public LMSecurity getSecurity()
+	{ if(controller != null) return controller.getSecurity(); return security; }
 }

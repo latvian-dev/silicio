@@ -48,15 +48,17 @@ public class Silicio
 		
 		if(LatCoreMC.isModInstalled("ThermalExpansion"))
 		{
-			try { LatCoreMC.invokeStatic("latmod.silicio.integration.SilicioTE", "init"); }
+			try { LatCoreMC.invokeStatic("latmod.silicio.SilicioTE", "init"); }
 			catch(Exception ex) { ex.printStackTrace(); };
 		}
 		
+		/*
 		if(LatCoreMC.isModInstalled("IC2"))
 		{
 			try { LatCoreMC.invokeStatic("latmod.silicio.integration.SilicioIC2", "init"); }
 			catch(Exception ex) { ex.printStackTrace(); };
 		}
+		*/
 		
 		proxy.postInit(e);
 	}

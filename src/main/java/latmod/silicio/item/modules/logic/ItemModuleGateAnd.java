@@ -11,6 +11,12 @@ public class ItemModuleGateAnd extends ItemModuleLogic implements ISignalProvide
 	public ItemModuleGateAnd(String s)
 	{
 		super(s);
+		
+		channelNames[0] = "Input 1";
+		channelNames[1] = "Input 1";
+		channelNames[2] = "Input 1";
+		channelNames[3] = "Input 1";
+		channelNames[4] = "Output";
 	}
 	
 	public int getChannelCount()

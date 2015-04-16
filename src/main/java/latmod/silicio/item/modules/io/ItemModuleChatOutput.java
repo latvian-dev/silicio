@@ -1,11 +1,12 @@
 package latmod.silicio.item.modules.io;
 
 import latmod.silicio.SilItems;
-import latmod.silicio.item.modules.IOType;
+import latmod.silicio.item.modules.*;
+import latmod.silicio.tile.*;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 
-public class ItemModuleChatOutput extends ItemModuleIO
+public class ItemModuleChatOutput extends ItemModuleIO implements IToggable
 {
 	public ItemModuleChatOutput(String s)
 	{
@@ -27,5 +28,9 @@ public class ItemModuleChatOutput extends ItemModuleIO
 		mod.recipes.addRecipe(new ItemStack(this), "B", "M",
 				'B', Blocks.beacon,
 				'M', SilItems.Modules.i_sign_out);
+	}
+	
+	public void onChannelToggled(CircuitBoard cb, int MID, CBChannel c)
+	{
 	}
 }

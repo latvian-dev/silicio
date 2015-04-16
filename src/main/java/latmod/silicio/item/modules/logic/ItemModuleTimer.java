@@ -20,6 +20,9 @@ public class ItemModuleTimer extends ItemModuleLogic implements ISignalProvider
 		cs_timer.min = 1;
 		cs_timer.max = 48000;
 		moduleConfig.add(cs_timer);
+		
+		channelNames[0] = "Timer";
+		channelNames[1] = "Input";
 	}
 	
 	public int getChannelCount()

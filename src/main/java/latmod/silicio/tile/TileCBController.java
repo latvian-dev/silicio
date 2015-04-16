@@ -7,6 +7,7 @@ import latmod.core.tile.*;
 import latmod.core.util.*;
 import latmod.silicio.item.modules.*;
 import mcp.mobius.waila.api.*;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
@@ -14,7 +15,7 @@ import net.minecraft.util.Facing;
 import net.minecraftforge.common.util.ForgeDirection;
 import cofh.api.energy.*;
 
-public class TileCBController extends TileLM implements ICBNetTile, IEnergyHandler, IWailaTile.Body
+public class TileCBController extends TileLM implements ICBNetTile, IEnergyHandler, IWailaTile.Body, ISecureTile
 {
 	public final FastList<ICBNetTile> network;
 	public final FastList<CircuitBoard> circuitBoards;
@@ -103,22 +104,27 @@ public class TileCBController extends TileLM implements ICBNetTile, IEnergyHandl
 			int cables = 0;
 			int otherDevices = 0;
 			
-			for(int i = 0; i < network.size(); i++)
-			{
-				ICBNetTile t = network.get(i);
-				
-				if(t instanceof TileCBCable) cables++;
-			}
+			for(ICBNetTile t : network)
+			{ if(t instanceof TileCBCable) cables++; }
 			
 			otherDevices = network.size() - cables;
 			
-			info.add("Cables: " + cables);
+			if(cables > 0) info.add("Cables: " + cables);
 			if(otherDevices > 0) info.add("Other Devices: " + otherDevices);
 			if(!circuitBoards.isEmpty()) info.add("CircuitBoards: " + circuitBoards.size());
-			if(!allModules.isEmpty()) info.add("Modules: " + allModules.size());
+			
+			int am = 0;
+			for(FastMap<Integer, ICBModule> m : allModules) am += m.size();
+			if(!allModules.isEmpty()) info.add("Modules: " + am);
+			
 			if(!invNetwork.isEmpty()) info.add("IInventories: " + invNetwork.size());
 			if(!tankNetwork.isEmpty()) info.add("IFluidHandlers: " + tankNetwork.size());
 		}
+	}
+	
+	public boolean onRightClick(EntityPlayer ep, ItemStack is, int side, float x, float y, float z)
+	{
+		return true;
 	}
 	
 	public boolean canConnect(ForgeDirection side)
@@ -162,19 +168,16 @@ public class TileCBController extends TileLM implements ICBNetTile, IEnergyHandl
 			markDirty();
 			sendDirtyUpdate();
 			
-			for(int i = 0; i < network.size(); i++)
-			{
-				ICBNetTile ec = network.get(i);
-				ec.onNetworkChanged(hasConflict ? null : this);
-			}
+			for(ICBNetTile t : network)
+				t.onNetworkChanged(hasConflict ? null : this);
 		}
 		
 		if(!isServer() || hasConflict) return;
 		
 		preUpdate();
 		
-		for(int i = 0; i < network.size(); i++)
-			network.get(i).preUpdate();
+		for(ICBNetTile t : network)
+			t.preUpdate();
 		
 		for(int i = 0; i < allModules.size(); i++)
 		{
@@ -231,14 +234,8 @@ public class TileCBController extends TileLM implements ICBNetTile, IEnergyHandl
 	{
 		super.onBroken();
 		
-		if(!hasConflict) for(int i = 0; i < network.size(); i++)
-		{
-			ICBNetTile ec = network.get(i);
-			TileEntity te = ec.getTile();
-			
-			if(te != null && !te.isInvalid())
-				ec.onNetworkChanged(null);
-		}
+		if(!hasConflict) for(ICBNetTile t : network)
+			t.onNetworkChanged(null);
 	}
 	
 	private void addToList(int x, int y, int z)
@@ -251,39 +248,39 @@ public class TileCBController extends TileLM implements ICBNetTile, IEnergyHandl
 			
 			TileEntity te = worldObj.getTileEntity(px, py, pz);
 			
-			if(te != null && !te.isInvalid() && te instanceof ICBNetTile && !network.contains(te))
+			if(te != null && !te.isInvalid() && te instanceof ICBNetTile)
 			{
-				if(te != this && te instanceof TileCBController)
+				ICBNetTile ec = (ICBNetTile)te;
+				
+				if(ec != this && ec instanceof TileCBController)
 				{
 					hasConflict = true;
 					return;
 				}
 				
-				ICBNetTile ec = (ICBNetTile)te;
-				
 				if(ec.isDisabled(Facing.oppositeSide[i])) continue;
 				
-				if(ec != null && !network.contains(te))
+				if(!network.contains(te))
 				{
 					network.add(ec);
 					
-					if(te instanceof TileCBCable)
+					if(ec instanceof TileCBCable)
 					{
-						for(CircuitBoard cb : ((TileCBCable)te).boards)
-						if(cb != null)
+						TileCBCable tc = (TileCBCable)ec;
+						for(int b = 0; b < 6; b++) if(tc.boards[b] != null)
 						{
-							circuitBoards.add(cb);
+							circuitBoards.add(tc.boards[b]);
 							
-							FastMap<Integer, ICBModule> modules = cb.getAllModules();
-							allModules.put(cb, modules);
+							FastMap<Integer, ICBModule> modules = tc.boards[b].getAllModules();
+							allModules.put(tc.boards[b], modules);
 							
 							for(int j = 0; j < modules.size(); j++)
 							{
 								ICBModule m = modules.values.get(j);
 								int MID = modules.keys.get(j);
 								
-								m.updateInvNet(cb, MID, invNetwork);
-								m.updateTankNet(cb, MID, tankNetwork);
+								m.updateInvNet(tc.boards[b], MID, invNetwork);
+								m.updateTankNet(tc.boards[b], MID, tankNetwork);
 							}
 						}
 					}

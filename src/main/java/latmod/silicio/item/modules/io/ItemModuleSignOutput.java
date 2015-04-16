@@ -24,6 +24,8 @@ public class ItemModuleSignOutput extends ItemModuleIO implements IToggable
 				public boolean isValid(String s)
 				{ return s.length() <= 20; }
 			};
+			
+			moduleConfig.add(cs_text[i]);
 		}
 		
 		cs_text[1].defaultString = "Test";

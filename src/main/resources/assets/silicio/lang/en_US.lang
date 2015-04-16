@@ -47,6 +47,8 @@ silicio:item.cbm_gate_and.name=AND Gate
 silicio:item.cbm_gate_or.name=OR Gate
 silicio:item.cbm_gate_xor.name=XOR Gate
 
+silicio:item.cbm_timer.name=Timer Module
+
 ### Lang ###
 
 # Module Types #
