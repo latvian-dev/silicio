@@ -1,8 +1,8 @@
 package latmod.silicio.item.modules.config;
 
 import latmod.core.util.FastList;
+import latmod.silicio.gui.*;
 import latmod.silicio.tile.CircuitBoard;
-import net.minecraft.client.Minecraft;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import cpw.mods.fml.relauncher.*;
@@ -15,13 +15,11 @@ public class ModuleCSString extends ModuleConfigSegment
 	{ super(i, s); }
 
 	@SideOnly(Side.CLIENT)
-	public void buttonClicked(CircuitBoard cb, int MID, Minecraft mc)
-	{
-	}
+	public void buttonClicked(GuiModuleSettings g)
+	{ g.mc.displayGuiScreen(new GuiCSText(g, this)); }
 	
 	public void onConfigReceived(CircuitBoard cb, int MID, NBTTagCompound data)
-	{
-	}
+	{ set(cb.items[MID], data.getString("V")); cb.cable.markDirty(); }
 	
 	public String get(ItemStack is)
 	{

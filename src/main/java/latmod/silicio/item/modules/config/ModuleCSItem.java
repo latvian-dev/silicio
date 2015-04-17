@@ -1,8 +1,8 @@
 package latmod.silicio.item.modules.config;
 
 import latmod.core.util.FastList;
+import latmod.silicio.gui.GuiModuleSettings;
 import latmod.silicio.tile.CircuitBoard;
-import net.minecraft.client.Minecraft;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import cpw.mods.fml.relauncher.*;
@@ -15,7 +15,7 @@ public class ModuleCSItem extends ModuleConfigSegment
 	{ super(i, s); }
 
 	@SideOnly(Side.CLIENT)
-	public void buttonClicked(CircuitBoard cb, int MID, Minecraft mc)
+	public void buttonClicked(GuiModuleSettings g)
 	{
 	}
 	

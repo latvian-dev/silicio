@@ -140,7 +140,7 @@ public class TileCBCable extends TileLM implements IPaintable, ICBNetTile, IGuiT
 			if(boards[i] != null) boards[i].preUpdate();
 			
 			markDirty();
-			onNeighborBlockChange();
+			onNeighborBlockChange(Blocks.air);
 		}
 		
 		for(int s = 0; s < 6; s++)
@@ -158,10 +158,7 @@ public class TileCBCable extends TileLM implements IPaintable, ICBNetTile, IGuiT
 						if(cb.items[i] != null && cb.items[i].getItem() instanceof ItemModuleEnergyInput)
 						{
 							if(((ItemModuleEnergyInput)cb.items[i].getItem()).canReceive(cb, i))
-							{
-								canReceive[s] = true;
-								continue;
-							}
+							{ canReceive[s] = true; break; }
 						}
 					}
 				}
@@ -471,7 +468,7 @@ public class TileCBCable extends TileLM implements IPaintable, ICBNetTile, IGuiT
 	public void addWailaBody(IWailaDataAccessor data, IWailaConfigHandler config, List<String> info)
 	{
 		int i = data.getPosition().subHit;
-		if(i < 6) { if(isDisabled(i)) info.add("Disabled"); }
+		if(i >= 0 && i < 6) { if(isDisabled(i)) info.add("Disabled"); }
 	}
 	
 	public LMSecurity getSecurity()

@@ -21,9 +21,9 @@ public class GuiModuleSettings extends GuiModule
 	public static final TextureCoords icon_cfg_item = new TextureCoords(thisTex, 21 * 3, 62);
 	public static final TextureCoords icon_cfg_bool = new TextureCoords(thisTex, 21 * 4, 62);
 	
-	public CircuitBoard board;
-	public ICBModule module;
-	public int moduleID;
+	public final CircuitBoard board;
+	public final ICBModule module;
+	public final int moduleID;
 	
 	public ButtonLM buttonChannels;
 	public ButtonLM buttonBack;
@@ -73,7 +73,7 @@ public class GuiModuleSettings extends GuiModule
 				public void onButtonPressed(int b)
 				{
 					playClickSound();
-					mcs.buttonClicked(board, moduleID, mc);
+					mcs.buttonClicked(GuiModuleSettings.this);
 				}
 				
 				public void addMouseOverText(FastList<String> l)
@@ -94,6 +94,9 @@ public class GuiModuleSettings extends GuiModule
 			widgets.add(b);
 		}
 	}
+	
+	public GuiModuleSettings(GuiModuleSettings parent)
+	{ this(parent.container.player, parent.board, parent.board.getModule(parent.moduleID), parent.moduleID); }
 	
 	public void drawGuiContainerBackgroundLayer(float f, int mx, int my)
 	{
