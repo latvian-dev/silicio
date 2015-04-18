@@ -35,15 +35,11 @@ public class TileCBCable extends TileLM implements IPaintable, ICBNetTile, IGuiT
 	public final Paint[] paint = new Paint[6];
 	public boolean hasCover;
 	public TileCBController controller;
-	public final CBChannel[] channels;
-	public final CBChannel[] prevChannels;
 	private final boolean[] canReceive;
 	private final boolean[] isDisabled;
 	
 	public TileCBCable()
 	{
-		channels = CBChannel.create(16, CBChannel.Type.LOCAL);
-		prevChannels = CBChannel.create(16, CBChannel.Type.LOCAL);
 		canReceive = new boolean[6];
 		isDisabled = new boolean[6];
 	}
@@ -53,8 +49,6 @@ public class TileCBCable extends TileLM implements IPaintable, ICBNetTile, IGuiT
 	
 	public void preUpdate()
 	{
-		CBChannel.copy(channels, prevChannels);
-		CBChannel.clear(channels);
 	}
 	
 	public void readTileData(NBTTagCompound tag)
@@ -74,7 +68,6 @@ public class TileCBCable extends TileLM implements IPaintable, ICBNetTile, IGuiT
 		
 		hasCover = tag.getBoolean("HasCover");
 		Paint.readFromNBT(tag, "Paint", paint);
-		CBChannel.readFromNBT(tag, "Channels", channels);
 
 		Converter.toBools(isDisabled, tag.getIntArray("Disabled"), true);
 	}
@@ -97,7 +90,6 @@ public class TileCBCable extends TileLM implements IPaintable, ICBNetTile, IGuiT
 		
 		tag.setBoolean("HasCover", hasCover);
 		Paint.writeToNBT(tag, "Paint", paint);
-		CBChannel.writeToNBT(tag, "Channels", channels);
 		
 		int[] idx = Converter.fromBools(isDisabled, true);
 		if(idx.length > 0) tag.setIntArray("Disabled", idx);
@@ -278,7 +270,7 @@ public class TileCBCable extends TileLM implements IPaintable, ICBNetTile, IGuiT
 			}
 			else
 			{
-				LatCoreMC.openGui(ep, this, 0);
+				LatCoreMC.openGui(ep, this, id);
 			}
 		}
 		
@@ -332,20 +324,12 @@ public class TileCBCable extends TileLM implements IPaintable, ICBNetTile, IGuiT
 	
 	public Container getContainer(EntityPlayer ep, int ID)
 	{
-		MovingObjectPosition mop = MathHelperLM.rayTrace(ep);
+		CircuitBoard cb = getBoard(ID % 6);
 		
-		if(mop != null)
+		if(cb != null)
 		{
-			CircuitBoard cb = null;
-			
-			if(hasCover) cb = getBoard(mop.sideHit);
-			else if(mop.subHit < 6) cb = getBoard(mop.subHit);
-			
-			if(cb != null)
-			{
-				if(ID == 0) return new ContainerCircuitBoard(ep, cb);
-				else if(ID == 1) return new ContainerCircuitBoardSettings(ep, cb);
-			}
+			if(ID / 6 == 0) return new ContainerCircuitBoard(ep, cb);
+			else return new ContainerCircuitBoardSettings(ep, cb);
 		}
 		
 		return null;
@@ -354,20 +338,12 @@ public class TileCBCable extends TileLM implements IPaintable, ICBNetTile, IGuiT
 	@SideOnly(Side.CLIENT)
 	public GuiScreen getGui(EntityPlayer ep, int ID)
 	{
-		MovingObjectPosition mop = MathHelperLM.rayTrace(ep);
+		CircuitBoard cb = getBoard(ID % 6);
 		
-		if(mop != null)
+		if(cb != null)
 		{
-			CircuitBoard cb = null;
-			
-			if(hasCover) cb = getBoard(mop.sideHit);
-			else if(mop.subHit < 6) cb = getBoard(mop.subHit);
-			
-			if(cb != null)
-			{
-				if(ID == 0) return new GuiCircuitBoard(new ContainerCircuitBoard(ep, cb));
-				else if(ID == 1) return new GuiCircuitBoardSettings(new ContainerCircuitBoardSettings(ep, cb));
-			}
+			if(ID / 6 == 0) return new GuiCircuitBoard(new ContainerCircuitBoard(ep, cb));
+			else return new GuiCircuitBoardSettings(new ContainerCircuitBoardSettings(ep, cb));
 		}
 		
 		return null;
@@ -380,7 +356,7 @@ public class TileCBCable extends TileLM implements IPaintable, ICBNetTile, IGuiT
 			int side = data.getByte("F");
 			int moduleID = data.getByte("M");
 			int id = data.getByte("I");
-			byte ch = data.getByte("C");
+			int ch = data.getInteger("C");
 			
 			ICBModule m = boards[side].getModule(moduleID);
 			m.setChannel(boards[side], moduleID, id, ch);
@@ -411,7 +387,7 @@ public class TileCBCable extends TileLM implements IPaintable, ICBNetTile, IGuiT
 		data.setByte("F", (byte)side);
 		data.setByte("M", (byte)moduleID);
 		data.setByte("I", (byte)id);
-		data.setByte("C", (byte)ch);
+		data.setInteger("C", ch);
 		sendClientAction(ACTION_SET_CHANNEL, data);
 	}
 	

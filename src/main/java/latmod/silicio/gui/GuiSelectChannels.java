@@ -13,11 +13,12 @@ import cpw.mods.fml.relauncher.*;
 public class GuiSelectChannels extends GuiModule
 {
 	public static final ResourceLocation thisTex = getTex("selectChannel.png");
-	public static final TextureCoords iconSelChannel = new TextureCoords(thisTex, 168, 0);
-	public static final TextureCoords iconInput = new TextureCoords(thisTex, 168, 10);
-	public static final TextureCoords iconOutput = new TextureCoords(thisTex, 168, 18);
-	public static final TextureCoords iconIOPressed = new TextureCoords(thisTex, 168, 26);
-	public static final TextureCoords iconChannelEnabled = new TextureCoords(thisTex, 168, 34);
+	public static final TextureCoords iconSelChannel = new TextureCoords(thisTex, 180, 0);
+	public static final TextureCoords iconInput = new TextureCoords(thisTex, 180, 10);
+	public static final TextureCoords iconOutput = new TextureCoords(thisTex, 180, 18);
+	public static final TextureCoords iconIOPressed = new TextureCoords(thisTex, 180, 26);
+	public static final TextureCoords iconChannelEnabled = new TextureCoords(thisTex, 180, 34);
+	public static final TextureCoords iconBack = new TextureCoords(thisTex, 166, 2);
 	
 	public CircuitBoard board;
 	public ICBModule module;
@@ -33,13 +34,13 @@ public class GuiSelectChannels extends GuiModule
 	public GuiSelectChannels(EntityPlayer ep, CircuitBoard cb, ICBModule m, int id)
 	{
 		super(ep, thisTex);
-		xSize = 168;
-		ySize = 89;
+		xSize = 166;
+		ySize = 98;
 		board = cb;
 		module = m;
 		moduleID = id;
 		
-		widgets.add(buttonBack = new ButtonLM(this, 156, 1, 11, 11)
+		widgets.add(buttonBack = new ButtonLM(this, 166, 2, 14, 18)
 		{
 			public void onButtonPressed(int b)
 			{
@@ -71,7 +72,7 @@ public class GuiSelectChannels extends GuiModule
 			widgets.add(buttonSelectChannel[i]);
 		}
 		
-		widgets.add(buttonNoChannel = new ButtonLM(this, 7, 24, 8, 8)
+		widgets.add(buttonNoChannel = new ButtonLM(this, 151, 7, 8, 8)
 		{
 			public void onButtonPressed(int b)
 			{
@@ -81,12 +82,15 @@ public class GuiSelectChannels extends GuiModule
 		});
 		
 		buttonNoChannel.customID = -1;
-		buttonNoChannel.title = CBChannel.channelToString(-1);
+		buttonNoChannel.title = CBChannel.NONE.name;
 		allChannels.add(buttonNoChannel);
 		
-		for(int i = 0; i < 16; i++)
+		for(int i = 0; i < cb.cable.controller.channels.length; i++)
 		{
-			ButtonLM b = new ButtonLM(this, 16 + i * 9, 24, 8, 8)
+			int bx = i % 16;
+			int by = i / 16;
+			
+			ButtonLM b = new ButtonLM(this, 16 + bx * 9, 20 + by * 9, 8, 8)
 			{
 				public void onButtonPressed(int b)
 				{
@@ -96,28 +100,7 @@ public class GuiSelectChannels extends GuiModule
 			};
 			
 			b.customID = i;
-			b.title = CBChannel.channelToString(b.customID);
-			
-			widgets.add(b);
-			allChannels.add(b);
-		}
-		
-		for(int i = 0; i < 64; i++)
-		{
-			int bx = i % 16;
-			int by = i / 16;
-			
-			ButtonLM b = new ButtonLM(this, 16 + bx * 9, 45 + by * 9, 8, 8)
-			{
-				public void onButtonPressed(int b)
-				{
-					playClickSound();
-					sendSetChannel(customID);
-				}
-			};
-			
-			b.customID = i + 16;
-			b.title = CBChannel.channelToString(b.customID);
+			b.title = cb.cable.controller.channels[b.customID].name;
 			
 			widgets.add(b);
 			allChannels.add(b);
@@ -148,20 +131,14 @@ public class GuiSelectChannels extends GuiModule
 			if(b.customID == ItemModule.getChannelID(module, board.items[moduleID], selectedChannel))
 				iconSelChannel.render(this, b.posX - 1, b.posY - 1, 10, 10);
 			
-			if(b.customID >= 0)
+			if(b.customID >= 0 && board.cable.controller != null)
 			{
-				if(b.customID < 16)
-				{
-					if(board.cable.channels[b.customID].isEnabled())
-						iconChannelEnabled.render(this, b.posX, b.posY, 8, 8);
-				}
-				else if(board.cable.controller != null)
-				{
-					if(board.cable.controller.channels[b.customID - 16].isEnabled())
-						iconChannelEnabled.render(this, b.posX, b.posY, 8, 8);
-				}
+				if(board.cable.controller.channels[b.customID].isEnabled())
+					iconChannelEnabled.render(this, b.posX, b.posY, 8, 8);
 			}
 		}
+		
+		iconBack.render(this, buttonBack.posX, buttonBack.posY, buttonBack.width, buttonBack.height);
 	}
 	
 	public void drawScreen(int mx, int my, float f)

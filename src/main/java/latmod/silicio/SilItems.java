@@ -31,6 +31,7 @@ public class SilItems
 		public static ItemStack EMPTY;
 		public static ItemStack INPUT;
 		public static ItemStack OUTPUT;
+		public static ItemStack LOGIC;
 		
 		public static ItemModule i_command_block;
 		public static ItemModule i_light_sensor;
@@ -58,6 +59,7 @@ public class SilItems
 		public static ItemModule i_gate_xor;
 		
 		public static ItemModule i_timer;
+		public static ItemModule i_sequencer;
 		
 		public static void init()
 		{
@@ -87,6 +89,7 @@ public class SilItems
 			i_gate_xor = new ItemModuleGateXOr("gate_xor").register();
 			
 			i_timer = new ItemModuleTimer("timer").register();
+			i_sequencer = new ItemModuleSequencer("sequencer").register();
 		}
 	}
 }

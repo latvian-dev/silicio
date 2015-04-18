@@ -13,9 +13,9 @@ public class ItemModuleGateOr extends ItemModuleLogic implements ISignalProvider
 		super(s);
 		
 		channelNames[0] = "Input 1";
-		channelNames[1] = "Input 1";
-		channelNames[2] = "Input 1";
-		channelNames[3] = "Input 1";
+		channelNames[1] = "Input 2";
+		channelNames[2] = "Input 3";
+		channelNames[3] = "Input 4";
 		channelNames[4] = "Output";
 	}
 	
@@ -27,7 +27,7 @@ public class ItemModuleGateOr extends ItemModuleLogic implements ISignalProvider
 	
 	public void loadRecipes()
 	{
-		mod.recipes.addShapelessRecipe(new ItemStack(this), SilItems.Modules.EMPTY, SilMat.SILICON, ODItems.REDSTONE, ODItems.REDSTONE);
+		mod.recipes.addShapelessRecipe(new ItemStack(this), SilItems.Modules.LOGIC, SilMat.SILICON, ODItems.REDSTONE);
 	}
 	
 	public void provideSignals(CircuitBoard cb, int MID)

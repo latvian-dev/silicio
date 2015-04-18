@@ -22,13 +22,14 @@ public class ItemModuleSignOutput extends ItemModuleIO implements IToggable
 			cs_text[i] = new ModuleCSString(i, "Line #" + (i + 1))
 			{
 				public boolean isValid(String s)
-				{ return s.length() <= 20; }
+				{ return s.length() < 20; }
 			};
 			
+			cs_text[i].defaultString = "~";
 			moduleConfig.add(cs_text[i]);
 		}
 		
-		cs_text[1].defaultString = "Test";
+		channelNames[0] = "Input";
 	}
 	
 	public int getChannelCount()
@@ -58,7 +59,10 @@ public class ItemModuleSignOutput extends ItemModuleIO implements IToggable
 			TileEntitySign tes = (TileEntitySign)te;
 			
 			for(int i = 0; i < 4; i++)
-				tes.signText[i] = cs_text[i].get(cb.items[MID]);
+			{
+				String s = cs_text[i].get(cb.items[MID]);
+				if(!s.equals("~")) tes.signText[i] = s;
+			}
 			
 			tes.markDirty();
 			tes.getWorldObj().markBlockForUpdate(tes.xCoord, tes.yCoord, tes.zCoord);

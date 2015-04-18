@@ -24,7 +24,7 @@ public class GuiCircuitBoard extends GuiLM
 			public void onButtonPressed(int b)
 			{
 				playClickSound();
-				board.cable.clientOpenGui(1);
+				board.cable.clientOpenGui(board.side.ordinal() + 6);
 			}
 		});
 		

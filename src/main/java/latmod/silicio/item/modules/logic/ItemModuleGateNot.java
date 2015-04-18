@@ -24,7 +24,7 @@ public class ItemModuleGateNot extends ItemModuleLogic implements ISignalProvide
 	
 	public void loadRecipes()
 	{
-		mod.recipes.addShapelessRecipe(new ItemStack(this), SilItems.Modules.EMPTY, SilMat.SILICON, Blocks.redstone_torch);
+		mod.recipes.addShapelessRecipe(new ItemStack(this), SilItems.Modules.LOGIC, SilMat.SILICON, Blocks.redstone_torch);
 	}
 	
 	public void provideSignals(CircuitBoard cb, int MID)

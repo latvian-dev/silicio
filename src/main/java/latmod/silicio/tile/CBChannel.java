@@ -6,42 +6,28 @@ import net.minecraft.nbt.NBTTagCompound;
 
 public final class CBChannel
 {
-	public static final CBChannel NONE = new CBChannel(-1);
-	
-	public static enum Type
-	{
-		NONE,
-		GLOBAL,
-		LOCAL;
-		
-		Type() {}
-		
-		public boolean canModify()
-		{ return this != NONE; }
-		
-		public static Type getFromID(int id)
-		{
-			if(id < 0) return NONE;
-			return (id >= 16) ? GLOBAL : LOCAL;
-		}
-	}
+	public static final CBChannel NONE = new CBChannel(-1, "IO Disabled");
 	
 	public final int ID;
-	public final Type type;
-	
+	public final EnumDyeColor color;
 	private boolean isEnabled;
+	public String name;
 	
-	private CBChannel(int id)
+	public CBChannel(int id, String s)
 	{
 		ID = id;
-		type = Type.getFromID(id);
+		color = (ID >= 0) ? EnumDyeColor.VALUES[ID % 16] : EnumDyeColor.BLACK;
+		name = (s != null && !s.isEmpty()) ? ("" + s) : getChannelName(ID);
 	}
 	
+	public static String getChannelName(int i) { if(i < 0) return NONE.name;
+	return (EnumDyeColor.VALUES[i % 16].toString() + " #" + (i / 16 + 1)); }
+	
 	public void enable()
-	{ if(type.canModify()) isEnabled = true; }
+	{ if(ID != -1) isEnabled = true; }
 	
 	public boolean isEnabled()
-	{ return type.canModify() ? isEnabled : false; }
+	{ return (ID != -1) && isEnabled; }
 	
 	public int hashCode()
 	{ return ID; }
@@ -51,37 +37,13 @@ public final class CBChannel
 	
 	public CBChannel copy()
 	{
-		CBChannel c = new CBChannel(ID);
+		CBChannel c = new CBChannel(ID, name);
 		c.isEnabled = isEnabled();
 		return c;
 	}
 	
 	public String toString()
-	{ return channelToString(ID); }
-	
-	public static String channelToString(int id)
-	{
-		Type t = Type.getFromID(id);
-		if(t == Type.NONE) return "IO Disabled";
-		String s = (t == Type.LOCAL) ? "Local " : "Global ";
-		s += CBChannel.getColor(id).toString();
-		if(t == Type.GLOBAL) s += " #" + (id / 16 + 1);
-		return s;
-	}
-	
-	public static EnumDyeColor getColor(int id)
-	{
-		if(id < 0) return EnumDyeColor.BLACK;
-		return EnumDyeColor.VALUES[id % 16];
-	}
-	
-	public static CBChannel[] create(int i, Type t)
-	{
-		CBChannel[] c = new CBChannel[i];
-		for(int j = 0; j < c.length; j++)
-		c[j] = new CBChannel((t == Type.LOCAL) ? j : (j + 16));
-		return c;
-	}
+	{ return name; }
 	
 	public FastList<CBChannel> getAllEnabled(CBChannel[] channels)
 	{
@@ -93,12 +55,6 @@ public final class CBChannel
 		return al;
 	}
 	
-	public static void clear(CBChannel[] channels)
-	{
-		for(int i = 0; i  < channels.length; i++)
-			channels[i].isEnabled = false;
-	}
-	
 	public static void readFromNBT(NBTTagCompound tag, String s, CBChannel[] channels)
 	{
 		clear(channels); int[] en = tag.getIntArray(s);
@@ -107,17 +63,28 @@ public final class CBChannel
 	
 	public static void writeToNBT(NBTTagCompound tag, String s, CBChannel[] channels)
 	{
-		FastList<Integer> en = new FastList<Integer>();
+		IntList en = new IntList();
 		for(int i = 0; i < channels.length; i++)
 		if(channels[i].isEnabled) en.add(i);
-		if(!en.isEmpty()) tag.setIntArray(s, Converter.toInts(en.toArray(new Integer[0])));
+		if(!en.isEmpty()) tag.setIntArray(s, en.array);
+	}
+	
+	public static void clear(CBChannel[] channels)
+	{
+		for(int i = 0; i  < channels.length; i++)
+			channels[i].isEnabled = false;
+	}
+	
+	public static CBChannel[] create(int l)
+	{
+		CBChannel[] c = new CBChannel[l];
+		for(int i = 0; i < l; i++) c[i] = new CBChannel(i, null);
+		return c;
 	}
 	
 	public static void copy(CBChannel[] from, CBChannel[] to)
 	{
-		if(from == null || to == null) return;
-		if(from.length != to.length) return;
-		for(int i = 0; i < from.length; i++)
-			to[i] = from[i].copy();
+		int l1 = Math.min(from.length, to.length);
+		for(int i = 0; i < l1; i++) to[i] = from[i].copy();
 	}
 }

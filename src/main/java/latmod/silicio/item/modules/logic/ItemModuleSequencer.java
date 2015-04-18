@@ -4,14 +4,14 @@ import latmod.silicio.SilItems;
 import latmod.silicio.item.modules.*;
 import latmod.silicio.item.modules.config.ModuleCSInt;
 import latmod.silicio.tile.CircuitBoard;
-import net.minecraft.init.*;
+import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 
-public class ItemModuleTimer extends ItemModuleLogic implements ISignalProvider
+public class ItemModuleSequencer extends ItemModuleLogic implements ISignalProvider
 {
 	public static final ModuleCSInt cs_timer = new ModuleCSInt(0, "Timer");
 	
-	public ItemModuleTimer(String s)
+	public ItemModuleSequencer(String s)
 	{
 		super(s);
 		
@@ -20,25 +20,32 @@ public class ItemModuleTimer extends ItemModuleLogic implements ISignalProvider
 		cs_timer.max = 48000;
 		moduleConfig.add(cs_timer);
 		
-		channelNames[0] = "Output";
-		channelNames[1] = "Input";
+		channelNames[0] = "Output 1";
+		channelNames[1] = "Output 2";
+		channelNames[2] = "Output 3";
+		channelNames[3] = "Output 4";
+		channelNames[4] = "Input";
 	}
 	
 	public int getChannelCount()
-	{ return 2; }
+	{ return 5; }
 	
 	public IOType getChannelType(int c)
-	{ return c == 0 ? IOType.OUTPUT : IOType.INPUT; }
+	{ return c == 4 ? IOType.INPUT : IOType.OUTPUT; }
 	
 	public void loadRecipes()
 	{
-		mod.recipes.addShapelessRecipe(new ItemStack(this), SilItems.Modules.LOGIC, Items.clock, Blocks.redstone_torch);
+		mod.recipes.addRecipe(new ItemStack(this), " R ", "RTR", " R ", 
+				'T', SilItems.Modules.i_timer,
+				'R', Blocks.redstone_torch);
 	}
 	
 	public void provideSignals(CircuitBoard cb, int MID)
 	{
+		if(getChannel(cb, MID, 4).isEnabled()) return;
+		
 		int t = cs_timer.get(cb.items[MID]);
-		if(cb.tick % t == 0L && !getChannel(cb, MID, 1).isEnabled())
-			getChannel(cb, MID, 0).enable();
+		int p = (int)((cb.tick / t) % 4L);
+		getChannel(cb, MID, p).enable();
 	}
 }

@@ -20,7 +20,8 @@ public class ItemMaterialsSil extends ItemMaterials
 			"gemSilicon",
 			"dustSilicon",
 			"circuit",
-			"laserCrystal"
+			"laserCrystal",
+			"logicModule",
 		};
 	}
 	
@@ -44,6 +45,7 @@ public class ItemMaterialsSil extends ItemMaterials
 		SilMat.SILICON_DUST = new ItemStack(this, 1, 4);
 		SilMat.CIRCUIT = new ItemStack(this, 1, 5);
 		SilMat.LASER_CRYSTAL = new ItemStack(this, 1, 6);
+		SilItems.Modules.LOGIC = new ItemStack(this, 1, 7);
 	}
 	
 	public void loadRecipes()
@@ -54,5 +56,7 @@ public class ItemMaterialsSil extends ItemMaterials
 				'C', SilItems.b_cbcable,
 				'S', SilMat.SILICON,
 				'I', ODItems.IRON);
+		
+		mod.recipes.addShapelessRecipe(SilItems.Modules.LOGIC, SilItems.Modules.EMPTY, SilMat.SILICON, ODItems.QUARTZ, ODItems.REDSTONE);
 	}
 }

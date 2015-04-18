@@ -14,6 +14,7 @@ silicio:item.mat.gearSilicon.name=Silicon Gear
 silicio:item.mat.emptyModule.name=Empty Module
 silicio:item.mat.inputModule.name=Empty Input Module
 silicio:item.mat.outputModule.name=Empty Output Module
+silicio:item.mat.logicModule.name=Empty Logic Module
 silicio:item.mat.circuit.name=Integrated Circuit
 silicio:item.mat.laserCrystal.name=Laser Crystal
 

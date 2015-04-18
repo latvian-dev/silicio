@@ -58,7 +58,7 @@ public class GuiModuleSettings extends GuiModule
 			public void onButtonPressed(int b)
 			{
 				playClickSound();
-				board.cable.clientOpenGui(1);
+				board.cable.clientOpenGui(board.side.ordinal() + 6);
 			}
 		});
 		

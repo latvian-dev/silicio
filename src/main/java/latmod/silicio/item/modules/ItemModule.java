@@ -1,6 +1,6 @@
 package latmod.silicio.item.modules;
-import latmod.core.LatCoreMC;
-import latmod.core.util.FastList;
+import latmod.core.*;
+import latmod.core.util.*;
 import latmod.silicio.item.ItemSil;
 import latmod.silicio.item.modules.config.ModuleConfigSegment;
 import latmod.silicio.item.modules.io.ItemModuleIO;
@@ -94,15 +94,21 @@ public abstract class ItemModule extends ItemSil implements ICBModule
 		if(!is.hasTagCompound())
 			is.stackTagCompound = new NBTTagCompound();
 		
-		byte[] channels = is.stackTagCompound.getByteArray(NBT_TAG);
+		if(is.stackTagCompound.func_150299_b(NBT_TAG) == NBTHelper.BYTE_ARRAY)
+		{
+			byte[] b = is.stackTagCompound.getByteArray(NBT_TAG);
+			is.stackTagCompound.setIntArray(NBT_TAG, Converter.toInts(b));
+		}
+		
+		int[] channels = is.stackTagCompound.getIntArray(NBT_TAG);
 		
 		if(channels.length == 0)
 		{
-			channels = new byte[m.getChannelCount()];
+			channels = new int[m.getChannelCount()];
 			for(int i = 0; i < channels.length; i++)
-				channels[i] = -1;
+				channels[i] = CBChannel.NONE.ID;
 			
-			is.stackTagCompound.setByteArray(NBT_TAG, channels);
+			is.stackTagCompound.setIntArray(NBT_TAG, channels);
 		}
 		
 		return channels[c];
@@ -111,17 +117,15 @@ public abstract class ItemModule extends ItemSil implements ICBModule
 	public final CBChannel getChannel(CircuitBoard cb, int MID, int c)
 	{
 		int ch = getChannelID(this, cb.items[MID], c);
-		if(ch < 0) return CBChannel.NONE;
-		if(ch < 16) return cb.cable.channels[ch];
-		if(cb.cable.controller == null) return CBChannel.NONE;
-		return cb.cable.controller.channels[ch - 16];
+		if(ch < 0 || cb.cable.controller == null || ch >= cb.cable.controller.channels.length) return CBChannel.NONE;
+		return cb.cable.controller.channels[ch];
 	}
 	
-	public final void setChannel(CircuitBoard cb, int MID, int c, byte ch)
+	public final void setChannel(CircuitBoard cb, int MID, int c, int ch)
 	{
 		getChannel(cb, MID, c);
-		byte[] channels = cb.items[MID].stackTagCompound.getByteArray(NBT_TAG);
+		int[] channels = cb.items[MID].stackTagCompound.getIntArray(NBT_TAG);
 		channels[c] = ch;
-		cb.items[MID].stackTagCompound.setByteArray(NBT_TAG, channels);
+		cb.items[MID].stackTagCompound.setIntArray(NBT_TAG, channels);
 	}
 }

@@ -37,8 +37,8 @@ public class TileCBController extends TileLM implements ICBNetTile, IEnergyHandl
 		allModules = new FastMap<CircuitBoard, FastMap<Integer, ICBModule>>();
 		invNetwork = new FastList<InvEntry>();
 		tankNetwork = new FastList<TankEntry>();
-		channels = CBChannel.create(64, CBChannel.Type.GLOBAL);
-		prevChannels = CBChannel.create(64, CBChannel.Type.GLOBAL);
+		channels = CBChannel.create(128);
+		prevChannels = CBChannel.create(128);
 	}
 	
 	public boolean rerenderBlock()
