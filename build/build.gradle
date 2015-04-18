@@ -1,6 +1,6 @@
-def mod_name = "SiliconAge";
-def mod_group = "latmod.siliconage";
-def mod_class = "SiliconAge.java";
+def mod_name = "Silicio";
+def mod_group = "latmod.silicio";
+def mod_class = "Silicio.java";
 
 buildscript {
     repositories {
@@ -43,6 +43,9 @@ minecraft {
 
 dependencies {
     compile files("sources/Exported/LatCoreMC-" + config.version_mc + "-" + config.version_mods + "-dev.jar")
+    compile files(config.mods_dir + "unused/CoFHCore-dev.jar")
+    compile files(config.mods_dir + "unused/ThermalFoundation-dev.jar")
+    compile files(config.mods_dir + "unused/ThermalExpansion-dev.jar")
 }
 
 sourceSets {
