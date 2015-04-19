@@ -2,7 +2,7 @@ package latmod.silicio.tile;
 
 import java.util.List;
 
-import latmod.core.InvUtils;
+import latmod.core.*;
 import latmod.core.tile.*;
 import latmod.core.util.*;
 import latmod.silicio.item.modules.*;
@@ -155,8 +155,19 @@ public class TileCBController extends TileLM implements ICBNetTile, IEnergyHandl
 		invNetwork.clear();
 		tankNetwork.clear();
 		
-		addToList(xCoord, yCoord, zCoord);
-		network.remove(this);
+		try
+		{
+			addToList(xCoord, yCoord, zCoord);
+			network.remove(this);
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+			LatCoreMC.printChat(null, "CBController @ " + LatCore.stripInt(xCoord, yCoord, zCoord) + " crashed!", true);
+			
+			if(worldObj.setBlockToAir(xCoord, yCoord, zCoord))
+				InvUtils.dropItem(worldObj, xCoord, yCoord, zCoord, new ItemStack(getBlockType(), 1, getBlockMetadata()), 10);
+		}
 		
 		if(pHasConflict != hasConflict)
 			markDirty();
@@ -331,4 +342,9 @@ public class TileCBController extends TileLM implements ICBNetTile, IEnergyHandl
 	
 	public boolean isDisabled(int side)
 	{ return false; }
+	
+	public ItemStack requestItem(ItemStack item, boolean reduce)
+	{
+		return null;
+	}
 }

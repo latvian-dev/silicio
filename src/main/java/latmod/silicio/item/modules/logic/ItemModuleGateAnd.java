@@ -1,7 +1,7 @@
 package latmod.silicio.item.modules.logic;
 
 import latmod.core.ODItems;
-import latmod.silicio.*;
+import latmod.silicio.SilItems;
 import latmod.silicio.item.modules.*;
 import latmod.silicio.tile.*;
 import net.minecraft.item.ItemStack;

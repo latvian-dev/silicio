@@ -2,9 +2,9 @@ package latmod.silicio.gui;
 
 import latmod.core.gui.*;
 import latmod.core.util.Converter;
-import latmod.silicio.item.modules.config.*;
+import latmod.silicio.item.modules.config.ModuleCSInt;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.*;
+import net.minecraft.util.EnumChatFormatting;
 import cpw.mods.fml.relauncher.*;
 
 @SideOnly(Side.CLIENT)

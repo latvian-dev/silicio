@@ -5,14 +5,13 @@ import latmod.core.mod.LC;
 import latmod.core.util.FastList;
 import latmod.silicio.item.modules.*;
 import latmod.silicio.tile.*;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ResourceLocation;
 import cpw.mods.fml.relauncher.*;
 
 @SideOnly(Side.CLIENT)
-public class GuiSelectChannels extends GuiModule
+public class GuiSelectChannels extends GuiLM
 {
-	public static final ResourceLocation thisTex = getTex("selectChannel.png");
+	public static final ResourceLocation thisTex = GuiModule.getTex("selectChannel.png");
 	public static final TextureCoords iconSelChannel = new TextureCoords(thisTex, 180, 0);
 	public static final TextureCoords iconInput = new TextureCoords(thisTex, 180, 10);
 	public static final TextureCoords iconOutput = new TextureCoords(thisTex, 180, 18);
@@ -31,27 +30,28 @@ public class GuiSelectChannels extends GuiModule
 	
 	public int selectedChannel = 0;
 	
-	public GuiSelectChannels(EntityPlayer ep, CircuitBoard cb, ICBModule m, int id)
+	public GuiSelectChannels(ContainerEmpty c, int id)
 	{
-		super(ep, thisTex);
+		super(c, thisTex);
+		
 		xSize = 166;
 		ySize = 98;
-		board = cb;
-		module = m;
+		board = (CircuitBoard)c.inv;
 		moduleID = id;
+		module = board.getModule(moduleID);
 		
 		widgets.add(buttonBack = new ButtonLM(this, 166, 2, 14, 18)
 		{
 			public void onButtonPressed(int b)
 			{
-				mc.displayGuiScreen(new GuiModuleSettings(container.player, board, module, moduleID));
+				board.cable.clientOpenGui(TileCBCable.guiData(board.side.ordinal(), 2, moduleID));
 				playClickSound();
 			}
 		});
 		
 		buttonBack.title = LC.mod.translate("button.back");
 		
-		int chCount = m.getChannelCount();
+		int chCount = module.getChannelCount();
 		if(chCount > 16) chCount = 16;
 		
 		buttonSelectChannel = new ButtonLM[chCount];
@@ -85,7 +85,7 @@ public class GuiSelectChannels extends GuiModule
 		buttonNoChannel.title = CBChannel.NONE.name;
 		allChannels.add(buttonNoChannel);
 		
-		for(int i = 0; i < cb.cable.controller.channels.length; i++)
+		for(int i = 0; i < board.cable.controller.channels.length; i++)
 		{
 			int bx = i % 16;
 			int by = i / 16;
@@ -100,7 +100,7 @@ public class GuiSelectChannels extends GuiModule
 			};
 			
 			b.customID = i;
-			b.title = cb.cable.controller.channels[b.customID].name;
+			b.title = board.cable.controller.channels[b.customID].name;
 			
 			widgets.add(b);
 			allChannels.add(b);

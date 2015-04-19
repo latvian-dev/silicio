@@ -33,7 +33,9 @@ public abstract class ModuleConfigSegment
 	@SideOnly(Side.CLIENT)
 	public abstract void buttonClicked(GuiModuleSettings g);
 	public abstract void onConfigReceived(CircuitBoard cb, int MID, NBTTagCompound data);
-	public abstract void addButtonDesc(CircuitBoard cb, int MID, FastList<String> s);
+	
+	@SideOnly(Side.CLIENT)
+	public abstract void addButtonDesc(GuiModuleSettings g, FastList<String> s);
 	
 	public final void clientConfig(CircuitBoard cb, int MID, NBTTagCompound tag)
 	{ cb.cable.clientModuleConfig(cb, MID, ID, tag); }

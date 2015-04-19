@@ -39,8 +39,9 @@ public class ModuleCSFloat extends ModuleConfigSegment
 		setData(is, tag);
 	}
 	
-	public void addButtonDesc(CircuitBoard cb, int MID, FastList<String> s)
-	{ s.add("" + get(cb.items[MID])); }
+	@SideOnly(Side.CLIENT)
+	public void addButtonDesc(GuiModuleSettings g, FastList<String> s)
+	{ s.add("" + get(g.board.items[g.moduleID])); }
 	
 	public boolean isValid(float f)
 	{ return f >= min && f <= max; }

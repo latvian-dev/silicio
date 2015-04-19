@@ -13,20 +13,16 @@ import net.minecraft.tileentity.TileEntity;
 
 public class ItemModuleItemStorage extends ItemModuleIO
 {
-	public static final ModuleCSItem cs_filter = new ModuleCSItem(0, "Filter");
-	public static final ModuleCSInt cs_priority = new ModuleCSInt(1, "Priority");
-	public static final ModuleCSBool cs_use_dmg = new ModuleCSBool(2, "Use Damage");
-	public static final ModuleCSBool cs_use_nbt = new ModuleCSBool(3, "Use NBT");
+	public static final ModuleCSInt cs_priority = new ModuleCSInt(0, "Priority");
+	public static final ModuleCSItem cs_filter = new ModuleCSItem(1, "Filter");
 	
 	public ItemModuleItemStorage(String s)
 	{
 		super(s);
 		setTextureName("item");
 		
-		moduleConfig.add(cs_filter);
 		moduleConfig.add(cs_priority);
-		moduleConfig.add(cs_use_dmg);
-		moduleConfig.add(cs_use_nbt);
+		moduleConfig.add(cs_filter);
 	}
 	
 	public int getChannelCount()
@@ -54,20 +50,7 @@ public class ItemModuleItemStorage extends ItemModuleIO
 		if(c != CBChannel.NONE && !c.isEnabled()) return;
 		
 		TileEntity te = cb.getFacingTile();
-		
 		if(te != null && !te.isInvalid() && te instanceof IInventory)
-		{
-			InvEntry e = new InvEntry
-			(
-					(IInventory)te,
-					cb.sideOpposite.ordinal(),
-					cs_priority.get(cb.items[MID]),
-					cs_filter.get(cb.items[MID]),
-					cs_use_dmg.get(cb.items[MID]),
-					cs_use_nbt.get(cb.items[MID])
-			);
-			
-			list.add(e);
-		}
+			list.add(new InvEntry((IInventory)te, cb.sideOpposite.ordinal(), cs_priority.get(cb.items[MID]), cs_filter.getItem(cb.items[MID])));
 	}
 }

@@ -47,7 +47,7 @@ public class ItemModulePainter extends ItemModuleIO implements IToggable
 		{
 			Paint p = null;
 			
-			ItemStack isp = cs_paint.get(cb.items[MID]);
+			ItemStack isp = cs_paint.getItem(cb.items[MID]);
 			
 			if(isp != null && isp.getItem() instanceof ItemBlock)
 				p = new Paint(Block.getBlockFromItem(isp.getItem()), isp.getItemDamage());

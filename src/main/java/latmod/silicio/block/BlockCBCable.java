@@ -3,7 +3,7 @@ import java.util.List;
 
 import latmod.core.ODItems;
 import latmod.core.tile.TileLM;
-import latmod.core.util.MathHelperLM;
+import latmod.core.util.*;
 import latmod.silicio.SilMat;
 import latmod.silicio.client.render.world.RenderCBCable;
 import latmod.silicio.tile.TileCBCable;
@@ -55,20 +55,15 @@ public class BlockCBCable extends BlockSil
 	
 	public void loadRecipes()
 	{
-		if(ODItems.hasOre(ODItems.RUBBER))
-		{
-			mod.recipes.addRecipe(new ItemStack(this, 16), "RRR", "SES", "RRR",
-					'R', ODItems.RUBBER,
-					'E', ODItems.SILVER,
-					'S', SilMat.SILICON_DUST);
-		}
-		else
-		{
-			mod.recipes.addRecipe(new ItemStack(this, 16), "RRR", "SES", "RRR",
-					'R', ODItems.SLIMEBALL,
-					'E', ODItems.SILVER,
-					'S', SilMat.SILICON_DUST);
-		}
+		String oreName = "sheetPlastic";
+		
+		if(!ODItems.hasOre(oreName)) oreName = ODItems.RUBBER;
+		if(!ODItems.hasOre(oreName)) oreName = ODItems.SLIMEBALL;
+		
+		mod.recipes.addRecipe(new ItemStack(this, 16), "RRR", "SES", "RRR",
+				'R', oreName,
+				'E', ODItems.LAPIS,
+				'S', SilMat.SILICON_DUST);
 	}
 	
 	public void setBlockBoundsForItemRender()
@@ -80,7 +75,45 @@ public class BlockCBCable extends BlockSil
 	@SuppressWarnings("all")
 	public void addCollisionBoxesToList(World w, int x, int y, int z, AxisAlignedBB bb, List l, Entity e)
 	{
-		super.addCollisionBoxesToList(w, x, y, z, bb, l, e);
+		FastList<AxisAlignedBB> boxes1 = new FastList<AxisAlignedBB>();
+		
+		float s = pipeBorder;
+		
+		boxes1.add(AxisAlignedBB.getBoundingBox(s, s, s, 1F - s, 1F - s, 1F - s));
+		
+		TileEntity te = w.getTileEntity(x, y, z);
+		
+		if(te != null && te instanceof TileCBCable)
+		{
+			TileCBCable t = (TileCBCable)te;
+			
+			if(t.isInvalid() || t.hasCover)
+			{
+				boxes1.add(AxisAlignedBB.getBoundingBox(0F, 0F, 0F, 1F, 1F, 1F));
+			}
+			else
+			{
+				boolean x0 = TileCBCable.connectCable(t, 4) || t.boards[4] != null;
+				boolean x1 = TileCBCable.connectCable(t, 5) || t.boards[5] != null;
+				boolean y0 = TileCBCable.connectCable(t, 0) || t.boards[0] != null;
+				boolean y1 = TileCBCable.connectCable(t, 1) || t.boards[1] != null;
+				boolean z0 = TileCBCable.connectCable(t, 2) || t.boards[2] != null;
+				boolean z1 = TileCBCable.connectCable(t, 3) || t.boards[3] != null;
+				
+				if(x0) boxes1.add(AxisAlignedBB.getBoundingBox(0F, s, s, s, 1F - s, 1F - s));
+				if(x1) boxes1.add(AxisAlignedBB.getBoundingBox(1F - s, s, s, 1F, 1F - s, 1F - s));
+				if(y0) boxes1.add(AxisAlignedBB.getBoundingBox(s, 0F, s, 1F - s, s, 1F - s));
+				if(y1) boxes1.add(AxisAlignedBB.getBoundingBox(s, 1F - s, s, 1F - s, 1F, 1F - s));
+				if(z0) boxes1.add(AxisAlignedBB.getBoundingBox(s, s, 0F, 1F - s, 1F - s, s));
+				if(z1) boxes1.add(AxisAlignedBB.getBoundingBox(s, s, 1F - s, 1F - s, 1F - s, 1F));
+			}
+		}
+		
+		for(AxisAlignedBB bb1 : boxes1)
+		{
+			AxisAlignedBB bb2 = bb1.getOffsetBoundingBox(x, y, z);
+			if(bb.intersectsWith(bb2)) l.add(bb2);
+		}
 	}
 	
 	public void setBlockBoundsBasedOnState(IBlockAccess iba, int x, int y, int z)

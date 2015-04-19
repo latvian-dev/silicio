@@ -4,7 +4,7 @@ import latmod.core.mod.LC;
 import latmod.silicio.Silicio;
 import latmod.silicio.gui.container.ContainerCircuitBoardSettings;
 import latmod.silicio.item.modules.ICBModule;
-import latmod.silicio.tile.CircuitBoard;
+import latmod.silicio.tile.*;
 import cpw.mods.fml.relauncher.*;
 
 @SideOnly(Side.CLIENT)
@@ -26,7 +26,7 @@ public class GuiCircuitBoardSettings extends GuiLM
 			public void onButtonPressed(int b)
 			{
 				playClickSound();
-				board.cable.clientOpenGui(board.side.ordinal());
+				board.cable.clientOpenGui(TileCBCable.guiData(board.side.ordinal(), 0, -1));
 			}
 		});
 		
@@ -46,7 +46,7 @@ public class GuiCircuitBoardSettings extends GuiLM
 					public void onButtonPressed(int b)
 					{
 						playClickSound();
-						mc.displayGuiScreen(new GuiModuleSettings(container.player, board, (ICBModule)board.items[id].getItem(), id));
+						board.cable.clientOpenGui(TileCBCable.guiData(board.side.ordinal(), 2, id));
 					}
 				};
 				

@@ -1,20 +1,22 @@
 package latmod.silicio.item.modules.io;
 
-import latmod.core.InvUtils;
 import latmod.silicio.SilItems;
 import latmod.silicio.item.modules.IOType;
-import latmod.silicio.tile.*;
-import net.minecraft.inventory.*;
+import latmod.silicio.item.modules.config.ModuleCSItem;
+import latmod.silicio.tile.CircuitBoard;
 import net.minecraft.item.ItemStack;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraftforge.common.util.ForgeDirection;
 
 public class ItemModuleItemInput extends ItemModuleIO
 {
+	public static final ModuleCSItem cs_filter = new ModuleCSItem(0, "Filter");
+	
 	public ItemModuleItemInput(String s)
 	{
 		super(s);
 		setTextureName("item");
+		
+		moduleConfig.add(cs_filter);
+		channelNames[0] = "Input";
 	}
 	
 	public int getChannelCount()
@@ -35,6 +37,7 @@ public class ItemModuleItemInput extends ItemModuleIO
 	
 	public void onUpdate(CircuitBoard cb, int MID)
 	{
+		/*
 		if(cb.tick % 4 == 0 && cb.cable.isServer())
 		{
 			CBChannel c = getChannel(cb, MID, 0);
@@ -76,5 +79,6 @@ public class ItemModuleItemInput extends ItemModuleIO
 				}
 			}
 		}
+		*/
 	}
 }

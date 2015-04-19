@@ -84,10 +84,8 @@ public class RenderCBCable extends BlockRendererLM
 	public void renderInventoryBlock(Block block, int metadata, int modelId, RenderBlocks renderer0)
 	{
 		renderBlocks.setOverrideBlockTexture(SilItems.b_cbcable.getBlockIcon());
-		
-		double s = BlockCBCable.pipeBorder;
-		renderBlocks.setRenderBounds(s, s, 0D, 1D - s, 1D - s, 1D);
-		
+		block.setBlockBoundsForItemRender();
+		renderBlocks.setRenderBoundsFromBlock(block);
 		renderBlocks.renderBlockAsItem(block, metadata, 1F);
 	}
 	

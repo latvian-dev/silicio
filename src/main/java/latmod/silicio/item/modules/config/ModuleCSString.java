@@ -35,8 +35,9 @@ public class ModuleCSString extends ModuleConfigSegment
 		setData(is, tag);
 	}
 	
-	public void addButtonDesc(CircuitBoard cb, int MID, FastList<String> s)
-	{ String s1 = get(cb.items[MID]); if(!s1.isEmpty()) s.add(s1); }
+	@SideOnly(Side.CLIENT)
+	public void addButtonDesc(GuiModuleSettings g, FastList<String> s)
+	{ String s1 = get(g.board.items[g.moduleID]); if(!s1.isEmpty()) s.add(s1); }
 	
 	public boolean isValid(String s)
 	{ return true; }

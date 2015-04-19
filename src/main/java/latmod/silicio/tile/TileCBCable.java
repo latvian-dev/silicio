@@ -2,6 +2,7 @@ package latmod.silicio.tile;
 import java.util.*;
 
 import latmod.core.*;
+import latmod.core.gui.ContainerEmpty;
 import latmod.core.mod.LC;
 import latmod.core.tile.*;
 import latmod.core.util.*;
@@ -214,7 +215,15 @@ public class TileCBCable extends TileLM implements IPaintable, ICBNetTile, IGuiT
 			}
 			
 			if(mop != null && mop.subHit >= 0 && mop.subHit <= 6)
+			{
 				id = (mop.subHit == 6) ? mop.sideHit : mop.subHit;
+				
+				if(mop.subHit == 6 && ep.isSneaking() && LatCoreMC.isWrench(is))
+				{
+					if(worldObj.setBlockToAir(xCoord, yCoord, zCoord))
+						InvUtils.dropItem(worldObj, xCoord + 0.5D, yCoord + 0.5D, zCoord + 0.5D, new ItemStack(SilItems.b_cbcable), 8);
+				}
+			}
 		}
 		else id = side;
 		
@@ -270,7 +279,7 @@ public class TileCBCable extends TileLM implements IPaintable, ICBNetTile, IGuiT
 			}
 			else
 			{
-				LatCoreMC.openGui(ep, this, id);
+				LatCoreMC.openGui(ep, this, guiData(id, 0, -1));
 			}
 		}
 		
@@ -300,12 +309,10 @@ public class TileCBCable extends TileLM implements IPaintable, ICBNetTile, IGuiT
 	
 	public boolean isAABBEnabled(int i)
 	{
-		if(i == 6) return true;
-		
-		if(boards[i] != null) return true;
+		if(i == 6 || boards[i] != null) return true;
 		
 		Block block = worldObj.getBlock(xCoord + Facing.offsetsXForSide[i], yCoord + Facing.offsetsYForSide[i], zCoord + Facing.offsetsZForSide[i]);
-		if(block == SilItems.b_cbcable) return true;
+		if(block == SilItems.b_cbcable || block == SilItems.b_cbcontroller) return true;
 		
 		EntityPlayer clientP = LC.proxy.getClientPlayer();
 		
@@ -322,28 +329,48 @@ public class TileCBCable extends TileLM implements IPaintable, ICBNetTile, IGuiT
 	public double getRelStoredEnergy()
 	{ return (controller == null || controller.isInvalid()) ? 0D : (controller.storage.getEnergyStored() / (double)controller.storage.getMaxEnergyStored()); }
 	
-	public Container getContainer(EntityPlayer ep, int ID)
+	public static NBTTagCompound guiData(int side, int gui, int module)
 	{
-		CircuitBoard cb = getBoard(ID % 6);
+		NBTTagCompound data = new NBTTagCompound();
+		data.setByte("Side", (byte)side);
+		data.setByte("Gui", (byte)gui);
+		if(module > 0) data.setByte("MID", (byte)module);
+		return data;
+	}
+	
+	public Container getContainer(EntityPlayer ep, NBTTagCompound data)
+	{
+		int side = data.getByte("Side");
+		int gui = data.getByte("Gui");
 		
-		if(cb != null)
+		CircuitBoard t = getBoard(side);
+		
+		if(t != null)
 		{
-			if(ID / 6 == 0) return new ContainerCircuitBoard(ep, cb);
-			else return new ContainerCircuitBoardSettings(ep, cb);
+			if(gui == 0) return new ContainerCircuitBoard(ep, t);
+			else if(gui == 1) return new ContainerCircuitBoardSettings(ep, t);
+			else if(gui == 2) return new ContainerModuleSettings(ep, t);
+			else if(gui == 3) return new ContainerEmpty(ep, t);
 		}
 		
 		return null;
 	}
 	
 	@SideOnly(Side.CLIENT)
-	public GuiScreen getGui(EntityPlayer ep, int ID)
+	public GuiScreen getGui(EntityPlayer ep, NBTTagCompound data)
 	{
-		CircuitBoard cb = getBoard(ID % 6);
+		int side = data.getByte("Side");
+		int gui = data.getByte("Gui");
+		int moduleID = data.getByte("MID");
+		
+		CircuitBoard cb = getBoard(side);
 		
 		if(cb != null)
 		{
-			if(ID / 6 == 0) return new GuiCircuitBoard(new ContainerCircuitBoard(ep, cb));
-			else return new GuiCircuitBoardSettings(new ContainerCircuitBoardSettings(ep, cb));
+			if(gui == 0) return new GuiCircuitBoard(new ContainerCircuitBoard(ep, cb));
+			else if(gui == 1) return new GuiCircuitBoardSettings(new ContainerCircuitBoardSettings(ep, cb));
+			else if(gui == 2) return new GuiModuleSettings(new ContainerModuleSettings(ep, cb), moduleID);
+			else if(gui == 3) return new GuiSelectChannels(new ContainerEmpty(ep, cb), moduleID);
 		}
 		
 		return null;
