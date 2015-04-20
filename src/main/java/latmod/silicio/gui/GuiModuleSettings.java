@@ -33,6 +33,8 @@ public class GuiModuleSettings extends GuiLM
 	public ButtonLM buttonChannels;
 	public ButtonLM buttonBack;
 	
+	public ButtonLM buttonClicked;
+	
 	public FastList<ButtonLM> buttonsConfig;
 	
 	private static RenderItem renderItem = new RenderItem();
@@ -80,6 +82,7 @@ public class GuiModuleSettings extends GuiLM
 				public void onButtonPressed(int b)
 				{
 					playClickSound();
+					buttonClicked = this;
 					mcs.buttonClicked(GuiModuleSettings.this);
 				}
 				
@@ -121,16 +124,21 @@ public class GuiModuleSettings extends GuiLM
 		{
 			if(b.background instanceof ItemStack)
 			{
+				GL11.glPushMatrix();
+				GL11.glTranslatef(b.posX + guiLeft + 2.5F, b.posY + guiTop + 2.5F, 0F);
+				GL11.glPushAttrib(GL11.GL_ENABLE_BIT);
 				RenderHelper.enableGUIStandardItemLighting();
 				GL11.glDisable(GL11.GL_LIGHTING);
 				GL11.glEnable(GL12.GL_RESCALE_NORMAL);
 				GL11.glEnable(GL11.GL_COLOR_MATERIAL);
 				GL11.glEnable(GL11.GL_LIGHTING);
-				renderItem.renderItemIntoGUI(mc.fontRenderer, mc.getTextureManager(), (ItemStack)b.background, b.posX, b.posY, false);
-				renderItem.renderItemOverlayIntoGUI(mc.fontRenderer, mc.getTextureManager(), (ItemStack)b.background, b.posX, b.posY);
+				renderItem.renderItemIntoGUI(mc.fontRenderer, mc.getTextureManager(), (ItemStack)b.background, 0, 0, false);
+				renderItem.renderItemOverlayIntoGUI(mc.fontRenderer, mc.getTextureManager(), (ItemStack)b.background, 0, 0);
 				GL11.glDisable(GL11.GL_LIGHTING);
 				GL11.glDepthMask(true);
 				GL11.glEnable(GL11.GL_DEPTH_TEST);
+				GL11.glPopAttrib();
+				GL11.glPopMatrix();
 			}
 			else b.render(b.background);
 		}

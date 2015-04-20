@@ -319,8 +319,7 @@ public class TileCBCable extends TileLM implements IPaintable, ICBNetTile, IGuiT
 		if(clientP != null && clientP.getHeldItem() != null)
 		{
 			Item item = clientP.getHeldItem().getItem();
-			
-			if((item == SilItems.i_circuit_board && block != Blocks.air) || (SilMat.coverBlock != null && InvUtils.itemsEquals(clientP.getHeldItem(), SilMat.coverBlock, false, true))) return true;
+			if((item == SilItems.i_circuit_board && block != Blocks.air)) return true;
 		}
 		
 		return false;
