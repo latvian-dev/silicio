@@ -34,7 +34,6 @@ public class GuiCircuitBoard extends GuiLM
 	public void drawGuiContainerBackgroundLayer(float f, int mx, int my)
 	{
 		super.drawGuiContainerBackgroundLayer(f, mx, my);
-		
 		buttonSettings.render(Icons.settings);
 	}
 }

@@ -1,7 +1,7 @@
 package latmod.silicio.tile;
-import latmod.core.InvUtils;
+import latmod.core.*;
 import latmod.core.util.FastMap;
-import latmod.silicio.item.modules.ICBModule;
+import latmod.silicio.item.modules.*;
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;

@@ -65,15 +65,9 @@ public class GuiCSInt extends GuiModule
 		textBox.text = "" + c.get(parent.board.items[parent.moduleID]);
 	}
 	
-	public void drawGuiContainerBackgroundLayer(float f, int mx, int my)
-	{
-		super.drawGuiContainerBackgroundLayer(f, mx, my);
-	}
-	
 	public void drawScreen(int mx, int my, float f)
 	{
 		super.drawScreen(mx, my, f);
-		
 		textBox.render(12, 13, 0xFFFFFFFF);
 	}
 }

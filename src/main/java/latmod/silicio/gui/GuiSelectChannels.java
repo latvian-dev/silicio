@@ -2,7 +2,6 @@ package latmod.silicio.gui;
 
 import latmod.core.gui.*;
 import latmod.core.mod.LC;
-import latmod.core.util.FastList;
 import latmod.silicio.item.modules.*;
 import latmod.silicio.tile.*;
 import net.minecraft.util.ResourceLocation;
@@ -24,11 +23,10 @@ public class GuiSelectChannels extends GuiLM
 	public int moduleID;
 	
 	public ButtonLM buttonBack;
-	public ButtonLM buttonNoChannel;
-	public ButtonLM[] buttonSelectChannel;
-	public FastList<ButtonLM> allChannels = new FastList<ButtonLM>();
+	public ButtonLM[] buttonSelectIO;
+	public ButtonLM[] allChannels;
 	
-	public int selectedChannel = 0;
+	public int selectedIO = 0;
 	
 	public GuiSelectChannels(ContainerEmpty c, int id)
 	{
@@ -54,43 +52,28 @@ public class GuiSelectChannels extends GuiLM
 		int chCount = module.getChannelCount();
 		if(chCount > 16) chCount = 16;
 		
-		buttonSelectChannel = new ButtonLM[chCount];
+		buttonSelectIO = new ButtonLM[chCount];
 		
 		for(int i = 0; i < chCount; i++)
 		{
-			buttonSelectChannel[i] = new ButtonLM(this, 7 + i * 9, 7, 8, 8)
+			buttonSelectIO[i] = new ButtonLM(this, 7 + i * 9, 7, 8, 8)
 			{
 				public void onButtonPressed(int b)
 				{
-					selectedChannel = customID;
+					selectedIO = customID;
 					playClickSound();
 				}
 			};
 			
-			buttonSelectChannel[i].customID = i;
-			buttonSelectChannel[i].title = module.getChannelName(i);
-			widgets.add(buttonSelectChannel[i]);
+			buttonSelectIO[i].customID = i;
+			buttonSelectIO[i].title = module.getChannelName(i);
+			widgets.add(buttonSelectIO[i]);
 		}
 		
-		widgets.add(buttonNoChannel = new ButtonLM(this, 151, 7, 8, 8)
-		{
-			public void onButtonPressed(int b)
-			{
-				playClickSound();
-				sendSetChannel(customID);
-			}
-		});
+		allChannels = new ButtonLM[board.cable.controller.channels.length + 1];
 		
-		buttonNoChannel.customID = -1;
-		buttonNoChannel.title = CBChannel.NONE.name;
-		allChannels.add(buttonNoChannel);
-		
-		for(int i = 0; i < board.cable.controller.channels.length; i++)
 		{
-			int bx = i % 16;
-			int by = i / 16;
-			
-			ButtonLM b = new ButtonLM(this, 16 + bx * 9, 20 + by * 9, 8, 8)
+			ButtonLM b = new ButtonLM(this, 151, 7, 8, 8)
 			{
 				public void onButtonPressed(int b)
 				{
@@ -99,36 +82,53 @@ public class GuiSelectChannels extends GuiLM
 				}
 			};
 			
-			b.customID = i;
-			b.title = board.cable.controller.channels[b.customID].name;
-			
+			b.customID = -1;
+			b.title = CBChannel.NONE.name;
+			allChannels[allChannels.length - 1] = b;
 			widgets.add(b);
-			allChannels.add(b);
+		}
+		
+		for(int i = 0; i < board.cable.controller.channels.length; i++)
+		{
+			int bx = i % 16;
+			int by = i / 16;
+			
+			allChannels[i] = new ButtonLM(this, 16 + bx * 9, 20 + by * 9, 8, 8)
+			{
+				public void onButtonPressed(int b)
+				{
+					playClickSound();
+					sendSetChannel(customID);
+				}
+			};
+			
+			allChannels[i].customID = i;
+			allChannels[i].title = board.cable.controller.channels[i].name;
+			
+			widgets.add(allChannels[i]);
 		}
 	}
 	
 	private void sendSetChannel(int ch)
-	{ board.cable.clientSetChannel(board.side.ordinal(), moduleID, selectedChannel, ch); }
+	{ board.cable.clientSetChannel(board.side.ordinal(), moduleID, selectedIO, ch); }
 	
 	public void drawGuiContainerBackgroundLayer(float f, int mx, int my)
 	{
 		super.drawGuiContainerBackgroundLayer(f, mx, my);
 		
-		for(int i = 0; i < buttonSelectChannel.length; i++)
+		for(int i = 0; i < buttonSelectIO.length; i++)
 		{
-			if(module.getChannelType(buttonSelectChannel[i].customID).isInput())
-				buttonSelectChannel[i].render(iconInput);
-			else buttonSelectChannel[i].render(iconOutput);
+			if(module.getChannelType(buttonSelectIO[i].customID).isInput())
+				buttonSelectIO[i].render(iconInput);
+			else buttonSelectIO[i].render(iconOutput);
 			
-			if(selectedChannel == i)
-				iconIOPressed.render(this, buttonSelectChannel[i].posX, buttonSelectChannel[i].posY, 8, 8);
+			if(selectedIO == i)
+				iconIOPressed.render(this, buttonSelectIO[i].posX, buttonSelectIO[i].posY, 8, 8);
 		}
 		
-		for(int i = 0; i < allChannels.size(); i++)
+		for(ButtonLM b : allChannels)
 		{
-			ButtonLM b = allChannels.get(i);
-			
-			if(b.customID == ItemModule.getChannelID(module, board.items[moduleID], selectedChannel))
+			if(b.customID == ItemModule.getChannelID(module, board.items[moduleID], selectedIO))
 				iconSelChannel.render(this, b.posX - 1, b.posY - 1, 10, 10);
 			
 			if(b.customID >= 0 && board.cable.controller != null)

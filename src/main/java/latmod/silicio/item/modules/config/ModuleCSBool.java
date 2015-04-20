@@ -17,6 +17,8 @@ public class ModuleCSBool extends ModuleConfigSegment
 	@SideOnly(Side.CLIENT)
 	public void buttonClicked(GuiModuleSettings g)
 	{
+		//boolean b = get(g.board.items[g.moduleID]);
+		//g.buttonClicked.background = b ? GuiModuleSettings.icon_cfg_bool;
 		clientConfig(g.board, g.moduleID, null);
 	}
 	

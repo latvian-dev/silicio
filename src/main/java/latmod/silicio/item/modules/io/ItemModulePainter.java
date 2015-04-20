@@ -10,22 +10,30 @@ import net.minecraft.item.*;
 
 public class ItemModulePainter extends ItemModuleIO implements IToggable
 {
-	public static final ModuleCSItem cs_paint = new ModuleCSItem(0, "Paint")
+	public static final ModuleCSBool cs_paint_all = new ModuleCSBool(0, "Paint all block");
+	
+	public static final ModuleCSItem cs_paint_on = new ModuleCSItem(1, "Paint [ON]")
 	{
 		public boolean isValid(ItemStack is)
-		{ return is == null || (is.getItem() instanceof ItemBlock && !Block.getBlockFromItem(is.getItem()).hasTileEntity(is.getItemDamage())); }
+		{ return is != null && is.getItem() instanceof ItemBlock && !Block.getBlockFromItem(is.getItem()).hasTileEntity(is.getItemDamage()); }
 	};
 	
-	public static final ModuleCSBool cs_paint_all = new ModuleCSBool(1, "Paint all block");
+	public static final ModuleCSItem cs_paint_off = new ModuleCSItem(2, "Paint [OFF]")
+	{
+		public boolean isValid(ItemStack is)
+		{ return is == null || cs_paint_on.isValid(is); }
+	};
 	
 	public ItemModulePainter(String s)
 	{
 		super(s);
 		
-		cs_paint.defaultItem = new ItemStack(Blocks.planks, 1, 0);
-		moduleConfig.add(cs_paint);
+		cs_paint_on.defaultItem = new ItemStack(Blocks.planks, 1, 0);
+		cs_paint_off.defaultItem = null;
 		
 		moduleConfig.add(cs_paint_all);
+		moduleConfig.add(cs_paint_on);
+		moduleConfig.add(cs_paint_off);
 	}
 	
 	public int getChannelCount()
@@ -43,11 +51,13 @@ public class ItemModulePainter extends ItemModuleIO implements IToggable
 	
 	public void onChannelToggled(CircuitBoard cb, int MID, CBChannel c)
 	{
-		if(cb.cable.hasCover && c.isEnabled() && c == getChannel(cb, MID, 0))
+		if(cb.cable.hasCover && c == getChannel(cb, MID, 0))
 		{
 			Paint p = null;
 			
-			ItemStack isp = cs_paint.getItem(cb.items[MID]);
+			ItemStack isp = (c.isEnabled() ? cs_paint_on.getItem(cb.items[MID]) : cs_paint_off.getItem(cb.items[MID]));
+			
+			if(isp == null) return;
 			
 			if(isp != null && isp.getItem() instanceof ItemBlock)
 				p = new Paint(Block.getBlockFromItem(isp.getItem()), isp.getItemDamage());

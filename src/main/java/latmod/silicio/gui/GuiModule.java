@@ -10,9 +10,7 @@ import cpw.mods.fml.relauncher.*;
 public class GuiModule extends GuiLM
 {
 	public GuiModule(EntityPlayer ep, ResourceLocation tex)
-	{
-		super(new ContainerEmpty(ep, null), tex);
-	}
+	{ super(new ContainerEmpty(ep, null), tex); }
 	
 	public static ResourceLocation getTex(String s)
 	{ return Silicio.mod.getLocation("textures/gui/" + s); }

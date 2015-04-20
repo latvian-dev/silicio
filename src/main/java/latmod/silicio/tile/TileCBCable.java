@@ -9,7 +9,7 @@ import latmod.core.util.*;
 import latmod.silicio.*;
 import latmod.silicio.gui.*;
 import latmod.silicio.gui.container.*;
-import latmod.silicio.item.modules.ICBModule;
+import latmod.silicio.item.modules.*;
 import latmod.silicio.item.modules.config.ModuleConfigSegment;
 import latmod.silicio.item.modules.io.ItemModuleEnergyInput;
 import mcp.mobius.waila.api.*;
@@ -48,8 +48,60 @@ public class TileCBCable extends TileLM implements IPaintable, ICBNetTile, IGuiT
 	public boolean rerenderBlock()
 	{ return true; }
 	
-	public void preUpdate()
+	public void preUpdate(TileCBController c)
 	{
+		controller = c;
+		
+		for(CircuitBoard cb : boards)
+		{
+			if(cb != null)
+			{
+				cb.preUpdate();
+				
+				for(int i = 0; i < cb.items.length; i++)
+				{
+					if(cb.items[i] != null && cb.items[i].getItem() instanceof ISignalProvider)
+						((ISignalProvider)cb.items[i].getItem()).provideSignals(cb, i);
+				}
+			}
+		}
+	}
+	
+	public void onUpdateCB()
+	{
+		for(CircuitBoard cb : boards)
+		{
+			if(cb != null)
+			{
+				for(int i = 0; i < cb.items.length; i++)
+				{
+					if(cb.items[i] != null && cb.items[i].getItem() instanceof ICBModule)
+						((ICBModule)cb.items[i].getItem()).onUpdate(cb, i);
+				}
+			}
+		}
+		
+		for(int j = 0; j < controller.channels.length; j++)
+		{
+			if(controller.channels[j].isEnabled() != controller.prevChannels[j].isEnabled())
+			{
+				for(CircuitBoard cb : boards)
+				{
+					if(cb != null)
+					{
+						for(int i = 0; i < cb.items.length; i++)
+						{
+							if(cb.items[i] != null && cb.items[i].getItem() instanceof IToggable)
+								((IToggable)cb.items[i].getItem()).onChannelToggled(cb, i, controller.channels[j]);
+						}
+					}
+				}
+				
+				controller.markDirty();
+			}
+		}
+		
+		for(CircuitBoard cb : boards) if(cb != null) cb.postUpdate();
 	}
 	
 	public void readTileData(NBTTagCompound tag)
@@ -118,15 +170,13 @@ public class TileCBCable extends TileLM implements IPaintable, ICBNetTile, IGuiT
 	
 	public static boolean connectCable(TileCBCable c, int s)
 	{
-		if(c.isDisabled(s)) return false;
+		if(!c.isSideEnabled(s)) return false;
 		TileEntity te = c.worldObj.getTileEntity(c.xCoord + Facing.offsetsXForSide[s], c.yCoord + Facing.offsetsYForSide[s], c.zCoord + Facing.offsetsZForSide[s]);
-		return (te != null && te instanceof ICBNetTile && !((ICBNetTile)te).isDisabled(Facing.oppositeSide[s]));
+		return (te != null && te instanceof ICBNetTile && ((ICBNetTile)te).isSideEnabled(Facing.oppositeSide[s]));
 	}
 	
-	public void onNetworkChanged(TileCBController c)
+	public void onControllerDisconnected()
 	{
-		controller = c;
-		
 		if(controller == null)
 		{
 			for(int i = 0; i < boards.length; i++)
@@ -177,27 +227,16 @@ public class TileCBCable extends TileLM implements IPaintable, ICBNetTile, IGuiT
 	
 	public void onUpdate()
 	{
-		if(!isServer()) return;
-		
-		if(controller != null && tick % 20 == 0)
-		{
-			if(!controller.network.contains(this))
-				onNetworkChanged(null);
-		}
 	}
 	
 	public boolean onRightClick(EntityPlayer ep, ItemStack is, int side, float x, float y, float z)
 	{
-		if(is != null && is.getItem() == SilItems.b_cbcable.getItem()) return false;
-		
 		if(is != null && is.getItem() instanceof IPaintable.IPainterItem)
 			return false;
 		
 		MovingObjectPosition mop = MathHelperLM.rayTrace(ep);
 		
 		if(mop == null) return false;
-		
-		if(!isServer()) return true;
 		
 		int id = -1;
 		
@@ -228,6 +267,10 @@ public class TileCBCable extends TileLM implements IPaintable, ICBNetTile, IGuiT
 		else id = side;
 		
 		if(id < 0 || id >= 6) return true;
+		
+		if(is != null && boards[id] == null && is.getItem() == SilItems.b_cbcable.getItem()) return false;
+		
+		if(!isServer()) return true;
 		
 		if(LatCoreMC.isWrench(is) && !ep.isSneaking())
 		{
@@ -461,16 +504,16 @@ public class TileCBCable extends TileLM implements IPaintable, ICBNetTile, IGuiT
 		}
 	}
 	
-	public boolean isDisabled(int side)
+	public boolean isSideEnabled(int side)
 	{
-		if(side < 0 || side >= 6) return true;
-		return isDisabled[side];
+		if(side < 0 || side >= 6) return false;
+		return !isDisabled[side];
 	}
 	
 	public void addWailaBody(IWailaDataAccessor data, IWailaConfigHandler config, List<String> info)
 	{
 		int i = data.getPosition().subHit;
-		if(i >= 0 && i < 6) { if(isDisabled(i)) info.add("Disabled"); }
+		if(i >= 0 && i < 6) { if(!isSideEnabled(i)) info.add("Disabled"); }
 	}
 	
 	public LMSecurity getSecurity()

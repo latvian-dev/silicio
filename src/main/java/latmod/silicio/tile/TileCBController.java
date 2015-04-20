@@ -3,19 +3,25 @@ package latmod.silicio.tile;
 import java.util.List;
 
 import latmod.core.*;
+import latmod.core.gui.ContainerEmpty;
 import latmod.core.tile.*;
 import latmod.core.util.*;
+import latmod.silicio.SilItems;
+import latmod.silicio.gui.GuiController;
 import latmod.silicio.item.modules.*;
 import mcp.mobius.waila.api.*;
+import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.inventory.Container;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Facing;
 import net.minecraftforge.common.util.ForgeDirection;
 import cofh.api.energy.*;
+import cpw.mods.fml.relauncher.*;
 
-public class TileCBController extends TileLM implements ICBNetTile, IEnergyHandler, IWailaTile.Body, ISecureTile
+public class TileCBController extends TileLM implements ICBNetTile, IEnergyReceiver, IWailaTile.Body, ISecureTile, IGuiTile
 {
 	public final FastList<ICBNetTile> network;
 	public final FastList<CircuitBoard> circuitBoards;
@@ -123,14 +129,12 @@ public class TileCBController extends TileLM implements ICBNetTile, IEnergyHandl
 	}
 	
 	public boolean onRightClick(EntityPlayer ep, ItemStack is, int side, float x, float y, float z)
-	{
-		return true;
-	}
+	{ if(isServer()) LatCoreMC.openGui(ep, this, null); return true; }
 	
 	public boolean canConnect(ForgeDirection side)
 	{ return true; }
 	
-	public void preUpdate()
+	public void preUpdate(TileCBController c)
 	{
 		CBChannel.copy(channels, prevChannels);
 		CBChannel.clear(channels);
@@ -155,22 +159,27 @@ public class TileCBController extends TileLM implements ICBNetTile, IEnergyHandl
 		invNetwork.clear();
 		tankNetwork.clear();
 		
-		try
-		{
-			addToList(xCoord, yCoord, zCoord);
-			network.remove(this);
-		}
+		try { onUpdateCB(); }
 		catch(Exception e)
 		{
-			e.printStackTrace();
-			LatCoreMC.printChat(null, "CBController @ " + LatCore.stripInt(xCoord, yCoord, zCoord) + " crashed!", true);
+			hasConflict = true;
 			
 			if(worldObj.setBlockToAir(xCoord, yCoord, zCoord))
-				InvUtils.dropItem(worldObj, xCoord, yCoord, zCoord, new ItemStack(getBlockType(), 1, getBlockMetadata()), 10);
+			{
+				e.printStackTrace();
+				LatCoreMC.printChat(null, "CBController @ " + LatCore.stripInt(xCoord, yCoord, zCoord) + " crashed!", true);
+				InvUtils.dropItem(worldObj, xCoord + 0.5D, yCoord + 0.5D, zCoord + 0.5D, new ItemStack(SilItems.b_cbcontroller), 10);
+			}
 		}
 		
 		if(pHasConflict != hasConflict)
 			markDirty();
+	}
+	
+	public void onUpdateCB()
+	{
+		addToList(xCoord, yCoord, zCoord);
+		network.remove(this);
 		
 		if(pNetworkSize != network.size())
 		{
@@ -179,74 +188,33 @@ public class TileCBController extends TileLM implements ICBNetTile, IEnergyHandl
 			markDirty();
 			sendDirtyUpdate();
 			
-			for(ICBNetTile t : network)
-				t.onNetworkChanged(hasConflict ? null : this);
+			if(hasConflict) for(ICBNetTile t : network)
+				t.onControllerDisconnected();
 		}
 		
-		if(!isServer() || hasConflict) return;
+		if(hasConflict) return;
 		
-		preUpdate();
+		preUpdate(this);
 		
 		for(ICBNetTile t : network)
-			t.preUpdate();
+			t.preUpdate(this);
 		
-		for(int i = 0; i < allModules.size(); i++)
-		{
-			CircuitBoard cb = allModules.keys.get(i);
-			FastMap<Integer, ICBModule> modules = allModules.values.get(i);
-			
-			cb.preUpdate();
-			
-			for(int j = 0; j < modules.size(); j++)
-			{
-				ICBModule m = modules.values.get(j);
-				
-				if(m instanceof ISignalProvider)
-					((ISignalProvider)m).provideSignals(cb, modules.keys.get(j));
-			}
-		}
+		if(!isServer()) return;
 		
-		for(int i = 0; i < allModules.size(); i++)
-		{
-			CircuitBoard cb = allModules.keys.get(i);
-			FastMap<Integer, ICBModule> modules = allModules.values.get(i);
-			
-			if(cb.cable != null && cb.cable.controller == this)
-			for(int j = 0; j < modules.size(); j++)
-				modules.values.get(j).onUpdate(cb, modules.keys.get(j));
-		}
-		
-		for(int i = 0; i < allModules.size(); i++)
-		{
-			CircuitBoard cb = allModules.keys.get(i);
-			FastMap<Integer, ICBModule> modules = allModules.values.get(i);
-			
-			for(int j = 0; j < modules.size(); j++)
-			{
-				for(int k = 0; k < channels.length; k++)
-				{
-					if(prevChannels[k].isEnabled() != channels[k].isEnabled())
-					{
-						ICBModule m = modules.values.get(j);
-						
-						if(m instanceof IToggable)
-							((IToggable)m).onChannelToggled(cb, modules.keys.get(j), channels[k]);
-						
-						markDirty();
-					}
-				}
-			}
-			
-			cb.postUpdate();
-		}
+		for(ICBNetTile t : network)
+			t.onUpdateCB();
+	}
+	
+	public void onControllerDisconnected()
+	{
 	}
 	
 	public void onBroken()
 	{
 		super.onBroken();
 		
-		if(!hasConflict) for(ICBNetTile t : network)
-			t.onNetworkChanged(null);
+		for(ICBNetTile t : network)
+			t.onControllerDisconnected();
 	}
 	
 	private void addToList(int x, int y, int z)
@@ -269,9 +237,7 @@ public class TileCBController extends TileLM implements ICBNetTile, IEnergyHandl
 					return;
 				}
 				
-				if(ec.isDisabled(Facing.oppositeSide[i])) continue;
-				
-				if(!network.contains(te))
+				if(ec.isSideEnabled(Facing.oppositeSide[i]) && !network.contains(ec))
 				{
 					network.add(ec);
 					
@@ -300,14 +266,6 @@ public class TileCBController extends TileLM implements ICBNetTile, IEnergyHandl
 				}
 			}
 		}
-	}
-	
-	public void onNetworkChanged(TileCBController c)
-	{
-	}
-	
-	public void onLoaded()
-	{
 	}
 	
 	public boolean canConnectEnergy(ForgeDirection dir)
@@ -340,11 +298,18 @@ public class TileCBController extends TileLM implements ICBNetTile, IEnergyHandl
 	public int getMaxEnergyStored(ForgeDirection dir)
 	{ return storage.getMaxEnergyStored(); }
 	
-	public boolean isDisabled(int side)
-	{ return false; }
+	public boolean isSideEnabled(int side)
+	{ return true; }
 	
 	public ItemStack requestItem(ItemStack item, boolean reduce)
 	{
 		return null;
 	}
+	
+	public Container getContainer(EntityPlayer ep, NBTTagCompound data)
+	{ return new ContainerEmpty(ep, this); }
+	
+	@SideOnly(Side.CLIENT)
+	public GuiScreen getGui(EntityPlayer ep, NBTTagCompound data)
+	{ return new GuiController(new ContainerEmpty(ep, this)); }
 }

@@ -5,18 +5,18 @@ itemGroup.silicio:tab=Silicio
 silicio:tile.machine.name=Machine Block
 silicio:tile.cable.name=Circuit Board Cable
 silicio:tile.controller.name=Circuit Board Controller
+silicio:tile.module_copier.name=Module Copier
 
 ### Items ###
 
-silicio:item.mat.gemSilicon.name=Silicon
-silicio:item.mat.dustSilicon.name=Silicon Dust
-silicio:item.mat.gearSilicon.name=Silicon Gear
-silicio:item.mat.emptyModule.name=Empty Module
-silicio:item.mat.inputModule.name=Empty Input Module
-silicio:item.mat.outputModule.name=Empty Output Module
-silicio:item.mat.logicModule.name=Empty Logic Module
+silicio:item.mat.silicon_gem.name=Silicon
+silicio:item.mat.silicon_dust.name=Silicon Dust
+silicio:item.mat.module_empty.name=Empty Module
+silicio:item.mat.module_input.name=Empty Input Module
+silicio:item.mat.module_output.name=Empty Output Module
+silicio:item.mat.module_logic.name=Empty Logic Module
 silicio:item.mat.circuit.name=Integrated Circuit
-silicio:item.mat.laserCrystal.name=Laser Crystal
+silicio:item.mat.laser_crystal.name=Laser Crystal
 
 silicio:item.circuit_board.name=Circuit Board
 
@@ -50,21 +50,3 @@ silicio:item.cbm_gate_xor.name=XOR Gate
 
 silicio:item.cbm_timer.name=Timer Module
 silicio:item.cbm_sequencer.name=Sequencer Module
-
-### Lang ###
-
-# Module Types #
-silicio:type.module=Toggable Module
-silicio:type.side=Side
-silicio:type.color=Color
-silicio:type.text=Text
-silicio:type.int=Integer
-silicio:type.float=Float
-
-# Module Titles #
-silicio:side.front=Front
-silicio:side.back=Back
-silicio:side.up=Up
-silicio:side.down=Down
-silicio:side.left=Left
-silicio:side.right=Right

@@ -11,6 +11,7 @@ public class SilItems
 {
 	public static BlockCBCable b_cbcable;
 	public static BlockCBController b_cbcontroller;
+	public static BlockModuleCopier b_module_copier;
 	
 	public static ItemMaterialsSil i_mat;
 	public static ItemCircuitBoard i_circuit_board;
@@ -19,6 +20,7 @@ public class SilItems
 	{
 		b_cbcable = new BlockCBCable("cable").register();
 		b_cbcontroller = new BlockCBController("controller").register();
+		b_module_copier = new BlockModuleCopier("module_copier").register();
 		
 		i_mat = new ItemMaterialsSil("materials").register();
 		i_circuit_board = new ItemCircuitBoard("circuit_board").register();

@@ -21,10 +21,12 @@ public class GuiModuleSettings extends GuiLM
 {
 	public static final ResourceLocation thisTex = GuiModule.getTex("moduleSettings.png");
 	public static final TextureCoords icon_channels = new TextureCoords(thisTex, 176, 0);
+	public static final TextureCoords icon_cfg_empty = new TextureCoords(thisTex, 197, 0);
 	public static final TextureCoords icon_cfg_text = new TextureCoords(thisTex, 218, 0);
 	public static final TextureCoords icon_cfg_num = new TextureCoords(thisTex, 176, 21);
 	public static final TextureCoords icon_cfg_bool = new TextureCoords(thisTex, 197, 21);
 	public static final TextureCoords icon_cfg_item = new TextureCoords(thisTex, 218, 21);
+	public static final TextureCoords icon_cfg_bool_on = new TextureCoords(thisTex, 197, 42);
 	
 	public final CircuitBoard board;
 	public final ICBModule module;
@@ -32,10 +34,8 @@ public class GuiModuleSettings extends GuiLM
 	
 	public ButtonLM buttonChannels;
 	public ButtonLM buttonBack;
-	
 	public ButtonLM buttonClicked;
-	
-	public FastList<ButtonLM> buttonsConfig;
+	public ButtonLM[] buttonsConfig;
 	
 	private static RenderItem renderItem = new RenderItem();
 	
@@ -73,11 +73,13 @@ public class GuiModuleSettings extends GuiLM
 		
 		buttonBack.title = LC.mod.translate("button.back");
 		
-		buttonsConfig = new FastList<ButtonLM>();
+		buttonsConfig = new ButtonLM[12];
 		
 		for(final ModuleConfigSegment mcs : module.getModuleConfig())
 		{
-			ButtonLM b = new ButtonLM(this, 31 + 23 * (mcs.ID % 6), 9 + 23 * (mcs.ID / 6), 21, 21)
+			if(mcs == null || mcs.ID < 0 || mcs.ID >= buttonsConfig.length) continue;
+			
+			buttonsConfig[mcs.ID] = new ButtonLM(this, 31 + 23 * (mcs.ID % 6), 9 + 23 * (mcs.ID / 6), 21, 21)
 			{
 				public void onButtonPressed(int b)
 				{
@@ -95,18 +97,17 @@ public class GuiModuleSettings extends GuiLM
 				}
 			};
 			
-			if(mcs instanceof ModuleCSBool) b.background = icon_cfg_bool;
-			else if(mcs instanceof ModuleCSInt || mcs instanceof ModuleCSFloat) b.background = icon_cfg_num;
+			if(mcs instanceof ModuleCSBool) buttonsConfig[mcs.ID].background = icon_cfg_bool;
+			else if(mcs instanceof ModuleCSInt || mcs instanceof ModuleCSFloat) buttonsConfig[mcs.ID].background = icon_cfg_num;
 			else if(mcs instanceof ModuleCSItem)
 			{
-				b.background = icon_cfg_item;
+				buttonsConfig[mcs.ID].background = icon_cfg_item;
 				ItemStack is = ((ModuleCSItem)mcs).getItem(board.items[moduleID]);
-				if(is != null) b.background = is;
+				if(is != null) buttonsConfig[mcs.ID].background = is;
 			}
-			else b.background = icon_cfg_text;
+			else buttonsConfig[mcs.ID].background = icon_cfg_text;
 			
-			buttonsConfig.add(b);
-			widgets.add(b);
+			widgets.add(buttonsConfig[mcs.ID]);
 		}
 	}
 	
@@ -122,8 +123,12 @@ public class GuiModuleSettings extends GuiLM
 		
 		for(ButtonLM b : buttonsConfig)
 		{
+			if(b == null || b.background == null) continue;
+			
 			if(b.background instanceof ItemStack)
 			{
+				b.render(icon_cfg_empty);
+				
 				GL11.glPushMatrix();
 				GL11.glTranslatef(b.posX + guiLeft + 2.5F, b.posY + guiTop + 2.5F, 0F);
 				GL11.glPushAttrib(GL11.GL_ENABLE_BIT);

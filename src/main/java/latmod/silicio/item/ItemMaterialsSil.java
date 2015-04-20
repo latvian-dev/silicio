@@ -14,14 +14,14 @@ public class ItemMaterialsSil extends ItemMaterials
 	{
 		return new String[]
 		{
-			"emptyModule",
-			"inputModule",
-			"outputModule",
-			"gemSilicon",
-			"dustSilicon",
+			"module_empty",
+			"module_input",
+			"module_output",
+			"silicon_gem",
+			"silicon_dust",
 			"circuit",
-			"laserCrystal",
-			"logicModule",
+			"laser_crystal",
+			"module_logic",
 		};
 	}
 	

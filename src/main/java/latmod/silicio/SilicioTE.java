@@ -19,7 +19,7 @@ public class SilicioTE
 		addSmelter(new ItemStack(SilItems.i_circuit_board), SilItems.Modules.EMPTY, LMRecipes.size(SilMat.SILICON, 8), 1200);
 		
 		// Materials //
-		addSmelter(SilItems.Modules.EMPTY, SilMat.CIRCUIT, new ItemStack(Items.iron_ingot, 8), 48000);
+		addSmelter(SilItems.Modules.EMPTY, SilMat.CIRCUIT, new ItemStack(Items.iron_ingot, 8), 12000);
 		addSmelter(SilItems.Modules.INPUT, SilItems.Modules.EMPTY, new ItemStack(Blocks.hopper), 1200);
 		addSmelter(SilItems.Modules.OUTPUT, SilItems.Modules.EMPTY, new ItemStack(Blocks.dropper), 1200);
 		
@@ -33,6 +33,13 @@ public class SilicioTE
 				'F', BlockFrame.frameTesseractFull,
 				'C', SilItems.b_cbcable,
 				'I', SilMat.CIRCUIT);
+		
+		Silicio.mod.recipes.addRecipe(new ItemStack(SilItems.b_module_copier), " C ", "MFM", "GLG",
+				'C', SilMat.CIRCUIT,
+				'M', SilItems.Modules.EMPTY,
+				'L', SilMat.LASER_CRYSTAL,
+				'F', BlockFrame.frameMachineBasic,
+				'G', "gearTin");
 	}
 	
 	private static void addPulverizer(ItemStack out, Object in, int energy, ItemStack out2, int out2chance)
