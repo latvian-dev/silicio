@@ -32,5 +32,8 @@ public class ItemModuleChatOutput extends ItemModuleIO implements IToggable
 	
 	public void onChannelToggled(CircuitBoard cb, int MID, CBChannel c)
 	{
+		if(isEnabled(c, cb, MID, 0))
+		{
+		}
 	}
 }

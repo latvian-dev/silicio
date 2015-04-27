@@ -9,8 +9,10 @@ import latmod.silicio.item.modules.config.*;
 import latmod.silicio.tile.*;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.renderer.entity.RenderItem;
+import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.*;
+import net.minecraftforge.fluids.*;
 
 import org.lwjgl.opengl.*;
 
@@ -26,7 +28,7 @@ public class GuiModuleSettings extends GuiLM
 	public static final TextureCoords icon_cfg_num = new TextureCoords(thisTex, 176, 21);
 	public static final TextureCoords icon_cfg_bool = new TextureCoords(thisTex, 197, 21);
 	public static final TextureCoords icon_cfg_item = new TextureCoords(thisTex, 218, 21);
-	public static final TextureCoords icon_cfg_bool_on = new TextureCoords(thisTex, 197, 42);
+	public static final TextureCoords icon_cfg_fluid = new TextureCoords(thisTex, 218, 42);
 	
 	public final CircuitBoard board;
 	public final ICBModule module;
@@ -53,7 +55,7 @@ public class GuiModuleSettings extends GuiLM
 			public void onButtonPressed(int b)
 			{
 				playClickSound();
-				board.cable.clientOpenGui(TileCBCable.guiData(board.side.ordinal(), 3, moduleID));
+				board.cable.clientOpenGui(TileCBCable.guiData(board.side, 3, moduleID));
 			}
 		};
 		
@@ -67,7 +69,7 @@ public class GuiModuleSettings extends GuiLM
 			public void onButtonPressed(int b)
 			{
 				playClickSound();
-				board.cable.clientOpenGui(TileCBCable.guiData(board.side.ordinal(), 1, -1));
+				board.cable.clientOpenGui(TileCBCable.guiData(board.side, 1, -1));
 			}
 		});
 		
@@ -98,12 +100,18 @@ public class GuiModuleSettings extends GuiLM
 			};
 			
 			if(mcs instanceof ModuleCSBool) buttonsConfig[mcs.ID].background = icon_cfg_bool;
-			else if(mcs instanceof ModuleCSInt || mcs instanceof ModuleCSFloat) buttonsConfig[mcs.ID].background = icon_cfg_num;
+			else if(mcs instanceof ModuleCSNum) buttonsConfig[mcs.ID].background = icon_cfg_num;
 			else if(mcs instanceof ModuleCSItem)
 			{
 				buttonsConfig[mcs.ID].background = icon_cfg_item;
 				ItemStack is = ((ModuleCSItem)mcs).getItem(board.items[moduleID]);
 				if(is != null) buttonsConfig[mcs.ID].background = is;
+			}
+			else if(mcs instanceof ModuleCSFluid)
+			{
+				buttonsConfig[mcs.ID].background = icon_cfg_fluid;
+				FluidStack fs = ((ModuleCSFluid)mcs).getFluid(board.items[moduleID]);
+				if(fs != null) buttonsConfig[mcs.ID].background = fs;
 			}
 			else buttonsConfig[mcs.ID].background = icon_cfg_text;
 			
@@ -144,6 +152,25 @@ public class GuiModuleSettings extends GuiLM
 				GL11.glEnable(GL11.GL_DEPTH_TEST);
 				GL11.glPopAttrib();
 				GL11.glPopMatrix();
+			}
+			else if(b.background instanceof FluidStack)
+			{
+				b.render(icon_cfg_empty);
+				Fluid fl = ((FluidStack)b.background).getFluid();
+				
+				IIcon ic = fl.getStillIcon();
+				if(ic == null && fl.getBlock() != null)
+					ic = fl.getBlock().getBlockTextureFromSide(1);
+				
+				if(ic != null)
+				{
+					GL11.glPushMatrix();
+					setTexture(TextureMap.locationBlocksTexture);
+					GL11.glTranslatef(b.posX + guiLeft + 2.5F, b.posY + guiTop + 2.5F, 0F);
+					drawWrappedIcon(ic, 0, 0, 16, 16);
+					setTexture(thisTex);
+					GL11.glPopMatrix();
+				}
 			}
 			else b.render(b.background);
 		}

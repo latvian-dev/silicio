@@ -1,12 +1,15 @@
 package latmod.silicio.item.modules.io;
 
+import latmod.core.InvUtils;
 import latmod.silicio.SilItems;
-import latmod.silicio.item.modules.IOType;
+import latmod.silicio.item.modules.*;
 import latmod.silicio.item.modules.config.ModuleCSItem;
-import latmod.silicio.tile.CircuitBoard;
+import latmod.silicio.tile.*;
+import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
+import net.minecraft.tileentity.TileEntity;
 
-public class ItemModuleItemOutput extends ItemModuleIO
+public class ItemModuleItemOutput extends ItemModuleIO implements IToggable
 {
 	public static final ModuleCSItem cs_item = new ModuleCSItem(0, "Item");
 	
@@ -35,50 +38,31 @@ public class ItemModuleItemOutput extends ItemModuleIO
 				'F', SilItems.Modules.i_item_storage);
 	}
 	
-	public void onUpdate(CircuitBoard cb, int MID)
+	public void onChannelToggled(CircuitBoard cb, int MID, CBChannel c)
 	{
-		/*
-		if(cb.tick % 4 == 0 && cb.cable.isServer())
+		if(isEnabled(c, cb, MID, 0))
 		{
-			CBChannel c = getChannel(cb, MID, 0);
-			if(c != CBChannel.NONE && !c.isEnabled()) return;
+			ItemStack itemT = cs_item.getItem(cb.items[MID]);
+			
+			if(itemT == null) return;
 			
 			TileEntity te = cb.getFacingTile();
 			
 			if(te != null && !te.isInvalid() && te instanceof IInventory)
 			{
 				IInventory inv = (IInventory)te;
-				ForgeDirection side = cb.side.getOpposite();
-				int slots[] = InvUtils.getAllSlots(inv, side.ordinal());
 				
-				for(int i = 0; i < slots.length; i++)
+				int idx = InvUtils.getFirstIndexWhereFits(inv, itemT, cb.sideOpposite);
+				
+				if(idx != -1 && cb.cable.controller().requestItem(itemT, false))
 				{
-					ItemStack is1 = inv.getStackInSlot(slots[i]);
-					
-					if(is1 != null)
-					{
-						if(inv instanceof ISidedInventory && !((ISidedInventory)inv).canExtractItem(slots[i], is1, side.ordinal()))
-							continue;
-						
-						InvEntry ie = cb.cable.controller.getInventoryFor(is1);
-						
-						if(ie != null && InvUtils.addSingleItemToInv(is1, ie.inv, ie.side, true))
-						{
-							is1 = InvUtils.reduceItem(is1);
-							inv.setInventorySlotContents(slots[i], is1);
-							
-							if(is1 == null)
-							{
-								inv.markDirty();
-								ie.inv.markDirty();
-							}
-							
-							return;
-						}
-					}
+					ItemStack is0 = inv.getStackInSlot(idx);
+					if(is0 == null) is0 = InvUtils.singleCopy(itemT);
+					else is0.stackSize++;
+					inv.setInventorySlotContents(idx, is0);
+					//inv.markDirty();
 				}
 			}
 		}
-		*/
 	}
 }

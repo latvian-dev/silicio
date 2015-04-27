@@ -8,13 +8,15 @@ import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.*;
 import net.minecraftforge.common.util.ForgeDirection;
 
 public class CircuitBoard implements IInventory
 {
 	public final TileCBCable cable;
-	public final ForgeDirection side;
-	public final ForgeDirection sideOpposite;
+	public final int side;
+	public final int sideOpposite;
+	public final ChunkCoordinates sidePos;
 	
 	public ItemStack items[] = new ItemStack[12];
 	public boolean dropItems = true;
@@ -22,12 +24,16 @@ public class CircuitBoard implements IInventory
 	public boolean redstoneOut = false;
 	private Boolean prevRedstoneOut = null;
 	
-	public CircuitBoard(TileCBCable t, ForgeDirection f)
+	public CircuitBoard(TileCBCable t, int f)
 	{
 		cable = t;
 		side = f;
-		sideOpposite = side.getOpposite();
+		sideOpposite = Facing.oppositeSide[side];
+		sidePos = new ChunkCoordinates(cable.xCoord + Facing.offsetsXForSide[side], cable.yCoord + Facing.offsetsYForSide[side], cable.zCoord + Facing.offsetsZForSide[side]);
 	}
+	
+	public ForgeDirection side()
+	{ return ForgeDirection.VALID_DIRECTIONS[side]; }
 	
 	public void readTileData(NBTTagCompound tag)
 	{
@@ -82,20 +88,12 @@ public class CircuitBoard implements IInventory
 	
 	public TileEntity getFacingTile()
 	{
-		TileEntity te = cable.getWorldObj().getTileEntity(cable.xCoord + side.offsetX, cable.yCoord + side.offsetY, cable.zCoord + side.offsetZ);
+		TileEntity te = cable.getWorldObj().getTileEntity(sidePos.posX, sidePos.posY, sidePos.posZ);
 		return (te == null || te.isInvalid()) ? null : te;
 	}
 	
-	@SuppressWarnings("unchecked")
-	public <T extends TileEntity> T getFacingTileT(Class<? extends T> c)
-	{
-		TileEntity te = getFacingTile();
-		if(te != null && c.isAssignableFrom(te.getClass())) return (T)te;
-		return null;
-	}
-	
 	public Block getFacingBlock()
-	{ return cable.getWorldObj().getBlock(cable.xCoord + side.offsetX, cable.yCoord + side.offsetY, cable.zCoord + side.offsetZ); }
+	{ return cable.getWorldObj().getBlock(sidePos.posX, sidePos.posY, sidePos.posZ); }
 	
 	public int getSizeInventory()
 	{ return items.length; }

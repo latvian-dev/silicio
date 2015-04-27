@@ -1,6 +1,8 @@
 package latmod.silicio.item.modules.io;
 
+import latmod.core.*;
 import latmod.core.tile.IPaintable.Paint;
+import latmod.silicio.SilItems;
 import latmod.silicio.item.modules.*;
 import latmod.silicio.item.modules.config.*;
 import latmod.silicio.tile.*;
@@ -47,6 +49,18 @@ public class ItemModulePainter extends ItemModuleIO implements IToggable
 	
 	public void loadRecipes()
 	{
+		ItemStack is = InvUtils.parseItem("LatBlocks:painterParts@3");
+		
+		if(is != null)
+			mod.recipes.addShapelessRecipe(new ItemStack(this), SilItems.Modules.OUTPUT, is);
+		else
+			mod.recipes.addRecipe(new ItemStack(this), "1D2", "DMD", "3D4",
+					'M', SilItems.Modules.OUTPUT,
+					'D', ODItems.DIAMOND,
+					'1', EnumDyeColor.BLUE.dyeName,
+					'2', EnumDyeColor.GREEN.dyeName,
+					'3', EnumDyeColor.YELLOW.dyeName,
+					'4', EnumDyeColor.RED.dyeName);
 	}
 	
 	public void onChannelToggled(CircuitBoard cb, int MID, CBChannel c)
@@ -64,7 +78,7 @@ public class ItemModulePainter extends ItemModuleIO implements IToggable
 			
 			if(cs_paint_all.get(cb.items[MID]))
 			{ for(int i = 0; i < 6; i++) cb.cable.paint[i] = p; }
-			else cb.cable.paint[cb.side.ordinal()] = p;
+			else cb.cable.paint[cb.side] = p;
 			cb.cable.markDirty();
 		}
 	}

@@ -50,22 +50,23 @@ public class ItemModuleSignOutput extends ItemModuleIO implements IToggable
 	
 	public void onChannelToggled(CircuitBoard cb, int MID, CBChannel c)
 	{
-		if(!c.isEnabled() || c != getChannel(cb, MID, 0)) return;
-		
-		TileEntity te = cb.getFacingTile();
-		
-		if(cb.cable.isServer() && te != null && te instanceof TileEntitySign)
+		if(isEnabled(c, cb, MID, 0))
 		{
-			TileEntitySign tes = (TileEntitySign)te;
+			TileEntity te = cb.getFacingTile();
 			
-			for(int i = 0; i < 4; i++)
+			if(cb.cable.isServer() && te != null && te instanceof TileEntitySign)
 			{
-				String s = cs_text[i].get(cb.items[MID]);
-				if(!s.equals("~")) tes.signText[i] = s;
+				TileEntitySign tes = (TileEntitySign)te;
+				
+				for(int i = 0; i < 4; i++)
+				{
+					String s = cs_text[i].get(cb.items[MID]);
+					if(!s.equals("~")) tes.signText[i] = s;
+				}
+				
+				tes.markDirty();
+				tes.getWorldObj().markBlockForUpdate(tes.xCoord, tes.yCoord, tes.zCoord);
 			}
-			
-			tes.markDirty();
-			tes.getWorldObj().markBlockForUpdate(tes.xCoord, tes.yCoord, tes.zCoord);
 		}
 	}
 }

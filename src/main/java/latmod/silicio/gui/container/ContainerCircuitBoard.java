@@ -2,7 +2,8 @@ package latmod.silicio.gui.container;
 import latmod.core.gui.ContainerLM;
 import latmod.silicio.tile.CircuitBoard;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.inventory.Slot;
+import net.minecraft.inventory.*;
+import net.minecraft.item.ItemStack;
 
 public class ContainerCircuitBoard extends ContainerLM
 {
@@ -15,5 +16,13 @@ public class ContainerCircuitBoard extends ContainerLM
 			addSlotToContainer(new Slot(t, x + y * 6, 9 + x * 22, 10 + y * 22));
 		
 		addPlayerSlots(56);
+	}
+	
+	public ItemStack transferStackInSlot(EntityPlayer ep, int i)
+	{
+		IInventory inv1 = (IInventory)inv;
+		if (i < inv1.getSizeInventory())
+			return super.transferStackInSlot(ep, i);
+		return null;
 	}
 }

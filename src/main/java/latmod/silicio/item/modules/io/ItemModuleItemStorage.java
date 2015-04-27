@@ -13,7 +13,7 @@ import net.minecraft.tileentity.TileEntity;
 
 public class ItemModuleItemStorage extends ItemModuleIO
 {
-	public static final ModuleCSInt cs_priority = new ModuleCSInt(0, "Priority");
+	public static final ModuleCSNum cs_priority = new ModuleCSNum(0, "Priority");
 	public static final ModuleCSItem cs_filter = new ModuleCSItem(1, "Filter");
 	
 	public ItemModuleItemStorage(String s)
@@ -26,13 +26,13 @@ public class ItemModuleItemStorage extends ItemModuleIO
 	}
 	
 	public int getChannelCount()
-	{ return 1; }
+	{ return 0; }
 	
 	public IOType getModuleType()
 	{ return IOType.NONE; }
 	
 	public IOType getChannelType(int c)
-	{ return IOType.INPUT; }
+	{ return IOType.NONE; }
 	
 	public void loadRecipes()
 	{
@@ -46,11 +46,8 @@ public class ItemModuleItemStorage extends ItemModuleIO
 	
 	public void updateInvNet(CircuitBoard cb, int MID, FastList<InvEntry> list)
 	{
-		CBChannel c = getChannel(cb, MID, 0);
-		if(c != CBChannel.NONE && !c.isEnabled()) return;
-		
 		TileEntity te = cb.getFacingTile();
 		if(te != null && !te.isInvalid() && te instanceof IInventory)
-			list.add(new InvEntry((IInventory)te, cb.sideOpposite.ordinal(), cs_priority.get(cb.items[MID]), cs_filter.getItem(cb.items[MID])));
+			list.add(new InvEntry((IInventory)te, cb.sideOpposite, cs_priority.get(cb.items[MID]), cs_filter.getItem(cb.items[MID])));
 	}
 }

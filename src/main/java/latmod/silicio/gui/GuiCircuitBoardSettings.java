@@ -26,7 +26,7 @@ public class GuiCircuitBoardSettings extends GuiLM
 			public void onButtonPressed(int b)
 			{
 				playClickSound();
-				board.cable.clientOpenGui(TileCBCable.guiData(board.side.ordinal(), 0, -1));
+				board.cable.clientOpenGui(TileCBCable.guiData(board.side, 0, -1));
 			}
 		});
 		
@@ -46,7 +46,7 @@ public class GuiCircuitBoardSettings extends GuiLM
 					public void onButtonPressed(int b)
 					{
 						playClickSound();
-						board.cable.clientOpenGui(TileCBCable.guiData(board.side.ordinal(), 2, id));
+						board.cable.clientOpenGui(TileCBCable.guiData(board.side, 2, id));
 					}
 				};
 				

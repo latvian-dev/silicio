@@ -9,13 +9,13 @@ public interface IItemCard
 	
 	public static class Helper
 	{
-		public boolean isValid(ItemStack is, ItemStack item)
+		public static boolean isValid(ItemStack filter, ItemStack item)
 		{
 			if(item == null) return false;
-			if(is == null) return true;
-			if(is.getItem() instanceof IItemCard)
-				return ((IItemCard)is.getItem()).isItemValid(is, item);
-			return InvUtils.itemsEquals(is, item, false, true);
+			if(filter == null) return true;
+			if(filter.getItem() instanceof IItemCard)
+				return ((IItemCard)filter.getItem()).isItemValid(filter, item);
+			return InvUtils.itemsEquals(filter, item, false, true);
 		}
 	}
 }

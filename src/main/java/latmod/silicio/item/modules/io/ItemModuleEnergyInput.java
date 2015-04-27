@@ -13,22 +13,16 @@ public class ItemModuleEnergyInput extends ItemModuleIO
 	}
 	
 	public int getChannelCount()
-	{ return 1; }
+	{ return 0; }
 	
 	public IOType getModuleType()
 	{ return IOType.INPUT; }
 	
 	public IOType getChannelType(int c)
-	{ return IOType.INPUT; }
+	{ return IOType.NONE; }
 	
 	public void loadRecipes()
 	{
-	}
-	
-	public boolean canReceive(CircuitBoard cb, int MID)
-	{
-		CBChannel c = getChannel(cb, MID, 0);
-		return c == CBChannel.NONE || c.isEnabled();
 	}
 	
 	public void onUpdate(ItemStack is, CircuitBoard t)

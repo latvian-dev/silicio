@@ -1,17 +1,18 @@
-package latmod.silicio;
+package latmod.silicio.integration;
 
 import latmod.core.recipes.*;
 import latmod.core.util.FastList;
+import latmod.silicio.*;
 import net.minecraft.init.*;
 import net.minecraft.item.ItemStack;
 import cofh.thermalexpansion.block.simple.BlockFrame;
 import cofh.thermalexpansion.util.crafting.*;
 
-public class SilicioTE
+public class SilIntTE
 {
 	private static boolean addAllOreItems = true;
 	
-	public static void init()
+	public static void onLoaded() throws Exception
 	{
 		if(SilConfig.General.disableAllCrafting) return;
 		

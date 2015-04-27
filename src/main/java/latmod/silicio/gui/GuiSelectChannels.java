@@ -42,7 +42,7 @@ public class GuiSelectChannels extends GuiLM
 		{
 			public void onButtonPressed(int b)
 			{
-				board.cable.clientOpenGui(TileCBCable.guiData(board.side.ordinal(), 2, moduleID));
+				board.cable.clientOpenGui(TileCBCable.guiData(board.side, 2, moduleID));
 				playClickSound();
 			}
 		});
@@ -70,7 +70,7 @@ public class GuiSelectChannels extends GuiLM
 			widgets.add(buttonSelectIO[i]);
 		}
 		
-		allChannels = new ButtonLM[board.cable.controller.channels.length + 1];
+		allChannels = new ButtonLM[board.cable.controller().channels.length + 1];
 		
 		{
 			ButtonLM b = new ButtonLM(this, 151, 7, 8, 8)
@@ -88,7 +88,7 @@ public class GuiSelectChannels extends GuiLM
 			widgets.add(b);
 		}
 		
-		for(int i = 0; i < board.cable.controller.channels.length; i++)
+		for(int i = 0; i < board.cable.controller().channels.length; i++)
 		{
 			int bx = i % 16;
 			int by = i / 16;
@@ -103,14 +103,14 @@ public class GuiSelectChannels extends GuiLM
 			};
 			
 			allChannels[i].customID = i;
-			allChannels[i].title = board.cable.controller.channels[i].name;
+			allChannels[i].title = board.cable.controller().channels[i].name;
 			
 			widgets.add(allChannels[i]);
 		}
 	}
 	
 	private void sendSetChannel(int ch)
-	{ board.cable.clientSetChannel(board.side.ordinal(), moduleID, selectedIO, ch); }
+	{ board.cable.clientSetChannel(board.side, moduleID, selectedIO, ch); }
 	
 	public void drawGuiContainerBackgroundLayer(float f, int mx, int my)
 	{
@@ -131,9 +131,9 @@ public class GuiSelectChannels extends GuiLM
 			if(b.customID == ItemModule.getChannelID(module, board.items[moduleID], selectedIO))
 				iconSelChannel.render(this, b.posX - 1, b.posY - 1, 10, 10);
 			
-			if(b.customID >= 0 && board.cable.controller != null)
+			if(b.customID >= 0 && board.cable.controller() != null)
 			{
-				if(board.cable.controller.channels[b.customID].isEnabled())
+				if(board.cable.controller().channels[b.customID].isEnabled())
 					iconChannelEnabled.render(this, b.posX, b.posY, 8, 8);
 			}
 		}

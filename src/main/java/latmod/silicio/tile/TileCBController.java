@@ -8,6 +8,7 @@ import latmod.core.tile.*;
 import latmod.core.util.*;
 import latmod.silicio.SilItems;
 import latmod.silicio.gui.GuiController;
+import latmod.silicio.item.IItemCard;
 import latmod.silicio.item.modules.*;
 import mcp.mobius.waila.api.*;
 import net.minecraft.client.gui.GuiScreen;
@@ -66,44 +67,10 @@ public class TileCBController extends TileLM implements ICBNetTile, IEnergyRecei
 		if(hasConflict) tag.setBoolean("Conflict", true);
 	}
 	
-	public InvEntry getInventoryFor(ItemStack is)
-	{
-		invNetwork.sort(new InvComparator(is));
-		
-		for(int i = 0; i < invNetwork.size(); i++)
-		{
-			InvEntry e = invNetwork.get(i);
-			
-			if(e != null)
-			{
-				if(InvUtils.getFirstIndexWhereFits(e.inv, is, e.side) != -1)
-					return e;
-			}
-		}
-		
-		return null;
-	}
-	
-	public InvEntry getTankFor(ItemStack is)
-	{
-		invNetwork.sort(new InvComparator(is));
-		
-		for(int i = 0; i < invNetwork.size(); i++)
-		{
-			InvEntry e = invNetwork.get(i);
-			
-			if(e != null)
-			{
-				if(InvUtils.getFirstIndexWhereFits(e.inv, is, e.side) != -1)
-					return e;
-			}
-		}
-		
-		return null;
-	}
-	
 	public void addWailaBody(IWailaDataAccessor data, IWailaConfigHandler config, List<String> info)
 	{
+		ICBEnergyTile.Helper.addWaila(storage, info);
+		
 		if(hasConflict) info.add("Conflicting Controller found!");
 		else
 		{
@@ -146,6 +113,12 @@ public class TileCBController extends TileLM implements ICBNetTile, IEnergyRecei
 		{
 			energyChanged = false;
 			markDirty();
+			
+			for(ICBNetTile t : network)
+			{
+				if(t instanceof ICBEnergyTile)
+					((TileEntity)t).markDirty();
+			}
 		}
 		
 		// Update network //
@@ -197,7 +170,24 @@ public class TileCBController extends TileLM implements ICBNetTile, IEnergyRecei
 		preUpdate(this);
 		
 		for(ICBNetTile t : network)
+		{
 			t.preUpdate(this);
+			
+			if(t instanceof ICBEnergyTile && storage.getEnergyStored() > 0)
+			{
+				EnergyStorage e = ((ICBEnergyTile)t).getEnergyStorage();
+				
+				int d = Math.min(e.getMaxReceive(), storage.getMaxExtract());
+				d = Math.min(d, Math.min(storage.getEnergyStored(), e.getMaxEnergyStored() - e.getEnergyStored()));
+				
+				if(d > 0)
+				{
+					storage.extractEnergy(d, false);
+					e.receiveEnergy(d, false);
+					energyChanged = true;
+				}
+			}
+		}
 		
 		if(!isServer()) return;
 		
@@ -301,9 +291,46 @@ public class TileCBController extends TileLM implements ICBNetTile, IEnergyRecei
 	public boolean isSideEnabled(int side)
 	{ return true; }
 	
-	public ItemStack requestItem(ItemStack item, boolean reduce)
+	public boolean addItem(ItemStack is, boolean simulate)
 	{
-		return null;
+		if(is == null) return false;
+		
+		for(InvEntry e : invNetwork.sortToNew(null))
+		{
+			if(IItemCard.Helper.isValid(e.filter, is))
+			{
+				if(InvUtils.addSingleItemToInv(is, e.inv, e.side, !simulate))
+					return true;
+			}
+		}
+		
+		return false;
+	}
+	
+	public boolean requestItem(ItemStack is, boolean simulate)
+	{
+		if(is == null) return false;
+		
+		for(InvEntry e : invNetwork.sortToNew(null))
+		{
+			if(IItemCard.Helper.isValid(e.filter, is))
+			{
+				int idx = InvUtils.getFirstFilledIndex(e.inv, is, e.side);
+				
+				if(idx != -1)
+				{
+					if(!simulate)
+					{
+						e.inv.setInventorySlotContents(idx, InvUtils.reduceItem(e.inv.getStackInSlot(idx)));
+						e.inv.markDirty();
+					}
+					
+					return true;
+				}
+			}
+		}
+		
+		return false;
 	}
 	
 	public Container getContainer(EntityPlayer ep, NBTTagCompound data)

@@ -16,14 +16,10 @@ public class ModuleCSBool extends ModuleConfigSegment
 	
 	@SideOnly(Side.CLIENT)
 	public void buttonClicked(GuiModuleSettings g)
-	{
-		//boolean b = get(g.board.items[g.moduleID]);
-		//g.buttonClicked.background = b ? GuiModuleSettings.icon_cfg_bool;
-		clientConfig(g.board, g.moduleID, null);
-	}
+	{ clientConfig(g.board, g.moduleID, null); }
 	
 	public void onConfigReceived(CircuitBoard cb, int MID, NBTTagCompound data)
-	{ set(cb.items[MID], !get(cb.items[MID])); }
+	{ set(cb.items[MID], !get(cb.items[MID])); cb.cable.markDirty(); }
 	
 	public boolean get(ItemStack is)
 	{

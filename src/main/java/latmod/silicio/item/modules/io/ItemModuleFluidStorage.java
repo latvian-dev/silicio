@@ -4,6 +4,7 @@ import latmod.core.ODItems;
 import latmod.core.util.FastList;
 import latmod.silicio.SilItems;
 import latmod.silicio.item.modules.IOType;
+import latmod.silicio.item.modules.config.*;
 import latmod.silicio.tile.*;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
@@ -12,10 +13,16 @@ import net.minecraftforge.fluids.IFluidHandler;
 
 public class ItemModuleFluidStorage extends ItemModuleIO
 {
+	public static final ModuleCSNum cs_priority = new ModuleCSNum(0, "Priority");
+	public static final ModuleCSFluid cs_filter = new ModuleCSFluid(1, "Filter");
+	
 	public ItemModuleFluidStorage(String s)
 	{
 		super(s);
 		setTextureName("fluid");
+		
+		moduleConfig.add(cs_priority);
+		moduleConfig.add(cs_filter);
 	}
 	
 	public int getChannelCount()
@@ -25,7 +32,7 @@ public class ItemModuleFluidStorage extends ItemModuleIO
 	{ return IOType.NONE; }
 	
 	public IOType getChannelType(int c)
-	{ return IOType.INPUT; }
+	{ return IOType.NONE; }
 	
 	public void loadRecipes()
 	{
@@ -39,18 +46,9 @@ public class ItemModuleFluidStorage extends ItemModuleIO
 	
 	public void updateTankNet(CircuitBoard cb, int MID, FastList<TankEntry> list)
 	{
-		CBChannel c = getChannel(cb, MID, 0);
-		if(c != CBChannel.NONE && !c.isEnabled()) return;
-		
 		TileEntity te = cb.getFacingTile();
 		
 		if(te != null && !te.isInvalid() && te instanceof IFluidHandler)
-		{
-			TankEntry ie = new TankEntry();
-			ie.tank = ((IFluidHandler)te);
-			ie.side = cb.side.getOpposite();
-			ie.priority = 1;
-			list.add(ie);
-		}
+		{ list.add(new TankEntry((IFluidHandler)te, cb.sideOpposite, cs_priority.get(cb.items[MID]), cs_filter.getFluid(cb.items[MID]))); }
 	}
 }

@@ -1,6 +1,6 @@
 package latmod.silicio.tile;
 
-import latmod.core.EnumDyeColor;
+import latmod.core.*;
 import latmod.core.util.*;
 import net.minecraft.nbt.NBTTagCompound;
 

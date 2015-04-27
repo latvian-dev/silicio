@@ -117,8 +117,8 @@ public abstract class ItemModule extends ItemSil implements ICBModule
 	public final CBChannel getChannel(CircuitBoard cb, int MID, int c)
 	{
 		int ch = getChannelID(this, cb.items[MID], c);
-		if(ch < 0 || cb.cable.controller == null || ch >= cb.cable.controller.channels.length) return CBChannel.NONE;
-		return cb.cable.controller.channels[ch];
+		if(ch < 0 || cb.cable.controller() == null || ch >= cb.cable.controller().channels.length) return CBChannel.NONE;
+		return cb.cable.controller().channels[ch];
 	}
 	
 	public final void setChannel(CircuitBoard cb, int MID, int c, int ch)
@@ -128,4 +128,7 @@ public abstract class ItemModule extends ItemSil implements ICBModule
 		channels[c] = ch;
 		cb.items[MID].stackTagCompound.setIntArray(NBT_TAG, channels);
 	}
+	
+	public boolean isEnabled(CBChannel cbc, CircuitBoard cb, int MID, int c)
+	{ return cbc.isEnabled() && cbc == getChannel(cb, MID, c); }
 }

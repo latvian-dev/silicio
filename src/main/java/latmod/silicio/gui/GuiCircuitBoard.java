@@ -1,6 +1,8 @@
 package latmod.silicio.gui;
+import net.minecraft.util.EnumChatFormatting;
 import latmod.core.gui.*;
 import latmod.core.mod.LC;
+import latmod.core.util.FastList;
 import latmod.silicio.Silicio;
 import latmod.silicio.gui.container.ContainerCircuitBoard;
 import latmod.silicio.tile.*;
@@ -23,8 +25,19 @@ public class GuiCircuitBoard extends GuiLM
 		{
 			public void onButtonPressed(int b)
 			{
-				playClickSound();
-				board.cable.clientOpenGui(TileCBCable.guiData(board.side.ordinal(), 1, -1));
+				if(board.cable.controller() != null)
+				{
+					playClickSound();
+					board.cable.clientOpenGui(TileCBCable.guiData(board.side, 1, -1));
+				}
+			}
+			
+			public void addMouseOverText(FastList<String> l)
+			{
+				l.add(title);
+				
+				if(board.cable.controller() == null)
+					l.add(EnumChatFormatting.GRAY + "No Controller!");
 			}
 		});
 		
