@@ -1,7 +1,7 @@
 package latmod.silicio.item.modules.io;
 
 import latmod.silicio.item.modules.IOType;
-import latmod.silicio.tile.*;
+import latmod.silicio.tile.CircuitBoard;
 import net.minecraft.item.ItemStack;
 
 public class ItemModuleEnergyInput extends ItemModuleIO

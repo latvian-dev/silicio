@@ -6,8 +6,7 @@
 
 package dan200.computercraft.api.peripheral;
 
-import dan200.computercraft.api.lua.ILuaContext;
-import dan200.computercraft.api.lua.LuaException;
+import dan200.computercraft.api.lua.*;
 
 /**
  * The interface that defines a peripheral. This should be implemented by the

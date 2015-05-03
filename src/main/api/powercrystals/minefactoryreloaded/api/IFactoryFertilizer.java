@@ -1,7 +1,6 @@
 package powercrystals.minefactoryreloaded.api;
 
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
+import net.minecraft.item.*;
 
 /**
  * Defines a fertilizer item for use in the Fertilizer.

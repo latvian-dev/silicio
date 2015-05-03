@@ -1,5 +1,5 @@
 package latmod.silicio;
-import latmod.core.*;
+import latmod.core.LMMod;
 import latmod.silicio.integration.SilInt;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.ItemStack;

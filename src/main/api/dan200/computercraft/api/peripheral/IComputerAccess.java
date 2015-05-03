@@ -6,8 +6,8 @@
 
 package dan200.computercraft.api.peripheral;
 
-import dan200.computercraft.api.filesystem.IMount;
-import dan200.computercraft.api.filesystem.IWritableMount;
+import net.minecraft.world.World;
+import dan200.computercraft.api.filesystem.*;
 
 /**
  * The interface passed to peripherals by computers or turtles, providing methods

@@ -9,7 +9,7 @@ import latmod.core.util.*;
 import latmod.silicio.SilItems;
 import latmod.silicio.gui.GuiController;
 import latmod.silicio.item.IItemCard;
-import latmod.silicio.item.modules.*;
+import latmod.silicio.item.modules.ICBModule;
 import mcp.mobius.waila.api.*;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.entity.player.EntityPlayer;
@@ -25,6 +25,7 @@ import cpw.mods.fml.relauncher.*;
 public class TileCBController extends TileLM implements ICBNetTile, IEnergyReceiver, IWailaTile.Body, ISecureTile, IGuiTile
 {
 	public final FastList<ICBNetTile> network;
+	private final FastList<ICBNetTile> prevNetwork;
 	public final FastList<CircuitBoard> circuitBoards;
 	public final FastMap<CircuitBoard, FastMap<Integer, ICBModule>> allModules;
 	public final FastList<InvEntry> invNetwork;
@@ -40,6 +41,7 @@ public class TileCBController extends TileLM implements ICBNetTile, IEnergyRecei
 	{
 		storage = new EnergyStorage(50000000, 500000);
 		network = new FastList<ICBNetTile>();
+		prevNetwork = new FastList<ICBNetTile>();
 		circuitBoards = new FastList<CircuitBoard>();
 		allModules = new FastMap<CircuitBoard, FastMap<Integer, ICBModule>>();
 		invNetwork = new FastList<InvEntry>();
@@ -107,6 +109,12 @@ public class TileCBController extends TileLM implements ICBNetTile, IEnergyRecei
 		CBChannel.clear(channels);
 	}
 	
+	public void onUnloaded()
+	{
+		for(ICBNetTile t : network)
+			t.onControllerDisconnected();
+	}
+	
 	public void onUpdate()
 	{
 		if(isServer() && energyChanged && tick % 5 == 0)
@@ -126,6 +134,9 @@ public class TileCBController extends TileLM implements ICBNetTile, IEnergyRecei
 		boolean pHasConflict = hasConflict;
 		hasConflict = false;
 		
+		prevNetwork.clear();
+		prevNetwork.addAll(network);
+		
 		network.clear();
 		circuitBoards.clear();
 		allModules.clear();
@@ -144,6 +155,9 @@ public class TileCBController extends TileLM implements ICBNetTile, IEnergyRecei
 				InvUtils.dropItem(worldObj, xCoord + 0.5D, yCoord + 0.5D, zCoord + 0.5D, new ItemStack(SilItems.b_cbcontroller), 10);
 			}
 		}
+		
+		for(ICBNetTile t : prevNetwork)
+			t.onControllerDisconnected();
 		
 		if(pHasConflict != hasConflict)
 			markDirty();
@@ -230,6 +244,7 @@ public class TileCBController extends TileLM implements ICBNetTile, IEnergyRecei
 				if(ec.isSideEnabled(Facing.oppositeSide[i]) && !network.contains(ec))
 				{
 					network.add(ec);
+					prevNetwork.remove(ec);
 					
 					if(ec instanceof TileCBCable)
 					{

@@ -1,11 +1,11 @@
 package latmod.silicio.gui;
-import net.minecraft.util.EnumChatFormatting;
 import latmod.core.gui.*;
 import latmod.core.mod.LC;
 import latmod.core.util.FastList;
 import latmod.silicio.Silicio;
 import latmod.silicio.gui.container.ContainerCircuitBoard;
 import latmod.silicio.tile.*;
+import net.minecraft.util.EnumChatFormatting;
 import cpw.mods.fml.relauncher.*;
 
 @SideOnly(Side.CLIENT)

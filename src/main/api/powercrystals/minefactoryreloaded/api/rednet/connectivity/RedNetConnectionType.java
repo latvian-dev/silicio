@@ -1,7 +1,6 @@
 package powercrystals.minefactoryreloaded.api.rednet.connectivity;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Defines how RedNet cable connects to a block

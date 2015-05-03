@@ -1,11 +1,10 @@
 package latmod.silicio.block;
 import java.util.List;
 
-import latmod.core.ODItems;
+import latmod.core.*;
 import latmod.core.tile.TileLM;
 import latmod.core.util.*;
 import latmod.silicio.SilMat;
-import latmod.silicio.client.render.world.RenderCBCable;
 import latmod.silicio.tile.TileCBCable;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.Minecraft;
@@ -37,7 +36,7 @@ public class BlockCBCable extends BlockSil
 	}
 	
 	@SideOnly(Side.CLIENT)
-	public IIcon icon_board, icon_cover;
+	public IIcon icon_cover;
 	
 	public BlockCBCable(String s)
 	{
@@ -149,21 +148,19 @@ public class BlockCBCable extends BlockSil
 	public boolean renderAsNormalBlock()
 	{ return false; }
 	
-	@SideOnly(Side.CLIENT)
 	public int getRenderType()
-	{ return RenderCBCable.instance.getRenderId(); }
+	{ return 0; }
 	
 	@SideOnly(Side.CLIENT)
 	public void registerBlockIcons(IIconRegister ir)
 	{
-		blockIcon = ir.registerIcon(mod.assets + "cable");
-		icon_board = ir.registerIcon(mod.assets + "board");
+		blockIcon = ir.registerIcon(mod.assets + "cable_item");
 		icon_cover = ir.registerIcon(mod.assets + "cable_cover");
 	}
 	
 	@SideOnly(Side.CLIENT)
 	public IIcon getIcon(IBlockAccess iba, int x, int y, int z, int s)
-	{ return blockIcon; }
+	{ return LatCoreMC.blockNullIcon; }
 	
 	public boolean isSideSolid(IBlockAccess iba, int x, int y, int z, ForgeDirection side)
 	{ return true; }

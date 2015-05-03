@@ -36,17 +36,38 @@ public class TileCBCable extends TileLM implements IPaintable, ICBNetTile, IGuiT
 	public final Paint[] paint = new Paint[6];
 	public boolean hasCover;
 	private TileCBController controller;
-	private final boolean[] canReceive;
-	private final boolean[] isDisabled;
+	private final boolean[] canReceive = new boolean[6];
+	private final boolean[] isDisabled = new boolean[6];
+	public final boolean[] renderCableSide = new boolean[6];
 	
-	public TileCBCable()
+	public TileCBCable() { }
+	
+	private void updateRenderSides()
 	{
-		canReceive = new boolean[6];
-		isDisabled = new boolean[6];
+		for(int i = 0; i < 6; i++)
+			renderCableSide[i] = boards[i] != null || connectCable(this, i);
+	}
+	
+	public void onNeighborBlockChange(Block b)
+	{
+		super.onNeighborBlockChange(b);
+		updateRenderSides();
+		if(isServer()) markDirty();
+	}
+	
+	public void onPlaced()
+	{
+		super.onPlaced();
+		updateRenderSides();
+	}
+	
+	public void onUpdatePacket()
+	{
+		updateRenderSides();
 	}
 	
 	public boolean rerenderBlock()
-	{ return true; }
+	{ return false; }
 	
 	public TileCBController controller()
 	{ return controller; }
@@ -188,7 +209,7 @@ public class TileCBCable extends TileLM implements IPaintable, ICBNetTile, IGuiT
 	
 	public void onControllerDisconnected()
 	{
-		if(controller == null)
+		if(controller != null)
 		{
 			for(int i = 0; i < boards.length; i++)
 			if(boards[i] != null) boards[i].preUpdate();
@@ -199,6 +220,8 @@ public class TileCBCable extends TileLM implements IPaintable, ICBNetTile, IGuiT
 		
 		for(int s = 0; s < 6; s++)
 			canReceive[s] = false;
+		
+		controller = null;
 	}
 	
 	private boolean canReceiveEnergy(int s)
@@ -528,4 +551,11 @@ public class TileCBCable extends TileLM implements IPaintable, ICBNetTile, IGuiT
 	
 	public LMSecurity getSecurity()
 	{ if(controller != null) return controller.getSecurity(); return security; }
+
+	public boolean isOnline()
+	{ return controller != null && !controller.hasConflict; }
+	
+	@SideOnly(Side.CLIENT)
+    public AxisAlignedBB getRenderBoundingBox()
+    { return AxisAlignedBB.getBoundingBox(xCoord, yCoord, zCoord, xCoord + 1D, yCoord + 1D, zCoord + 1D); }
 }
