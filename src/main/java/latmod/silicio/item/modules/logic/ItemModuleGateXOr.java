@@ -30,7 +30,8 @@ public class ItemModuleGateXOr extends ItemModuleLogic implements ISignalProvide
 		mod.recipes.addShapelessRecipe(new ItemStack(this), SilItems.Modules.i_gate_or, Blocks.redstone_torch);
 	}
 	
-	public void provideSignals(CircuitBoard cb, int MID)
+	public void provideSignals(CircuitBoard cb, int MID, boolean pre)
 	{
+		if(pre) return;
 	}
 }

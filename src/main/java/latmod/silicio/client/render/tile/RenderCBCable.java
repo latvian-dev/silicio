@@ -1,5 +1,6 @@
 package latmod.silicio.client.render.tile;
 
+import latmod.core.LatCoreMC;
 import latmod.core.client.*;
 import latmod.silicio.*;
 import latmod.silicio.tile.TileCBCable;
@@ -61,6 +62,7 @@ public class RenderCBCable extends TileRenderer<TileCBCable>
 			GL11.glPushMatrix();
 			GL11.glTranslated(rx + 0.5D, ry + 0.5D, rz + 0.5D);
 			GL11.glDisable(GL11.GL_LIGHTING);
+			GL11.glDisable(GL11.GL_CULL_FACE);
 			
 			Minecraft.getMinecraft().getTextureManager().bindTexture(TextureMap.locationBlocksTexture);
 			
@@ -68,17 +70,27 @@ public class RenderCBCable extends TileRenderer<TileCBCable>
 			
 			for(int i = 0; i < 6; i++)
 			{
-				icons[i] = SilItems.b_cbcable.icon_cover;
-				
-				if(t.paint[i] != null && t.paint[i].block != null)
-					icons[i] = t.paint[i].block.getBlockTextureFromSide(i);
+				if(t.renderCover[i])
+				{
+					icons[i] = SilItems.b_cbcable.icon_cover;
+					
+					if(t.paint[i] != null && t.paint[i].block != null)
+						icons[i] = t.paint[i].block.getBlockTextureFromSide(i);
+				}
+				else
+				{
+					icons[i] = LatCoreMC.blockNullIcon;
+				}
 			}
 			
+			double d = 0.001D;
+			renderBlocks.fullBlock.setBounds(d, d, d, 1D - d, 1D - d, 1D - d);
 			renderBlocks.blockAccess = t.getWorldObj();
 			renderBlocks.renderAllFaces = true;
 			renderBlocks.setRenderBounds(renderBlocks.fullBlock);
 			renderBlocks.renderStandardBlockIcons(t.getBlockType(), t.xCoord, t.yCoord, t.zCoord, icons, true);
 			
+			GL11.glEnable(GL11.GL_CULL_FACE);
 			GL11.glEnable(GL11.GL_LIGHTING);
 			GL11.glPopMatrix();
 		}

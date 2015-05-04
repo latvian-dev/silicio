@@ -4,5 +4,5 @@ import latmod.silicio.tile.CircuitBoard;
 
 public interface ISignalProvider extends ICBModule
 {
-	public void provideSignals(CircuitBoard cb, int MID);
+	public void provideSignals(CircuitBoard cb, int MID, boolean pre);
 }

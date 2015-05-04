@@ -30,8 +30,10 @@ public class ItemModuleGateAnd extends ItemModuleLogic implements ISignalProvide
 		mod.recipes.addShapelessRecipe(new ItemStack(this), SilItems.Modules.i_gate_or, ODItems.REDSTONE);
 	}
 	
-	public void provideSignals(CircuitBoard cb, int MID)
+	public void provideSignals(CircuitBoard cb, int MID, boolean pre)
 	{
+		if(pre) return;
+		
 		for(int i = 0; i < 4; i++)
 		{
 			CBChannel c = getChannel(cb, MID, i);

@@ -3,7 +3,7 @@ package latmod.silicio.item.modules.logic;
 import latmod.silicio.SilItems;
 import latmod.silicio.item.modules.*;
 import latmod.silicio.item.modules.config.ModuleCSNum;
-import latmod.silicio.tile.CircuitBoard;
+import latmod.silicio.tile.*;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 
@@ -37,9 +37,12 @@ public class ItemModuleSequencer extends ItemModuleLogic implements ISignalProvi
 				'R', Blocks.redstone_torch);
 	}
 	
-	public void provideSignals(CircuitBoard cb, int MID)
+	public void provideSignals(CircuitBoard cb, int MID, boolean pre)
 	{
-		if(getChannel(cb, MID, 4).isEnabled()) return;
+		if(pre) return;
+		
+		CBChannel c4 = getChannel(cb, MID, 4);
+		if(c4 != CBChannel.NONE && !c4.isEnabled()) return;
 		
 		int t = cs_timer.get(cb.items[MID]);
 		int p = (int)((cb.tick / t) % 4L);

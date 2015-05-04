@@ -103,9 +103,7 @@ public class TileModuleCopier extends TileInvLM implements IGuiTile, ICBNetTile,
 	{ return energyStorage; }
 	
 	public void addWailaBody(IWailaDataAccessor data, IWailaConfigHandler config, List<String> info)
-	{
-		ICBEnergyTile.Helper.addWaila(energyStorage, info);
-	}
+	{ ICBEnergyTile.Helper.addWaila(energyStorage, info); }
 	
 	public float getProgressF()
 	{ return progress > 0 ? (progress + 1) / (float)maxProg : 0; }

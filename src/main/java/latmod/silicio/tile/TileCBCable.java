@@ -39,13 +39,22 @@ public class TileCBCable extends TileLM implements IPaintable, ICBNetTile, IGuiT
 	private final boolean[] canReceive = new boolean[6];
 	private final boolean[] isDisabled = new boolean[6];
 	public final boolean[] renderCableSide = new boolean[6];
+	public final boolean[] renderCover = new boolean[6];
 	
 	public TileCBCable() { }
 	
 	private void updateRenderSides()
 	{
 		for(int i = 0; i < 6; i++)
+		{
 			renderCableSide[i] = boards[i] != null || connectCable(this, i);
+			renderCover[i] = true;
+			
+			TileEntity te = getTile(i);
+			if(te != null && !te.isInvalid() && te instanceof TileCBCable)
+				if(((TileCBCable)te).hasCover && ((TileCBCable)te).paint[Facing.oppositeSide[i]] != null)
+					renderCover[i] = false;
+		}
 	}
 	
 	public void onNeighborBlockChange(Block b)
@@ -85,21 +94,21 @@ public class TileCBCable extends TileLM implements IPaintable, ICBNetTile, IGuiT
 				for(int i = 0; i < boards[s].items.length; i++)
 				{
 					if(boards[s].items[i] != null && boards[s].items[i].getItem() instanceof ISignalProvider)
-						((ISignalProvider)boards[s].items[i].getItem()).provideSignals(boards[s], i);
+						((ISignalProvider)boards[s].items[i].getItem()).provideSignals(boards[s], i, true);
 				}
 			}
 		}
-		
+	}
+	
+	public void onUpdateCB()
+	{
 		for(int s = 0; s < 6; s++)
 		{
 			canReceive[s] = false;
 			if(controller != null && canReceiveEnergy(s))
 				canReceive[s] = true;
 		}
-	}
-	
-	public void onUpdateCB()
-	{
+		
 		for(int s = 0; s < boards.length; s++)
 		{
 			if(boards[s] != null)
@@ -107,7 +116,12 @@ public class TileCBCable extends TileLM implements IPaintable, ICBNetTile, IGuiT
 				for(int i = 0; i < boards[s].items.length; i++)
 				{
 					if(boards[s].items[i] != null && boards[s].items[i].getItem() instanceof ICBModule)
+					{
+						if(boards[s].items[i].getItem() instanceof ISignalProvider)
+							((ISignalProvider)boards[s].items[i].getItem()).provideSignals(boards[s], i, false);
+						
 						((ICBModule)boards[s].items[i].getItem()).onUpdate(boards[s], i);
+					}
 				}
 			}
 		}
@@ -182,6 +196,8 @@ public class TileCBCable extends TileLM implements IPaintable, ICBNetTile, IGuiT
 	
 	public boolean setPaint(PaintData p)
 	{
+		if(p.paint != null && p.paint.block != null && p.paint.block != Blocks.glass && !p.paint.block.renderAsNormalBlock()) return false;
+		
 		if(p.player.isSneaking())
 		{
 			for(int i = 0; i < 6; i++)
@@ -303,14 +319,14 @@ public class TileCBCable extends TileLM implements IPaintable, ICBNetTile, IGuiT
 		
 		if(is != null && boards[id] == null && is.getItem() == SilItems.b_cbcable.getItem()) return false;
 		
-		if(!isServer()) return true;
-		
 		if(LatCoreMC.isWrench(is) && !ep.isSneaking())
 		{
 			if(boards[id] != null) return true;
 			setDisabled(id, !isDisabled[id]);
 			return true;
 		}
+		
+		if(!isServer()) return true;
 		
 		if(boards[id] == null)
 		{
@@ -521,6 +537,7 @@ public class TileCBCable extends TileLM implements IPaintable, ICBNetTile, IGuiT
 		{
 			isDisabled[side] = b;
 			notifyNeighbors();
+			onNeighborBlockChange(getBlockType());
 			markDirty();
 			
 			TileEntity te = worldObj.getTileEntity(xCoord + Facing.offsetsXForSide[side], yCoord + Facing.offsetsYForSide[side], zCoord + Facing.offsetsZForSide[side]);
@@ -531,6 +548,7 @@ public class TileCBCable extends TileLM implements IPaintable, ICBNetTile, IGuiT
 				{
 					t.isDisabled[Facing.oppositeSide[side]] = b;
 					t.notifyNeighbors();
+					t.onNeighborBlockChange(getBlockType());
 					t.markDirty();
 				}
 			}

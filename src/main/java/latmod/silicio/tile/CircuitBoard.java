@@ -16,6 +16,8 @@ public class CircuitBoard implements IInventory
 	public final TileCBCable cable;
 	public final int side;
 	public final int sideOpposite;
+	public final ForgeDirection sideF;
+	public final ForgeDirection sideOppositeF;
 	public final ChunkCoordinates sidePos;
 	
 	public ItemStack items[] = new ItemStack[12];
@@ -29,11 +31,10 @@ public class CircuitBoard implements IInventory
 		cable = t;
 		side = f;
 		sideOpposite = Facing.oppositeSide[side];
+		sideF = ForgeDirection.VALID_DIRECTIONS[side];
+		sideOppositeF = sideF.getOpposite();
 		sidePos = new ChunkCoordinates(cable.xCoord + Facing.offsetsXForSide[side], cable.yCoord + Facing.offsetsYForSide[side], cable.zCoord + Facing.offsetsZForSide[side]);
 	}
-	
-	public ForgeDirection side()
-	{ return ForgeDirection.VALID_DIRECTIONS[side]; }
 	
 	public void readTileData(NBTTagCompound tag)
 	{

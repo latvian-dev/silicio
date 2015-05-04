@@ -36,6 +36,8 @@ public class TileCBController extends TileLM implements ICBNetTile, IEnergyRecei
 	public EnergyStorage storage;
 	private int pNetworkSize = -1;
 	public boolean hasConflict = false;
+	private int prevEnergyWaila = -1;
+	private int currentEnergyWaila = -1;
 	
 	public TileCBController()
 	{
@@ -71,7 +73,7 @@ public class TileCBController extends TileLM implements ICBNetTile, IEnergyRecei
 	
 	public void addWailaBody(IWailaDataAccessor data, IWailaConfigHandler config, List<String> info)
 	{
-		ICBEnergyTile.Helper.addWaila(storage, info);
+		ICBEnergyTile.Helper.addWailaWithChange(storage, info, (currentEnergyWaila == -1 || prevEnergyWaila == -1) ? 0 : (currentEnergyWaila - prevEnergyWaila));
 		
 		if(hasConflict) info.add("Conflicting Controller found!");
 		else
@@ -117,9 +119,13 @@ public class TileCBController extends TileLM implements ICBNetTile, IEnergyRecei
 	
 	public void onUpdate()
 	{
-		if(isServer() && energyChanged && tick % 5 == 0)
+		if(isServer() && energyChanged && tick % 20 == 0)
 		{
 			energyChanged = false;
+			
+			prevEnergyWaila = currentEnergyWaila;
+			currentEnergyWaila = storage.getEnergyStored();
+			
 			markDirty();
 			
 			for(ICBNetTile t : network)
@@ -165,6 +171,8 @@ public class TileCBController extends TileLM implements ICBNetTile, IEnergyRecei
 	
 	public void onUpdateCB()
 	{
+		preUpdate(this);
+		
 		addToList(xCoord, yCoord, zCoord);
 		network.remove(this);
 		
@@ -180,8 +188,6 @@ public class TileCBController extends TileLM implements ICBNetTile, IEnergyRecei
 		}
 		
 		if(hasConflict) return;
-		
-		preUpdate(this);
 		
 		for(ICBNetTile t : network)
 		{

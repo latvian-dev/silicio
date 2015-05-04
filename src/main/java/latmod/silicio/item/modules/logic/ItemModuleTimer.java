@@ -32,8 +32,9 @@ public class ItemModuleTimer extends ItemModuleLogic implements ISignalProvider
 		mod.recipes.addShapelessRecipe(new ItemStack(this), SilItems.Modules.LOGIC, Items.clock, Blocks.redstone_torch);
 	}
 	
-	public void provideSignals(CircuitBoard cb, int MID)
+	public void provideSignals(CircuitBoard cb, int MID, boolean pre)
 	{
+		if(pre) return;
 		int t = cs_timer.get(cb.items[MID]);
 		if(cb.tick % t == 0L && !getChannel(cb, MID, 1).isEnabled())
 			getChannel(cb, MID, 0).enable();
