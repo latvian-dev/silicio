@@ -18,14 +18,13 @@ public class ItemModuleTimer extends ItemModuleLogic implements ISignalProvider
 		moduleConfig.add(cs_timer);
 		
 		channelNames[0] = "Output";
-		channelNames[1] = "Input";
 	}
 	
 	public int getChannelCount()
-	{ return 2; }
+	{ return 1; }
 	
 	public IOType getChannelType(int c)
-	{ return c == 0 ? IOType.OUTPUT : IOType.INPUT; }
+	{ return IOType.OUTPUT; }
 	
 	public void loadRecipes()
 	{
@@ -36,7 +35,6 @@ public class ItemModuleTimer extends ItemModuleLogic implements ISignalProvider
 	{
 		if(pre) return;
 		int t = cs_timer.get(cb.items[MID]);
-		if(cb.tick % t == 0L && !getChannel(cb, MID, 1).isEnabled())
-			getChannel(cb, MID, 0).enable();
+		if(cb.tick % t == 0L) getChannel(cb, MID, 0).enable();
 	}
 }

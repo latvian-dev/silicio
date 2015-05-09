@@ -21,8 +21,10 @@ import net.minecraft.util.Facing;
 import net.minecraftforge.common.util.ForgeDirection;
 import cofh.api.energy.*;
 import cpw.mods.fml.relauncher.*;
+import dan200.computercraft.api.lua.*;
+import dan200.computercraft.api.peripheral.*;
 
-public class TileCBController extends TileLM implements ICBNetTile, IEnergyReceiver, IWailaTile.Body, ISecureTile, IGuiTile
+public class TileCBController extends TileLM implements ICBNetTile, IEnergyReceiver, IWailaTile.Body, ISecureTile, IGuiTile, IPeripheral
 {
 	public final FastList<ICBNetTile> network;
 	private final FastList<ICBNetTile> prevNetwork;
@@ -360,4 +362,33 @@ public class TileCBController extends TileLM implements ICBNetTile, IEnergyRecei
 	@SideOnly(Side.CLIENT)
 	public GuiScreen getGui(EntityPlayer ep, NBTTagCompound data)
 	{ return new GuiController(new ContainerEmpty(ep, this)); }
+	
+	public String getType()
+	{ return "cbcontroller"; }
+	
+	public String[] getMethodNames()
+	{ return new String[] { "setChannel", "getChannel" }; }
+	
+	public Object[] callMethod(IComputerAccess computer, ILuaContext context, int method, Object[] arguments) throws LuaException, InterruptedException
+	{
+		if(method == 0)
+		{
+		}
+		else if(method == 1)
+		{
+			if(arguments == null || arguments.length < 1)
+				return new Object[] { -1 };
+			int c = ((Number)arguments[0]).intValue();
+			if(c < 0 || c >= channels.length)
+				return new Object[] { -1 };
+			return new Object[] { channels[c].isEnabled() };
+		}
+		
+		return null;
+	}
+	
+	public void attach(IComputerAccess computer) { }
+	public void detach(IComputerAccess computer) { }
+	public boolean equals(IPeripheral other)
+	{ return super.equals(other); }
 }

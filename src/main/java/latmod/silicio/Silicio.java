@@ -6,7 +6,7 @@ import net.minecraft.item.ItemStack;
 import cpw.mods.fml.common.*;
 import cpw.mods.fml.common.event.*;
 
-@Mod(modid = Silicio.MOD_ID, name = "Silicio", version = "@VERSION@", dependencies = "required-after:LatCoreMC;after:ThermalExpansion;after:ComputerCraft;after:BuildCraft")
+@Mod(modid = Silicio.MOD_ID, name = "Silicio", version = "@VERSION@", dependencies = "required-after:LatCoreMC;after:ThermalExpansion;after:ComputerCraft;after:BuildCraft;after:MineFactoryReloaded")
 public class Silicio
 {
 	protected static final String MOD_ID = "Silicio";

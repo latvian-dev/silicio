@@ -8,6 +8,7 @@ public class SilInt
 	public static final void onLoadedAll()
 	{
 		load("ThermalExpansion", "latmod.silicio.integration.SilIntTE");
+		load("ComputerCraft", "latmod.silicio.integration.SilIntCC");
 	}
 	
 	private static final void load(String m, String c)

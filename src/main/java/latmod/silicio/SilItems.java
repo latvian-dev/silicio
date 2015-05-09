@@ -12,6 +12,7 @@ public class SilItems
 	public static BlockCBCable b_cbcable;
 	public static BlockCBController b_cbcontroller;
 	public static BlockModuleCopier b_module_copier;
+	public static BlockRedNetIO b_rednet_io;
 	
 	public static ItemMaterialsSil i_mat;
 	public static ItemCircuitBoard i_circuit_board;
@@ -21,6 +22,7 @@ public class SilItems
 		b_cbcable = new BlockCBCable("cable").register();
 		b_cbcontroller = new BlockCBController("controller").register();
 		b_module_copier = new BlockModuleCopier("module_copier").register();
+		b_rednet_io = new BlockRedNetIO("rednet_io").register();
 		
 		i_mat = new ItemMaterialsSil("materials").register();
 		i_circuit_board = new ItemCircuitBoard("circuit_board").register();
@@ -78,8 +80,8 @@ public class SilItems
 			i_energy_out = new ItemModuleEnergyOutput("energy_out").register();
 			
 			i_item_storage = new ItemModuleItemStorage("item_storage").register();
-			i_item_in = new ItemModuleItemInput("item_in").register();
-			i_item_out = new ItemModuleItemOutput("item_out").register();
+			i_item_in = new ItemModuleItemInput("item_in", 1).register();
+			i_item_out = new ItemModuleItemOutput("item_out", 1).register();
 			
 			i_fluid_storage = new ItemModuleFluidStorage("fluid_storage").register();
 			i_fluid_in = new ItemModuleFluidInput("fluid_in").register();

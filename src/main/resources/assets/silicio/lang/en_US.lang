@@ -6,6 +6,8 @@ silicio:tile.machine.name=Machine Block
 silicio:tile.cable.name=Circuit Board Cable
 silicio:tile.controller.name=Circuit Board Controller
 silicio:tile.module_copier.name=Module Copier
+silicio:tile.rednet_io.name=Circuit Board RedNetIO
+silicio:tile.computer_io.name=Circuit Board ComputerIO
 
 ### Items ###
 

@@ -9,27 +9,29 @@ import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 
-public class ItemModuleItemInput extends ItemModuleIO implements IToggable
+public class ItemModuleItemInput extends ItemModuleIO
 {
 	public static final ModuleCSItem cs_filter = new ModuleCSItem(0, "Filter");
 	
-	public ItemModuleItemInput(String s)
+	public final int itemsPerSecond;
+	
+	public ItemModuleItemInput(String s, int i)
 	{
 		super(s);
+		itemsPerSecond = i;
 		setTextureName("item");
 		
 		moduleConfig.add(cs_filter);
-		channelNames[0] = "Input";
 	}
 	
 	public int getChannelCount()
-	{ return 1; }
+	{ return 0; }
 	
 	public IOType getModuleType()
 	{ return IOType.INPUT; }
 	
 	public IOType getChannelType(int c)
-	{ return IOType.INPUT; }
+	{ return IOType.NONE; }
 	
 	public void loadRecipes()
 	{
@@ -38,9 +40,9 @@ public class ItemModuleItemInput extends ItemModuleIO implements IToggable
 				'F', SilItems.Modules.i_item_storage);
 	}
 	
-	public void onChannelToggled(CircuitBoard cb, int MID, CBChannel c)
+	public void onUpdate(CircuitBoard cb, int MID)
 	{
-		if(isEnabled(c, cb, MID, 0))
+		if(cb.tick % 20L == 0L)
 		{
 			ItemStack itemT = cs_filter.getItem(cb.items[MID]);
 			
@@ -50,18 +52,23 @@ public class ItemModuleItemInput extends ItemModuleIO implements IToggable
 			{
 				IInventory inv = (IInventory)te;
 				
-				int idx = InvUtils.getFirstFilledIndex(inv, itemT, cb.sideOpposite);
-				
-				if(idx != -1)
+				for(int i = 0; i < itemsPerSecond; i++)
 				{
-					ItemStack is0 = inv.getStackInSlot(idx);
+					int idx = InvUtils.getFirstFilledIndex(inv, itemT, cb.sideOpposite);
 					
-					if(cb.cable.controller().addItem(is0, false))
+					if(idx != -1)
 					{
-						is0 = InvUtils.reduceItem(is0);
-						inv.setInventorySlotContents(idx, is0);
-						//inv.markDirty();
+						ItemStack is0 = inv.getStackInSlot(idx);
+						
+						if(cb.cable.controller().addItem(is0, false))
+						{
+							is0 = InvUtils.reduceItem(is0);
+							inv.setInventorySlotContents(idx, is0);
+							//inv.markDirty();
+						}
+						else return;
 					}
+					else return;
 				}
 			}
 		}

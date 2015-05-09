@@ -20,14 +20,17 @@ public final class CBChannel
 		name = (s != null && !s.isEmpty()) ? ("" + s) : getChannelName(ID);
 	}
 	
+	public boolean isNone()
+	{ return this == NONE || ID < 0; }
+	
 	public static String getChannelName(int i) { if(i < 0) return NONE.name;
 	return (EnumDyeColor.VALUES[i % 16].toString() + " #" + (i / 16 + 1)); }
 	
 	public void enable()
-	{ if(ID != -1) isEnabled = true; }
+	{ if(!isNone()) isEnabled = true; }
 	
 	public boolean isEnabled()
-	{ return (ID != -1) && isEnabled; }
+	{ return !isNone() && isEnabled; }
 	
 	public int hashCode()
 	{ return ID; }
