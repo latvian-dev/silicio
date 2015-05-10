@@ -2,9 +2,9 @@ package latmod.silicio.item.modules.io;
 
 import latmod.core.InvUtils;
 import latmod.silicio.SilItems;
-import latmod.silicio.item.modules.*;
-import latmod.silicio.item.modules.config.ModuleCSItem;
-import latmod.silicio.tile.*;
+import latmod.silicio.item.modules.IOType;
+import latmod.silicio.item.modules.config.*;
+import latmod.silicio.tile.CircuitBoard;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
@@ -12,16 +12,23 @@ import net.minecraft.tileentity.TileEntity;
 public class ItemModuleItemInput extends ItemModuleIO
 {
 	public static final ModuleCSItem cs_filter = new ModuleCSItem(0, "Filter");
+	public static final ModuleCSMode cs_mode = new ModuleCSMode(1, "Mode");
 	
-	public final int itemsPerSecond;
+	public static final int[] itemsPerSecond = { 1, 4, 16, 64 };
+	public static final int[] powerUse = { 0, 10, 200, 1200 };
 	
-	public ItemModuleItemInput(String s, int i)
+	public ItemModuleItemInput(String s)
 	{
 		super(s);
-		itemsPerSecond = i;
 		setTextureName("item");
 		
+		cs_mode.setModes(0, "Slow", "Medium", "Fast", "Very Fast");
+		
+		for(int i = 0; i < cs_mode.modes.length; i++)
+			cs_mode.setDesc(i, "Items: " + itemsPerSecond[i] + "x for " + powerUse[i] + " RF");
+		
 		moduleConfig.add(cs_filter);
+		moduleConfig.add(cs_mode);
 	}
 	
 	public int getChannelCount()
@@ -42,7 +49,7 @@ public class ItemModuleItemInput extends ItemModuleIO
 	
 	public void onUpdate(CircuitBoard cb, int MID)
 	{
-		if(cb.tick % 20L == 0L)
+		if(cb.tick % 20L == MID)
 		{
 			ItemStack itemT = cs_filter.getItem(cb.items[MID]);
 			
@@ -52,7 +59,11 @@ public class ItemModuleItemInput extends ItemModuleIO
 			{
 				IInventory inv = (IInventory)te;
 				
-				for(int i = 0; i < itemsPerSecond; i++)
+				int mode = cs_mode.get(cb.items[MID]);
+				int ips = itemsPerSecond[mode];
+				int pw = powerUse[mode];
+				
+				for(int i = 0; i < ips; i++)
 				{
 					int idx = InvUtils.getFirstFilledIndex(inv, itemT, cb.sideOpposite);
 					
@@ -60,8 +71,9 @@ public class ItemModuleItemInput extends ItemModuleIO
 					{
 						ItemStack is0 = inv.getStackInSlot(idx);
 						
-						if(cb.cable.controller().addItem(is0, false))
+						if((pw == 0 || cb.cable.controller().hasEnergy(pw)) && cb.cable.controller().addItem(is0, false))
 						{
+							if(pw > 0) cb.cable.controller().extractEnergy(pw);
 							is0 = InvUtils.reduceItem(is0);
 							inv.setInventorySlotContents(idx, is0);
 							//inv.markDirty();

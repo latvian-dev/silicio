@@ -80,8 +80,8 @@ public class SilItems
 			i_energy_out = new ItemModuleEnergyOutput("energy_out").register();
 			
 			i_item_storage = new ItemModuleItemStorage("item_storage").register();
-			i_item_in = new ItemModuleItemInput("item_in", 1).register();
-			i_item_out = new ItemModuleItemOutput("item_out", 1).register();
+			i_item_in = new ItemModuleItemInput("item_in").register();
+			i_item_out = new ItemModuleItemOutput("item_out").register();
 			
 			i_fluid_storage = new ItemModuleFluidStorage("fluid_storage").register();
 			i_fluid_in = new ItemModuleFluidInput("fluid_in").register();

@@ -9,18 +9,19 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.fluids.*;
 
-public class ItemModuleFluidOutput extends ItemModuleIO implements IToggable
+public class ItemModuleFluidOutput extends ItemModuleIO
 {
 	public static final ModuleCSFluid cs_fluid = new ModuleCSFluid(0, "Fluid");
-	public static final ModuleCSNum cs_amount = new ModuleCSNum(1, "Amount");
+	public static final ModuleCSMode cs_mode = new ModuleCSMode(1, "Mode");
 	
 	public ItemModuleFluidOutput(String s)
 	{
 		super(s);
 		setTextureName("fluid");
-		cs_amount.setValues(1000, 1, 1000, 10);
+		cs_mode.setModes(0, "Slow", "Medium", "Fast", "Very Fast");
+		
 		moduleConfig.add(cs_fluid);
-		moduleConfig.add(cs_amount);
+		moduleConfig.add(cs_mode);
 	}
 	
 	public int getChannelCount()
@@ -39,14 +40,17 @@ public class ItemModuleFluidOutput extends ItemModuleIO implements IToggable
 				'F', SilItems.Modules.i_fluid_storage);
 	}
 	
-	public void onChannelToggled(CircuitBoard cb, int MID, CBChannel c)
+	public void onUpdate(CircuitBoard cb, int MID)
 	{
-		if(isEnabled(c, cb, MID, 0))
+		if(cb.tick % 20L == MID)
 		{
 			FluidStack fs = cs_fluid.getFluid(cb.items[MID]);
 			if(fs == null) return;
 			fs.amount = 1;
-			int left = cs_amount.get(cb.items[MID]);
+			
+			int mode = cs_mode.get(cb.items[MID]);
+			int left = ItemModuleFluidInput.mBucketsPerSecond[mode];
+			int pw = ItemModuleFluidInput.powerUse[mode];
 			
 			TileEntity te = cb.getFacingTile();
 			
