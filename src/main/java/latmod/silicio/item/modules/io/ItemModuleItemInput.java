@@ -4,7 +4,7 @@ import latmod.core.InvUtils;
 import latmod.silicio.SilItems;
 import latmod.silicio.item.modules.IOType;
 import latmod.silicio.item.modules.config.*;
-import latmod.silicio.tile.CircuitBoard;
+import latmod.silicio.item.modules.events.EventUpdateModule;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
@@ -21,7 +21,6 @@ public class ItemModuleItemInput extends ItemModuleIO
 	{
 		super(s);
 		setTextureName("item");
-		
 		cs_mode.setModes(0, "Slow", "Medium", "Fast", "Very Fast");
 		
 		for(int i = 0; i < cs_mode.modes.length; i++)
@@ -47,33 +46,33 @@ public class ItemModuleItemInput extends ItemModuleIO
 				'F', SilItems.Modules.i_item_storage);
 	}
 	
-	public void onUpdate(CircuitBoard cb, int MID)
+	public void onUpdate(EventUpdateModule e)
 	{
-		if(cb.tick % 20L == MID)
+		if(e.isTick(20))
 		{
-			ItemStack itemT = cs_filter.getItem(cb.items[MID]);
+			ItemStack itemT = cs_filter.getItem(e.item());
 			
-			TileEntity te = cb.getFacingTile();
+			TileEntity te = e.board.getFacingTile();
 			
 			if(te != null && !te.isInvalid() && te instanceof IInventory)
 			{
 				IInventory inv = (IInventory)te;
 				
-				int mode = cs_mode.get(cb.items[MID]);
+				int mode = cs_mode.get(e.item());
 				int ips = itemsPerSecond[mode];
 				int pw = powerUse[mode];
 				
 				for(int i = 0; i < ips; i++)
 				{
-					int idx = InvUtils.getFirstFilledIndex(inv, itemT, cb.sideOpposite);
+					int idx = InvUtils.getFirstFilledIndex(inv, itemT, e.board.sideOpposite);
 					
 					if(idx != -1)
 					{
 						ItemStack is0 = inv.getStackInSlot(idx);
 						
-						if((pw == 0 || cb.cable.controller().hasEnergy(pw)) && cb.cable.controller().addItem(is0, false))
+						if((pw == 0 || e.controller.hasEnergy(pw)) && e.controller.addItem(is0, false))
 						{
-							if(pw > 0) cb.cable.controller().extractEnergy(pw);
+							if(pw > 0) e.controller.extractEnergy(pw);
 							is0 = InvUtils.reduceItem(is0);
 							inv.setInventorySlotContents(idx, is0);
 							//inv.markDirty();

@@ -3,7 +3,7 @@ package latmod.silicio.item.modules.io;
 import latmod.silicio.SilItems;
 import latmod.silicio.item.modules.*;
 import latmod.silicio.item.modules.config.ModuleCSString;
-import latmod.silicio.tile.*;
+import latmod.silicio.item.modules.events.EventChannelToggled;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.*;
@@ -48,19 +48,19 @@ public class ItemModuleSignOutput extends ItemModuleIO implements IToggable
 				'S', Items.sign);
 	}
 	
-	public void onChannelToggled(CircuitBoard cb, int MID, CBChannel c)
+	public void onChannelToggled(EventChannelToggled e)
 	{
-		if(isEnabled(c, cb, MID, 0))
+		if(e.isEnabled(0, e.channel, false))
 		{
-			TileEntity te = cb.getFacingTile();
+			TileEntity te = e.board.getFacingTile();
 			
-			if(cb.cable.isServer() && te != null && te instanceof TileEntitySign)
+			if(e.board.cable.isServer() && te != null && te instanceof TileEntitySign)
 			{
 				TileEntitySign tes = (TileEntitySign)te;
 				
 				for(int i = 0; i < 4; i++)
 				{
-					String s = cs_text[i].get(cb.items[MID]);
+					String s = cs_text[i].get(e.item());
 					if(!s.equals("~")) tes.signText[i] = s;
 				}
 				

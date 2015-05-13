@@ -3,7 +3,7 @@ package latmod.silicio.item.modules.logic;
 import latmod.silicio.SilItems;
 import latmod.silicio.item.modules.*;
 import latmod.silicio.item.modules.config.ModuleCSNum;
-import latmod.silicio.tile.CircuitBoard;
+import latmod.silicio.item.modules.events.EventProvideSignals;
 import net.minecraft.init.*;
 import net.minecraft.item.ItemStack;
 
@@ -31,10 +31,9 @@ public class ItemModuleTimer extends ItemModuleLogic implements ISignalProvider
 		mod.recipes.addShapelessRecipe(new ItemStack(this), SilItems.Modules.LOGIC, Items.clock, Blocks.redstone_torch);
 	}
 	
-	public void provideSignals(CircuitBoard cb, int MID, boolean pre)
+	public void provideSignals(EventProvideSignals e)
 	{
-		if(pre) return;
-		int t = cs_timer.get(cb.items[MID]);
-		if(cb.tick % t == 0L) getChannel(cb, MID, 0).enable();
+		int t = cs_timer.get(e.item());
+		if(e.isTick(t)) e.setEnabled(0);
 	}
 }

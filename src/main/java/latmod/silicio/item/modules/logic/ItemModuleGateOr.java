@@ -3,7 +3,7 @@ package latmod.silicio.item.modules.logic;
 import latmod.core.ODItems;
 import latmod.silicio.*;
 import latmod.silicio.item.modules.*;
-import latmod.silicio.tile.CircuitBoard;
+import latmod.silicio.item.modules.events.EventProvideSignals;
 import net.minecraft.item.ItemStack;
 
 public class ItemModuleGateOr extends ItemModuleLogic implements ISignalProvider
@@ -30,8 +30,7 @@ public class ItemModuleGateOr extends ItemModuleLogic implements ISignalProvider
 		mod.recipes.addShapelessRecipe(new ItemStack(this), SilItems.Modules.LOGIC, SilMat.SILICON, ODItems.REDSTONE);
 	}
 	
-	public void provideSignals(CircuitBoard cb, int MID, boolean pre)
+	public void provideSignals(EventProvideSignals e)
 	{
-		if(pre) return;
 	}
 }

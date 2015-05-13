@@ -1,6 +1,6 @@
 package latmod.silicio.block;
 import latmod.core.tile.TileLM;
-import latmod.silicio.tile.TileRedNetIO;
+import latmod.silicio.tile.cb.TileRedNetIO;
 import net.minecraft.block.material.Material;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
@@ -26,19 +26,20 @@ public class BlockRedNetIO extends BlockSil implements IRedNetOmniNode
 	
 	public void onInputsChanged(World world, int x, int y, int z, ForgeDirection side, int[] inputValues)
 	{
+		TileRedNetIO t = (TileRedNetIO)world.getTileEntity(x, y, z);
+		if(t != null && !t.isInvalid()) t.onInputsChanged(side, inputValues);
 	}
 	
 	public void onInputChanged(World world, int x, int y, int z, ForgeDirection side, int inputValue)
-	{
-	}
+	{ onInputsChanged(world, x, y, z, side, new int[] { inputValue }); }
 	
 	public RedNetConnectionType getConnectionType(World world, int x, int y, int z, ForgeDirection side)
-	{
-		return RedNetConnectionType.CableAll;
-	}
+	{ return RedNetConnectionType.CableAll; }
 	
 	public int[] getOutputValues(World world, int x, int y, int z, ForgeDirection side)
 	{
+		TileRedNetIO t = (TileRedNetIO)world.getTileEntity(x, y, z);
+		if(t != null && !t.isInvalid()) return t.getOutputValues(side);
 		return new int[16];
 	}
 	

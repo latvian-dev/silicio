@@ -1,7 +1,7 @@
 package latmod.silicio.item.modules.logic;
 
 import latmod.silicio.item.modules.ItemModule;
-import latmod.silicio.tile.CircuitBoard;
+import latmod.silicio.tile.cb.CircuitBoard;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import cpw.mods.fml.relauncher.*;
 

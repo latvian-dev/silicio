@@ -1,7 +1,7 @@
 package latmod.silicio.gui;
 
 import latmod.core.gui.*;
-import latmod.silicio.tile.TileCBController;
+import latmod.silicio.tile.cb.TileCBController;
 import net.minecraft.util.ResourceLocation;
 import cpw.mods.fml.relauncher.*;
 
@@ -22,9 +22,9 @@ public class GuiController extends GuiLM
 		ySize = 85;
 		controller = (TileCBController)c.inv;
 		
-		channels = new ButtonLM[controller.channels.length];
+		channels = new ButtonLM[TileCBController.MAX_CHANNEL];
 		
-		for(int i = 0; i < controller.channels.length; i++)
+		for(int i = 0; i < channels.length; i++)
 		{
 			int bx = i % 16;
 			int by = i / 16;
@@ -37,7 +37,7 @@ public class GuiController extends GuiLM
 			};
 			
 			channels[i].customID = i;
-			channels[i].title = controller.channels[i].name;
+			channels[i].title = "[" + (i + 1) + "] " + TileCBController.getChannelName(i);
 			
 			widgets.add(channels[i]);
 		}
@@ -49,7 +49,7 @@ public class GuiController extends GuiLM
 		
 		for(int i = 0; i < channels.length; i++)
 		{
-			if(controller.channels[i].isEnabled())
+			if(controller.channels.contains(i))
 				iconChannelEnabled.render(this, channels[i].posX, channels[i].posY, 8, 8);
 		}
 	}

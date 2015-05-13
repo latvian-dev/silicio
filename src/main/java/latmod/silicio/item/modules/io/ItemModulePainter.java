@@ -5,7 +5,7 @@ import latmod.core.tile.IPaintable.Paint;
 import latmod.silicio.SilItems;
 import latmod.silicio.item.modules.*;
 import latmod.silicio.item.modules.config.*;
-import latmod.silicio.tile.*;
+import latmod.silicio.item.modules.events.EventChannelToggled;
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.*;
@@ -63,23 +63,26 @@ public class ItemModulePainter extends ItemModuleIO implements IToggable
 					'4', EnumDyeColor.RED.dyeName);
 	}
 	
-	public void onChannelToggled(CircuitBoard cb, int MID, CBChannel c)
+	public void onChannelToggled(EventChannelToggled e)
 	{
-		if(cb.cable.hasCover && c == getChannel(cb, MID, 0))
+		if(!e.cable.hasCover) return;
+		int ch = e.getChannel(0);
+		
+		if(ch != -1 && e.channel == ch)
 		{
 			Paint p = null;
 			
-			ItemStack isp = (c.isEnabled() ? cs_paint_on.getItem(cb.items[MID]) : cs_paint_off.getItem(cb.items[MID]));
+			ItemStack isp = (e.isEnabled0(ch, -1, false) ? cs_paint_on.getItem(e.item()) : cs_paint_off.getItem(e.item()));
 			
 			if(isp == null) return;
 			
 			if(isp != null && isp.getItem() instanceof ItemBlock)
 				p = new Paint(Block.getBlockFromItem(isp.getItem()), isp.getItemDamage());
 			
-			if(cs_paint_all.get(cb.items[MID]))
-			{ for(int i = 0; i < 6; i++) cb.cable.paint[i] = p; }
-			else cb.cable.paint[cb.side] = p;
-			cb.cable.markDirty();
+			if(cs_paint_all.get(e.item()))
+			{ for(int i = 0; i < 6; i++) e.cable.paint[i] = p; }
+			else e.cable.paint[e.board.side] = p;
+			e.cable.markDirty();
 		}
 	}
 }

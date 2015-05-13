@@ -1,8 +1,8 @@
 package latmod.silicio.item.modules;
 
-import latmod.silicio.tile.CircuitBoard;
+import latmod.silicio.item.modules.events.EventProvideSignals;
 
-public interface ISignalProvider extends ICBModule
+public interface ISignalProvider
 {
-	public void provideSignals(CircuitBoard cb, int MID, boolean pre);
+	public void provideSignals(EventProvideSignals e);
 }

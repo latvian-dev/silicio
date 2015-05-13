@@ -1,6 +1,6 @@
 package latmod.silicio.integration;
 
-import latmod.silicio.tile.TileCBController;
+import latmod.silicio.tile.cb.TileComputerIO;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import dan200.computercraft.api.ComputerCraftAPI;
@@ -17,8 +17,8 @@ public class SilIntCC implements IPeripheralProvider
 	{
 		TileEntity te = world.getTileEntity(x, y, z);
 		
-		if(te != null && !te.isInvalid() && te instanceof TileCBController)
-			return (TileCBController)te;
+		if(te != null && !te.isInvalid() && te instanceof TileComputerIO)
+			return (TileComputerIO)te;
 		
 		return null;
 	}

@@ -1,4 +1,4 @@
-package latmod.silicio.tile;
+package latmod.silicio.tile.cb;
 
 import java.util.List;
 
@@ -6,7 +6,7 @@ import latmod.core.*;
 import latmod.core.tile.*;
 import latmod.silicio.gui.GuiModuleCopier;
 import latmod.silicio.gui.container.ContainerModuleCopier;
-import latmod.silicio.item.modules.ICBModule;
+import latmod.silicio.item.modules.ItemModule;
 import mcp.mobius.waila.api.*;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.entity.player.EntityPlayer;
@@ -61,7 +61,7 @@ public class TileModuleCopier extends TileInvLM implements IGuiTile, ICBNetTile,
 		
 		if(progress == 0)
 		{
-			if(items[0] != null && items[1] != null && energyStorage.getEnergyStored() >= energyRequired && items[0].getItem() instanceof ICBModule)
+			if(items[0] != null && items[1] != null && energyStorage.getEnergyStored() >= energyRequired && items[0].getItem() instanceof ItemModule)
 			{
 				if(items[1].hasTagCompound() && InvUtils.itemsEquals(items[0], items[1], false, false))
 				{
@@ -112,7 +112,7 @@ public class TileModuleCopier extends TileInvLM implements IGuiTile, ICBNetTile,
 	{ return s == 0 ? new int[] { 2 } : new int[] { 0 }; }
 	
 	public boolean canInsertItem(int i, ItemStack is, int s)
-	{ return is != null && is.getItem() instanceof ICBModule; }
+	{ return is != null && is.getItem() instanceof ItemModule; }
 	
 	public boolean canExtractItem(int i, ItemStack is, int s)
 	{ return s == 0; }

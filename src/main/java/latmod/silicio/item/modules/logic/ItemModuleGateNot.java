@@ -2,7 +2,7 @@ package latmod.silicio.item.modules.logic;
 
 import latmod.silicio.*;
 import latmod.silicio.item.modules.*;
-import latmod.silicio.tile.CircuitBoard;
+import latmod.silicio.item.modules.events.EventProvideSignals;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 
@@ -27,6 +27,8 @@ public class ItemModuleGateNot extends ItemModuleLogic implements ISignalProvide
 		mod.recipes.addShapelessRecipe(new ItemStack(this), SilItems.Modules.LOGIC, SilMat.SILICON, Blocks.redstone_torch);
 	}
 	
-	public void provideSignals(CircuitBoard cb, int MID, boolean pre)
-	{ if(pre) return; if(!getChannel(cb, MID, 0).isEnabled()) getChannel(cb, MID, 1).enable(); }
+	public void provideSignals(EventProvideSignals e)
+	{
+		if(!e.isEnabled(0, -1, true)) e.setEnabled(1);
+	}
 }

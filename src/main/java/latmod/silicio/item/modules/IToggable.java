@@ -1,8 +1,8 @@
 package latmod.silicio.item.modules;
 
-import latmod.silicio.tile.*;
+import latmod.silicio.item.modules.events.EventChannelToggled;
 
-public interface IToggable extends ICBModule
+public interface IToggable
 {
-	public void onChannelToggled(CircuitBoard cb, int MID, CBChannel c);
+	public void onChannelToggled(EventChannelToggled e);
 }

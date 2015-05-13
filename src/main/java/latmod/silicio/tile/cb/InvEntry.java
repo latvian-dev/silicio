@@ -1,4 +1,4 @@
-package latmod.silicio.tile;
+package latmod.silicio.tile.cb;
 
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;

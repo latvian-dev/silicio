@@ -1,7 +1,7 @@
 package latmod.silicio.item.modules.io;
 
 import latmod.silicio.item.modules.IOType;
-import latmod.silicio.tile.*;
+import latmod.silicio.item.modules.events.EventUpdateModule;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.common.util.ForgeDirection;
 import cofh.api.energy.IEnergyReceiver;
@@ -27,32 +27,18 @@ public class ItemModuleEnergyOutput extends ItemModuleIO
 	{
 	}
 	
-	public void onUpdate(CircuitBoard cb, int MID)
+	public void onUpdate(EventUpdateModule e)
 	{
-		if(cb.cable.isServer())
+		if(e.cable.isServer() && e.controller.hasEnergy(1) && e.isEnabled(0, -1, true))
 		{
-			CBChannel c = getChannel(cb, MID, 0);
-			if(c != CBChannel.NONE && !c.isEnabled()) return;
+			TileEntity te = e.board.getFacingTile();
 			
-			TileEntity te = cb.getFacingTile();
-			
-			if(cb.cable.controller().hasEnergy(1) && te != null && !te.isInvalid())
+			if(te != null && !te.isInvalid() && te instanceof IEnergyReceiver)
 			{
-				if(te instanceof IEnergyReceiver)
-				{
-					IEnergyReceiver ie = (IEnergyReceiver)te;
-					
-					if(ie.canConnectEnergy(ForgeDirection.VALID_DIRECTIONS[cb.sideOpposite]))
-					{
-						int i = ie.receiveEnergy(ForgeDirection.VALID_DIRECTIONS[cb.sideOpposite], Math.min(cb.cable.controller().storage.getMaxExtract(), cb.cable.controller().storage.getEnergyStored()), false);
-						
-						if(i != 0)
-						{
-							cb.cable.controller().storage.extractEnergy(i, false);
-							cb.cable.controller().energyChanged = true;
-						}
-					}
-				}
+				IEnergyReceiver ie = (IEnergyReceiver)te;
+				
+				if(ie.canConnectEnergy(ForgeDirection.VALID_DIRECTIONS[e.board.sideOpposite]))
+					e.controller.extractEnergy(ie.receiveEnergy(ForgeDirection.VALID_DIRECTIONS[e.board.sideOpposite], Math.min(e.controller.storage.getMaxExtract(), e.controller.storage.getEnergyStored()), false));
 			}
 		}
 	}

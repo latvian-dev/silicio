@@ -1,17 +1,16 @@
 package latmod.silicio.item.modules.io;
 
 import latmod.silicio.SilItems;
-import latmod.silicio.item.modules.*;
+import latmod.silicio.item.modules.IOType;
 import latmod.silicio.item.modules.config.*;
-import latmod.silicio.tile.*;
+import latmod.silicio.item.modules.events.EventUpdateModule;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.FluidStack;
 
 public class ItemModuleFluidInput extends ItemModuleIO
 {
 	public static final ModuleCSFluid cs_fluid = new ModuleCSFluid(0, "Fluid");
-	public static final ModuleCSNum cs_amount = new ModuleCSNum(1, "Amount");
-	public static final ModuleCSMode cs_mode = new ModuleCSMode(2, "Mode");
+	public static final ModuleCSMode cs_mode = new ModuleCSMode(1, "Mode");
 	
 	public static final int[] mBucketsPerSecond = { 200, 1000, 4000, 16000 };
 	public static final int[] powerUse = { 0, 10, 200, 1200 };
@@ -20,30 +19,32 @@ public class ItemModuleFluidInput extends ItemModuleIO
 	{
 		super(s);
 		setTextureName("fluid");
-		
-		cs_amount.setValues(1000, 1, 1000, 10);
 		cs_mode.setModes(0, "Slow", "Medium", "Fast", "Very Fast");
 		
+		for(int i = 0; i < cs_mode.modes.length; i++)
+			cs_mode.setDesc(i, "Fluid: " + mBucketsPerSecond[i] + "mB for " + powerUse[i] + " RF");
+		
 		moduleConfig.add(cs_fluid);
-		moduleConfig.add(cs_amount);
 		moduleConfig.add(cs_mode);
 	}
 	
 	public int getChannelCount()
-	{ return 1; }
+	{ return 0; }
 	
 	public IOType getModuleType()
 	{ return IOType.INPUT; }
 	
 	public IOType getChannelType(int c)
-	{ return IOType.INPUT; }
+	{ return IOType.NONE; }
 	
-	public void onUpdate(CircuitBoard cb, int MID)
+	public void onUpdate(EventUpdateModule e)
 	{
-		if(cb.tick % 20L == MID)
+		if(e.isTick(20))
 		{
-			FluidStack fs = cs_fluid.getFluid(cb.items[MID]);
-			if(fs != null) fs.amount = cs_amount.get(cb.items[MID]);
+			int mode = cs_mode.get(e.item());
+			
+			FluidStack fs = cs_fluid.getFluid(e.item());
+			if(fs != null) fs.amount = mBucketsPerSecond[mode];
 		}
 	}
 	

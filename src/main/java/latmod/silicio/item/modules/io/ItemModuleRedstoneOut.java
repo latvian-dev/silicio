@@ -3,7 +3,7 @@ package latmod.silicio.item.modules.io;
 import latmod.core.ODItems;
 import latmod.silicio.SilItems;
 import latmod.silicio.item.modules.IOType;
-import latmod.silicio.tile.CircuitBoard;
+import latmod.silicio.item.modules.events.EventUpdateModule;
 import net.minecraft.item.ItemStack;
 
 public class ItemModuleRedstoneOut extends ItemModuleIO
@@ -30,9 +30,6 @@ public class ItemModuleRedstoneOut extends ItemModuleIO
 				'M', SilItems.Modules.OUTPUT);
 	}
 	
-	public void onUpdate(CircuitBoard cb, int MID)
-	{
-		if(cb.cable.isServer() && getChannel(cb, MID, 0).isEnabled())
-			cb.redstoneOut = true;
-	}
+	public void onUpdate(EventUpdateModule e)
+	{ if(e.isEnabled(0, -1, false)) e.board.redstoneOut = true; }
 }

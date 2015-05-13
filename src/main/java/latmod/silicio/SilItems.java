@@ -13,6 +13,7 @@ public class SilItems
 	public static BlockCBController b_cbcontroller;
 	public static BlockModuleCopier b_module_copier;
 	public static BlockRedNetIO b_rednet_io;
+	public static BlockComputerIO b_computer_io;
 	
 	public static ItemMaterialsSil i_mat;
 	public static ItemCircuitBoard i_circuit_board;
@@ -23,6 +24,7 @@ public class SilItems
 		b_cbcontroller = new BlockCBController("controller").register();
 		b_module_copier = new BlockModuleCopier("module_copier").register();
 		b_rednet_io = new BlockRedNetIO("rednet_io").register();
+		b_computer_io = new BlockComputerIO("computer_io").register();
 		
 		i_mat = new ItemMaterialsSil("materials").register();
 		i_circuit_board = new ItemCircuitBoard("circuit_board").register();

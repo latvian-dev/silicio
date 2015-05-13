@@ -2,9 +2,9 @@ package latmod.silicio.item.modules.io;
 
 import latmod.core.InvUtils;
 import latmod.silicio.SilItems;
-import latmod.silicio.item.modules.*;
+import latmod.silicio.item.modules.IOType;
 import latmod.silicio.item.modules.config.*;
-import latmod.silicio.tile.*;
+import latmod.silicio.item.modules.events.EventUpdateModule;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
@@ -18,7 +18,6 @@ public class ItemModuleItemOutput extends ItemModuleIO
 	{
 		super(s);
 		setTextureName("item");
-		
 		cs_mode.setModes(0, "Slow", "Medium", "Fast", "Very Fast");
 		
 		for(int i = 0; i < cs_mode.modes.length; i++)
@@ -44,31 +43,31 @@ public class ItemModuleItemOutput extends ItemModuleIO
 				'F', SilItems.Modules.i_item_storage);
 	}
 	
-	public void onUpdate(CircuitBoard cb, int MID)
+	public void onUpdate(EventUpdateModule e)
 	{
-		if(cb.tick % 20L == MID)
+		if(e.isTick(20))
 		{
-			ItemStack itemT = cs_item.getItem(cb.items[MID]);
+			ItemStack itemT = cs_item.getItem(e.item());
 			
 			if(itemT == null) return;
 			
-			TileEntity te = cb.getFacingTile();
+			TileEntity te = e.board.getFacingTile();
 			
 			if(te != null && !te.isInvalid() && te instanceof IInventory)
 			{
 				IInventory inv = (IInventory)te;
 				
-				int mode = cs_mode.get(cb.items[MID]);
+				int mode = cs_mode.get(e.item());
 				int ips = ItemModuleItemInput.itemsPerSecond[mode];
 				int pw = ItemModuleItemInput.powerUse[mode];
 				
 				for(int i = 0; i < ips; i++)
 				{
-					int idx = InvUtils.getFirstIndexWhereFits(inv, itemT, cb.sideOpposite);
+					int idx = InvUtils.getFirstIndexWhereFits(inv, itemT, e.board.sideOpposite);
 					
-					if(idx != -1 && (pw == 0 || cb.cable.controller().hasEnergy(pw)) && cb.cable.controller().requestItem(itemT, false))
+					if(idx != -1 && (pw == 0 || e.controller.hasEnergy(pw)) && e.controller.requestItem(itemT, false))
 					{
-						if(pw > 0) cb.cable.controller().extractEnergy(pw);
+						if(pw > 0) e.controller.extractEnergy(pw);
 						
 						ItemStack is0 = inv.getStackInSlot(idx);
 						if(is0 == null) is0 = InvUtils.singleCopy(itemT);

@@ -2,7 +2,7 @@ package latmod.silicio.item.modules.config;
 
 import latmod.core.util.FastList;
 import latmod.silicio.gui.*;
-import latmod.silicio.tile.CircuitBoard;
+import latmod.silicio.tile.cb.CircuitBoard;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import cpw.mods.fml.relauncher.*;

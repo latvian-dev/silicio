@@ -3,7 +3,7 @@ package latmod.silicio.item.modules.io;
 import latmod.core.ODItems;
 import latmod.silicio.SilItems;
 import latmod.silicio.item.modules.*;
-import latmod.silicio.tile.CircuitBoard;
+import latmod.silicio.item.modules.events.EventProvideSignals;
 import net.minecraft.item.ItemStack;
 
 public class ItemModuleRedstoneIn extends ItemModuleIO implements ISignalProvider
@@ -30,10 +30,9 @@ public class ItemModuleRedstoneIn extends ItemModuleIO implements ISignalProvide
 				'M', SilItems.Modules.INPUT);
 	}
 	
-	public void provideSignals(CircuitBoard cb, int MID, boolean pre)
+	public void provideSignals(EventProvideSignals e)
 	{
-		if(!pre) return;
-		if(cb.cable.getWorldObj().isBlockProvidingPowerTo(cb.sidePos.posX, cb.sidePos.posY, cb.sidePos.posZ, cb.side) > 0)
-			getChannel(cb, MID, 0).enable();
+		if(e.cable.getWorldObj().isBlockProvidingPowerTo(e.board.sidePos.posX, e.board.sidePos.posY, e.board.sidePos.posZ, e.board.side) > 0)
+			e.setEnabled(0);
 	}
 }

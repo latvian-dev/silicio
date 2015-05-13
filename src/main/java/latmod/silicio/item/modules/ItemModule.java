@@ -1,11 +1,13 @@
 package latmod.silicio.item.modules;
+import java.util.List;
+
 import latmod.core.*;
 import latmod.core.util.*;
 import latmod.silicio.item.ItemSil;
 import latmod.silicio.item.modules.config.ModuleConfigSegment;
 import latmod.silicio.item.modules.io.ItemModuleIO;
 import latmod.silicio.item.modules.logic.ItemModuleLogic;
-import latmod.silicio.tile.*;
+import latmod.silicio.tile.cb.*;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -14,7 +16,7 @@ import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 import cpw.mods.fml.relauncher.*;
 
-public abstract class ItemModule extends ItemSil implements ICBModule
+public abstract class ItemModule extends ItemSil
 {
 	public final boolean isIOModule = (this instanceof ItemModuleIO);
 	public final boolean isLogicModule = (this instanceof ItemModuleLogic);
@@ -46,9 +48,6 @@ public abstract class ItemModule extends ItemSil implements ICBModule
 	public String getChannelName(int c)
 	{ if(channelNames[c] != null) return channelNames[c];
 	return "#" + (c + 1) + (getChannelType(c).isInput() ? " [Input]" : " [Output]"); }
-	
-	public final FastList<ModuleConfigSegment> getModuleConfig()
-	{ return moduleConfig; }
 	
 	public boolean isItemTool(ItemStack is)
 	{ return is.stackTagCompound != null; }
@@ -84,10 +83,10 @@ public abstract class ItemModule extends ItemSil implements ICBModule
 		return is;
 	}
 	
-	public void updateInvNet(CircuitBoard cb, int MID, FastList<InvEntry> list) { }
-	public void updateTankNet(CircuitBoard cb, int MID, FastList<TankEntry> list) { }
+	public void updateInvNet(CircuitBoard cb, int MID, List<InvEntry> list) { }
+	public void updateTankNet(CircuitBoard cb, int MID, List<TankEntry> list) { }
 	
-	public static final int getChannelID(ICBModule m, ItemStack is, int c)
+	public static final int getChannelID(ItemModule m, ItemStack is, int c)
 	{
 		if(m.getChannelCount() <= 0) return 0;
 		
@@ -106,7 +105,7 @@ public abstract class ItemModule extends ItemSil implements ICBModule
 		{
 			channels = new int[m.getChannelCount()];
 			for(int i = 0; i < channels.length; i++)
-				channels[i] = CBChannel.NONE.ID;
+				channels[i] = -1;
 			
 			is.stackTagCompound.setIntArray(NBT_TAG, channels);
 		}
@@ -114,21 +113,18 @@ public abstract class ItemModule extends ItemSil implements ICBModule
 		return channels[c];
 	}
 	
-	public final CBChannel getChannel(CircuitBoard cb, int MID, int c)
+	public final int getChannel(CircuitBoard cb, int MID, int id)
 	{
-		int ch = getChannelID(this, cb.items[MID], c);
-		if(ch < 0 || cb.cable.controller() == null || ch >= cb.cable.controller().channels.length) return CBChannel.NONE;
-		return cb.cable.controller().channels[ch];
+		int ch = getChannelID(this, cb.items[MID], id);
+		if(ch < 0 || cb.cable.controller == null || ch >= cb.cable.controller.channels.size()) return -1;
+		return cb.cable.controller.channels.get(ch);
 	}
 	
-	public final void setChannel(CircuitBoard cb, int MID, int c, int ch)
+	public final void setChannel(CircuitBoard cb, int MID, int id, int ch)
 	{
-		getChannel(cb, MID, c);
+		getChannel(cb, MID, id);
 		int[] channels = cb.items[MID].stackTagCompound.getIntArray(NBT_TAG);
-		channels[c] = ch;
+		channels[id] = ch;
 		cb.items[MID].stackTagCompound.setIntArray(NBT_TAG, channels);
 	}
-	
-	public boolean isEnabled(CBChannel cbc, CircuitBoard cb, int MID, int c)
-	{ return cbc.isEnabled() && cbc == getChannel(cb, MID, c); }
 }

@@ -1,4 +1,4 @@
-package latmod.silicio.tile;
+package latmod.silicio.tile.cb;
 
 import net.minecraftforge.common.util.ForgeDirection;
 import net.minecraftforge.fluids.*;

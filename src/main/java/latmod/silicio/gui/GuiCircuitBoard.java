@@ -4,7 +4,7 @@ import latmod.core.mod.LC;
 import latmod.core.util.FastList;
 import latmod.silicio.Silicio;
 import latmod.silicio.gui.container.ContainerCircuitBoard;
-import latmod.silicio.tile.*;
+import latmod.silicio.tile.cb.*;
 import net.minecraft.util.EnumChatFormatting;
 import cpw.mods.fml.relauncher.*;
 
@@ -25,7 +25,7 @@ public class GuiCircuitBoard extends GuiLM
 		{
 			public void onButtonPressed(int b)
 			{
-				if(board.cable.controller() != null)
+				if(board.cable.controller != null)
 				{
 					playClickSound();
 					board.cable.clientOpenGui(TileCBCable.guiData(board.side, 1, -1));
@@ -36,7 +36,7 @@ public class GuiCircuitBoard extends GuiLM
 			{
 				l.add(title);
 				
-				if(board.cable.controller() == null)
+				if(board.cable.controller == null)
 					l.add(EnumChatFormatting.GRAY + "No Controller!");
 			}
 		});

@@ -1,4 +1,4 @@
-package latmod.silicio.tile;
+package latmod.silicio.tile.cb;
 import java.util.*;
 
 import latmod.core.*;
@@ -35,7 +35,7 @@ public class TileCBCable extends TileLM implements IPaintable, ICBNetTile, IGuiT
 	public final CircuitBoard[] boards = new CircuitBoard[6];
 	public final Paint[] paint = new Paint[6];
 	public boolean hasCover;
-	private TileCBController controller;
+	public TileCBController controller = null;
 	private final boolean[] canReceive = new boolean[6];
 	private final boolean[] isDisabled = new boolean[6];
 	public final boolean[] renderCableSide = new boolean[6];
@@ -78,12 +78,10 @@ public class TileCBCable extends TileLM implements IPaintable, ICBNetTile, IGuiT
 	public boolean rerenderBlock()
 	{ return false; }
 	
-	public TileCBController controller()
-	{ return controller; }
-	
 	public void preUpdate(TileCBController c)
 	{
 		controller = c;
+		/*
 		
 		for(int s = 0; s < boards.length; s++)
 		{
@@ -97,7 +95,7 @@ public class TileCBCable extends TileLM implements IPaintable, ICBNetTile, IGuiT
 						((ISignalProvider)boards[s].items[i].getItem()).provideSignals(boards[s], i, true);
 				}
 			}
-		}
+		}*/
 	}
 	
 	public void onUpdateCB()
@@ -109,42 +107,40 @@ public class TileCBCable extends TileLM implements IPaintable, ICBNetTile, IGuiT
 				canReceive[s] = true;
 		}
 		
+		/*
 		for(int s = 0; s < boards.length; s++)
 		{
 			if(boards[s] != null)
 			{
 				for(int i = 0; i < boards[s].items.length; i++)
 				{
-					if(boards[s].items[i] != null && boards[s].items[i].getItem() instanceof ICBModule)
+					if(boards[s].items[i] != null && boards[s].items[i].getItem() instanceof ItemModule)
 					{
 						if(boards[s].items[i].getItem() instanceof ISignalProvider)
 							((ISignalProvider)boards[s].items[i].getItem()).provideSignals(boards[s], i, false);
 						
-						((ICBModule)boards[s].items[i].getItem()).onUpdate(boards[s], i);
+						((ItemModule)boards[s].items[i].getItem()).onUpdate(boards[s], i);
 					}
 				}
 			}
 		}
 		
-		for(int j = 0; j < controller.channels.length; j++)
+		if(!controller.channelChanges.isEmpty()) for(int s = 0; s < boards.length; s++)
 		{
-			if(controller.channels[j].isEnabled() != controller.prevChannels[j].isEnabled())
+			if(boards[s] != null)
 			{
-				for(int s = 0; s < boards.length; s++)
+				for(int i = 0; i < boards[s].items.length; i++)
 				{
-					if(boards[s] != null)
+					if(boards[s].items[i] != null && boards[s].items[i].getItem() instanceof IToggable)
 					{
-						for(int i = 0; i < boards[s].items.length; i++)
-						{
-							if(boards[s].items[i] != null && boards[s].items[i].getItem() instanceof IToggable)
-								((IToggable)boards[s].items[i].getItem()).onChannelToggled(boards[s], i, controller.channels[j]);
-						}
+						IToggable it = ((IToggable)boards[s].items[i].getItem());
+						
+						for(int j = 0; j < controller.channelChanges.size(); j++)
+							it.onChannelToggled(boards[s], i, controller.channelChanges.keys.get(j).intValue());
 					}
 				}
-				
-				controller.markDirty();
 			}
-		}
+		}*/
 		
 		for(int s = 0; s < boards.length; s++)
 			if(boards[s] != null) boards[s].postUpdate();
@@ -476,7 +472,7 @@ public class TileCBCable extends TileLM implements IPaintable, ICBNetTile, IGuiT
 			int id = data.getByte("I");
 			int ch = data.getInteger("C");
 			
-			ICBModule m = boards[side].getModule(moduleID);
+			ItemModule m = boards[side].getModule(moduleID);
 			m.setChannel(boards[side], moduleID, id, ch);
 			markDirty();
 		}
@@ -487,7 +483,7 @@ public class TileCBCable extends TileLM implements IPaintable, ICBNetTile, IGuiT
 			int id = data.getByte("I");
 			NBTTagCompound tag = (NBTTagCompound)data.getTag("D");
 			
-			for(ModuleConfigSegment mcs : ((ICBModule)boards[side].items[moduleID].getItem()).getModuleConfig())
+			for(ModuleConfigSegment mcs : ((ItemModule)boards[side].items[moduleID].getItem()).moduleConfig)
 			{
 				if(mcs.ID == id)
 				{
@@ -523,13 +519,13 @@ public class TileCBCable extends TileLM implements IPaintable, ICBNetTile, IGuiT
 	{ return canReceive[f.ordinal()]; }
 	
 	public int getEnergyStored(ForgeDirection f)
-	{ return (controller() == null) ? 0 : controller().getEnergyStored(f); }
+	{ return (controller == null) ? 0 : controller.getEnergyStored(f); }
 	
 	public int getMaxEnergyStored(ForgeDirection f)
-	{ return (controller() == null) ? 0 : controller().getMaxEnergyStored(f); }
+	{ return (controller == null) ? 0 : controller.getMaxEnergyStored(f); }
 	
 	public int receiveEnergy(ForgeDirection f, int e, boolean b)
-	{ return (controller() == null || !canConnectEnergy(f)) ? 0 : controller().receiveEnergy(f, e, b); }
+	{ return (controller == null || !canConnectEnergy(f)) ? 0 : controller.receiveEnergy(f, e, b); }
 	
 	public void setDisabled(int side, boolean b)
 	{

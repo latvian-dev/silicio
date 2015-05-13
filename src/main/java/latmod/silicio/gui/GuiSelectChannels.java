@@ -3,7 +3,7 @@ package latmod.silicio.gui;
 import latmod.core.gui.*;
 import latmod.core.mod.LC;
 import latmod.silicio.item.modules.*;
-import latmod.silicio.tile.*;
+import latmod.silicio.tile.cb.*;
 import net.minecraft.util.ResourceLocation;
 import cpw.mods.fml.relauncher.*;
 
@@ -19,7 +19,7 @@ public class GuiSelectChannels extends GuiLM
 	public static final TextureCoords iconBack = new TextureCoords(thisTex, 166, 2);
 	
 	public CircuitBoard board;
-	public ICBModule module;
+	public ItemModule module;
 	public int moduleID;
 	
 	public ButtonLM buttonBack;
@@ -70,7 +70,7 @@ public class GuiSelectChannels extends GuiLM
 			widgets.add(buttonSelectIO[i]);
 		}
 		
-		allChannels = new ButtonLM[board.cable.controller().channels.length + 1];
+		allChannels = new ButtonLM[TileCBController.MAX_CHANNEL + 1];
 		
 		{
 			ButtonLM b = new ButtonLM(this, 151, 7, 8, 8)
@@ -83,12 +83,12 @@ public class GuiSelectChannels extends GuiLM
 			};
 			
 			b.customID = -1;
-			b.title = CBChannel.NONE.name;
+			b.title = "Disabled";
 			allChannels[allChannels.length - 1] = b;
 			widgets.add(b);
 		}
 		
-		for(int i = 0; i < board.cable.controller().channels.length; i++)
+		for(int i = 0; i < TileCBController.MAX_CHANNEL; i++)
 		{
 			int bx = i % 16;
 			int by = i / 16;
@@ -103,7 +103,7 @@ public class GuiSelectChannels extends GuiLM
 			};
 			
 			allChannels[i].customID = i;
-			allChannels[i].title = board.cable.controller().channels[i].name;
+			allChannels[i].title = TileCBController.getChannelName(i);
 			
 			widgets.add(allChannels[i]);
 		}
@@ -131,9 +131,9 @@ public class GuiSelectChannels extends GuiLM
 			if(b.customID == ItemModule.getChannelID(module, board.items[moduleID], selectedIO))
 				iconSelChannel.render(this, b.posX - 1, b.posY - 1, 10, 10);
 			
-			if(b.customID >= 0 && board.cable.controller() != null)
+			if(b.customID >= 0 && board.cable.controller != null)
 			{
-				if(board.cable.controller().channels[b.customID].isEnabled())
+				if(board.cable.controller.channels.contains(b.customID))
 					iconChannelEnabled.render(this, b.posX, b.posY, 8, 8);
 			}
 		}
@@ -143,8 +143,8 @@ public class GuiSelectChannels extends GuiLM
 	
 	public void drawScreen(int mx, int my, float f)
 	{
-		board = ((TileCBCable)board.cable.getWorldObj().getTileEntity(board.cable.xCoord, board.cable.yCoord, board.cable.zCoord)).getBoard(board.side);
-		module = (ICBModule)board.items[moduleID].getItem();
+		//board = ((TileCBCable)board.cable.getWorldObj().getTileEntity(board.cable.xCoord, board.cable.yCoord, board.cable.zCoord)).getBoard(board.side);
+		//module = (ICBModule)board.items[moduleID].getItem();
 		
 		super.drawScreen(mx, my, f);
 	}

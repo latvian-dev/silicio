@@ -1,4 +1,4 @@
-package latmod.silicio.tile;
+package latmod.silicio.tile.cb;
 
 import java.util.List;
 
@@ -9,7 +9,7 @@ import latmod.core.util.*;
 import latmod.silicio.SilItems;
 import latmod.silicio.gui.GuiController;
 import latmod.silicio.item.IItemCard;
-import latmod.silicio.item.modules.ICBModule;
+import latmod.silicio.item.modules.*;
 import mcp.mobius.waila.api.*;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.entity.player.EntityPlayer;
@@ -21,21 +21,22 @@ import net.minecraft.util.Facing;
 import net.minecraftforge.common.util.ForgeDirection;
 import cofh.api.energy.*;
 import cpw.mods.fml.relauncher.*;
-import dan200.computercraft.api.lua.*;
-import dan200.computercraft.api.peripheral.*;
 
-public class TileCBController extends TileLM implements ICBNetTile, IEnergyReceiver, IWailaTile.Body, ISecureTile, IGuiTile, IPeripheral
+public class TileCBController extends TileLM implements ICBNetTile, IEnergyReceiver, IWailaTile.Body, ISecureTile, IGuiTile
 {
+	public static final int MAX_CHANNEL = 128;
+	
+	public EnergyStorage storage;
 	public final FastList<ICBNetTile> network;
 	private final FastList<ICBNetTile> prevNetwork;
 	public final FastList<CircuitBoard> circuitBoards;
-	public final FastMap<CircuitBoard, FastMap<Integer, ICBModule>> allModules;
+	public final FastList<ModuleEntry> allModules;
 	public final FastList<InvEntry> invNetwork;
 	public final FastList<TankEntry> tankNetwork;
-	public final CBChannel[] channels;
-	public final CBChannel[] prevChannels;
-	public boolean energyChanged;
-	public EnergyStorage storage;
+	public final IntList channels;
+	public final FastMap<Integer, Boolean> channelChanges;
+	
+	public boolean energyChanged = false;
 	private int pNetworkSize = -1;
 	public boolean hasConflict = false;
 	private int prevEnergyWaila = -1;
@@ -47,11 +48,11 @@ public class TileCBController extends TileLM implements ICBNetTile, IEnergyRecei
 		network = new FastList<ICBNetTile>();
 		prevNetwork = new FastList<ICBNetTile>();
 		circuitBoards = new FastList<CircuitBoard>();
-		allModules = new FastMap<CircuitBoard, FastMap<Integer, ICBModule>>();
+		allModules = new FastList<ModuleEntry>();
 		invNetwork = new FastList<InvEntry>();
 		tankNetwork = new FastList<TankEntry>();
-		channels = CBChannel.create(128);
-		prevChannels = CBChannel.create(128);
+		channels = new IntList();
+		channelChanges = new FastMap<Integer, Boolean>();
 	}
 	
 	public boolean rerenderBlock()
@@ -61,7 +62,8 @@ public class TileCBController extends TileLM implements ICBNetTile, IEnergyRecei
 	{
 		super.readTileData(tag);
 		storage.readFromNBT(tag);
-		CBChannel.readFromNBT(tag, "Channels", channels);
+		channels.clear();
+		channels.addAll(tag.getIntArray("Channels"));
 		hasConflict = tag.hasKey("Conflict");
 	}
 	
@@ -69,7 +71,7 @@ public class TileCBController extends TileLM implements ICBNetTile, IEnergyRecei
 	{
 		super.writeTileData(tag);
 		storage.writeToNBT(tag);
-		CBChannel.writeToNBT(tag, "Channels", channels);
+		tag.setIntArray("Channels", channels.toArray());
 		if(hasConflict) tag.setBoolean("Conflict", true);
 	}
 	
@@ -88,16 +90,11 @@ public class TileCBController extends TileLM implements ICBNetTile, IEnergyRecei
 			
 			otherDevices = network.size() - cables;
 			
-			if(cables > 0) info.add("Cables: " + cables);
-			if(otherDevices > 0) info.add("Other Devices: " + otherDevices);
-			if(!circuitBoards.isEmpty()) info.add("CircuitBoards: " + circuitBoards.size());
+			if(cables > 0 || otherDevices > 0) info.add("Cables | Other Devices: " + cables + " | " + otherDevices);
 			
-			int am = 0;
-			for(FastMap<Integer, ICBModule> m : allModules) am += m.size();
-			if(!allModules.isEmpty()) info.add("Modules: " + am);
-			
-			if(!invNetwork.isEmpty()) info.add("IInventories: " + invNetwork.size());
-			if(!tankNetwork.isEmpty()) info.add("IFluidHandlers: " + tankNetwork.size());
+			if(!circuitBoards.isEmpty() || !allModules.isEmpty()) info.add("Boards | Modules: " + circuitBoards.size() + " | " + allModules.size());
+			if(!invNetwork.isEmpty() || !tankNetwork.isEmpty()) info.add("Chests | Tanks: " + invNetwork.size() + " | " + tankNetwork.size());
+			if(!channels.isEmpty()) info.add("Enabled Channels: " + channels.size());
 		}
 	}
 	
@@ -107,11 +104,7 @@ public class TileCBController extends TileLM implements ICBNetTile, IEnergyRecei
 	public boolean canConnect(ForgeDirection side)
 	{ return true; }
 	
-	public void preUpdate(TileCBController c)
-	{
-		CBChannel.copy(channels, prevChannels);
-		CBChannel.clear(channels);
-	}
+	public void preUpdate(TileCBController c) { }
 	
 	public void onUnloaded()
 	{
@@ -173,7 +166,23 @@ public class TileCBController extends TileLM implements ICBNetTile, IEnergyRecei
 	
 	public void onUpdateCB()
 	{
-		preUpdate(this);
+		channelChanges.clear();
+		IntList prevChannels = channels.copy();
+		
+		for(int ch : channels.toArray())
+		{
+			if(!prevChannels.contains(ch))
+				channelChanges.put(ch, true);
+		}
+		
+		for(int ch : prevChannels.toArray())
+		{
+			if(!channels.contains(ch))
+				channelChanges.put(ch, false);
+		}
+		
+		prevChannels.clear();
+		prevChannels.addAll(channels);
 		
 		addToList(xCoord, yCoord, zCoord);
 		network.remove(this);
@@ -261,16 +270,16 @@ public class TileCBController extends TileLM implements ICBNetTile, IEnergyRecei
 						{
 							circuitBoards.add(tc.boards[b]);
 							
-							FastMap<Integer, ICBModule> modules = tc.boards[b].getAllModules();
-							allModules.put(tc.boards[b], modules);
-							
-							for(int j = 0; j < modules.size(); j++)
+							for(int mid = 0; mid < tc.boards[b].items.length; mid++)
 							{
-								ICBModule m = modules.values.get(j);
-								int MID = modules.keys.get(j);
-								
-								m.updateInvNet(tc.boards[b], MID, invNetwork);
-								m.updateTankNet(tc.boards[b], MID, tankNetwork);
+								if(tc.boards[b].items[mid] != null && tc.boards[b].items[mid].getItem() instanceof ItemModule)
+								{
+									ModuleEntry me = new ModuleEntry(this, tc.boards[b], mid);
+									allModules.add(me);
+									
+									if(me.item instanceof IInvProvider) ((IInvProvider)me.item).updateInvNet(me, invNetwork);
+									if(me.item instanceof ITankProvider) ((ITankProvider)me.item).updateTankNet(me, tankNetwork);
+								}
 							}
 						}
 					}
@@ -313,6 +322,21 @@ public class TileCBController extends TileLM implements ICBNetTile, IEnergyRecei
 	
 	public boolean isSideEnabled(int side)
 	{ return true; }
+	
+	public boolean isEnabled(int ch, int ch1, boolean def)
+	{
+		if(ch == -1) return def;
+		if(ch1 != -1 && ch != ch1) return false;
+		return channels.contains(ch);
+	}
+	
+	public boolean setEnabled(int ch)
+	{
+		if(ch == -1) return false;
+		if(!channels.contains(ch))
+		{ channels.add(ch); return true; }
+		return false;
+	}
 	
 	public boolean addItem(ItemStack is, boolean simulate)
 	{
@@ -363,32 +387,12 @@ public class TileCBController extends TileLM implements ICBNetTile, IEnergyRecei
 	public GuiScreen getGui(EntityPlayer ep, NBTTagCompound data)
 	{ return new GuiController(new ContainerEmpty(ep, this)); }
 	
-	public String getType()
-	{ return "cbcontroller"; }
-	
-	public String[] getMethodNames()
-	{ return new String[] { "setChannel", "getChannel" }; }
-	
-	public Object[] callMethod(IComputerAccess computer, ILuaContext context, int method, Object[] arguments) throws LuaException, InterruptedException
+	public static String getChannelName(int i)
 	{
-		if(method == 0)
-		{
-		}
-		else if(method == 1)
-		{
-			if(arguments == null || arguments.length < 1)
-				return new Object[] { -1 };
-			int c = ((Number)arguments[0]).intValue();
-			if(c < 0 || c >= channels.length)
-				return new Object[] { -1 };
-			return new Object[] { channels[c].isEnabled() };
-		}
-		
-		return null;
+		if(i < 0) return "Disabled";
+		return (EnumDyeColor.VALUES[i % 16].toString() + " #" + (i / 16 + 1));
 	}
 	
-	public void attach(IComputerAccess computer) { }
-	public void detach(IComputerAccess computer) { }
-	public boolean equals(IPeripheral other)
-	{ return super.equals(other); }
+	public int hashCode()
+	{ return LatCore.hashCode(xCoord, yCoord, zCoord); }
 }

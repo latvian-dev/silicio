@@ -1,8 +1,6 @@
-package latmod.silicio.tile;
+package latmod.silicio.tile.cb;
 
-import latmod.core.tile.ITileInterface;
-
-public interface ICBNetTile extends ITileInterface
+public interface ICBNetTile
 {
 	public void preUpdate(TileCBController c);
 	public void onUpdateCB();

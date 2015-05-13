@@ -1,7 +1,7 @@
 package latmod.silicio.client;
 import latmod.silicio.SilCommon;
 import latmod.silicio.client.render.tile.RenderCBCable;
-import latmod.silicio.tile.TileCBCable;
+import latmod.silicio.tile.cb.TileCBCable;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.relauncher.*;
 

@@ -2,9 +2,9 @@ package latmod.silicio.item.modules.logic;
 
 import latmod.silicio.item.modules.*;
 import latmod.silicio.item.modules.config.ModuleCSString;
-import latmod.silicio.tile.*;
+import latmod.silicio.item.modules.events.EventChannelToggled;
+import latmod.silicio.tile.cb.CircuitBoard;
 import net.minecraft.command.*;
-import net.minecraft.item.ItemStack;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.*;
 import net.minecraft.world.World;
@@ -31,15 +31,11 @@ public class ItemModuleCommandBlock extends ItemModuleLogic implements IToggable
 	{
 	}
 	
-	public void onUpdate(ItemStack is, CircuitBoard t)
+	public void onChannelToggled(EventChannelToggled e)
 	{
-	}
-	
-	public void onChannelToggled(CircuitBoard cb, int MID, CBChannel c)
-	{
-		if(!c.isEnabled() || c != getChannel(cb, MID, 0)) return;
+		if(!e.isEnabled(0, e.channel, false)) return;
 		
-		String cmd = cs_command.get(cb.items[MID]);
+		String cmd = cs_command.get(e.item());
 		
 		if(!cmd.isEmpty())
 		{
@@ -48,7 +44,7 @@ public class ItemModuleCommandBlock extends ItemModuleLogic implements IToggable
 			if (ms != null && ms.isCommandBlockEnabled())
 			{
 				ICommandManager icm = ms.getCommandManager();
-				icm.executeCommand(new CmdModuleICS(cb), cmd);
+				icm.executeCommand(new CmdModuleICS(e.board), cmd);
 			}
 		}
 	}

@@ -3,8 +3,8 @@ import latmod.core.gui.*;
 import latmod.core.mod.LC;
 import latmod.silicio.Silicio;
 import latmod.silicio.gui.container.ContainerCircuitBoardSettings;
-import latmod.silicio.item.modules.ICBModule;
-import latmod.silicio.tile.*;
+import latmod.silicio.item.modules.ItemModule;
+import latmod.silicio.tile.cb.*;
 import cpw.mods.fml.relauncher.*;
 
 @SideOnly(Side.CLIENT)
@@ -39,7 +39,7 @@ public class GuiCircuitBoardSettings extends GuiLM
 		{
 			final int id = x + y * 6;
 			
-			if(board.items[id] != null && board.items[id].getItem() instanceof ICBModule)
+			if(board.items[id] != null && board.items[id].getItem() instanceof ItemModule)
 			{
 				itemButtons[id] = new ItemButtonLM(this, 9 + x * 22, 10 + y * 22, 18, 18)
 				{

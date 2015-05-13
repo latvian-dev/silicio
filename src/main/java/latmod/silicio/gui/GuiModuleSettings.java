@@ -4,9 +4,9 @@ import latmod.core.gui.*;
 import latmod.core.mod.LC;
 import latmod.core.util.FastList;
 import latmod.silicio.gui.container.ContainerModuleSettings;
-import latmod.silicio.item.modules.ICBModule;
+import latmod.silicio.item.modules.ItemModule;
 import latmod.silicio.item.modules.config.*;
-import latmod.silicio.tile.*;
+import latmod.silicio.tile.cb.*;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.renderer.entity.RenderItem;
 import net.minecraft.client.renderer.texture.TextureMap;
@@ -31,7 +31,7 @@ public class GuiModuleSettings extends GuiLM
 	public static final TextureCoords icon_cfg_fluid = new TextureCoords(thisTex, 218, 42);
 	
 	public final CircuitBoard board;
-	public final ICBModule module;
+	public final ItemModule module;
 	public final int moduleID;
 	
 	public ButtonLM buttonChannels;
@@ -77,7 +77,7 @@ public class GuiModuleSettings extends GuiLM
 		
 		buttonsConfig = new ButtonLM[12];
 		
-		for(final ModuleConfigSegment mcs : module.getModuleConfig())
+		for(final ModuleConfigSegment mcs : module.moduleConfig)
 		{
 			if(mcs == null || mcs.ID < 0 || mcs.ID >= buttonsConfig.length) continue;
 			

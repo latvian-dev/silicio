@@ -1,7 +1,6 @@
-package latmod.silicio.tile;
+package latmod.silicio.tile.cb;
 import latmod.core.InvUtils;
-import latmod.core.util.FastMap;
-import latmod.silicio.item.modules.ICBModule;
+import latmod.silicio.item.modules.ItemModule;
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
@@ -22,7 +21,6 @@ public class CircuitBoard implements IInventory
 	
 	public ItemStack items[] = new ItemStack[12];
 	public boolean dropItems = true;
-	public long tick = 0L;
 	public boolean redstoneOut = false;
 	private Boolean prevRedstoneOut = null;
 	
@@ -39,35 +37,20 @@ public class CircuitBoard implements IInventory
 	public void readTileData(NBTTagCompound tag)
 	{
 		InvUtils.readItemsFromNBT(items, tag, "Items");
-		tick = tag.getLong("Tick");
 		redstoneOut = tag.getBoolean("RSOut");
 	}
 	
 	public void writeTileData(NBTTagCompound tag)
 	{
 		if(items != null) InvUtils.writeItemsToNBT(items, tag, "Items");
-		tag.setLong("Tick", tick);
 		tag.setBoolean("RSOut", redstoneOut);
 	}
 	
-	public ICBModule getModule(int moduleID)
+	public ItemModule getModule(int moduleID)
 	{
 		if(moduleID < 0 || moduleID >= items.length || items[moduleID] == null) return null;
-		if(items[moduleID].getItem() instanceof ICBModule) return (ICBModule)items[moduleID].getItem();
+		if(items[moduleID].getItem() instanceof ItemModule) return (ItemModule)items[moduleID].getItem();
 		return null;
-	}
-	
-	public FastMap<Integer, ICBModule> getAllModules()
-	{
-		FastMap<Integer, ICBModule> map = new FastMap<Integer, ICBModule>();
-		
-		for(int i = 0; i < items.length; i++)
-		{
-			ICBModule m = getModule(i);
-			if(map != null) map.put(i, m);
-		}
-		
-		return map;
 	}
 	
 	public void preUpdate()
@@ -83,8 +66,6 @@ public class CircuitBoard implements IInventory
 			cable.markDirty();
 			cable.getWorldObj().notifyBlocksOfNeighborChange(cable.xCoord, cable.yCoord, cable.zCoord, cable.blockType);
 		}
-		
-		tick++;
 	}
 	
 	public TileEntity getFacingTile()

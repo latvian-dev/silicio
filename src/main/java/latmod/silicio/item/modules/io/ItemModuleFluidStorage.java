@@ -3,15 +3,15 @@ package latmod.silicio.item.modules.io;
 import latmod.core.ODItems;
 import latmod.core.util.FastList;
 import latmod.silicio.SilItems;
-import latmod.silicio.item.modules.IOType;
+import latmod.silicio.item.modules.*;
 import latmod.silicio.item.modules.config.*;
-import latmod.silicio.tile.*;
+import latmod.silicio.tile.cb.*;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.fluids.IFluidHandler;
 
-public class ItemModuleFluidStorage extends ItemModuleIO
+public class ItemModuleFluidStorage extends ItemModuleIO implements ITankProvider
 {
 	public static final ModuleCSNum cs_priority = new ModuleCSNum(0, "Priority");
 	public static final ModuleCSFluid cs_filter = new ModuleCSFluid(1, "Filter");
@@ -44,11 +44,10 @@ public class ItemModuleFluidStorage extends ItemModuleIO
 				'W', Items.bucket);
 	}
 	
-	public void updateTankNet(CircuitBoard cb, int MID, FastList<TankEntry> list)
+	public void updateTankNet(ModuleEntry e, FastList<TankEntry> l)
 	{
-		TileEntity te = cb.getFacingTile();
-		
+		TileEntity te = e.board.getFacingTile();
 		if(te != null && !te.isInvalid() && te instanceof IFluidHandler)
-		{ list.add(new TankEntry((IFluidHandler)te, cb.sideOpposite, cs_priority.get(cb.items[MID]), cs_filter.getFluid(cb.items[MID]))); }
+			l.add(new TankEntry((IFluidHandler)te, e.board.sideOpposite, cs_priority.get(e.stack), cs_filter.getFluid(e.stack)));
 	}
 }

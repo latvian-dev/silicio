@@ -5,7 +5,7 @@ import latmod.core.*;
 import latmod.core.tile.TileLM;
 import latmod.core.util.*;
 import latmod.silicio.SilMat;
-import latmod.silicio.tile.TileCBCable;
+import latmod.silicio.tile.cb.TileCBCable;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.texture.IIconRegister;

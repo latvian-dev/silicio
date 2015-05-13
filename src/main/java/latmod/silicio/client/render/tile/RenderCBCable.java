@@ -3,7 +3,7 @@ package latmod.silicio.client.render.tile;
 import latmod.core.LatCoreMC;
 import latmod.core.client.*;
 import latmod.silicio.*;
-import latmod.silicio.tile.TileCBCable;
+import latmod.silicio.tile.cb.TileCBCable;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.util.*;

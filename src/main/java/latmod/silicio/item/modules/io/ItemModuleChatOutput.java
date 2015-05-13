@@ -2,7 +2,7 @@ package latmod.silicio.item.modules.io;
 
 import latmod.silicio.SilItems;
 import latmod.silicio.item.modules.*;
-import latmod.silicio.tile.*;
+import latmod.silicio.item.modules.events.EventChannelToggled;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 
@@ -30,9 +30,9 @@ public class ItemModuleChatOutput extends ItemModuleIO implements IToggable
 				'M', SilItems.Modules.i_sign_out);
 	}
 	
-	public void onChannelToggled(CircuitBoard cb, int MID, CBChannel c)
+	public void onChannelToggled(EventChannelToggled e)
 	{
-		if(isEnabled(c, cb, MID, 0))
+		if(e.isEnabled(0, e.channel, false))
 		{
 		}
 	}

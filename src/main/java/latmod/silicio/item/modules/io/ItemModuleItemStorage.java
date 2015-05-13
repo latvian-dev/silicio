@@ -3,15 +3,15 @@ package latmod.silicio.item.modules.io;
 import latmod.core.ODItems;
 import latmod.core.util.FastList;
 import latmod.silicio.SilItems;
-import latmod.silicio.item.modules.IOType;
+import latmod.silicio.item.modules.*;
 import latmod.silicio.item.modules.config.*;
-import latmod.silicio.tile.*;
+import latmod.silicio.tile.cb.*;
 import net.minecraft.init.Blocks;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 
-public class ItemModuleItemStorage extends ItemModuleIO
+public class ItemModuleItemStorage extends ItemModuleIO implements IInvProvider
 {
 	public static final ModuleCSNum cs_priority = new ModuleCSNum(0, "Priority");
 	public static final ModuleCSItem cs_filter = new ModuleCSItem(1, "Filter");
@@ -44,10 +44,10 @@ public class ItemModuleItemStorage extends ItemModuleIO
 				'W', Blocks.chest);
 	}
 	
-	public void updateInvNet(CircuitBoard cb, int MID, FastList<InvEntry> list)
+	public void updateInvNet(ModuleEntry e, FastList<InvEntry> l)
 	{
-		TileEntity te = cb.getFacingTile();
+		TileEntity te = e.board.getFacingTile();
 		if(te != null && !te.isInvalid() && te instanceof IInventory)
-			list.add(new InvEntry((IInventory)te, cb.sideOpposite, cs_priority.get(cb.items[MID]), cs_filter.getItem(cb.items[MID])));
+			l.add(new InvEntry((IInventory)te, e.board.sideOpposite, cs_priority.get(e.stack), cs_filter.getItem(e.stack)));
 	}
 }

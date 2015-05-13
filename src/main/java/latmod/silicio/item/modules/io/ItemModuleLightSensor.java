@@ -3,7 +3,7 @@ package latmod.silicio.item.modules.io;
 import latmod.silicio.SilItems;
 import latmod.silicio.item.modules.*;
 import latmod.silicio.item.modules.config.ModuleCSNum;
-import latmod.silicio.tile.CircuitBoard;
+import latmod.silicio.item.modules.events.EventProvideSignals;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 
@@ -34,10 +34,9 @@ public class ItemModuleLightSensor extends ItemModuleIO implements ISignalProvid
 				'M', SilItems.Modules.EMPTY);
 	}
 	
-	public void provideSignals(CircuitBoard cb, int MID, boolean pre)
+	public void provideSignals(EventProvideSignals e)
 	{
-		if(!pre) return;
-		if(cb.cable.isServer() && cb.cable.getWorldObj().getBlockLightValue(cb.sidePos.posX, cb.sidePos.posY, cb.sidePos.posZ) >= cs_light.get(cb.items[MID]))
-			getChannel(cb, MID, 0).enable();
+		if(e.cable.getWorldObj().getBlockLightValue(e.board.sidePos.posX, e.board.sidePos.posY, e.board.sidePos.posZ) >= cs_light.get(e.item()))
+			e.setEnabled(0);
 	}
 }

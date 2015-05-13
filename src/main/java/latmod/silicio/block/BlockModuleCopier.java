@@ -1,6 +1,6 @@
 package latmod.silicio.block;
 import latmod.core.tile.TileLM;
-import latmod.silicio.tile.TileModuleCopier;
+import latmod.silicio.tile.cb.TileModuleCopier;
 import net.minecraft.block.material.Material;
 import net.minecraft.world.World;
 

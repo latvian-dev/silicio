@@ -3,10 +3,10 @@ package latmod.silicio.item.modules.config;
 import latmod.core.mod.LC;
 import latmod.core.util.FastList;
 import latmod.silicio.gui.GuiModuleSettings;
-import latmod.silicio.tile.CircuitBoard;
+import latmod.silicio.tile.cb.CircuitBoard;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.EnumChatFormatting;
+import net.minecraft.util.*;
 import cpw.mods.fml.relauncher.*;
 
 public class ModuleCSMode extends ModuleConfigSegment
@@ -38,7 +38,8 @@ public class ModuleCSMode extends ModuleConfigSegment
 	{
 		NBTTagCompound tag = data(is);
 		if(!tag.hasKey(SID)) set(is, defaultValue);
-		return tag.getByte(SID);
+		int i = tag.getByte(SID);
+		return MathHelper.clamp_int(i, 0, modes.length);
 	}
 	
 	public void set(ItemStack is, int b)

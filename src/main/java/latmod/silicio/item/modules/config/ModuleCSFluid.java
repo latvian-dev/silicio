@@ -4,7 +4,7 @@ import latmod.core.*;
 import latmod.core.mod.LC;
 import latmod.core.util.FastList;
 import latmod.silicio.gui.GuiModuleSettings;
-import latmod.silicio.tile.CircuitBoard;
+import latmod.silicio.tile.cb.CircuitBoard;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumChatFormatting;
