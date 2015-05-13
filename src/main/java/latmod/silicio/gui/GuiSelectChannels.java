@@ -2,7 +2,7 @@ package latmod.silicio.gui;
 
 import latmod.core.gui.*;
 import latmod.core.mod.LC;
-import latmod.silicio.item.modules.*;
+import latmod.silicio.item.modules.ItemModule;
 import latmod.silicio.tile.cb.*;
 import net.minecraft.util.ResourceLocation;
 import cpw.mods.fml.relauncher.*;

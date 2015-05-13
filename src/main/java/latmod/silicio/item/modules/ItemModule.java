@@ -1,13 +1,12 @@
 package latmod.silicio.item.modules;
-import java.util.List;
-
 import latmod.core.*;
 import latmod.core.util.*;
 import latmod.silicio.item.ItemSil;
 import latmod.silicio.item.modules.config.ModuleConfigSegment;
+import latmod.silicio.item.modules.events.EventUpdateModule;
 import latmod.silicio.item.modules.io.ItemModuleIO;
 import latmod.silicio.item.modules.logic.ItemModuleLogic;
-import latmod.silicio.tile.cb.*;
+import latmod.silicio.tile.cb.CircuitBoard;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -83,8 +82,13 @@ public abstract class ItemModule extends ItemSil
 		return is;
 	}
 	
-	public void updateInvNet(CircuitBoard cb, int MID, List<InvEntry> list) { }
-	public void updateTankNet(CircuitBoard cb, int MID, List<TankEntry> list) { }
+	public void onUpdate(EventUpdateModule e)
+	{
+	}
+	
+	public final void onUpdate(CircuitBoard cb, int MID)
+	{
+	}
 	
 	public static final int getChannelID(ItemModule m, ItemStack is, int c)
 	{

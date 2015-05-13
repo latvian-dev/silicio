@@ -9,7 +9,7 @@ import latmod.core.util.*;
 import latmod.silicio.*;
 import latmod.silicio.gui.*;
 import latmod.silicio.gui.container.*;
-import latmod.silicio.item.modules.*;
+import latmod.silicio.item.modules.ItemModule;
 import latmod.silicio.item.modules.config.ModuleConfigSegment;
 import latmod.silicio.item.modules.io.ItemModuleEnergyInput;
 import mcp.mobius.waila.api.*;
@@ -81,21 +81,6 @@ public class TileCBCable extends TileLM implements IPaintable, ICBNetTile, IGuiT
 	public void preUpdate(TileCBController c)
 	{
 		controller = c;
-		/*
-		
-		for(int s = 0; s < boards.length; s++)
-		{
-			if(boards[s] != null)
-			{
-				boards[s].preUpdate();
-				
-				for(int i = 0; i < boards[s].items.length; i++)
-				{
-					if(boards[s].items[i] != null && boards[s].items[i].getItem() instanceof ISignalProvider)
-						((ISignalProvider)boards[s].items[i].getItem()).provideSignals(boards[s], i, true);
-				}
-			}
-		}*/
 	}
 	
 	public void onUpdateCB()
@@ -106,41 +91,6 @@ public class TileCBCable extends TileLM implements IPaintable, ICBNetTile, IGuiT
 			if(controller != null && canReceiveEnergy(s))
 				canReceive[s] = true;
 		}
-		
-		/*
-		for(int s = 0; s < boards.length; s++)
-		{
-			if(boards[s] != null)
-			{
-				for(int i = 0; i < boards[s].items.length; i++)
-				{
-					if(boards[s].items[i] != null && boards[s].items[i].getItem() instanceof ItemModule)
-					{
-						if(boards[s].items[i].getItem() instanceof ISignalProvider)
-							((ISignalProvider)boards[s].items[i].getItem()).provideSignals(boards[s], i, false);
-						
-						((ItemModule)boards[s].items[i].getItem()).onUpdate(boards[s], i);
-					}
-				}
-			}
-		}
-		
-		if(!controller.channelChanges.isEmpty()) for(int s = 0; s < boards.length; s++)
-		{
-			if(boards[s] != null)
-			{
-				for(int i = 0; i < boards[s].items.length; i++)
-				{
-					if(boards[s].items[i] != null && boards[s].items[i].getItem() instanceof IToggable)
-					{
-						IToggable it = ((IToggable)boards[s].items[i].getItem());
-						
-						for(int j = 0; j < controller.channelChanges.size(); j++)
-							it.onChannelToggled(boards[s], i, controller.channelChanges.keys.get(j).intValue());
-					}
-				}
-			}
-		}*/
 		
 		for(int s = 0; s < boards.length; s++)
 			if(boards[s] != null) boards[s].postUpdate();

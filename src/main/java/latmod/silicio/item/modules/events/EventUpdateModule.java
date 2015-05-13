@@ -1,6 +1,6 @@
 package latmod.silicio.item.modules.events;
 
-import latmod.silicio.tile.cb.*;
+import latmod.silicio.tile.cb.ModuleEntry;
 
 public class EventUpdateModule extends EventModule
 {

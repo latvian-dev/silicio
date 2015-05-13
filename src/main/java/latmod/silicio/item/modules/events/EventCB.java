@@ -5,13 +5,9 @@ import latmod.silicio.tile.cb.TileCBController;
 public class EventCB
 {
 	public final TileCBController controller;
-	public final boolean isServer;
 	
 	public EventCB(TileCBController c)
-	{
-		controller = c;
-		isServer = c.isServer();
-	}
+	{ controller = c; }
 	
 	public int hashCode()
 	{ return controller.hashCode(); }
@@ -21,4 +17,10 @@ public class EventCB
 	
 	public boolean isTick(int i)
 	{ return controller.tick % i == getUID(i); }
+	
+	public boolean isEnabled0(int ch0, int ch, boolean def)
+	{ return controller.isEnabled(ch0, ch, def); }
+	
+	public boolean setEnabled0(int ch)
+	{ return controller.setEnabled(ch); }
 }

@@ -10,6 +10,7 @@ import latmod.silicio.SilItems;
 import latmod.silicio.gui.GuiController;
 import latmod.silicio.item.IItemCard;
 import latmod.silicio.item.modules.*;
+import latmod.silicio.item.modules.events.*;
 import mcp.mobius.waila.api.*;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.entity.player.EntityPlayer;
@@ -44,7 +45,7 @@ public class TileCBController extends TileLM implements ICBNetTile, IEnergyRecei
 	
 	public TileCBController()
 	{
-		storage = new EnergyStorage(50000000, 500000);
+		storage = new EnergyStorage(48000000, 4800);
 		network = new FastList<ICBNetTile>();
 		prevNetwork = new FastList<ICBNetTile>();
 		circuitBoards = new FastList<CircuitBoard>();
@@ -210,17 +211,25 @@ public class TileCBController extends TileLM implements ICBNetTile, IEnergyRecei
 				
 				int d = Math.min(e.getMaxReceive(), storage.getMaxExtract());
 				d = Math.min(d, Math.min(storage.getEnergyStored(), e.getMaxEnergyStored() - e.getEnergyStored()));
-				
-				if(d > 0)
-				{
-					storage.extractEnergy(d, false);
-					e.receiveEnergy(d, false);
-					energyChanged = true;
-				}
+				if(d > 0) e.receiveEnergy(extractEnergy(d), false);
 			}
 		}
 		
 		if(!isServer()) return;
+		
+		for(ModuleEntry me : allModules)
+		{
+			me.item.onUpdate(new EventUpdateModule(me));
+			
+			if(me.item instanceof ISignalProvider)
+				((ISignalProvider)me.item).provideSignals(new EventProvideSignals(me));
+		}
+		
+		for(ICBNetTile t : network)
+		{
+			if(t instanceof ISignalProviderTile)
+				((ISignalProviderTile)t).provideSignalsTile(new EventProvideSignalsTile(this));
+		}
 		
 		for(ICBNetTile t : network)
 			t.onUpdateCB();

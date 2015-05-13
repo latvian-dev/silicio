@@ -1,8 +1,6 @@
 package latmod.silicio.item.modules.io;
 
 import latmod.silicio.item.modules.*;
-import latmod.silicio.item.modules.events.EventUpdateModule;
-import latmod.silicio.tile.cb.CircuitBoard;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
@@ -15,14 +13,6 @@ public abstract class ItemModuleIO extends ItemModule
 	
 	public ItemModuleIO(String s)
 	{ super(s); }
-	
-	public void onUpdate(EventUpdateModule e)
-	{
-	}
-	
-	public final void onUpdate(CircuitBoard cb, int MID)
-	{
-	}
 	
 	public int getRenderPasses(int m)
 	{ return (getModuleType() == IOType.NONE) ? 1 : 2; }
