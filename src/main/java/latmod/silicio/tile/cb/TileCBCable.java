@@ -11,6 +11,7 @@ import latmod.silicio.gui.*;
 import latmod.silicio.gui.container.*;
 import latmod.silicio.item.modules.ItemModule;
 import latmod.silicio.item.modules.config.ModuleConfigSegment;
+import latmod.silicio.item.modules.events.*;
 import latmod.silicio.item.modules.io.ItemModuleEnergyInput;
 import mcp.mobius.waila.api.*;
 import net.minecraft.block.Block;
@@ -169,21 +170,24 @@ public class TileCBCable extends TileLM implements IPaintable, ICBNetTile, IGuiT
 		return (te != null && te instanceof ICBNetTile && ((ICBNetTile)te).isSideEnabled(Facing.oppositeSide[s]));
 	}
 	
-	public void onControllerDisconnected()
+	public void onControllerConnected(EventControllerConnected e)
+	{ if(controller == null) controller = e.controller; }
+	
+	public void onControllerDisconnected(EventControllerDisconnected e)
 	{
-		if(controller != null)
+		if(controller != null && controller.equals(e.controller))
 		{
+			controller = null;
+			
 			for(int i = 0; i < boards.length; i++)
-			if(boards[i] != null) boards[i].preUpdate();
+				if(boards[i] != null) boards[i].redstoneOut = false;
 			
 			markDirty();
 			onNeighborBlockChange(Blocks.air);
+			
+			for(int s = 0; s < 6; s++)
+				canReceive[s] = false;
 		}
-		
-		for(int s = 0; s < 6; s++)
-			canReceive[s] = false;
-		
-		controller = null;
 	}
 	
 	private boolean canReceiveEnergy(int s)
@@ -201,7 +205,7 @@ public class TileCBCable extends TileLM implements IPaintable, ICBNetTile, IGuiT
 	}
 
 	public boolean isOutputtingRS(int s)
-	{ return isServer() && boards[s] != null && boards[s].redstoneOut; }
+	{ return boards[s] != null && boards[s].redstoneOut; }
 
 	public CircuitBoard getBoard(int side)
 	{
@@ -349,15 +353,15 @@ public class TileCBCable extends TileLM implements IPaintable, ICBNetTile, IGuiT
 	{
 		if(i == 6 || boards[i] != null) return true;
 		
-		Block block = worldObj.getBlock(xCoord + Facing.offsetsXForSide[i], yCoord + Facing.offsetsYForSide[i], zCoord + Facing.offsetsZForSide[i]);
-		if(block == SilItems.b_cbcable || block == SilItems.b_cbcontroller) return true;
+		TileEntity te = worldObj.getTileEntity(xCoord + Facing.offsetsXForSide[i], yCoord + Facing.offsetsYForSide[i], zCoord + Facing.offsetsZForSide[i]);
+		if(te instanceof ICBNetTile) return true;
 		
 		EntityPlayer clientP = LC.proxy.getClientPlayer();
 		
 		if(clientP != null && clientP.getHeldItem() != null)
 		{
 			Item item = clientP.getHeldItem().getItem();
-			if((item == SilItems.i_circuit_board && block != Blocks.air)) return true;
+			if((item == SilItems.i_circuit_board && !worldObj.isAirBlock(xCoord + Facing.offsetsXForSide[i], yCoord + Facing.offsetsYForSide[i], zCoord + Facing.offsetsZForSide[i]))) return true;
 		}
 		
 		return false;

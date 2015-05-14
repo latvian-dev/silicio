@@ -38,10 +38,8 @@ public class ItemModuleSequencer extends ItemModuleLogic implements ISignalProvi
 	
 	public void provideSignals(EventProvideSignals e)
 	{
-		/* FIXME: Sequencer
-		int t = cs_timer.get(cb.items[MID]);
-		int p = (int)((cb.tick / t) % 4L);
-		cb.setEnabled(getChannel(cb, MID, p));
-		*/
+		int t = cs_timer.get(e.item());
+		int p = (int)((e.controller.tick / t) % 4L);
+		e.setEnabled(p);
 	}
 }

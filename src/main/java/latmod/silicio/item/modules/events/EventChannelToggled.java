@@ -8,9 +8,5 @@ public class EventChannelToggled extends EventModule
 	public final boolean on;
 	
 	public EventChannelToggled(ModuleEntry e, int ch, boolean b)
-	{
-		super(e);
-		channel = ch;
-		on = b;
-	}
+	{ super(e); channel = ch; on = b; }
 }

@@ -2,13 +2,19 @@ package latmod.silicio.block;
 import latmod.core.tile.TileLM;
 import latmod.silicio.tile.cb.TileRedNetIO;
 import net.minecraft.block.material.Material;
-import net.minecraft.world.World;
+import net.minecraft.client.renderer.texture.IIconRegister;
+import net.minecraft.util.IIcon;
+import net.minecraft.world.*;
 import net.minecraftforge.common.util.ForgeDirection;
 import powercrystals.minefactoryreloaded.api.rednet.IRedNetOmniNode;
 import powercrystals.minefactoryreloaded.api.rednet.connectivity.RedNetConnectionType;
+import cpw.mods.fml.relauncher.*;
 
 public class BlockRedNetIO extends BlockSil implements IRedNetOmniNode
 {
+	@SideOnly(Side.CLIENT)
+	public IIcon icon_input;
+	
 	public BlockRedNetIO(String s)
 	{
 		super(s, Material.iron);
@@ -23,6 +29,25 @@ public class BlockRedNetIO extends BlockSil implements IRedNetOmniNode
 	
 	public TileLM createNewTileEntity(World w, int m)
 	{ return new TileRedNetIO(); }
+	
+	@SideOnly(Side.CLIENT)
+	public void registerBlockIcons(IIconRegister ir)
+	{
+		blockIcon = ir.registerIcon(mod.assets + "rednet_io");
+		icon_input = ir.registerIcon(mod.assets + "rednet_io_input");
+	}
+	
+	@SideOnly(Side.CLIENT)
+	public IIcon getIcon(int s, int m)
+	{ return blockIcon; }
+	
+	@SideOnly(Side.CLIENT)
+	public IIcon getIcon(IBlockAccess iba, int x, int y, int z, int s)
+	{
+		TileRedNetIO t = (TileRedNetIO)iba.getTileEntity(x, y, z);
+		if(t != null && t.isValid() && s == t.inputSide) return icon_input;
+		return blockIcon;
+	}
 	
 	public void onInputsChanged(World world, int x, int y, int z, ForgeDirection side, int[] inputValues)
 	{

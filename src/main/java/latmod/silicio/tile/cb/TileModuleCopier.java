@@ -7,6 +7,7 @@ import latmod.core.tile.*;
 import latmod.silicio.gui.GuiModuleCopier;
 import latmod.silicio.gui.container.ContainerModuleCopier;
 import latmod.silicio.item.modules.ItemModule;
+import latmod.silicio.item.modules.events.*;
 import mcp.mobius.waila.api.*;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.entity.player.EntityPlayer;
@@ -92,7 +93,11 @@ public class TileModuleCopier extends TileInvLM implements IGuiTile, ICBNetTile,
 	{
 	}
 	
-	public void onControllerDisconnected()
+	public void onControllerConnected(EventControllerConnected e)
+	{
+	}
+	
+	public void onControllerDisconnected(EventControllerDisconnected e)
 	{
 	}
 	

@@ -66,7 +66,7 @@ public class ItemModuleFluidOutput extends ItemModuleIO
 				FluidTankInfo[] info = fh.getTankInfo(e.board.sideOppositeF);
 				FluidStack fs0 = (info == null || info.length <= 0) ? null : info[0].fluid;
 				
-				for(TankEntry entry : e.controller.tankNetwork.sortToNew(null))
+				for(TankEntry entry : e.controller.tankNetwork)
 				{
 					if(entry.filter == null || fs0 == null || entry.filter.isFluidEqual(fs0))
 					{

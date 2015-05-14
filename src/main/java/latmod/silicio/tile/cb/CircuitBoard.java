@@ -53,11 +53,6 @@ public class CircuitBoard implements IInventory
 		return null;
 	}
 	
-	public void preUpdate()
-	{
-		redstoneOut = false;
-	}
-	
 	public void postUpdate()
 	{
 		if(prevRedstoneOut == null || prevRedstoneOut != redstoneOut)

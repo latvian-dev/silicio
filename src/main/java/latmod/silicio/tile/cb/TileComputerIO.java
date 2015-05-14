@@ -2,11 +2,12 @@ package latmod.silicio.tile.cb;
 
 import latmod.core.tile.TileLM;
 import latmod.core.util.IntList;
+import latmod.silicio.item.modules.events.*;
 import net.minecraft.nbt.NBTTagCompound;
 import dan200.computercraft.api.lua.*;
 import dan200.computercraft.api.peripheral.*;
 
-public class TileComputerIO extends TileLM implements ICBNetTile, IPeripheral // BlockComputerIO
+public class TileComputerIO extends TileLM implements ICBNetTile, IPeripheral, IToggableTile // BlockComputerIO
 {
 	public IntList enabledChannels = new IntList();
 	private TileCBController controller = null;
@@ -34,12 +35,13 @@ public class TileComputerIO extends TileLM implements ICBNetTile, IPeripheral //
 	
 	public void onUpdateCB()
 	{
-		if(controller != null && attachedComputer != null) for(int i = 0; i < controller.channelChanges.size(); i++)
-			attachedComputer.queueEvent("cb_channel", new Object[] { (controller.channelChanges.keys.get(i).intValue() + 1), controller.channelChanges.values.get(i).booleanValue() });
 	}
 	
-	public void onControllerDisconnected()
-	{ controller = null; }
+	public void onControllerConnected(EventControllerConnected e)
+	{ if(controller == null) controller = e.controller; }
+	
+	public void onControllerDisconnected(EventControllerDisconnected e)
+	{ if(controller != null && controller.equals(e.controller)) controller = null; }
 	
 	public boolean isSideEnabled(int side)
 	{ return true; }
@@ -67,13 +69,10 @@ public class TileComputerIO extends TileLM implements ICBNetTile, IPeripheral //
 		else if(method == 1)
 		{
 			if(controller == null || arguments == null || arguments.length < 1)
-				return new Object[] { 0 };
+				return new Object[] { false };
 			
-			int c = ((Number)arguments[0]).intValue();
-			if(c < 1 || c > controller.channels.size())
-				return new Object[] { 0 };
-			
-			return new Object[] { controller.channels.contains(c - 1) };
+			int c = ((Number)arguments[0]).intValue() - 1;
+			return new Object[] { controller.channels.contains(c) };
 		}
 		
 		return null;
@@ -87,4 +86,10 @@ public class TileComputerIO extends TileLM implements ICBNetTile, IPeripheral //
 	
 	public boolean equals(IPeripheral other)
 	{ return super.equals(other); }
+	
+	public void onChannelToggledTile(EventChannelToggledTile e)
+	{
+		if(controller != null && attachedComputer != null)
+			attachedComputer.queueEvent("cb_channel", new Object[] { (e.channel + 1), e.on });
+	}
 }

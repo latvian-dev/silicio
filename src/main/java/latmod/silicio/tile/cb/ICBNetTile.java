@@ -1,9 +1,11 @@
 package latmod.silicio.tile.cb;
 
+import latmod.silicio.item.modules.events.*;
+
 public interface ICBNetTile
 {
-	public void preUpdate(TileCBController c);
+	public void onControllerConnected(EventControllerConnected e);
+	public void onControllerDisconnected(EventControllerDisconnected e);
 	public void onUpdateCB();
-	public void onControllerDisconnected();
 	public boolean isSideEnabled(int side);
 }

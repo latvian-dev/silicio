@@ -7,8 +7,5 @@ public class EventControllerDisconnected extends EventCB
 	public final boolean hasConflict;
 	
 	public EventControllerDisconnected(TileCBController c, boolean b)
-	{
-		super(c);
-		hasConflict = b;
-	}
+	{ super(c); hasConflict = b; }
 }

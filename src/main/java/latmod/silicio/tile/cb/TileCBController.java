@@ -35,7 +35,6 @@ public class TileCBController extends TileLM implements ICBNetTile, IEnergyRecei
 	public final FastList<InvEntry> invNetwork;
 	public final FastList<TankEntry> tankNetwork;
 	public final IntList channels;
-	public final FastMap<Integer, Boolean> channelChanges;
 	
 	public boolean energyChanged = false;
 	private int pNetworkSize = -1;
@@ -53,7 +52,6 @@ public class TileCBController extends TileLM implements ICBNetTile, IEnergyRecei
 		invNetwork = new FastList<InvEntry>();
 		tankNetwork = new FastList<TankEntry>();
 		channels = new IntList();
-		channelChanges = new FastMap<Integer, Boolean>();
 	}
 	
 	public boolean rerenderBlock()
@@ -110,7 +108,7 @@ public class TileCBController extends TileLM implements ICBNetTile, IEnergyRecei
 	public void onUnloaded()
 	{
 		for(ICBNetTile t : network)
-			t.onControllerDisconnected();
+			t.onControllerDisconnected(new EventControllerDisconnected(this, false));
 	}
 	
 	public void onUpdate()
@@ -159,7 +157,7 @@ public class TileCBController extends TileLM implements ICBNetTile, IEnergyRecei
 		}
 		
 		for(ICBNetTile t : prevNetwork)
-			t.onControllerDisconnected();
+			t.onControllerDisconnected(new EventControllerDisconnected(this, false));
 		
 		if(pHasConflict != hasConflict)
 			markDirty();
@@ -167,26 +165,13 @@ public class TileCBController extends TileLM implements ICBNetTile, IEnergyRecei
 	
 	public void onUpdateCB()
 	{
-		channelChanges.clear();
 		IntList prevChannels = channels.copy();
-		
-		for(int ch : channels.toArray())
-		{
-			if(!prevChannels.contains(ch))
-				channelChanges.put(ch, true);
-		}
-		
-		for(int ch : prevChannels.toArray())
-		{
-			if(!channels.contains(ch))
-				channelChanges.put(ch, false);
-		}
-		
-		prevChannels.clear();
-		prevChannels.addAll(channels);
+		channels.clear();
 		
 		addToList(xCoord, yCoord, zCoord);
 		network.remove(this);
+		invNetwork.sort(null);
+		tankNetwork.sort(null);
 		
 		if(pNetworkSize != network.size())
 		{
@@ -196,14 +181,14 @@ public class TileCBController extends TileLM implements ICBNetTile, IEnergyRecei
 			sendDirtyUpdate();
 			
 			if(hasConflict) for(ICBNetTile t : network)
-				t.onControllerDisconnected();
+				t.onControllerDisconnected(new EventControllerDisconnected(this, true));
 		}
 		
 		if(hasConflict) return;
 		
 		for(ICBNetTile t : network)
 		{
-			t.preUpdate(this);
+			t.onControllerConnected(new EventControllerConnected(this));
 			
 			if(t instanceof ICBEnergyTile && storage.getEnergyStored() > 0)
 			{
@@ -219,8 +204,6 @@ public class TileCBController extends TileLM implements ICBNetTile, IEnergyRecei
 		
 		for(ModuleEntry me : allModules)
 		{
-			me.item.onUpdate(new EventUpdateModule(me));
-			
 			if(me.item instanceof ISignalProvider)
 				((ISignalProvider)me.item).provideSignals(new EventProvideSignals(me));
 		}
@@ -231,20 +214,60 @@ public class TileCBController extends TileLM implements ICBNetTile, IEnergyRecei
 				((ISignalProviderTile)t).provideSignalsTile(new EventProvideSignalsTile(this));
 		}
 		
+		for(ModuleEntry me : allModules)
+			me.item.onUpdate(new EventUpdateModule(me));
+		
 		for(ICBNetTile t : network)
 			t.onUpdateCB();
+		
+		{
+			for(int i = 0; i < channels.size(); i++)
+			{
+				int ch = channels.get(i);
+				if(!prevChannels.contains(ch))
+					channelChanged(ch, true);
+			}
+			
+			for(int i = 0; i < prevChannels.size(); i++)
+			{
+				int ch = prevChannels.get(i);
+				if(!channels.contains(ch))
+					channelChanged(ch, false);
+			}
+		}
 	}
 	
-	public void onControllerDisconnected()
+	private void channelChanged(int ch, boolean on)
+	{
+		LatCoreMC.printChat(null, this + ": " + ch + " - " + on);
+		
+		for(ModuleEntry me : allModules)
+		{
+			if(me.item instanceof IToggable)
+				((IToggable)me.item).onChannelToggled(new EventChannelToggled(me, ch, on));
+		}
+		
+		for(ICBNetTile t : network)
+		{
+			if(t instanceof IToggableTile)
+				((IToggableTile)t).onChannelToggledTile(new EventChannelToggledTile(this, ch, on));
+		}
+	}
+	
+	public void onControllerConnected(EventControllerConnected e)
+	{
+	}
+	
+	public void onControllerDisconnected(EventControllerDisconnected e)
 	{
 	}
 	
 	public void onBroken()
 	{
-		super.onBroken();
-		
 		for(ICBNetTile t : network)
-			t.onControllerDisconnected();
+			t.onControllerDisconnected(new EventControllerDisconnected(this, false));
+		
+		super.onBroken();
 	}
 	
 	private void addToList(int x, int y, int z)
@@ -351,7 +374,7 @@ public class TileCBController extends TileLM implements ICBNetTile, IEnergyRecei
 	{
 		if(is == null) return false;
 		
-		for(InvEntry e : invNetwork.sortToNew(null))
+		for(InvEntry e : invNetwork)
 		{
 			if(IItemCard.Helper.isValid(e.filter, is))
 			{
@@ -367,7 +390,7 @@ public class TileCBController extends TileLM implements ICBNetTile, IEnergyRecei
 	{
 		if(is == null) return false;
 		
-		for(InvEntry e : invNetwork.sortToNew(null))
+		for(InvEntry e : invNetwork)
 		{
 			if(IItemCard.Helper.isValid(e.filter, is))
 			{
