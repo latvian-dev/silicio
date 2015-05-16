@@ -233,6 +233,8 @@ public class TileCBCable extends TileLM implements IPaintable, ICBNetTile, IGuiT
 		
 		if(mop == null) return false;
 		
+		boolean isWrench = InvUtils.isWrench(is);
+		
 		int id = -1;
 		
 		if(!hasCover)
@@ -256,7 +258,7 @@ public class TileCBCable extends TileLM implements IPaintable, ICBNetTile, IGuiT
 			{
 				id = (mop.subHit == 6) ? mop.sideHit : mop.subHit;
 				
-				if(isServer() && mop.subHit == 6 && ep.isSneaking() && LatCoreMC.isWrench(is))
+				if(isServer() && mop.subHit == 6 && ep.isSneaking() && isWrench)
 				{
 					if(worldObj.setBlockToAir(xCoord, yCoord, zCoord))
 						InvUtils.dropItem(worldObj, xCoord + 0.5D, yCoord + 0.5D, zCoord + 0.5D, new ItemStack(SilItems.b_cbcable), 8);
@@ -269,7 +271,7 @@ public class TileCBCable extends TileLM implements IPaintable, ICBNetTile, IGuiT
 		
 		if(is != null && boards[id] == null && is.getItem() == SilItems.b_cbcable.getItem()) return false;
 		
-		if(LatCoreMC.isWrench(is) && !ep.isSneaking())
+		if(isWrench && !ep.isSneaking())
 		{
 			if(boards[id] != null) return true;
 			setDisabled(id, !isDisabled[id]);
@@ -287,7 +289,7 @@ public class TileCBCable extends TileLM implements IPaintable, ICBNetTile, IGuiT
 				if(!ep.capabilities.isCreativeMode) is.stackSize--;
 				markDirty();
 			}
-			else if(LatCoreMC.isWrench(is))
+			else if(isWrench)
 			{
 				if(!ep.isSneaking())
 				{
@@ -305,7 +307,7 @@ public class TileCBCable extends TileLM implements IPaintable, ICBNetTile, IGuiT
 		}
 		else
 		{
-			if(is != null && ep.isSneaking() && LatCoreMC.isWrench(is))
+			if(is != null && ep.isSneaking() && isWrench)
 			{
 				if(!ep.capabilities.isCreativeMode)
 					InvUtils.dropItem(ep, new ItemStack(SilItems.i_circuit_board));

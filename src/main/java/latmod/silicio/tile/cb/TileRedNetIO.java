@@ -2,12 +2,11 @@ package latmod.silicio.tile.cb;
 
 import java.util.List;
 
-import latmod.core.LatCoreMC;
+import latmod.core.*;
 import latmod.core.tile.*;
 import latmod.core.util.IntList;
 import latmod.silicio.item.modules.events.*;
 import mcp.mobius.waila.api.*;
-import net.minecraft.block.BlockColored;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;
@@ -42,7 +41,7 @@ public class TileRedNetIO extends TileLM implements ICBNetTile, IWailaTile.Body,
 	{
 		if(isServer())
 		{
-			if(LatCoreMC.isWrench(is))
+			if(InvUtils.isWrench(is))
 			{ if(inputSide != side) { inputSide = side; markDirty(); } }
 			else LatCoreMC.openGui(ep, this, null);
 		}

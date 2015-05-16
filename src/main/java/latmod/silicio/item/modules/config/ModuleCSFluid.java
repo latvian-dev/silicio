@@ -1,6 +1,6 @@
 package latmod.silicio.item.modules.config;
 
-import latmod.core.*;
+import latmod.core.InvUtils;
 import latmod.core.mod.LC;
 import latmod.core.util.FastList;
 import latmod.silicio.gui.GuiModuleSettings;
@@ -25,7 +25,7 @@ public class ModuleCSFluid extends ModuleConfigSegment
 		
 		if(is == null && !LC.proxy.isShiftDown()) return;
 		
-		FluidStack fluidFromItem = LatCoreMC.getFluid(is);
+		FluidStack fluidFromItem = InvUtils.getFluid(is);
 		if(is != null && fluidFromItem == null) return;
 		
 		FluidStack fs = (is == null) ? null : fluidFromItem;
