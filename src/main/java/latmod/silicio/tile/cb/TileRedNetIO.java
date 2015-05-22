@@ -1,6 +1,6 @@
 package latmod.silicio.tile.cb;
 
-import java.util.List;
+import java.util.*;
 
 import latmod.core.*;
 import latmod.core.tile.*;
@@ -15,10 +15,14 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.common.util.ForgeDirection;
 import cpw.mods.fml.relauncher.*;
 
-public class TileRedNetIO extends TileLM implements ICBNetTile, IWailaTile.Body, IGuiTile, ISignalProviderTile // BlockRedNetIO
+public class TileRedNetIO extends TileLM implements ICBNetTile, IWailaTile.Body, IGuiTile, ISignalProviderTile, IToggableTile // BlockRedNetIO
 {
 	public int inputSide = 1;
 	public IntList inputs = new IntList();
+	public int[] linked = new int[16];
+	
+	public TileRedNetIO()
+	{ Arrays.fill(linked, -1); }
 	
 	public boolean rerenderBlock()
 	{ return true; }
@@ -28,6 +32,7 @@ public class TileRedNetIO extends TileLM implements ICBNetTile, IWailaTile.Body,
 		super.readTileData(tag);
 		inputSide = tag.getByte("Side");
 		inputs.setAll(tag.getIntArray("Inputs"));
+		linked = tag.getIntArray("Linked");
 	}
 	
 	public void writeTileData(NBTTagCompound tag)
@@ -35,6 +40,7 @@ public class TileRedNetIO extends TileLM implements ICBNetTile, IWailaTile.Body,
 		super.writeTileData(tag);
 		tag.setByte("Side", (byte)inputSide);
 		tag.setIntArray("Inputs", inputs.toArray());
+		tag.setIntArray("Linked", linked);
 	}
 	
 	public boolean onRightClick(EntityPlayer ep, ItemStack is, int side, float x, float y, float z)
@@ -74,7 +80,7 @@ public class TileRedNetIO extends TileLM implements ICBNetTile, IWailaTile.Body,
 	@SideOnly(Side.CLIENT)
 	public GuiScreen getGui(EntityPlayer ep, NBTTagCompound data)
 	{ return null; }
-
+	
 	public void onInputsChanged(ForgeDirection side, int[] inputValues)
 	{
 		if(inputSide == side.ordinal() && inputValues.length == 16)
@@ -84,16 +90,33 @@ public class TileRedNetIO extends TileLM implements ICBNetTile, IWailaTile.Body,
 			for(int i = 0; i < 16; i++)
 				if(inputValues[i] > 0) inputs.add(i);
 			
-			LatCoreMC.printChat(null, inputs);
+			//LatCoreMC.printChat(null, inputs);
 		}
 	}
 	
 	public int[] getOutputValues(ForgeDirection side)
-	{ return new int[16]; }
+	{
+		int[] out = new int[16];
+		
+		for(int i = 0; i < 16; i++)
+		{
+			
+		}
+		
+		return out;
+	}
 	
 	public void provideSignalsTile(EventProvideSignalsTile e)
 	{
 		for(int i = 0; i < inputs.size(); i++)
-			e.setEnabled0(inputs.get(i));
+		{
+			int j = inputs.get(i);
+			if(j >= 0 && j < linked.length)
+				e.setEnabled0(linked[j]);
+		}
+	}
+	
+	public void onChannelToggledTile(EventChannelToggledTile e)
+	{
 	}
 }

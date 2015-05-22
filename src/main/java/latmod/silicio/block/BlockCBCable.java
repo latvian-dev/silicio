@@ -160,7 +160,7 @@ public class BlockCBCable extends BlockSil
 	
 	@SideOnly(Side.CLIENT)
 	public IIcon getIcon(IBlockAccess iba, int x, int y, int z, int s)
-	{ return LatCoreMC.blockNullIcon; }
+	{ return LatCoreMC.Client.blockNullIcon; }
 	
 	public boolean isSideSolid(IBlockAccess iba, int x, int y, int z, ForgeDirection side)
 	{ return true; }

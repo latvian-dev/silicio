@@ -9,7 +9,7 @@ import cpw.mods.fml.relauncher.*;
  * Created using Tabula 4.1.1
  */
 @SideOnly(Side.CLIENT)
-public class ModelCBCable extends ModelBase
+public class ModelCBCable extends ModelBase // RenderCBCable
 {
 	public ModelRenderer center;
 	public ModelRenderer cable[];
@@ -25,8 +25,10 @@ public class ModelCBCable extends ModelBase
 		cable = new ModelRenderer[6];
 		board = new ModelRenderer[6];
 		
-		float PI = 3.141592653589793F;
-		float PI2 = 1.5707963267948966F;
+		//float PI = 3.141592653589793F;
+		//float PI2 = 1.5707963267948966F;
+		float PI = (float)Math.PI;
+		float PI2 = (float)(Math.PI * 0.5D);
 		
 		cable[0] = new ModelRenderer(this, 16, 0);
 		cable[0].setRotationPoint(0F, 0F, 0F);

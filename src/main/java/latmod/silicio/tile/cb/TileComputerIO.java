@@ -7,7 +7,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import dan200.computercraft.api.lua.*;
 import dan200.computercraft.api.peripheral.*;
 
-public class TileComputerIO extends TileLM implements ICBNetTile, IPeripheral, IToggableTile // BlockComputerIO
+public class TileComputerIO extends TileLM implements ICBNetTile, IPeripheral, IToggableTile, ISignalProviderTile // BlockComputerIO
 {
 	public IntList enabledChannels = new IntList();
 	private TileCBController controller = null;
@@ -58,7 +58,7 @@ public class TileComputerIO extends TileLM implements ICBNetTile, IPeripheral, I
 		{
 			if(arguments != null && arguments.length == 2)
 			{
-				int c = ((Number)arguments[0]).intValue();
+				int c = ((Number)arguments[0]).intValue() - 1;
 				boolean b = ((Boolean)arguments[1]).booleanValue();
 				
 				if(!b) enabledChannels.removeValue(c);
@@ -91,5 +91,11 @@ public class TileComputerIO extends TileLM implements ICBNetTile, IPeripheral, I
 	{
 		if(controller != null && attachedComputer != null)
 			attachedComputer.queueEvent("cb_channel", new Object[] { (e.channel + 1), e.on });
+	}
+	
+	public void provideSignalsTile(EventProvideSignalsTile e)
+	{
+		for(int i = 0; i < enabledChannels.size(); i++)
+			e.setEnabled0(enabledChannels.get(i));
 	}
 }

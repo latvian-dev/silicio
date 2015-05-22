@@ -32,13 +32,13 @@ public class RenderCBCable extends TileRenderer<TileCBCable>
 	{
 		GL11.glPushMatrix();
 		GL11.glEnable(GL12.GL_RESCALE_NORMAL);
-		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
+		GL11.glColor4f(1F, 1F, 1F, 1F);
 		
 		GL11.glTranslated(rx, ry + 1D, rz + 1D);
 		GL11.glScaled(1D, -1D, -1D);
 		GL11.glTranslated(0.5D, 0.5D, 0.5D);
 		
-		Minecraft.getMinecraft().getTextureManager().bindTexture(t.isOnline() ? texture_on : texture_off);
+		Minecraft.getMinecraft().getTextureManager().bindTexture(texture_off);
 		
 		float s = 0.0625F;
 		
@@ -52,6 +52,30 @@ public class RenderCBCable extends TileRenderer<TileCBCable>
 				if(t.boards[i] != null)
 					model.board[i].render(s);
 			}
+		}
+		
+		if(t.isOnline())
+		{
+			LatCoreMC.Client.pushMaxBrightness();
+			GL11.glDisable(GL11.GL_LIGHTING);
+			
+			Minecraft.getMinecraft().getTextureManager().bindTexture(texture_on);
+			
+			int c = 0;
+			
+			for(int i = 0; i < 6; i++)
+				if(t.renderCableSide[i] || t.boards[i] != null) c++;
+			
+			if(c != 2) model.center.render(s);
+			
+			for(int i = 0; i < 6; i++)
+			{
+				if(t.boards[i] != null)
+					model.board[i].render(s);
+			}
+			
+			GL11.glEnable(GL11.GL_LIGHTING);
+			LatCoreMC.Client.popMaxBrightness();
 		}
 		
 		GL11.glPopMatrix();
@@ -79,11 +103,11 @@ public class RenderCBCable extends TileRenderer<TileCBCable>
 				}
 				else
 				{
-					icons[i] = LatCoreMC.blockNullIcon;
+					icons[i] = LatCoreMC.Client.blockNullIcon;
 				}
 			}
 			
-			double d = 0.001D;
+			double d = 0D;//0.001D;
 			renderBlocks.fullBlock.setBounds(d, d, d, 1D - d, 1D - d, 1D - d);
 			renderBlocks.blockAccess = t.getWorldObj();
 			renderBlocks.renderAllFaces = true;
