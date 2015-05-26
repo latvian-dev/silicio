@@ -34,7 +34,7 @@ public class TileCBController extends TileLM implements ICBNetTile, IEnergyRecei
 	public final FastList<ModuleEntry> allModules;
 	public final FastList<InvEntry> invNetwork;
 	public final FastList<TankEntry> tankNetwork;
-	public final IntList channels;
+	public final IntList prevChannels, channels;
 	
 	public boolean energyChanged = false;
 	private int pNetworkSize = -1;
@@ -49,6 +49,7 @@ public class TileCBController extends TileLM implements ICBNetTile, IEnergyRecei
 		allModules = new FastList<ModuleEntry>();
 		invNetwork = new FastList<InvEntry>();
 		tankNetwork = new FastList<TankEntry>();
+		prevChannels = new IntList();
 		channels = new IntList();
 	}
 	
@@ -59,8 +60,8 @@ public class TileCBController extends TileLM implements ICBNetTile, IEnergyRecei
 	{
 		super.readTileData(tag);
 		storage.readFromNBT(tag);
-		channels.clear();
-		channels.addAll(tag.getIntArray("Channels"));
+		prevChannels.setAll(tag.getIntArray("PChannels"));
+		channels.setAll(tag.getIntArray("Channels"));
 		hasConflict = tag.hasKey("Conflict");
 	}
 	
@@ -68,6 +69,7 @@ public class TileCBController extends TileLM implements ICBNetTile, IEnergyRecei
 	{
 		super.writeTileData(tag);
 		storage.writeToNBT(tag);
+		tag.setIntArray("PChannels", prevChannels.toArray());
 		tag.setIntArray("Channels", channels.toArray());
 		if(hasConflict) tag.setBoolean("Conflict", true);
 	}

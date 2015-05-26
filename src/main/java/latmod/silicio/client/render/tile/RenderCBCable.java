@@ -54,28 +54,58 @@ public class RenderCBCable extends TileRenderer<TileCBCable>
 			}
 		}
 		
-		if(t.isOnline())
+		if(t.controller != null)
 		{
-			LatCoreMC.Client.pushMaxBrightness();
-			GL11.glDisable(GL11.GL_LIGHTING);
-			
-			Minecraft.getMinecraft().getTextureManager().bindTexture(texture_on);
-			
 			int c = 0;
 			
 			for(int i = 0; i < 6; i++)
 				if(t.renderCableSide[i] || t.boards[i] != null) c++;
 			
-			if(c != 2) model.center.render(s);
-			
-			for(int i = 0; i < 6; i++)
+			if(c == 2)
 			{
-				if(t.boards[i] != null)
-					model.board[i].render(s);
+				if(!((t.renderCableSide[0] && t.renderCableSide[1] && !t.renderCableSide[2] && !t.renderCableSide[3] && !t.renderCableSide[4] && !t.renderCableSide[5])
+				|| (!t.renderCableSide[0] && !t.renderCableSide[1] && t.renderCableSide[2] && t.renderCableSide[3] && !t.renderCableSide[4] && !t.renderCableSide[5])
+				|| (!t.renderCableSide[0] && !t.renderCableSide[1] && !t.renderCableSide[2] && !t.renderCableSide[3] && t.renderCableSide[4] && t.renderCableSide[5])))
+					c = 1;
 			}
 			
-			GL11.glEnable(GL11.GL_LIGHTING);
-			LatCoreMC.Client.popMaxBrightness();
+			if(c > 0)
+			{
+				float sc = 1.01F;
+				GL11.glScalef(sc, sc, sc);
+				LatCoreMC.Client.pushMaxBrightness();
+				GL11.glDisable(GL11.GL_LIGHTING);
+				
+				Minecraft.getMinecraft().getTextureManager().bindTexture(texture_on);
+				
+				if(t.controller.hasConflict)
+					GL11.glColor4f(1F, 0F, 0F, 0.5F);
+				else
+					GL11.glColor4f(0F, 1F, 1F, 0.5F);
+				
+				GL11.glEnable(GL11.GL_BLEND);
+				GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
+				
+				if(c != 2) model.center.render(s);
+				
+				for(int i = 0; i < 6; i++)
+				{
+					if(t.boards[i] != null)
+						model.cable[i].render(s);
+				}
+				
+				GL11.glDisable(GL11.GL_BLEND);
+				
+				for(int i = 0; i < 6; i++)
+				{
+					if(t.boards[i] != null)
+						model.board[i].render(s);
+				}
+				
+				GL11.glColor4f(1F, 1F, 1F, 1F);
+				LatCoreMC.Client.popMaxBrightness();
+				GL11.glEnable(GL11.GL_LIGHTING);
+			}
 		}
 		
 		GL11.glPopMatrix();
