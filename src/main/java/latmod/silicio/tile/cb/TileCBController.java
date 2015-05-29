@@ -424,4 +424,10 @@ public class TileCBController extends TileLM implements ICBNetTile, IEnergyRecei
 	
 	public int hashCode()
 	{ return LatCore.hashCode(xCoord, yCoord, zCoord); }
+	
+	public boolean canPlayerInteract(EntityPlayer ep, boolean breakBlock)
+	{ return security.canInteract(ep); }
+	
+	public void onPlayerNotOwner(EntityPlayer ep, boolean breakBlock)
+	{ printOwner(ep); }
 }

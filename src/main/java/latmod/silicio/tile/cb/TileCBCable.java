@@ -521,6 +521,12 @@ public class TileCBCable extends TileLM implements IPaintable, ICBNetTile, IGuiT
 	
 	public LMSecurity getSecurity()
 	{ if(controller != null) return controller.getSecurity(); return security; }
+	
+	public boolean canPlayerInteract(EntityPlayer ep, boolean breakBlock)
+	{ return getSecurity().canInteract(ep); }
+	
+	public void onPlayerNotOwner(EntityPlayer ep, boolean breakBlock)
+	{ printOwner(ep); }
 
 	public boolean isOnline()
 	{ return controller != null && !controller.hasConflict; }
