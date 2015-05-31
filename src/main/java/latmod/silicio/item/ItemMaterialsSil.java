@@ -1,42 +1,34 @@
 package latmod.silicio.item;
 import latmod.core.*;
-import latmod.core.item.ItemMaterials;
 import latmod.silicio.*;
-import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.IIcon;
+import cpw.mods.fml.relauncher.*;
 
-public class ItemMaterialsSil extends ItemMaterials
+public class ItemMaterialsSil extends ItemSil
 {
+	public static final String[] names =
+	{
+		"module_empty",
+		"module_input",
+		"module_output",
+		"silicon_gem",
+		"silicon_dust",
+		"circuit",
+		"laser_crystal",
+		"module_logic",
+	};
+	
+	@SideOnly(Side.CLIENT)
+	public IIcon[] icons;
+	
 	public ItemMaterialsSil(String s)
 	{ super(s); }
 	
-	public String[] getNames()
-	{
-		return new String[]
-		{
-			"module_empty",
-			"module_input",
-			"module_output",
-			"silicon_gem",
-			"silicon_dust",
-			"circuit",
-			"laser_crystal",
-			"module_logic",
-		};
-	}
-	
-	public String getPrefix()
-	{ return "mat"; }
-	
-	public LMMod getMod()
-	{ return Silicio.mod; }
-	
-	public CreativeTabs getCreativeTab()
-	{ return Silicio.tab; }
-	
 	public void onPostLoaded()
 	{
-		super.onPostLoaded();
+		addAllDamages(names.length);
 		
 		SilItems.Modules.EMPTY = new ItemStack(this, 1, 0);
 		SilItems.Modules.INPUT = new ItemStack(this, 1, 1);
@@ -59,4 +51,19 @@ public class ItemMaterialsSil extends ItemMaterials
 		
 		mod.recipes.addShapelessRecipe(SilItems.Modules.LOGIC, SilItems.Modules.EMPTY, SilMat.SILICON, ODItems.QUARTZ, ODItems.REDSTONE);
 	}
+	
+	public String getUnlocalizedName(ItemStack is)
+	{ return mod.getItemName("mat." + names[is.getItemDamage()]); }
+	
+	@SideOnly(Side.CLIENT)
+	public void registerIcons(IIconRegister ir)
+	{
+		icons = new IIcon[names.length];
+		for(int i = 0; i < names.length; i++)
+			icons[i] = ir.registerIcon(mod.assets + "mat/" + names[i]);
+	}
+	
+	@SideOnly(Side.CLIENT)
+	public IIcon getIconFromDamageForRenderPass(int m, int r)
+	{ return (m >= 0 && m < icons.length) ? icons[m] : LatCoreMC.Client.unknownItemIcon; }
 }
