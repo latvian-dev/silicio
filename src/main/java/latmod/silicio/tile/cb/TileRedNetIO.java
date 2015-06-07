@@ -2,9 +2,9 @@ package latmod.silicio.tile.cb;
 
 import java.util.*;
 
-import latmod.core.*;
-import latmod.core.tile.*;
-import latmod.core.util.IntList;
+import latmod.ftbu.core.*;
+import latmod.ftbu.core.tile.*;
+import latmod.ftbu.core.util.IntList;
 import latmod.silicio.item.modules.events.*;
 import mcp.mobius.waila.api.*;
 import net.minecraft.client.gui.GuiScreen;

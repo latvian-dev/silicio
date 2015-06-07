@@ -2,10 +2,10 @@ package latmod.silicio.tile.cb;
 
 import java.util.List;
 
-import latmod.core.*;
-import latmod.core.gui.ContainerEmpty;
-import latmod.core.tile.*;
-import latmod.core.util.*;
+import latmod.ftbu.core.*;
+import latmod.ftbu.core.gui.ContainerEmpty;
+import latmod.ftbu.core.tile.*;
+import latmod.ftbu.core.util.*;
 import latmod.silicio.SilItems;
 import latmod.silicio.gui.GuiController;
 import latmod.silicio.item.IItemCard;

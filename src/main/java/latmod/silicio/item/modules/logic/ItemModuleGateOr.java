@@ -1,6 +1,6 @@
 package latmod.silicio.item.modules.logic;
 
-import latmod.core.ODItems;
+import latmod.ftbu.core.ODItems;
 import latmod.silicio.*;
 import latmod.silicio.item.modules.*;
 import latmod.silicio.item.modules.events.EventProvideSignals;

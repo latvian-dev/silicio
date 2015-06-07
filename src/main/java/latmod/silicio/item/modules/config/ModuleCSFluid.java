@@ -1,8 +1,8 @@
 package latmod.silicio.item.modules.config;
 
-import latmod.core.InvUtils;
-import latmod.core.mod.LC;
-import latmod.core.util.FastList;
+import latmod.ftbu.FTBU;
+import latmod.ftbu.core.InvUtils;
+import latmod.ftbu.core.util.FastList;
 import latmod.silicio.gui.GuiModuleSettings;
 import latmod.silicio.tile.cb.CircuitBoard;
 import net.minecraft.item.ItemStack;
@@ -23,7 +23,7 @@ public class ModuleCSFluid extends ModuleConfigSegment
 	{
 		ItemStack is = InvUtils.singleCopy(g.container.player.inventory.getItemStack());
 		
-		if(is == null && !LC.proxy.isShiftDown()) return;
+		if(is == null && !FTBU.proxy.isShiftDown()) return;
 		
 		FluidStack fluidFromItem = InvUtils.getFluid(is);
 		if(is != null && fluidFromItem == null) return;

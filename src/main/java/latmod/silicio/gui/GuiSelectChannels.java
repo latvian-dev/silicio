@@ -1,7 +1,7 @@
 package latmod.silicio.gui;
 
-import latmod.core.gui.*;
-import latmod.core.mod.LC;
+import latmod.ftbu.FTBU;
+import latmod.ftbu.core.gui.*;
 import latmod.silicio.item.modules.ItemModule;
 import latmod.silicio.tile.cb.*;
 import net.minecraft.util.ResourceLocation;
@@ -47,7 +47,7 @@ public class GuiSelectChannels extends GuiLM
 			}
 		});
 		
-		buttonBack.title = LC.mod.translate("button.back");
+		buttonBack.title = FTBU.mod.translate("button.back");
 		
 		int chCount = module.getChannelCount();
 		if(chCount > 16) chCount = 16;

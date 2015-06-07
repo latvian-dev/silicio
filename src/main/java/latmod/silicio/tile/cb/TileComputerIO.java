@@ -1,7 +1,7 @@
 package latmod.silicio.tile.cb;
 
-import latmod.core.tile.TileLM;
-import latmod.core.util.IntList;
+import latmod.ftbu.core.tile.TileLM;
+import latmod.ftbu.core.util.IntList;
 import latmod.silicio.item.modules.events.*;
 import net.minecraft.nbt.NBTTagCompound;
 import dan200.computercraft.api.lua.*;

@@ -1,7 +1,7 @@
 package latmod.silicio.gui;
-import latmod.core.gui.*;
-import latmod.core.mod.LC;
-import latmod.core.util.FastList;
+import latmod.ftbu.FTBU;
+import latmod.ftbu.core.gui.*;
+import latmod.ftbu.core.util.FastList;
 import latmod.silicio.Silicio;
 import latmod.silicio.gui.container.ContainerCircuitBoard;
 import latmod.silicio.tile.cb.*;
@@ -41,7 +41,7 @@ public class GuiCircuitBoard extends GuiLM
 			}
 		});
 		
-		buttonSettings.title = LC.mod.translate("button.settings");
+		buttonSettings.title = FTBU.mod.translate("button.settings");
 	}
 	
 	public void drawGuiContainerBackgroundLayer(float f, int mx, int my)

@@ -1,6 +1,6 @@
 package latmod.silicio.gui;
 
-import latmod.core.gui.*;
+import latmod.ftbu.core.gui.*;
 import latmod.silicio.item.modules.config.ModuleCSString;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.*;

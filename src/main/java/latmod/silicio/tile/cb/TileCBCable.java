@@ -1,11 +1,11 @@
 package latmod.silicio.tile.cb;
 import java.util.*;
 
-import latmod.core.*;
-import latmod.core.gui.ContainerEmpty;
-import latmod.core.mod.LC;
-import latmod.core.tile.*;
-import latmod.core.util.*;
+import latmod.ftbu.FTBU;
+import latmod.ftbu.core.*;
+import latmod.ftbu.core.gui.ContainerEmpty;
+import latmod.ftbu.core.tile.*;
+import latmod.ftbu.core.util.*;
 import latmod.silicio.*;
 import latmod.silicio.gui.*;
 import latmod.silicio.gui.container.*;
@@ -358,7 +358,7 @@ public class TileCBCable extends TileLM implements IPaintable, ICBNetTile, IGuiT
 		TileEntity te = worldObj.getTileEntity(xCoord + Facing.offsetsXForSide[i], yCoord + Facing.offsetsYForSide[i], zCoord + Facing.offsetsZForSide[i]);
 		if(te instanceof ICBNetTile) return true;
 		
-		EntityPlayer clientP = LC.proxy.getClientPlayer();
+		EntityPlayer clientP = FTBU.proxy.getClientPlayer();
 		
 		if(clientP != null && clientP.getHeldItem() != null)
 		{

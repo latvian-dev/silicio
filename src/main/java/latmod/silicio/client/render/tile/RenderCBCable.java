@@ -1,7 +1,6 @@
 package latmod.silicio.client.render.tile;
 
-import latmod.core.LatCoreMC;
-import latmod.core.client.*;
+import latmod.ftbu.core.client.*;
 import latmod.silicio.*;
 import latmod.silicio.tile.cb.TileCBCable;
 import net.minecraft.client.Minecraft;
@@ -73,7 +72,7 @@ public class RenderCBCable extends TileRenderer<TileCBCable>
 			{
 				float sc = 1.01F;
 				GL11.glScalef(sc, sc, sc);
-				LatCoreMC.Client.pushMaxBrightness();
+				LatCoreMCClient.pushMaxBrightness();
 				GL11.glDisable(GL11.GL_LIGHTING);
 				
 				Minecraft.getMinecraft().getTextureManager().bindTexture(texture_on);
@@ -103,7 +102,7 @@ public class RenderCBCable extends TileRenderer<TileCBCable>
 				}
 				
 				GL11.glColor4f(1F, 1F, 1F, 1F);
-				LatCoreMC.Client.popMaxBrightness();
+				LatCoreMCClient.popMaxBrightness();
 				GL11.glEnable(GL11.GL_LIGHTING);
 			}
 		}
@@ -133,7 +132,7 @@ public class RenderCBCable extends TileRenderer<TileCBCable>
 				}
 				else
 				{
-					icons[i] = LatCoreMC.Client.blockNullIcon;
+					icons[i] = LatCoreMCClient.blockNullIcon;
 				}
 			}
 			

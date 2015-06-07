@@ -1,6 +1,6 @@
 package latmod.silicio.item.modules.events;
 
-import latmod.core.util.LatCore;
+import latmod.ftbu.core.util.LatCore;
 import latmod.silicio.tile.cb.*;
 
 public class EventBoard extends EventCB

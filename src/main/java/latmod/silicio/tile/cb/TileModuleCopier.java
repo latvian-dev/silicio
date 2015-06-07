@@ -2,8 +2,8 @@ package latmod.silicio.tile.cb;
 
 import java.util.List;
 
-import latmod.core.*;
-import latmod.core.tile.*;
+import latmod.ftbu.core.*;
+import latmod.ftbu.core.tile.*;
 import latmod.silicio.gui.GuiModuleCopier;
 import latmod.silicio.gui.container.ContainerModuleCopier;
 import latmod.silicio.item.modules.ItemModule;

@@ -1,6 +1,6 @@
 package latmod.silicio.gui;
 
-import latmod.core.gui.*;
+import latmod.ftbu.core.gui.*;
 import latmod.silicio.Silicio;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ResourceLocation;

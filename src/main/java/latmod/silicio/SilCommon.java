@@ -1,6 +1,6 @@
 package latmod.silicio;
 
-import latmod.core.LMProxy;
+import latmod.ftbu.core.LMProxy;
 
 public class SilCommon extends LMProxy // SAClient
 {

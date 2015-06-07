@@ -1,7 +1,7 @@
 package latmod.silicio.integration;
 
-import latmod.core.recipes.*;
-import latmod.core.util.FastList;
+import latmod.ftbu.core.recipes.*;
+import latmod.ftbu.core.util.FastList;
 import latmod.silicio.*;
 import net.minecraft.init.*;
 import net.minecraft.item.ItemStack;

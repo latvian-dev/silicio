@@ -1,5 +1,5 @@
 package latmod.silicio.block;
-import latmod.core.tile.TileLM;
+import latmod.ftbu.core.tile.TileLM;
 import latmod.silicio.tile.cb.TileCBController;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;

@@ -1,7 +1,7 @@
 package latmod.silicio.item;
 
-import latmod.core.LMMod;
-import latmod.core.item.ItemLM;
+import latmod.ftbu.core.LMMod;
+import latmod.ftbu.core.item.ItemLM;
 import latmod.silicio.Silicio;
 import net.minecraft.creativetab.CreativeTabs;
 import cpw.mods.fml.relauncher.*;

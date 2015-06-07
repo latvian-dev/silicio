@@ -1,5 +1,5 @@
 package latmod.silicio;
-import latmod.core.*;
+import latmod.ftbu.core.*;
 import net.minecraft.nbt.NBTTagCompound;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 

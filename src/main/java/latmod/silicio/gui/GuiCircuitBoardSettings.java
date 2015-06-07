@@ -1,6 +1,6 @@
 package latmod.silicio.gui;
-import latmod.core.gui.*;
-import latmod.core.mod.LC;
+import latmod.ftbu.FTBU;
+import latmod.ftbu.core.gui.*;
 import latmod.silicio.Silicio;
 import latmod.silicio.gui.container.ContainerCircuitBoardSettings;
 import latmod.silicio.item.modules.ItemModule;
@@ -30,7 +30,7 @@ public class GuiCircuitBoardSettings extends GuiLM
 			}
 		});
 		
-		buttonBack.title = LC.mod.translate("button.back");
+		buttonBack.title = FTBU.mod.translate("button.back");
 		
 		itemButtons = new ItemButtonLM[board.items.length];
 		

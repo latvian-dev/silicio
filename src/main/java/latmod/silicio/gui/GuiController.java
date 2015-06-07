@@ -1,6 +1,6 @@
 package latmod.silicio.gui;
 
-import latmod.core.gui.*;
+import latmod.ftbu.core.gui.*;
 import latmod.silicio.tile.cb.TileCBController;
 import net.minecraft.util.ResourceLocation;
 import cpw.mods.fml.relauncher.*;

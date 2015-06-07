@@ -1,5 +1,6 @@
 package latmod.silicio.item;
-import latmod.core.*;
+import latmod.ftbu.core.ODItems;
+import latmod.ftbu.core.client.LatCoreMCClient;
 import latmod.silicio.*;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.item.ItemStack;
@@ -65,5 +66,5 @@ public class ItemMaterialsSil extends ItemSil
 	
 	@SideOnly(Side.CLIENT)
 	public IIcon getIconFromDamageForRenderPass(int m, int r)
-	{ return (m >= 0 && m < icons.length) ? icons[m] : LatCoreMC.Client.unknownItemIcon; }
+	{ return (m >= 0 && m < icons.length) ? icons[m] : LatCoreMCClient.unknownItemIcon; }
 }

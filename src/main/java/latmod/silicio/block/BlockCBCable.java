@@ -1,9 +1,10 @@
 package latmod.silicio.block;
 import java.util.List;
 
-import latmod.core.*;
-import latmod.core.tile.TileLM;
-import latmod.core.util.*;
+import latmod.ftbu.core.ODItems;
+import latmod.ftbu.core.client.LatCoreMCClient;
+import latmod.ftbu.core.tile.TileLM;
+import latmod.ftbu.core.util.*;
 import latmod.silicio.SilMat;
 import latmod.silicio.tile.cb.TileCBCable;
 import net.minecraft.block.material.Material;
@@ -160,7 +161,7 @@ public class BlockCBCable extends BlockSil
 	
 	@SideOnly(Side.CLIENT)
 	public IIcon getIcon(IBlockAccess iba, int x, int y, int z, int s)
-	{ return LatCoreMC.Client.blockNullIcon; }
+	{ return LatCoreMCClient.blockNullIcon; }
 	
 	public boolean isSideSolid(IBlockAccess iba, int x, int y, int z, ForgeDirection side)
 	{ return true; }

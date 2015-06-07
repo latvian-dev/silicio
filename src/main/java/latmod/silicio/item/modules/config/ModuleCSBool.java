@@ -1,6 +1,6 @@
 package latmod.silicio.item.modules.config;
 
-import latmod.core.util.FastList;
+import latmod.ftbu.core.util.FastList;
 import latmod.silicio.gui.GuiModuleSettings;
 import latmod.silicio.tile.cb.CircuitBoard;
 import net.minecraft.item.ItemStack;

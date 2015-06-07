@@ -1,6 +1,6 @@
 package latmod.silicio.item.modules;
-import latmod.core.*;
-import latmod.core.util.*;
+import latmod.ftbu.core.*;
+import latmod.ftbu.core.util.*;
 import latmod.silicio.item.ItemSil;
 import latmod.silicio.item.modules.config.ModuleConfigSegment;
 import latmod.silicio.item.modules.events.EventUpdateModule;

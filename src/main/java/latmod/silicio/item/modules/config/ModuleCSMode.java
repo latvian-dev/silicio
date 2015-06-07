@@ -1,7 +1,7 @@
 package latmod.silicio.item.modules.config;
 
-import latmod.core.mod.LC;
-import latmod.core.util.FastList;
+import latmod.ftbu.FTBU;
+import latmod.ftbu.core.util.FastList;
 import latmod.silicio.gui.GuiModuleSettings;
 import latmod.silicio.tile.cb.CircuitBoard;
 import net.minecraft.item.ItemStack;
@@ -53,7 +53,7 @@ public class ModuleCSMode extends ModuleConfigSegment
 	public void addButtonDesc(GuiModuleSettings g, FastList<String> s)
 	{
 		int mode = get(g.board.items[g.moduleID]);
-		if(LC.proxy.isShiftDown())
+		if(FTBU.proxy.isShiftDown())
 		{
 			for(int i = 0; i < modes.length; i++)
 			{

@@ -1,7 +1,7 @@
 package latmod.silicio.item.modules.io;
 
-import latmod.core.*;
-import latmod.core.tile.IPaintable.Paint;
+import latmod.ftbu.core.*;
+import latmod.ftbu.core.tile.IPaintable.Paint;
 import latmod.silicio.SilItems;
 import latmod.silicio.item.modules.*;
 import latmod.silicio.item.modules.config.*;

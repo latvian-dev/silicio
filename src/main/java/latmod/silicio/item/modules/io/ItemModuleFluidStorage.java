@@ -1,7 +1,7 @@
 package latmod.silicio.item.modules.io;
 
-import latmod.core.ODItems;
-import latmod.core.util.FastList;
+import latmod.ftbu.core.ODItems;
+import latmod.ftbu.core.util.FastList;
 import latmod.silicio.SilItems;
 import latmod.silicio.item.modules.*;
 import latmod.silicio.item.modules.config.*;

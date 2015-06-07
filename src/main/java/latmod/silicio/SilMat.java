@@ -1,6 +1,6 @@
 package latmod.silicio;
 
-import latmod.core.*;
+import latmod.ftbu.core.*;
 import net.minecraft.block.Block;
 import net.minecraft.item.ItemStack;
 

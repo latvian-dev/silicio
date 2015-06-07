@@ -1,5 +1,5 @@
 package latmod.silicio.gui;
-import latmod.core.gui.*;
+import latmod.ftbu.core.gui.*;
 import latmod.silicio.gui.container.ContainerModuleCopier;
 import latmod.silicio.tile.cb.TileModuleCopier;
 import cpw.mods.fml.relauncher.*;

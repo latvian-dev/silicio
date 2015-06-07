@@ -1,5 +1,5 @@
 package latmod.silicio.item;
-import latmod.core.util.FastList;
+import latmod.ftbu.core.util.FastList;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import cpw.mods.fml.relauncher.*;
