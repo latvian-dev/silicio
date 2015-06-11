@@ -29,6 +29,8 @@ public class RenderCBCable extends TileRenderer<TileCBCable>
 	
 	public void renderTile(TileCBCable t, double rx, double ry, double rz, float f)
 	{
+		//if(true) return;
+		
 		GL11.glPushMatrix();
 		GL11.glEnable(GL12.GL_RESCALE_NORMAL);
 		GL11.glColor4f(1F, 1F, 1F, 1F);

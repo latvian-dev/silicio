@@ -1,11 +1,11 @@
 package latmod.silicio.tile.cb;
 import java.util.*;
 
-import latmod.ftbu.FTBU;
 import latmod.ftbu.core.*;
 import latmod.ftbu.core.gui.ContainerEmpty;
 import latmod.ftbu.core.tile.*;
 import latmod.ftbu.core.util.*;
+import latmod.ftbu.mod.FTBU;
 import latmod.silicio.*;
 import latmod.silicio.gui.*;
 import latmod.silicio.gui.container.*;

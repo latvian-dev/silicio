@@ -12,7 +12,10 @@ public abstract class ItemModuleIO extends ItemModule
 	public IIcon icon_input, icon_output;
 	
 	public ItemModuleIO(String s)
-	{ super(s); }
+	{
+		super(s);
+		requiresMultipleRenderPasses = true;
+	}
 	
 	public int getRenderPasses(int m)
 	{ return (getModuleType() == IOType.NONE) ? 1 : 2; }

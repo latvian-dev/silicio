@@ -1,8 +1,8 @@
 package latmod.silicio.gui;
 
-import latmod.ftbu.FTBU;
 import latmod.ftbu.core.gui.*;
 import latmod.ftbu.core.util.FastList;
+import latmod.ftbu.mod.FTBU;
 import latmod.silicio.gui.container.ContainerModuleSettings;
 import latmod.silicio.item.modules.ItemModule;
 import latmod.silicio.item.modules.config.*;

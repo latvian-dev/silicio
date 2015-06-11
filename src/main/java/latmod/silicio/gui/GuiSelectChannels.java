@@ -1,7 +1,7 @@
 package latmod.silicio.gui;
 
-import latmod.ftbu.FTBU;
 import latmod.ftbu.core.gui.*;
+import latmod.ftbu.mod.FTBU;
 import latmod.silicio.item.modules.ItemModule;
 import latmod.silicio.tile.cb.*;
 import net.minecraft.util.ResourceLocation;
