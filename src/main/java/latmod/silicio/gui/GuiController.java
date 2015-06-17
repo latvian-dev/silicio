@@ -9,7 +9,7 @@ import cpw.mods.fml.relauncher.*;
 public class GuiController extends GuiLM
 {
 	public static final ResourceLocation thisTex = GuiModule.getTex("controller.png");
-	public static final TextureCoords iconChannelEnabled = new TextureCoords(thisTex, 166, 0);
+	public static final TextureCoords iconChannelEnabled = new TextureCoords(thisTex, 166, 0, 8, 8);
 	
 	public TileCBController controller;
 	public ButtonLM[] channels;

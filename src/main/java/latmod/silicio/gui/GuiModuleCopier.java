@@ -7,7 +7,7 @@ import cpw.mods.fml.relauncher.*;
 @SideOnly(Side.CLIENT)
 public class GuiModuleCopier extends GuiLM
 {
-	public static final TextureCoords texBar = new TextureCoords(GuiModule.getTex("moduleCopier.png"), 176, 0);
+	public static final TextureCoords texBar = new TextureCoords(GuiModule.getTex("moduleCopier.png"), 176, 0, 22, 15);
 	
 	public TileModuleCopier tile;
 	

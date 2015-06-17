@@ -11,12 +11,12 @@ import cpw.mods.fml.relauncher.*;
 public class GuiSelectChannels extends GuiLM
 {
 	public static final ResourceLocation thisTex = GuiModule.getTex("selectChannel.png");
-	public static final TextureCoords iconSelChannel = new TextureCoords(thisTex, 180, 0);
-	public static final TextureCoords iconInput = new TextureCoords(thisTex, 180, 10);
-	public static final TextureCoords iconOutput = new TextureCoords(thisTex, 180, 18);
-	public static final TextureCoords iconIOPressed = new TextureCoords(thisTex, 180, 26);
-	public static final TextureCoords iconChannelEnabled = new TextureCoords(thisTex, 180, 34);
-	public static final TextureCoords iconBack = new TextureCoords(thisTex, 166, 2);
+	public static final TextureCoords iconSelChannel = new TextureCoords(thisTex, 180, 0, 10, 10);
+	public static final TextureCoords iconInput = new TextureCoords(thisTex, 180, 10, 8, 8);
+	public static final TextureCoords iconOutput = new TextureCoords(thisTex, 180, 18, 8, 8);
+	public static final TextureCoords iconIOPressed = new TextureCoords(thisTex, 180, 26, 8, 8);
+	public static final TextureCoords iconChannelEnabled = new TextureCoords(thisTex, 180, 34, 8, 8);
+	public static final TextureCoords iconBack = new TextureCoords(thisTex, 166, 2, 14, 18);
 	
 	public CircuitBoard board;
 	public ItemModule module;
@@ -38,7 +38,7 @@ public class GuiSelectChannels extends GuiLM
 		moduleID = id;
 		module = board.getModule(moduleID);
 		
-		widgets.add(buttonBack = new ButtonLM(this, 166, 2, 14, 18)
+		widgets.add(buttonBack = new ButtonLM(this, 166, 2, iconBack.width, iconBack.height)
 		{
 			public void onButtonPressed(int b)
 			{

@@ -22,13 +22,13 @@ import cpw.mods.fml.relauncher.*;
 public class GuiModuleSettings extends GuiLM
 {
 	public static final ResourceLocation thisTex = GuiModule.getTex("moduleSettings.png");
-	public static final TextureCoords icon_channels = new TextureCoords(thisTex, 176, 0);
-	public static final TextureCoords icon_cfg_empty = new TextureCoords(thisTex, 197, 0);
-	public static final TextureCoords icon_cfg_text = new TextureCoords(thisTex, 218, 0);
-	public static final TextureCoords icon_cfg_num = new TextureCoords(thisTex, 176, 21);
-	public static final TextureCoords icon_cfg_bool = new TextureCoords(thisTex, 197, 21);
-	public static final TextureCoords icon_cfg_item = new TextureCoords(thisTex, 218, 21);
-	public static final TextureCoords icon_cfg_fluid = new TextureCoords(thisTex, 218, 42);
+	public static final TextureCoords icon_channels = new TextureCoords(thisTex, 176, 0, 21, 21);
+	public static final TextureCoords icon_cfg_empty = new TextureCoords(thisTex, 197, 0, 21, 21);
+	public static final TextureCoords icon_cfg_text = new TextureCoords(thisTex, 218, 0, 21, 21);
+	public static final TextureCoords icon_cfg_num = new TextureCoords(thisTex, 176, 21, 21, 21);
+	public static final TextureCoords icon_cfg_bool = new TextureCoords(thisTex, 197, 21, 21, 21);
+	public static final TextureCoords icon_cfg_item = new TextureCoords(thisTex, 218, 21, 21, 21);
+	public static final TextureCoords icon_cfg_fluid = new TextureCoords(thisTex, 218, 42, 21, 21);
 	
 	public final CircuitBoard board;
 	public final ItemModule module;
@@ -36,8 +36,8 @@ public class GuiModuleSettings extends GuiLM
 	
 	public ButtonLM buttonChannels;
 	public ButtonLM buttonBack;
-	public ButtonLM buttonClicked;
-	public ButtonLM[] buttonsConfig;
+	public ConfigButton buttonClicked;
+	public ConfigButton[] buttonsConfig;
 	
 	private static RenderItem renderItem = new RenderItem();
 	
@@ -75,13 +75,13 @@ public class GuiModuleSettings extends GuiLM
 		
 		buttonBack.title = FTBU.mod.translate("button.back");
 		
-		buttonsConfig = new ButtonLM[12];
+		buttonsConfig = new ConfigButton[12];
 		
 		for(final ModuleConfigSegment mcs : module.moduleConfig)
 		{
 			if(mcs == null || mcs.ID < 0 || mcs.ID >= buttonsConfig.length) continue;
 			
-			buttonsConfig[mcs.ID] = new ButtonLM(this, 31 + 23 * (mcs.ID % 6), 9 + 23 * (mcs.ID / 6), 21, 21)
+			buttonsConfig[mcs.ID] = new ConfigButton(this, 31 + 23 * (mcs.ID % 6), 9 + 23 * (mcs.ID / 6), 21, 21)
 			{
 				public void onButtonPressed(int b)
 				{
@@ -105,13 +105,13 @@ public class GuiModuleSettings extends GuiLM
 			{
 				buttonsConfig[mcs.ID].background = icon_cfg_item;
 				ItemStack is = ((ModuleCSItem)mcs).getItem(board.items[moduleID]);
-				if(is != null) buttonsConfig[mcs.ID].background = is;
+				if(is != null) buttonsConfig[mcs.ID].itemStack = is;
 			}
 			else if(mcs instanceof ModuleCSFluid)
 			{
 				buttonsConfig[mcs.ID].background = icon_cfg_fluid;
 				FluidStack fs = ((ModuleCSFluid)mcs).getFluid(board.items[moduleID]);
-				if(fs != null) buttonsConfig[mcs.ID].background = fs;
+				if(fs != null) buttonsConfig[mcs.ID].fluidStack = fs;
 			}
 			else buttonsConfig[mcs.ID].background = icon_cfg_text;
 			
@@ -129,11 +129,11 @@ public class GuiModuleSettings extends GuiLM
 		if(module.getChannelCount() > 0)
 			buttonChannels.render(icon_channels);
 		
-		for(ButtonLM b : buttonsConfig)
+		for(ConfigButton b : buttonsConfig)
 		{
-			if(b == null || b.background == null) continue;
+			if(b == null) continue;
 			
-			if(b.background instanceof ItemStack)
+			if(b.itemStack != null)
 			{
 				b.render(icon_cfg_empty);
 				
@@ -145,18 +145,18 @@ public class GuiModuleSettings extends GuiLM
 				GL11.glEnable(GL12.GL_RESCALE_NORMAL);
 				GL11.glEnable(GL11.GL_COLOR_MATERIAL);
 				GL11.glEnable(GL11.GL_LIGHTING);
-				renderItem.renderItemIntoGUI(mc.fontRenderer, mc.getTextureManager(), (ItemStack)b.background, 0, 0, false);
-				renderItem.renderItemOverlayIntoGUI(mc.fontRenderer, mc.getTextureManager(), (ItemStack)b.background, 0, 0);
+				renderItem.renderItemIntoGUI(mc.fontRenderer, mc.getTextureManager(), b.itemStack, 0, 0, false);
+				renderItem.renderItemOverlayIntoGUI(mc.fontRenderer, mc.getTextureManager(), b.itemStack, 0, 0);
 				GL11.glDisable(GL11.GL_LIGHTING);
 				GL11.glDepthMask(true);
 				GL11.glEnable(GL11.GL_DEPTH_TEST);
 				GL11.glPopAttrib();
 				GL11.glPopMatrix();
 			}
-			else if(b.background instanceof FluidStack)
+			else if(b.fluidStack != null)
 			{
 				b.render(icon_cfg_empty);
-				Fluid fl = ((FluidStack)b.background).getFluid();
+				Fluid fl = b.fluidStack.getFluid();
 				
 				IIcon ic = fl.getStillIcon();
 				if(ic == null && fl.getBlock() != null)
@@ -172,7 +172,34 @@ public class GuiModuleSettings extends GuiLM
 					GL11.glPopMatrix();
 				}
 			}
-			else b.render(b.background);
+			else if(b.background != null) b.render(b.background);
+		}
+	}
+	
+	public static class ConfigButton extends ButtonLM
+	{
+		public ItemStack itemStack = null;
+		public FluidStack fluidStack = null;
+		
+		public ConfigButton(GuiLM g, int x, int y, int w, int h)
+		{
+			super(g, x, y, w, h);
+		}
+		
+		public void setItem(ItemStack is)
+		{
+			background = icon_cfg_item;
+			itemStack = is;
+		}
+		
+		public void setFluid(FluidStack fs)
+		{
+			background = icon_cfg_fluid;
+			fluidStack = fs;
+		}
+		
+		public void onButtonPressed(int b)
+		{
 		}
 	}
 }

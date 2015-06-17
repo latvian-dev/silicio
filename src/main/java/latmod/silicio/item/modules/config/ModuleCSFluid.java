@@ -37,7 +37,7 @@ public class ModuleCSFluid extends ModuleConfigSegment
 			NBTTagCompound tag = new NBTTagCompound();
 			if(fs != null) fs.writeToNBT(tag);
 			clientConfig(g.board, g.moduleID, tag);
-			g.buttonClicked.background = (fs == null) ? GuiModuleSettings.icon_cfg_fluid : fs;
+			g.buttonClicked.setFluid(fs);
 		}
 	}
 	

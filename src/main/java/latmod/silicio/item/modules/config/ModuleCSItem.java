@@ -29,7 +29,7 @@ public class ModuleCSItem extends ModuleConfigSegment
 			NBTTagCompound tag = new NBTTagCompound();
 			if(is != null) is.writeToNBT(tag);
 			clientConfig(g.board, g.moduleID, tag);
-			g.buttonClicked.background = (is == null) ? GuiModuleSettings.icon_cfg_item : is;
+			g.buttonClicked.setItem(is);
 		}
 	}
 	
