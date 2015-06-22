@@ -1,5 +1,6 @@
 package latmod.silicio.gui;
 import latmod.ftbu.core.gui.*;
+import latmod.ftbu.core.util.FastList;
 import latmod.silicio.gui.container.ContainerModuleCopier;
 import latmod.silicio.tile.cb.TileModuleCopier;
 import cpw.mods.fml.relauncher.*;
@@ -19,9 +20,13 @@ public class GuiModuleCopier extends GuiLM
 		ySize = 166;
 	}
 	
-	public void drawGuiContainerBackgroundLayer(float f, int mx, int my)
+	public void addWidgets(FastList<WidgetLM> l)
 	{
-		super.drawGuiContainerBackgroundLayer(f, mx, my);
+	}
+	
+	public void drawBackground()
+	{
+		super.drawBackground();
 		texBar.render(this, 86, 35, (int)(22 * tile.getProgressF()), 15);
 	}
 }

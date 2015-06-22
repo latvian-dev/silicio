@@ -7,7 +7,7 @@ import net.minecraft.util.ResourceLocation;
 import cpw.mods.fml.relauncher.*;
 
 @SideOnly(Side.CLIENT)
-public class GuiModule extends GuiLM
+public abstract class GuiModule extends GuiLM
 {
 	public GuiModule(EntityPlayer ep, ResourceLocation tex)
 	{ super(new ContainerEmpty(ep, null), tex); }

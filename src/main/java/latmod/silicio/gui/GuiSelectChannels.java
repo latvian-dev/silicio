@@ -1,6 +1,7 @@
 package latmod.silicio.gui;
 
 import latmod.ftbu.core.gui.*;
+import latmod.ftbu.core.util.FastList;
 import latmod.ftbu.mod.FTBU;
 import latmod.silicio.item.modules.ItemModule;
 import latmod.silicio.tile.cb.*;
@@ -22,9 +23,9 @@ public class GuiSelectChannels extends GuiLM
 	public ItemModule module;
 	public int moduleID;
 	
-	public ButtonLM buttonBack;
-	public ButtonLM[] buttonSelectIO;
-	public ButtonLM[] allChannels;
+	public final ButtonLM buttonBack;
+	public final ButtonLM[] buttonSelectIO;
+	public final ButtonLM[] allChannels;
 	
 	public int selectedIO = 0;
 	
@@ -38,14 +39,14 @@ public class GuiSelectChannels extends GuiLM
 		moduleID = id;
 		module = board.getModule(moduleID);
 		
-		widgets.add(buttonBack = new ButtonLM(this, 166, 2, iconBack.width, iconBack.height)
+		buttonBack = new ButtonLM(this, 166, 2, iconBack.width, iconBack.height)
 		{
 			public void onButtonPressed(int b)
 			{
 				board.cable.clientOpenGui(TileCBCable.guiData(board.side, 2, moduleID));
 				playClickSound();
 			}
-		});
+		};
 		
 		buttonBack.title = FTBU.mod.translate("button.back");
 		
@@ -67,7 +68,6 @@ public class GuiSelectChannels extends GuiLM
 			
 			buttonSelectIO[i].customID = i;
 			buttonSelectIO[i].title = module.getChannelName(i);
-			widgets.add(buttonSelectIO[i]);
 		}
 		
 		allChannels = new ButtonLM[TileCBController.MAX_CHANNEL + 1];
@@ -85,7 +85,6 @@ public class GuiSelectChannels extends GuiLM
 			b.customID = -1;
 			b.title = "Disabled";
 			allChannels[allChannels.length - 1] = b;
-			widgets.add(b);
 		}
 		
 		for(int i = 0; i < TileCBController.MAX_CHANNEL; i++)
@@ -104,17 +103,22 @@ public class GuiSelectChannels extends GuiLM
 			
 			allChannels[i].customID = i;
 			allChannels[i].title = TileCBController.getChannelName(i);
-			
-			widgets.add(allChannels[i]);
 		}
+	}
+	
+	public void addWidgets(FastList<WidgetLM> l)
+	{
+		l.add(buttonBack);
+		l.addAll(buttonSelectIO);
+		l.addAll(allChannels);
 	}
 	
 	private void sendSetChannel(int ch)
 	{ board.cable.clientSetChannel(board.side, moduleID, selectedIO, ch); }
 	
-	public void drawGuiContainerBackgroundLayer(float f, int mx, int my)
+	public void drawBackground()
 	{
-		super.drawGuiContainerBackgroundLayer(f, mx, my);
+		super.drawBackground();
 		
 		for(int i = 0; i < buttonSelectIO.length; i++)
 		{
@@ -139,13 +143,5 @@ public class GuiSelectChannels extends GuiLM
 		}
 		
 		iconBack.render(this, buttonBack.posX, buttonBack.posY, buttonBack.width, buttonBack.height);
-	}
-	
-	public void drawScreen(int mx, int my, float f)
-	{
-		//board = ((TileCBCable)board.cable.getWorldObj().getTileEntity(board.cable.xCoord, board.cable.yCoord, board.cable.zCoord)).getBoard(board.side);
-		//module = (ICBModule)board.items[moduleID].getItem();
-		
-		super.drawScreen(mx, my, f);
 	}
 }

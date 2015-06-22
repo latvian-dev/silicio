@@ -1,6 +1,8 @@
 package latmod.silicio.gui;
 
+import latmod.ftbu.core.FTBULang;
 import latmod.ftbu.core.gui.*;
+import latmod.ftbu.core.util.FastList;
 import latmod.silicio.item.modules.config.ModuleCSString;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.*;
@@ -14,9 +16,8 @@ public class GuiCSText extends GuiModule
 	public final GuiModuleSettings parent;
 	public final ModuleCSString config;
 	
-	public ButtonLM buttonCancel;
-	public ButtonLM buttonSave;
-	public TextBoxLM textBox;
+	public final ButtonLM buttonCancel, buttonSave;
+	public final TextBoxLM textBox;
 	
 	public GuiCSText(GuiModuleSettings g, ModuleCSString c)
 	{
@@ -27,16 +28,18 @@ public class GuiCSText extends GuiModule
 		xSize = 176;
 		ySize = 54;
 		
-		widgets.add(buttonCancel = new ButtonLM(this, 8, 29, 78, 16)
+		buttonCancel = new ButtonLM(this, 8, 29, 78, 16)
 		{
 			public void onButtonPressed(int b)
 			{
 				playClickSound();
 				mc.displayGuiScreen(parent);
 			}
-		});
+		};
 		
-		widgets.add(buttonSave = new ButtonLM(this, 89, 29, 78, 16)
+		buttonCancel.title = FTBULang.button_cancel;
+		
+		buttonSave = new ButtonLM(this, 89, 29, 78, 16)
 		{
 			public void onButtonPressed(int b)
 			{
@@ -50,20 +53,29 @@ public class GuiCSText extends GuiModule
 					mc.displayGuiScreen(new GuiModuleSettings(parent));
 				}
 			}
-		});
+		};
 		
-		widgets.add(textBox = new TextBoxLM(this, 8, 9, 159, 16)
+		buttonSave.title = FTBULang.button_save;
+		
+		textBox = new TextBoxLM(this, 8, 9, 159, 16)
 		{
 			public String getText()
 			{ return (config.isValid(text) ? EnumChatFormatting.WHITE : EnumChatFormatting.RED) + text; }
-		});
+		};
 		
 		textBox.text = c.get(parent.board.items[parent.moduleID]);
 	}
 	
-	public void drawScreen(int mx, int my, float f)
+	public void addWidgets(FastList<WidgetLM> l)
 	{
-		super.drawScreen(mx, my, f);
+		l.add(buttonCancel);
+		l.add(buttonSave);
+		l.add(textBox);
+	}
+	
+	public void drawText(FastList<String> l)
+	{
 		textBox.render(12, 13, 0xFFFFFFFF);
+		super.drawText(l);
 	}
 }

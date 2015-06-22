@@ -148,7 +148,7 @@ public class TileCBController extends TileLM implements ICBNetTile, IEnergyRecei
 			if(worldObj.setBlockToAir(xCoord, yCoord, zCoord))
 			{
 				e.printStackTrace();
-				LatCoreMC.printChat(null, "CBController @ " + LatCore.stripInt(xCoord, yCoord, zCoord) + " crashed!", true);
+				LatCoreMC.printChatAll("CBController @ " + LatCore.stripInt(xCoord, yCoord, zCoord) + " crashed!");
 				InvUtils.dropItem(worldObj, xCoord + 0.5D, yCoord + 0.5D, zCoord + 0.5D, new ItemStack(SilItems.b_cbcontroller), 10);
 			}
 		}

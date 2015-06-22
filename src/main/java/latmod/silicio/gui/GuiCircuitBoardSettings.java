@@ -1,6 +1,7 @@
 package latmod.silicio.gui;
+import latmod.ftbu.core.FTBULang;
 import latmod.ftbu.core.gui.*;
-import latmod.ftbu.mod.FTBU;
+import latmod.ftbu.core.util.FastList;
 import latmod.silicio.Silicio;
 import latmod.silicio.gui.container.ContainerCircuitBoardSettings;
 import latmod.silicio.item.modules.ItemModule;
@@ -10,9 +11,9 @@ import cpw.mods.fml.relauncher.*;
 @SideOnly(Side.CLIENT)
 public class GuiCircuitBoardSettings extends GuiLM
 {
-	public ButtonLM buttonBack;
-	public CircuitBoard board;
-	public ItemButtonLM itemButtons[];
+	public final ButtonLM buttonBack;
+	public final CircuitBoard board;
+	public final ItemButtonLM itemButtons[];
 	
 	public GuiCircuitBoardSettings(ContainerCircuitBoardSettings c)
 	{
@@ -21,16 +22,16 @@ public class GuiCircuitBoardSettings extends GuiLM
 		
 		board = (CircuitBoard)c.inv;
 		
-		widgets.add(buttonBack = new ButtonLM(this, 146, 21, 16, 16)
+		buttonBack = new ButtonLM(this, 146, 21, 16, 16)
 		{
 			public void onButtonPressed(int b)
 			{
 				playClickSound();
 				board.cable.clientOpenGui(TileCBCable.guiData(board.side, 0, -1));
 			}
-		});
+		};
 		
-		buttonBack.title = FTBU.mod.translate("button.back");
+		buttonBack.title = FTBULang.button_back;
 		
 		itemButtons = new ItemButtonLM[board.items.length];
 		
@@ -53,14 +54,19 @@ public class GuiCircuitBoardSettings extends GuiLM
 				itemButtons[id].setItem(board.items[id]);
 				itemButtons[id].title = itemButtons[id].item.getDisplayName();
 				//itemButtons[id].setBackground(button_pressed);
-				widgets.add(itemButtons[id]);
 			}
 		}
 	}
 	
-	public void drawGuiContainerBackgroundLayer(float f, int mx, int my)
+	public void addWidgets(FastList<WidgetLM> l)
 	{
-		super.drawGuiContainerBackgroundLayer(f, mx, my);
+		l.add(buttonBack);
+		l.addAll(itemButtons);
+	}
+	
+	public void drawBackground()
+	{
+		super.drawBackground();
 		
 		buttonBack.render(Icons.back);
 		

@@ -1,7 +1,7 @@
 package latmod.silicio.gui;
+import latmod.ftbu.core.FTBULang;
 import latmod.ftbu.core.gui.*;
 import latmod.ftbu.core.util.FastList;
-import latmod.ftbu.mod.FTBU;
 import latmod.silicio.Silicio;
 import latmod.silicio.gui.container.ContainerCircuitBoard;
 import latmod.silicio.tile.cb.*;
@@ -11,7 +11,7 @@ import cpw.mods.fml.relauncher.*;
 @SideOnly(Side.CLIENT)
 public class GuiCircuitBoard extends GuiLM
 {
-	public ButtonLM buttonSettings;
+	public final ButtonLM buttonSettings;
 	public CircuitBoard board;
 	
 	public GuiCircuitBoard(ContainerCircuitBoard c)
@@ -21,7 +21,7 @@ public class GuiCircuitBoard extends GuiLM
 		
 		board = (CircuitBoard)c.inv;
 		
-		widgets.add(buttonSettings = new ButtonLM(this, 146, 21, 16, 16)
+		buttonSettings = new ButtonLM(this, 146, 21, 16, 16)
 		{
 			public void onButtonPressed(int b)
 			{
@@ -39,14 +39,19 @@ public class GuiCircuitBoard extends GuiLM
 				if(board.cable.controller == null)
 					l.add(EnumChatFormatting.GRAY + "No Controller!");
 			}
-		});
+		};
 		
-		buttonSettings.title = FTBU.mod.translate("button.settings");
+		buttonSettings.title = FTBULang.button_settings;
 	}
 	
-	public void drawGuiContainerBackgroundLayer(float f, int mx, int my)
+	public void addWidgets(FastList<WidgetLM> l)
 	{
-		super.drawGuiContainerBackgroundLayer(f, mx, my);
+		l.add(buttonSettings);
+	}
+	
+	public void drawBackground()
+	{
+		super.drawBackground();
 		buttonSettings.render(Icons.settings);
 	}
 }

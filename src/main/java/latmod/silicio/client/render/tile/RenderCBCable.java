@@ -91,7 +91,7 @@ public class RenderCBCable extends TileRenderer<TileCBCable>
 				
 				for(int i = 0; i < 6; i++)
 				{
-					if(t.boards[i] != null)
+					if(t.boards[i] != null || t.getBlock(i) == SilItems.b_cbcontroller)
 						model.cable[i].render(s);
 				}
 				

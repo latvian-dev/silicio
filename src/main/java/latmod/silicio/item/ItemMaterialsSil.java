@@ -25,7 +25,11 @@ public class ItemMaterialsSil extends ItemSil
 	public IIcon[] icons;
 	
 	public ItemMaterialsSil(String s)
-	{ super(s); }
+	{
+		super(s);
+		setHasSubtypes(true);
+		setMaxDamage(0);
+	}
 	
 	public void onPostLoaded()
 	{

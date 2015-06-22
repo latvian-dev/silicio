@@ -1,6 +1,7 @@
 package latmod.silicio.gui;
 
 import latmod.ftbu.core.gui.*;
+import latmod.ftbu.core.util.FastList;
 import latmod.silicio.tile.cb.TileCBController;
 import net.minecraft.util.ResourceLocation;
 import cpw.mods.fml.relauncher.*;
@@ -11,8 +12,8 @@ public class GuiController extends GuiLM
 	public static final ResourceLocation thisTex = GuiModule.getTex("controller.png");
 	public static final TextureCoords iconChannelEnabled = new TextureCoords(thisTex, 166, 0, 8, 8);
 	
-	public TileCBController controller;
-	public ButtonLM[] channels;
+	public final TileCBController controller;
+	public final WidgetLM[] channels;
 	
 	public GuiController(ContainerEmpty c)
 	{
@@ -29,23 +30,19 @@ public class GuiController extends GuiLM
 			int bx = i % 16;
 			int by = i / 16;
 			
-			channels[i] = new ButtonLM(this, 16 + bx * 9, 7 + by * 9, 8, 8)
-			{
-				public void onButtonPressed(int b)
-				{
-				}
-			};
-			
-			channels[i].customID = i;
+			channels[i] = new WidgetLM(this, 16 + bx * 9, 7 + by * 9, 8, 8);
 			channels[i].title = "[" + (i + 1) + "] " + TileCBController.getChannelName(i);
-			
-			widgets.add(channels[i]);
 		}
 	}
 	
-	public void drawGuiContainerBackgroundLayer(float f, int mx, int my)
+	public void addWidgets(FastList<WidgetLM> l)
 	{
-		super.drawGuiContainerBackgroundLayer(f, mx, my);
+		l.addAll(channels);
+	}
+	
+	public void drawBackground()
+	{
+		super.drawBackground();
 		
 		for(int i = 0; i < channels.length; i++)
 		{

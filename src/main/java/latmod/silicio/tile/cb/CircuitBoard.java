@@ -64,13 +64,10 @@ public class CircuitBoard implements IInventory
 	}
 	
 	public TileEntity getFacingTile()
-	{
-		TileEntity te = cable.getWorldObj().getTileEntity(sidePos.posX, sidePos.posY, sidePos.posZ);
-		return (te == null || te.isInvalid()) ? null : te;
-	}
+	{ return cable.getTile(side); }
 	
 	public Block getFacingBlock()
-	{ return cable.getWorldObj().getBlock(sidePos.posX, sidePos.posY, sidePos.posZ); }
+	{ return cable.getBlock(side); }
 	
 	public int getSizeInventory()
 	{ return items.length; }

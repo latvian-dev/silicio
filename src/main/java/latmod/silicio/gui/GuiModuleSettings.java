@@ -34,10 +34,10 @@ public class GuiModuleSettings extends GuiLM
 	public final ItemModule module;
 	public final int moduleID;
 	
-	public ButtonLM buttonChannels;
-	public ButtonLM buttonBack;
+	public final ButtonLM buttonChannels;
+	public final ButtonLM buttonBack;
+	public final ConfigButton[] buttonsConfig;
 	public ConfigButton buttonClicked;
-	public ConfigButton[] buttonsConfig;
 	
 	private static RenderItem renderItem = new RenderItem();
 	
@@ -61,17 +61,14 @@ public class GuiModuleSettings extends GuiLM
 		
 		buttonChannels.title = "Select Channels";
 		
-		if(module.getChannelCount() > 0)
-			widgets.add(buttonChannels);
-		
-		widgets.add(buttonBack = new ButtonLM(this, 8, 32, 21, 21)
+		buttonBack = new ButtonLM(this, 8, 32, 21, 21)
 		{
 			public void onButtonPressed(int b)
 			{
 				playClickSound();
 				board.cable.clientOpenGui(TileCBCable.guiData(board.side, 1, -1));
 			}
-		});
+		};
 		
 		buttonBack.title = FTBU.mod.translate("button.back");
 		
@@ -114,17 +111,23 @@ public class GuiModuleSettings extends GuiLM
 				if(fs != null) buttonsConfig[mcs.ID].fluidStack = fs;
 			}
 			else buttonsConfig[mcs.ID].background = icon_cfg_text;
-			
-			widgets.add(buttonsConfig[mcs.ID]);
 		}
 	}
 	
 	public GuiModuleSettings(GuiModuleSettings parent)
 	{ this(new ContainerModuleSettings(parent.container.player, parent.board), parent.moduleID); }
 	
-	public void drawGuiContainerBackgroundLayer(float f, int mx, int my)
+	public void addWidgets(FastList<WidgetLM> l)
 	{
-		super.drawGuiContainerBackgroundLayer(f, mx, my);
+		l.add(buttonBack);
+		if(module.getChannelCount() > 0)
+			l.add(buttonChannels);
+		l.addAll(buttonsConfig);
+	}
+	
+	public void drawBackground()
+	{
+		super.drawBackground();
 		
 		if(module.getChannelCount() > 0)
 			buttonChannels.render(icon_channels);
