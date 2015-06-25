@@ -1,8 +1,8 @@
 package latmod.silicio.gui;
 
+import latmod.ftbu.core.FTBULang;
 import latmod.ftbu.core.gui.*;
 import latmod.ftbu.core.util.FastList;
-import latmod.ftbu.mod.FTBU;
 import latmod.silicio.gui.container.ContainerModuleSettings;
 import latmod.silicio.item.modules.ItemModule;
 import latmod.silicio.item.modules.config.*;
@@ -70,7 +70,7 @@ public class GuiModuleSettings extends GuiLM
 			}
 		};
 		
-		buttonBack.title = FTBU.mod.translate("button.back");
+		buttonBack.title = FTBULang.button_back;
 		
 		buttonsConfig = new ConfigButton[12];
 		
