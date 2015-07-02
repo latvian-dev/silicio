@@ -37,9 +37,7 @@ public class BlockCBController extends BlockSil
 	@SideOnly(Side.CLIENT)
 	public IIcon getIcon(IBlockAccess iba, int x, int y, int z, int s)
 	{
-		TileCBController t = (TileCBController)iba.getTileEntity(x, y, z);
-		if(t != null && t.isValid() && t.hasConflict)
-			return icon_conflict;
-		return blockIcon;
+		TileCBController t = getTile(TileCBController.class, iba, x, y, z);
+		return (t != null && t.hasConflict) ? icon_conflict : blockIcon;
 	}
 }

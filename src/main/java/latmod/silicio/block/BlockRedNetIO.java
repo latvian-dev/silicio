@@ -44,9 +44,8 @@ public class BlockRedNetIO extends BlockSil implements IRedNetOmniNode
 	@SideOnly(Side.CLIENT)
 	public IIcon getIcon(IBlockAccess iba, int x, int y, int z, int s)
 	{
-		TileRedNetIO t = (TileRedNetIO)iba.getTileEntity(x, y, z);
-		if(t != null && t.isValid() && s == t.inputSide) return icon_input;
-		return blockIcon;
+		TileRedNetIO t = getTile(TileRedNetIO.class, iba, x, y, z);
+		return (t != null && s == t.inputSide) ? icon_input : blockIcon;
 	}
 	
 	public void onInputsChanged(World world, int x, int y, int z, ForgeDirection side, int[] inputValues)
