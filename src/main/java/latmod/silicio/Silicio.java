@@ -31,13 +31,12 @@ public class Silicio
 		
 		tab = mod.createTab("tab", new ItemStack(SilItems.b_cbcontroller));
 		
-		proxy.preInit(e);
+		proxy.preInit();
 	}
 	
 	@Mod.EventHandler
 	public void init(FMLInitializationEvent e)
 	{
-		proxy.init(e);
 	}
 	
 	@Mod.EventHandler
@@ -49,7 +48,5 @@ public class Silicio
 			mod.loadRecipes();
 		
 		SilInt.onLoadedAll();
-		
-		proxy.postInit(e);
 	}
 }
