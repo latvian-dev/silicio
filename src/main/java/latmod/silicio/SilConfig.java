@@ -1,5 +1,6 @@
 package latmod.silicio;
 import latmod.ftbu.core.*;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.nbt.NBTTagCompound;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 
@@ -23,7 +24,7 @@ public class SilConfig extends LMConfig implements IServerConfig
 		SilMat.updateCoverBlock();
 	}
 	
-	public void writeConfig(NBTTagCompound tag)
+	public void writeConfig(NBTTagCompound tag, EntityPlayerMP ep)
 	{
 		tag.setString("CB", General.coverBlock);
 		//writeBools(tag, "C",
