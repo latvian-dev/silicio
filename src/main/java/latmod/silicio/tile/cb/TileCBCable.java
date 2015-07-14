@@ -5,15 +5,15 @@ import latmod.ftbu.core.*;
 import latmod.ftbu.core.gui.ContainerEmpty;
 import latmod.ftbu.core.tile.*;
 import latmod.ftbu.core.util.*;
+import latmod.ftbu.core.waila.WailaDataAccessor;
 import latmod.ftbu.mod.FTBU;
 import latmod.silicio.*;
 import latmod.silicio.gui.*;
 import latmod.silicio.gui.container.*;
 import latmod.silicio.item.modules.ItemModule;
 import latmod.silicio.item.modules.config.ModuleConfigSegment;
-import latmod.silicio.item.modules.events.*;
 import latmod.silicio.item.modules.io.ItemModuleEnergyInput;
-import mcp.mobius.waila.api.*;
+import latmod.silicio.tile.cb.events.*;
 import net.minecraft.block.Block;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.entity.player.EntityPlayer;
@@ -28,7 +28,7 @@ import cofh.api.energy.IEnergyReceiver;
 import cpw.mods.fml.relauncher.*;
 
 // BlockCBCable //
-public class TileCBCable extends TileLM implements IPaintable, ICBNetTile, IGuiTile, IEnergyReceiver, IWailaTile.Body, ISecureTile
+public class TileCBCable extends TileBasicCBNetTile implements IPaintable, IGuiTile, IEnergyReceiver, IWailaTile.Body, ISecureTile
 {
 	public static final String ACTION_SET_CHANNEL = "silicio.channel";
 	public static final String ACTION_MODULE_CONFIG = "silicio.mconfig";
@@ -36,7 +36,6 @@ public class TileCBCable extends TileLM implements IPaintable, ICBNetTile, IGuiT
 	public final CircuitBoard[] boards = new CircuitBoard[6];
 	public final Paint[] paint = new Paint[6];
 	public boolean hasCover;
-	public TileCBController controller = null;
 	private final boolean[] canReceive = new boolean[6];
 	private final boolean[] isDisabled = new boolean[6];
 	public final boolean[] renderCableSide = new boolean[6];
@@ -79,22 +78,32 @@ public class TileCBCable extends TileLM implements IPaintable, ICBNetTile, IGuiT
 	public boolean rerenderBlock()
 	{ return false; }
 	
-	public void preUpdate(TileCBController c)
-	{
-		controller = c;
-	}
-	
 	public void onUpdateCB()
 	{
 		for(int s = 0; s < 6; s++)
 		{
 			canReceive[s] = false;
-			if(controller != null && canReceiveEnergy(s))
+			if(net.hasController() && canReceiveEnergy(s))
 				canReceive[s] = true;
 		}
 		
 		for(int s = 0; s < boards.length; s++)
 			if(boards[s] != null) boards[s].postUpdate();
+	}
+	
+	public void onCBNetworkEvent(EventCB e)
+	{
+		if(e.is(EventCBNotified.class))
+		{
+			for(int i = 0; i < boards.length; i++)
+				if(boards[i] != null) boards[i].redstoneOut = false;
+			
+			for(int s = 0; s < 6; s++)
+				canReceive[s] = false;
+			
+			markDirty();
+			onNeighborBlockChange(Blocks.air);
+		}
 	}
 	
 	public void readTileData(NBTTagCompound tag)
@@ -168,26 +177,6 @@ public class TileCBCable extends TileLM implements IPaintable, ICBNetTile, IGuiT
 		if(!c.isSideEnabled(s)) return false;
 		TileEntity te = c.worldObj.getTileEntity(c.xCoord + Facing.offsetsXForSide[s], c.yCoord + Facing.offsetsYForSide[s], c.zCoord + Facing.offsetsZForSide[s]);
 		return (te != null && te instanceof ICBNetTile && ((ICBNetTile)te).isSideEnabled(Facing.oppositeSide[s]));
-	}
-	
-	public void onControllerConnected(EventControllerConnected e)
-	{ if(controller == null) controller = e.controller; }
-	
-	public void onControllerDisconnected(EventControllerDisconnected e)
-	{
-		if(controller != null && controller.equals(e.controller))
-		{
-			controller = null;
-			
-			for(int i = 0; i < boards.length; i++)
-				if(boards[i] != null) boards[i].redstoneOut = false;
-			
-			markDirty();
-			onNeighborBlockChange(Blocks.air);
-			
-			for(int s = 0; s < 6; s++)
-				canReceive[s] = false;
-		}
 	}
 	
 	private boolean canReceiveEnergy(int s)
@@ -370,7 +359,7 @@ public class TileCBCable extends TileLM implements IPaintable, ICBNetTile, IGuiT
 	}
 	
 	public double getRelStoredEnergy()
-	{ return (controller == null || controller.isInvalid()) ? 0D : (controller.storage.getEnergyStored() / (double)controller.storage.getMaxEnergyStored()); }
+	{ return net.hasController() ? (net.controller.storage.getEnergyStored() / (double)net.controller.storage.getMaxEnergyStored()) : 0; }
 	
 	public static NBTTagCompound guiData(int side, int gui, int module)
 	{
@@ -426,10 +415,9 @@ public class TileCBCable extends TileLM implements IPaintable, ICBNetTile, IGuiT
 			int side = data.getByte("F");
 			int moduleID = data.getByte("M");
 			int id = data.getByte("I");
-			int ch = data.getInteger("C");
+			int col = data.getInteger("C");
 			
-			ItemModule m = boards[side].getModule(moduleID);
-			m.setChannel(boards[side], moduleID, id, ch);
+			ItemModule.setChannel(boards[side].items[moduleID], id, col);
 			markDirty();
 		}
 		else if(action.equals(ACTION_MODULE_CONFIG))
@@ -475,13 +463,13 @@ public class TileCBCable extends TileLM implements IPaintable, ICBNetTile, IGuiT
 	{ return canReceive[f.ordinal()]; }
 	
 	public int getEnergyStored(ForgeDirection f)
-	{ return (controller == null) ? 0 : controller.getEnergyStored(f); }
+	{ return net.hasController() ? net.controller.getEnergyStored(f) : 0; }
 	
 	public int getMaxEnergyStored(ForgeDirection f)
-	{ return (controller == null) ? 0 : controller.getMaxEnergyStored(f); }
+	{ return net.hasController() ? net.controller.getMaxEnergyStored(f) : 0; }
 	
 	public int receiveEnergy(ForgeDirection f, int e, boolean b)
-	{ return (controller == null || !canConnectEnergy(f)) ? 0 : controller.receiveEnergy(f, e, b); }
+	{ return (net.hasController() && canConnectEnergy(f)) ? net.controller.receiveEnergy(f, e, b) : 0; }
 	
 	public void setDisabled(int side, boolean b)
 	{
@@ -513,14 +501,14 @@ public class TileCBCable extends TileLM implements IPaintable, ICBNetTile, IGuiT
 		return !isDisabled[side];
 	}
 	
-	public void addWailaBody(IWailaDataAccessor data, IWailaConfigHandler config, List<String> info)
+	public void addWailaBody(WailaDataAccessor data, List<String> info)
 	{
-		int i = data.getPosition().subHit;
+		int i = data.position.subHit;
 		if(i >= 0 && i < 6) { if(!isSideEnabled(i)) info.add("Disabled"); }
 	}
 	
 	public LMSecurity getSecurity()
-	{ if(controller != null) return controller.getSecurity(); return security; }
+	{ if(net.hasController()) return net.controller.getSecurity(); return security; }
 	
 	public boolean canPlayerInteract(EntityPlayer ep, boolean breakBlock)
 	{ return getSecurity().canInteract(ep); }
@@ -528,9 +516,6 @@ public class TileCBCable extends TileLM implements IPaintable, ICBNetTile, IGuiT
 	public void onPlayerNotOwner(EntityPlayer ep, boolean breakBlock)
 	{ printOwner(ep); }
 
-	public boolean isOnline()
-	{ return controller != null && !controller.hasConflict; }
-	
 	@SideOnly(Side.CLIENT)
     public AxisAlignedBB getRenderBoundingBox()
     { return AxisAlignedBB.getBoundingBox(xCoord, yCoord, zCoord, xCoord + 1D, yCoord + 1D, zCoord + 1D); }

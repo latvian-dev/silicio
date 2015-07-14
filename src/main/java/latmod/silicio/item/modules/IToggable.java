@@ -1,6 +1,6 @@
 package latmod.silicio.item.modules;
 
-import latmod.silicio.item.modules.events.EventChannelToggled;
+import latmod.silicio.tile.cb.events.EventChannelToggled;
 
 public interface IToggable
 {

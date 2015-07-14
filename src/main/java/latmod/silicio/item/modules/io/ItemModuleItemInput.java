@@ -4,7 +4,7 @@ import latmod.ftbu.core.InvUtils;
 import latmod.silicio.SilItems;
 import latmod.silicio.item.modules.IOType;
 import latmod.silicio.item.modules.config.*;
-import latmod.silicio.item.modules.events.EventUpdateModule;
+import latmod.silicio.tile.cb.events.EventUpdateModule;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
@@ -70,9 +70,9 @@ public class ItemModuleItemInput extends ItemModuleIO
 					{
 						ItemStack is0 = inv.getStackInSlot(idx);
 						
-						if((pw == 0 || e.controller.hasEnergy(pw)) && e.controller.addItem(is0, false))
+						if((pw == 0 || e.net.controller.hasEnergy(pw)) && e.net.controller.addItem(is0, false))
 						{
-							if(pw > 0) e.controller.extractEnergy(pw);
+							if(pw > 0) e.net.controller.extractEnergy(pw);
 							is0 = InvUtils.reduceItem(is0);
 							inv.setInventorySlotContents(idx, is0);
 							//inv.markDirty();

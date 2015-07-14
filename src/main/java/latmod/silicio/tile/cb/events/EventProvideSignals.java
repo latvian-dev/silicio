@@ -1,4 +1,4 @@
-package latmod.silicio.item.modules.events;
+package latmod.silicio.tile.cb.events;
 
 import latmod.silicio.tile.cb.ModuleEntry;
 

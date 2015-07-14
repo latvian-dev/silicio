@@ -2,8 +2,8 @@ package latmod.silicio.item.modules.logic;
 
 import latmod.silicio.item.modules.*;
 import latmod.silicio.item.modules.config.ModuleCSString;
-import latmod.silicio.item.modules.events.EventChannelToggled;
 import latmod.silicio.tile.cb.CircuitBoard;
+import latmod.silicio.tile.cb.events.EventChannelToggled;
 import net.minecraft.command.*;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.*;

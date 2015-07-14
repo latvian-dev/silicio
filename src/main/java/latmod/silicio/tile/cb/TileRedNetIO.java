@@ -5,8 +5,8 @@ import java.util.*;
 import latmod.ftbu.core.*;
 import latmod.ftbu.core.tile.*;
 import latmod.ftbu.core.util.IntList;
-import latmod.silicio.item.modules.events.*;
-import mcp.mobius.waila.api.*;
+import latmod.ftbu.core.waila.WailaDataAccessor;
+import latmod.silicio.tile.cb.events.*;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;
@@ -15,7 +15,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.common.util.ForgeDirection;
 import cpw.mods.fml.relauncher.*;
 
-public class TileRedNetIO extends TileLM implements ICBNetTile, IWailaTile.Body, IGuiTile, ISignalProviderTile, IToggableTile // BlockRedNetIO
+public class TileRedNetIO extends TileBasicCBNetTile implements IWailaTile.Body, IGuiTile, ISignalProviderTile, IToggableTile // BlockRedNetIO
 {
 	public int inputSide = 1;
 	public IntList inputs = new IntList();
@@ -55,22 +55,11 @@ public class TileRedNetIO extends TileLM implements ICBNetTile, IWailaTile.Body,
 		return true;
 	}
 	
-	public void onControllerConnected(EventControllerConnected e)
-	{
-	}
-	
-	public void onControllerDisconnected(EventControllerDisconnected e)
-	{
-	}
-	
 	public void onUpdateCB()
 	{
 	}
 	
-	public boolean isSideEnabled(int side)
-	{ return true; }
-	
-	public void addWailaBody(IWailaDataAccessor data, IWailaConfigHandler config, List<String> info)
+	public void addWailaBody(WailaDataAccessor data, List<String> info)
 	{
 	}
 	

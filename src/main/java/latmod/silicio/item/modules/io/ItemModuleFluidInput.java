@@ -3,7 +3,7 @@ package latmod.silicio.item.modules.io;
 import latmod.silicio.SilItems;
 import latmod.silicio.item.modules.IOType;
 import latmod.silicio.item.modules.config.*;
-import latmod.silicio.item.modules.events.EventUpdateModule;
+import latmod.silicio.tile.cb.events.EventUpdateModule;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.FluidStack;
 

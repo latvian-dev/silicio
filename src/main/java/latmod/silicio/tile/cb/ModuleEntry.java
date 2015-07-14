@@ -5,15 +5,15 @@ import net.minecraft.item.ItemStack;
 
 public class ModuleEntry
 {
-	public final TileCBController controller;
+	public final CBNetwork net;
 	public final CircuitBoard board;
 	public final int moduleID;
 	public final ItemStack stack;
 	public final ItemModule item;
 	
-	public ModuleEntry(TileCBController c, CircuitBoard cb, int mid)
+	public ModuleEntry(CBNetwork c, CircuitBoard cb, int mid)
 	{
-		controller = c;
+		net = c;
 		board = cb;
 		moduleID = mid;
 		stack = cb.items[moduleID];

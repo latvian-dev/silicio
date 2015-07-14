@@ -25,7 +25,7 @@ public class GuiCircuitBoard extends GuiLM
 		{
 			public void onButtonPressed(int b)
 			{
-				if(board.cable.controller != null)
+				if(board.cable.getCBNetwork().controller != null)
 				{
 					playClickSound();
 					board.cable.clientOpenGui(TileCBCable.guiData(board.side, 1, -1));
@@ -36,7 +36,7 @@ public class GuiCircuitBoard extends GuiLM
 			{
 				l.add(title);
 				
-				if(board.cable.controller == null)
+				if(board.cable.getCBNetwork().controller == null)
 					l.add(EnumChatFormatting.GRAY + "No Controller!");
 			}
 		};

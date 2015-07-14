@@ -4,8 +4,8 @@ import latmod.ftbu.core.LatCoreMC;
 import latmod.silicio.SilItems;
 import latmod.silicio.item.modules.IOType;
 import latmod.silicio.item.modules.config.*;
-import latmod.silicio.item.modules.events.EventUpdateModule;
 import latmod.silicio.tile.cb.TankEntry;
+import latmod.silicio.tile.cb.events.EventUpdateModule;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.fluids.*;
@@ -66,7 +66,7 @@ public class ItemModuleFluidOutput extends ItemModuleIO
 				FluidTankInfo[] info = fh.getTankInfo(e.board.sideOppositeF);
 				FluidStack fs0 = (info == null || info.length <= 0) ? null : info[0].fluid;
 				
-				for(TankEntry entry : e.controller.tankNetwork)
+				for(TankEntry entry : e.net.controller.tankNetwork)
 				{
 					if(entry.filter == null || fs0 == null || entry.filter.isFluidEqual(fs0))
 					{

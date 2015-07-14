@@ -132,12 +132,12 @@ public class GuiSelectChannels extends GuiLM
 		
 		for(ButtonLM b : allChannels)
 		{
-			if(b.customID == ItemModule.getChannelID(module, board.items[moduleID], selectedIO))
+			if(b.customID == ItemModule.getChannel(board.items[moduleID], selectedIO))
 				iconSelChannel.render(this, b.posX - 1, b.posY - 1, 10, 10);
 			
-			if(b.customID >= 0 && board.cable.controller != null)
+			if(b.customID >= 0 && board.cable.getCBNetwork().hasController())
 			{
-				if(board.cable.controller.channels.contains(b.customID))
+				if(board.cable.getCBNetwork().controller.channels.contains(b.customID))
 					iconChannelEnabled.render(this, b.posX, b.posY, 8, 8);
 			}
 		}

@@ -6,12 +6,12 @@ import latmod.ftbu.core.*;
 import latmod.ftbu.core.gui.ContainerEmpty;
 import latmod.ftbu.core.tile.*;
 import latmod.ftbu.core.util.*;
+import latmod.ftbu.core.waila.WailaDataAccessor;
 import latmod.silicio.SilItems;
 import latmod.silicio.gui.GuiController;
 import latmod.silicio.item.IItemCard;
 import latmod.silicio.item.modules.*;
-import latmod.silicio.item.modules.events.*;
-import mcp.mobius.waila.api.*;
+import latmod.silicio.tile.cb.events.*;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;
@@ -23,13 +23,11 @@ import net.minecraftforge.common.util.ForgeDirection;
 import cofh.api.energy.*;
 import cpw.mods.fml.relauncher.*;
 
-public class TileCBController extends TileLM implements ICBNetTile, IEnergyReceiver, IWailaTile.Body, ISecureTile, IGuiTile
+public class TileCBController extends TileBasicCBNetTile implements IEnergyReceiver, IWailaTile.Body, ISecureTile, IGuiTile
 {
 	public static final int MAX_CHANNEL = 128;
 	
 	public EnergyStorage storage;
-	public final FastList<ICBNetTile> network;
-	private final FastList<ICBNetTile> prevNetwork;
 	public final FastList<CircuitBoard> circuitBoards;
 	public final FastList<ModuleEntry> allModules;
 	public final FastList<InvEntry> invNetwork;
@@ -43,8 +41,6 @@ public class TileCBController extends TileLM implements ICBNetTile, IEnergyRecei
 	public TileCBController()
 	{
 		storage = new EnergyStorage(48000000, 4800);
-		network = new FastList<ICBNetTile>();
-		prevNetwork = new FastList<ICBNetTile>();
 		circuitBoards = new FastList<CircuitBoard>();
 		allModules = new FastList<ModuleEntry>();
 		invNetwork = new FastList<InvEntry>();
@@ -60,7 +56,6 @@ public class TileCBController extends TileLM implements ICBNetTile, IEnergyRecei
 	{
 		super.readTileData(tag);
 		storage.readFromNBT(tag);
-		prevChannels.setAll(tag.getIntArray("PChannels"));
 		channels.setAll(tag.getIntArray("Channels"));
 		hasConflict = tag.hasKey("Conflict");
 	}
@@ -69,12 +64,21 @@ public class TileCBController extends TileLM implements ICBNetTile, IEnergyRecei
 	{
 		super.writeTileData(tag);
 		storage.writeToNBT(tag);
-		tag.setIntArray("PChannels", prevChannels.toArray());
 		tag.setIntArray("Channels", channels.toArray());
 		if(hasConflict) tag.setBoolean("Conflict", true);
 	}
 	
-	public void addWailaBody(IWailaDataAccessor data, IWailaConfigHandler config, List<String> info)
+	public void readTileServerData(NBTTagCompound tag)
+	{
+		prevChannels.setAll(tag.getIntArray("PChannels"));
+	}
+	
+	public void writeTileServerData(NBTTagCompound tag)
+	{
+		tag.setIntArray("PChannels", prevChannels.toArray());
+	}
+	
+	public void addWailaBody(WailaDataAccessor data, List<String> info)
 	{
 		ICBEnergyTile.Helper.addWaila(storage, info);
 		
@@ -84,10 +88,10 @@ public class TileCBController extends TileLM implements ICBNetTile, IEnergyRecei
 			int cables = 0;
 			int otherDevices = 0;
 			
-			for(ICBNetTile t : network)
+			for(ICBNetTile t : net.tiles)
 			{ if(t instanceof TileCBCable) cables++; }
 			
-			otherDevices = network.size() - cables;
+			otherDevices = net.tiles.size() - cables;
 			
 			if(cables > 0 || otherDevices > 0) info.add("Cables | Other Devices: " + cables + " | " + otherDevices);
 			
@@ -107,8 +111,7 @@ public class TileCBController extends TileLM implements ICBNetTile, IEnergyRecei
 	
 	public void onUnloaded()
 	{
-		for(ICBNetTile t : network)
-			t.onControllerDisconnected(new EventControllerDisconnected(this, false));
+		CBNetwork.notifyNetwork(worldObj, xCoord, yCoord, zCoord);
 	}
 	
 	public void onUpdate()
@@ -119,7 +122,7 @@ public class TileCBController extends TileLM implements ICBNetTile, IEnergyRecei
 			
 			markDirty();
 			
-			for(ICBNetTile t : network)
+			for(ICBNetTile t : net.tiles)
 			{
 				if(t instanceof ICBEnergyTile)
 					((TileEntity)t).markDirty();
@@ -131,10 +134,8 @@ public class TileCBController extends TileLM implements ICBNetTile, IEnergyRecei
 		boolean pHasConflict = hasConflict;
 		hasConflict = false;
 		
-		prevNetwork.clear();
-		prevNetwork.addAll(network);
+		//TODO: Generate network here
 		
-		network.clear();
 		circuitBoards.clear();
 		allModules.clear();
 		invNetwork.clear();
@@ -148,13 +149,13 @@ public class TileCBController extends TileLM implements ICBNetTile, IEnergyRecei
 			if(worldObj.setBlockToAir(xCoord, yCoord, zCoord))
 			{
 				e.printStackTrace();
-				LatCoreMC.printChatAll("CBController @ " + LatCore.stripInt(xCoord, yCoord, zCoord) + " crashed!");
+				LatCoreMC.printChat(BroadcastSender.inst, "CBController @ " + LatCore.stripInt(xCoord, yCoord, zCoord) + " crashed!");
 				InvUtils.dropItem(worldObj, xCoord + 0.5D, yCoord + 0.5D, zCoord + 0.5D, new ItemStack(SilItems.b_cbcontroller), 10);
 			}
 		}
 		
-		for(ICBNetTile t : prevNetwork)
-			t.onControllerDisconnected(new EventControllerDisconnected(this, false));
+		//for(ICBNetTile t : prevNetwork)
+		//	t.onCBNetworkEvent(new EventControllerDisconnected(getCBNetwork(), false));
 		
 		if(pHasConflict != hasConflict)
 			markDirty();
@@ -166,27 +167,26 @@ public class TileCBController extends TileLM implements ICBNetTile, IEnergyRecei
 		channels.clear();
 		
 		addToList(xCoord, yCoord, zCoord);
-		network.remove(this);
+		//network.remove(this);
 		invNetwork.sort(null);
 		tankNetwork.sort(null);
 		
-		if(pNetworkSize != network.size())
+		if(pNetworkSize != net.tiles.size())
 		{
-			pNetworkSize = network.size();
+			pNetworkSize = net.tiles.size();
 			
 			markDirty();
 			sendDirtyUpdate();
 			
-			if(hasConflict) for(ICBNetTile t : network)
-				t.onControllerDisconnected(new EventControllerDisconnected(this, true));
+			if(hasConflict) CBNetwork.notifyNetwork(worldObj, xCoord, yCoord, zCoord);
 		}
 		
 		if(hasConflict) return;
 		
-		for(ICBNetTile t : network)
+		CBNetwork.notifyNetwork(worldObj, xCoord, yCoord, zCoord);
+		
+		for(ICBNetTile t : net.tiles)
 		{
-			t.onControllerConnected(new EventControllerConnected(this));
-			
 			if(t instanceof ICBEnergyTile && storage.getEnergyStored() > 0)
 			{
 				EnergyStorage e = ((ICBEnergyTile)t).getEnergyStorage();
@@ -205,16 +205,16 @@ public class TileCBController extends TileLM implements ICBNetTile, IEnergyRecei
 				((ISignalProvider)me.item).provideSignals(new EventProvideSignals(me));
 		}
 		
-		for(ICBNetTile t : network)
+		for(ICBNetTile t : net.tiles)
 		{
 			if(t instanceof ISignalProviderTile)
-				((ISignalProviderTile)t).provideSignalsTile(new EventProvideSignalsTile(this));
+				((ISignalProviderTile)t).provideSignalsTile(new EventProvideSignalsTile(getCBNetwork()));
 		}
 		
 		for(ModuleEntry me : allModules)
 			me.item.onUpdate(new EventUpdateModule(me));
 		
-		for(ICBNetTile t : network)
+		for(ICBNetTile t : net.tiles)
 			t.onUpdateCB();
 		
 		{
@@ -244,26 +244,12 @@ public class TileCBController extends TileLM implements ICBNetTile, IEnergyRecei
 				((IToggable)me.item).onChannelToggled(new EventChannelToggled(me, ch, on));
 		}
 		
-		for(ICBNetTile t : network)
-		{
-			if(t instanceof IToggableTile)
-				((IToggableTile)t).onChannelToggledTile(new EventChannelToggledTile(this, ch, on));
-		}
-	}
-	
-	public void onControllerConnected(EventControllerConnected e)
-	{
-	}
-	
-	public void onControllerDisconnected(EventControllerDisconnected e)
-	{
+		net.sendEvent(new EventChannelToggledTile(getCBNetwork(), ch, on));
 	}
 	
 	public void onBroken()
 	{
-		for(ICBNetTile t : network)
-			t.onControllerDisconnected(new EventControllerDisconnected(this, false));
-		
+		CBNetwork.notifyNetwork(worldObj, xCoord, yCoord, zCoord);
 		super.onBroken();
 	}
 	
@@ -287,7 +273,7 @@ public class TileCBController extends TileLM implements ICBNetTile, IEnergyRecei
 					return;
 				}
 				
-				if(ec.isSideEnabled(Facing.oppositeSide[i]) && !network.contains(ec))
+				/*if(ec.isSideEnabled(Facing.oppositeSide[i]) && !network.contains(ec))
 				{
 					network.add(ec);
 					prevNetwork.remove(ec);
@@ -303,7 +289,7 @@ public class TileCBController extends TileLM implements ICBNetTile, IEnergyRecei
 							{
 								if(tc.boards[b].items[mid] != null && tc.boards[b].items[mid].getItem() instanceof ItemModule)
 								{
-									ModuleEntry me = new ModuleEntry(this, tc.boards[b], mid);
+									ModuleEntry me = new ModuleEntry(getCBNetwork(), tc.boards[b], mid);
 									allModules.add(me);
 									
 									if(me.item instanceof IInvProvider) ((IInvProvider)me.item).updateInvNet(me, invNetwork);
@@ -314,7 +300,7 @@ public class TileCBController extends TileLM implements ICBNetTile, IEnergyRecei
 					}
 					
 					addToList(px, py, pz);
-				}
+				}*/
 			}
 		}
 	}
@@ -348,9 +334,6 @@ public class TileCBController extends TileLM implements ICBNetTile, IEnergyRecei
 	
 	public int getMaxEnergyStored(ForgeDirection dir)
 	{ return storage.getMaxEnergyStored(); }
-	
-	public boolean isSideEnabled(int side)
-	{ return true; }
 	
 	public boolean isEnabled(int ch, int ch1, boolean def)
 	{
@@ -421,9 +404,6 @@ public class TileCBController extends TileLM implements ICBNetTile, IEnergyRecei
 		if(i < 0) return "Disabled";
 		return (EnumDyeColor.VALUES[i % 16].toString() + " #" + (i / 16 + 1));
 	}
-	
-	public int hashCode()
-	{ return LatCore.hashCode(xCoord, yCoord, zCoord); }
 	
 	public boolean canPlayerInteract(EntityPlayer ep, boolean breakBlock)
 	{ return security.canInteract(ep); }

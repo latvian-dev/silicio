@@ -4,7 +4,7 @@ import latmod.ftbu.core.InvUtils;
 import latmod.silicio.SilItems;
 import latmod.silicio.item.modules.IOType;
 import latmod.silicio.item.modules.config.*;
-import latmod.silicio.item.modules.events.EventUpdateModule;
+import latmod.silicio.tile.cb.events.EventUpdateModule;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
@@ -65,9 +65,9 @@ public class ItemModuleItemOutput extends ItemModuleIO
 				{
 					int idx = InvUtils.getFirstIndexWhereFits(inv, itemT, e.board.sideOpposite);
 					
-					if(idx != -1 && (pw == 0 || e.controller.hasEnergy(pw)) && e.controller.requestItem(itemT, false))
+					if(idx != -1 && (pw == 0 || e.net.controller.hasEnergy(pw)) && e.net.controller.requestItem(itemT, false))
 					{
-						if(pw > 0) e.controller.extractEnergy(pw);
+						if(pw > 0) e.net.controller.extractEnergy(pw);
 						
 						ItemStack is0 = inv.getStackInSlot(idx);
 						if(is0 == null) is0 = InvUtils.singleCopy(itemT);

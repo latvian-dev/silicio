@@ -3,7 +3,7 @@ package latmod.silicio.item.modules.logic;
 import latmod.ftbu.core.ODItems;
 import latmod.silicio.SilItems;
 import latmod.silicio.item.modules.*;
-import latmod.silicio.item.modules.events.EventProvideSignals;
+import latmod.silicio.tile.cb.events.EventProvideSignals;
 import net.minecraft.item.ItemStack;
 
 public class ItemModuleGateAnd extends ItemModuleLogic implements ISignalProvider

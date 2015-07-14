@@ -3,7 +3,7 @@ package latmod.silicio.item.modules.logic;
 import latmod.silicio.SilItems;
 import latmod.silicio.item.modules.*;
 import latmod.silicio.item.modules.config.ModuleCSNum;
-import latmod.silicio.item.modules.events.EventProvideSignals;
+import latmod.silicio.tile.cb.events.EventProvideSignals;
 import net.minecraft.init.*;
 import net.minecraft.item.ItemStack;
 

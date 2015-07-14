@@ -1,16 +1,14 @@
 package latmod.silicio.tile.cb;
 
-import latmod.ftbu.core.tile.TileLM;
 import latmod.ftbu.core.util.IntList;
-import latmod.silicio.item.modules.events.*;
+import latmod.silicio.tile.cb.events.*;
 import net.minecraft.nbt.NBTTagCompound;
 import dan200.computercraft.api.lua.*;
 import dan200.computercraft.api.peripheral.*;
 
-public class TileComputerIO extends TileLM implements ICBNetTile, IPeripheral, IToggableTile, ISignalProviderTile // BlockComputerIO
+public class TileComputerIO extends TileBasicCBNetTile implements IPeripheral, IToggableTile, ISignalProviderTile // BlockComputerIO
 {
 	public IntList enabledChannels = new IntList();
-	private TileCBController controller = null;
 	private IComputerAccess attachedComputer = null;
 	
 	public void readTileData(NBTTagCompound tag)
@@ -29,22 +27,12 @@ public class TileComputerIO extends TileLM implements ICBNetTile, IPeripheral, I
 	
 	public void preUpdate(TileCBController c)
 	{
-		controller = c;
 		c.channels.addAll(enabledChannels);
 	}
 	
 	public void onUpdateCB()
 	{
 	}
-	
-	public void onControllerConnected(EventControllerConnected e)
-	{ if(controller == null) controller = e.controller; }
-	
-	public void onControllerDisconnected(EventControllerDisconnected e)
-	{ if(controller != null && controller.equals(e.controller)) controller = null; }
-	
-	public boolean isSideEnabled(int side)
-	{ return true; }
 	
 	public String getType()
 	{ return "cb_io"; }
@@ -68,11 +56,11 @@ public class TileComputerIO extends TileLM implements ICBNetTile, IPeripheral, I
 		}
 		else if(method == 1)
 		{
-			if(controller == null || arguments == null || arguments.length < 1)
+			if(!net.hasWorkingController() || arguments == null || arguments.length < 1)
 				return new Object[] { false };
 			
 			int c = ((Number)arguments[0]).intValue() - 1;
-			return new Object[] { controller.channels.contains(c) };
+			return new Object[] { net.controller.channels.contains(c) };
 		}
 		
 		return null;
@@ -89,7 +77,7 @@ public class TileComputerIO extends TileLM implements ICBNetTile, IPeripheral, I
 	
 	public void onChannelToggledTile(EventChannelToggledTile e)
 	{
-		if(controller != null && attachedComputer != null)
+		if(net.hasWorkingController() && attachedComputer != null)
 			attachedComputer.queueEvent("cb_channel", new Object[] { (e.channel + 1), e.on });
 	}
 	

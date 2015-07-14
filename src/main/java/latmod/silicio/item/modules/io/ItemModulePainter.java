@@ -5,7 +5,7 @@ import latmod.ftbu.core.tile.IPaintable.Paint;
 import latmod.silicio.SilItems;
 import latmod.silicio.item.modules.*;
 import latmod.silicio.item.modules.config.*;
-import latmod.silicio.item.modules.events.EventChannelToggled;
+import latmod.silicio.tile.cb.events.EventChannelToggled;
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.*;

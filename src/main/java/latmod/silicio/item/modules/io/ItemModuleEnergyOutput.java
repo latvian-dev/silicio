@@ -1,7 +1,7 @@
 package latmod.silicio.item.modules.io;
 
 import latmod.silicio.item.modules.IOType;
-import latmod.silicio.item.modules.events.EventUpdateModule;
+import latmod.silicio.tile.cb.events.EventUpdateModule;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.common.util.ForgeDirection;
 import cofh.api.energy.IEnergyReceiver;
@@ -29,7 +29,7 @@ public class ItemModuleEnergyOutput extends ItemModuleIO
 	
 	public void onUpdate(EventUpdateModule e)
 	{
-		if(e.cable.isServer() && e.controller.hasEnergy(1) && e.isEnabled(0, -1, true))
+		if(e.cable.isServer() && e.net.controller.hasEnergy(1) && e.isEnabled(0, -1, true))
 		{
 			TileEntity te = e.board.getFacingTile();
 			
@@ -38,7 +38,7 @@ public class ItemModuleEnergyOutput extends ItemModuleIO
 				IEnergyReceiver ie = (IEnergyReceiver)te;
 				
 				if(ie.canConnectEnergy(ForgeDirection.VALID_DIRECTIONS[e.board.sideOpposite]))
-					e.controller.extractEnergy(ie.receiveEnergy(ForgeDirection.VALID_DIRECTIONS[e.board.sideOpposite], Math.min(e.controller.storage.getMaxExtract(), e.controller.storage.getEnergyStored()), false));
+					e.net.controller.extractEnergy(ie.receiveEnergy(ForgeDirection.VALID_DIRECTIONS[e.board.sideOpposite], Math.min(e.net.controller.storage.getMaxExtract(), e.net.controller.storage.getEnergyStored()), false));
 			}
 		}
 	}

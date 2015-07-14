@@ -1,12 +1,12 @@
 package latmod.silicio.item.modules;
-import latmod.ftbu.core.*;
+import latmod.ftbu.core.LatCoreMC;
 import latmod.ftbu.core.util.*;
 import latmod.silicio.item.ItemSil;
 import latmod.silicio.item.modules.config.ModuleConfigSegment;
-import latmod.silicio.item.modules.events.EventUpdateModule;
 import latmod.silicio.item.modules.io.ItemModuleIO;
 import latmod.silicio.item.modules.logic.ItemModuleLogic;
 import latmod.silicio.tile.cb.CircuitBoard;
+import latmod.silicio.tile.cb.events.EventUpdateModule;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -20,7 +20,7 @@ public abstract class ItemModule extends ItemSil
 	public final boolean isIOModule = (this instanceof ItemModuleIO);
 	public final boolean isLogicModule = (this instanceof ItemModuleLogic);
 	
-	public static final String NBT_TAG = "Channels";
+	public static final String NBT_TAG = "CMap";
 	
 	public final FastList<ModuleConfigSegment> moduleConfig;
 	protected final String[] channelNames;
@@ -61,13 +61,13 @@ public abstract class ItemModule extends ItemSil
 	public void addInfo(ItemStack is, EntityPlayer ep, FastList<String> l)
 	{
 		l.add(StatCollector.translateToLocal(mod.assets + "item.cbm_desc"));
-		if(is.stackTagCompound != null)
+		if(hasData(is))
 		{
 			l.add("Preconfigured");
+			IntMap m = getChannelMap(is);
 			
-			/*if(is.stackTagCompound.hasKey(NBT_TAG))
-			{
-			}*/
+			for(int i = 0; i < m.size(); i++)
+				l.add(m.keys.get(i) + ": " + LatCore.Colors.getHex(m.values.get(i)));
 		}
 	}
 	
@@ -90,45 +90,26 @@ public abstract class ItemModule extends ItemSil
 	{
 	}
 	
-	public static final int getChannelID(ItemModule m, ItemStack is, int c)
+	public static final boolean hasData(ItemStack is)
+	{ return is != null && is.hasTagCompound() && is.getTagCompound().hasKey(NBT_TAG); }
+	
+	public static final IntMap getChannelMap(ItemStack is)
+	{ return hasData(is) ? IntMap.fromIntArrayS(is.getTagCompound().getIntArray(NBT_TAG)) : new IntMap(0); }
+	
+	public static final void setChannelMap(ItemStack is, IntMap map)
 	{
-		if(m.getChannelCount() <= 0) return 0;
-		
-		if(!is.hasTagCompound())
-			is.stackTagCompound = new NBTTagCompound();
-		
-		if(is.stackTagCompound.func_150299_b(NBT_TAG) == NBTHelper.BYTE_ARRAY)
-		{
-			byte[] b = is.stackTagCompound.getByteArray(NBT_TAG);
-			is.stackTagCompound.setIntArray(NBT_TAG, Converter.toInts(b));
-		}
-		
-		int[] channels = is.stackTagCompound.getIntArray(NBT_TAG);
-		
-		if(channels.length == 0)
-		{
-			channels = new int[m.getChannelCount()];
-			for(int i = 0; i < channels.length; i++)
-				channels[i] = -1;
-			
-			is.stackTagCompound.setIntArray(NBT_TAG, channels);
-		}
-		
-		return channels[c];
+		if(is == null || map == null) return;
+		if(!is.hasTagCompound()) is.setTagCompound(new NBTTagCompound());
+		is.getTagCompound().setIntArray(NBT_TAG, map.toIntArray());
 	}
 	
-	public final int getChannel(CircuitBoard cb, int MID, int id)
-	{
-		int ch = getChannelID(this, cb.items[MID], id);
-		if(ch < 0 || cb.cable.controller == null || ch >= cb.cable.controller.channels.size()) return -1;
-		return cb.cable.controller.channels.get(ch);
-	}
+	public static final int getChannel(ItemStack is, int id)
+	{ return getChannelMap(is).get(id); }
 	
-	public final void setChannel(CircuitBoard cb, int MID, int id, int ch)
+	public static final void setChannel(ItemStack is, int id, int col)
 	{
-		getChannel(cb, MID, id);
-		int[] channels = cb.items[MID].stackTagCompound.getIntArray(NBT_TAG);
-		channels[id] = ch;
-		cb.items[MID].stackTagCompound.setIntArray(NBT_TAG, channels);
+		IntMap map = getChannelMap(is);
+		map.put(id, col);
+		setChannelMap(is, map);
 	}
 }

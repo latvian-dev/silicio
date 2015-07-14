@@ -3,7 +3,7 @@ package latmod.silicio.item.modules.io;
 import latmod.ftbu.core.ODItems;
 import latmod.silicio.SilItems;
 import latmod.silicio.item.modules.IOType;
-import latmod.silicio.item.modules.events.EventUpdateModule;
+import latmod.silicio.tile.cb.events.EventUpdateModule;
 import net.minecraft.item.ItemStack;
 
 public class ItemModuleRedstoneOut extends ItemModuleIO

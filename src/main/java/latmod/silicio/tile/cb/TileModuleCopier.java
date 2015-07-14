@@ -4,11 +4,11 @@ import java.util.List;
 
 import latmod.ftbu.core.*;
 import latmod.ftbu.core.tile.*;
+import latmod.ftbu.core.waila.WailaDataAccessor;
 import latmod.silicio.gui.GuiModuleCopier;
 import latmod.silicio.gui.container.ContainerModuleCopier;
 import latmod.silicio.item.modules.ItemModule;
-import latmod.silicio.item.modules.events.*;
-import mcp.mobius.waila.api.*;
+import latmod.silicio.tile.cb.events.EventCB;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.*;
@@ -22,13 +22,18 @@ public class TileModuleCopier extends TileInvLM implements IGuiTile, ICBNetTile,
 	public static final int maxProg = 50;
 	public static final int energyRequired = 1200;
 	
-	public EnergyStorage energyStorage = new EnergyStorage(4800);
+	public EnergyStorage energyStorage;
+	public CBNetwork net;
 	
 	public ItemStack item = null;
 	public int progress = 0;
 	
 	public TileModuleCopier()
-	{ super(3); }
+	{
+		super(3);
+		energyStorage = new EnergyStorage(4800);
+		net = new CBNetwork(null);
+	}
 	
 	public void readTileData(NBTTagCompound tag)
 	{
@@ -93,21 +98,13 @@ public class TileModuleCopier extends TileInvLM implements IGuiTile, ICBNetTile,
 	{
 	}
 	
-	public void onControllerConnected(EventControllerConnected e)
-	{
-	}
-	
-	public void onControllerDisconnected(EventControllerDisconnected e)
-	{
-	}
-	
 	public boolean isSideEnabled(int side)
 	{ return true; }
 	
 	public EnergyStorage getEnergyStorage()
 	{ return energyStorage; }
 	
-	public void addWailaBody(IWailaDataAccessor data, IWailaConfigHandler config, List<String> info)
+	public void addWailaBody(WailaDataAccessor data, List<String> info)
 	{ ICBEnergyTile.Helper.addWaila(energyStorage, info); }
 	
 	public float getProgressF()
@@ -121,4 +118,14 @@ public class TileModuleCopier extends TileInvLM implements IGuiTile, ICBNetTile,
 	
 	public boolean canExtractItem(int i, ItemStack is, int s)
 	{ return s == 0; }
+	
+	public CBNetwork getCBNetwork()
+	{ return net; }
+	
+	public void setCBNetwork(CBNetwork n)
+	{ net = n; }
+	
+	public void onCBNetworkEvent(EventCB e)
+	{
+	}
 }
