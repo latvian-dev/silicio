@@ -108,7 +108,7 @@ public class CBNetwork
 		addToList(net, w, x, y, z);
 		net.updateOtherNetworks();
 		
-		net.controller = net.tiles.isEmpty() ? null : (TileCBController)net.tiles.get(tempIntList.get(0));
+		net.controller = tempIntList.isEmpty() ? null : (TileCBController)net.tiles.get(tempIntList.get(0));
 		if(tempIntList.size() > 1) net.hasConflict = true;
 		net.tiles.removeAll(tempIntList.toArray());
 	}
