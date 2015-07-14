@@ -56,11 +56,11 @@ public class TileComputerIO extends TileBasicCBNetTile implements IPeripheral, I
 		}
 		else if(method == 1)
 		{
-			if(!net.hasWorkingController() || arguments == null || arguments.length < 1)
+			if(!getCBNetwork().hasWorkingController() || arguments == null || arguments.length < 1)
 				return new Object[] { false };
 			
 			int c = ((Number)arguments[0]).intValue() - 1;
-			return new Object[] { net.controller.channels.contains(c) };
+			return new Object[] { getCBNetwork().controller.channels.contains(c) };
 		}
 		
 		return null;
@@ -77,7 +77,7 @@ public class TileComputerIO extends TileBasicCBNetTile implements IPeripheral, I
 	
 	public void onChannelToggledTile(EventChannelToggledTile e)
 	{
-		if(net.hasWorkingController() && attachedComputer != null)
+		if(getCBNetwork().hasWorkingController() && attachedComputer != null)
 			attachedComputer.queueEvent("cb_channel", new Object[] { (e.channel + 1), e.on });
 	}
 	

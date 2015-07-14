@@ -55,7 +55,7 @@ public class RenderCBCable extends TileRenderer<TileCBCable>
 			}
 		}
 		
-		if(t.net.hasController())
+		if(t.getCBNetwork().hasController())
 		{
 			int c = 0;
 			
@@ -79,7 +79,7 @@ public class RenderCBCable extends TileRenderer<TileCBCable>
 				
 				Minecraft.getMinecraft().getTextureManager().bindTexture(texture_on);
 				
-				if(t.net.hasConflict())
+				if(t.getCBNetwork().hasConflict())
 					GL11.glColor4f(1F, 0F, 0F, 0.5F);
 				else
 					GL11.glColor4f(0F, 1F, 1F, 0.5F);

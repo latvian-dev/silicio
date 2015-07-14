@@ -18,33 +18,23 @@ import net.minecraft.inventory.Container;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.Facing;
 import net.minecraftforge.common.util.ForgeDirection;
 import cofh.api.energy.*;
 import cpw.mods.fml.relauncher.*;
 
-public class TileCBController extends TileBasicCBNetTile implements IEnergyReceiver, IWailaTile.Body, ISecureTile, IGuiTile
+public class TileCBController extends TileBasicCBNetTile implements IEnergyReceiver, IWailaTile.Body, ISecureTile, IGuiTile // CBNetwork
 {
 	public static final int MAX_CHANNEL = 128;
 	
 	public EnergyStorage storage;
-	public final FastList<CircuitBoard> circuitBoards;
-	public final FastList<ModuleEntry> allModules;
-	public final FastList<InvEntry> invNetwork;
-	public final FastList<TankEntry> tankNetwork;
 	public final IntList prevChannels, channels;
 	
 	public boolean energyChanged = false;
 	private int pNetworkSize = -1;
-	public boolean hasConflict = false;
 	
 	public TileCBController()
 	{
 		storage = new EnergyStorage(48000000, 4800);
-		circuitBoards = new FastList<CircuitBoard>();
-		allModules = new FastList<ModuleEntry>();
-		invNetwork = new FastList<InvEntry>();
-		tankNetwork = new FastList<TankEntry>();
 		prevChannels = new IntList();
 		channels = new IntList();
 	}
@@ -57,7 +47,6 @@ public class TileCBController extends TileBasicCBNetTile implements IEnergyRecei
 		super.readTileData(tag);
 		storage.readFromNBT(tag);
 		channels.setAll(tag.getIntArray("Channels"));
-		hasConflict = tag.hasKey("Conflict");
 	}
 	
 	public void writeTileData(NBTTagCompound tag)
@@ -65,7 +54,16 @@ public class TileCBController extends TileBasicCBNetTile implements IEnergyRecei
 		super.writeTileData(tag);
 		storage.writeToNBT(tag);
 		tag.setIntArray("Channels", channels.toArray());
-		if(hasConflict) tag.setBoolean("Conflict", true);
+	}
+	
+	public void readTileClientData(NBTTagCompound tag)
+	{
+		net.hasConflict = tag.hasKey("Conflict");
+	}
+	
+	public void writeTileClientData(NBTTagCompound tag)
+	{
+		if(net.hasConflict) tag.setBoolean("Conflict", true);
 	}
 	
 	public void readTileServerData(NBTTagCompound tag)
@@ -78,11 +76,14 @@ public class TileCBController extends TileBasicCBNetTile implements IEnergyRecei
 		tag.setIntArray("PChannels", prevChannels.toArray());
 	}
 	
+	public CBNetwork getCBNetwork()
+	{ return net; }
+	
 	public void addWailaBody(WailaDataAccessor data, List<String> info)
 	{
 		ICBEnergyTile.Helper.addWaila(storage, info);
 		
-		if(hasConflict) info.add("Conflicting Controller found!");
+		if(net.hasConflict) info.add("Conflicting Controller found!");
 		else
 		{
 			int cables = 0;
@@ -95,8 +96,8 @@ public class TileCBController extends TileBasicCBNetTile implements IEnergyRecei
 			
 			if(cables > 0 || otherDevices > 0) info.add("Cables | Other Devices: " + cables + " | " + otherDevices);
 			
-			if(!circuitBoards.isEmpty() || !allModules.isEmpty()) info.add("Boards | Modules: " + circuitBoards.size() + " | " + allModules.size());
-			if(!invNetwork.isEmpty() || !tankNetwork.isEmpty()) info.add("Chests | Tanks: " + invNetwork.size() + " | " + tankNetwork.size());
+			if(!net.circuitBoards.isEmpty() || !net.allModules.isEmpty()) info.add("Boards | Modules: " + net.circuitBoards.size() + " | " + net.allModules.size());
+			if(!net.invNetwork.isEmpty() || !net.tankNetwork.isEmpty()) info.add("Chests | Tanks: " + net.invNetwork.size() + " | " + net.tankNetwork.size());
 			if(!channels.isEmpty()) info.add("Enabled Channels: " + channels.size());
 		}
 	}
@@ -131,20 +132,16 @@ public class TileCBController extends TileBasicCBNetTile implements IEnergyRecei
 		
 		// Update network //
 		
-		boolean pHasConflict = hasConflict;
-		hasConflict = false;
+		boolean pHasConflict = net.hasConflict;
 		
-		//TODO: Generate network here
-		
-		circuitBoards.clear();
-		allModules.clear();
-		invNetwork.clear();
-		tankNetwork.clear();
-		
-		try { onUpdateCB(); }
+		try
+		{
+			CBNetwork.update(net, worldObj, xCoord, yCoord, zCoord);
+			onUpdateCB();
+		}
 		catch(Exception e)
 		{
-			hasConflict = true;
+			net.hasConflict = true;
 			
 			if(worldObj.setBlockToAir(xCoord, yCoord, zCoord))
 			{
@@ -157,7 +154,7 @@ public class TileCBController extends TileBasicCBNetTile implements IEnergyRecei
 		//for(ICBNetTile t : prevNetwork)
 		//	t.onCBNetworkEvent(new EventControllerDisconnected(getCBNetwork(), false));
 		
-		if(pHasConflict != hasConflict)
+		if(pHasConflict != net.hasConflict)
 			markDirty();
 	}
 	
@@ -166,11 +163,6 @@ public class TileCBController extends TileBasicCBNetTile implements IEnergyRecei
 		IntList prevChannels = channels.copy();
 		channels.clear();
 		
-		addToList(xCoord, yCoord, zCoord);
-		//network.remove(this);
-		invNetwork.sort(null);
-		tankNetwork.sort(null);
-		
 		if(pNetworkSize != net.tiles.size())
 		{
 			pNetworkSize = net.tiles.size();
@@ -178,10 +170,10 @@ public class TileCBController extends TileBasicCBNetTile implements IEnergyRecei
 			markDirty();
 			sendDirtyUpdate();
 			
-			if(hasConflict) CBNetwork.notifyNetwork(worldObj, xCoord, yCoord, zCoord);
+			if(net.hasConflict) CBNetwork.notifyNetwork(worldObj, xCoord, yCoord, zCoord);
 		}
 		
-		if(hasConflict) return;
+		if(net.hasConflict) return;
 		
 		CBNetwork.notifyNetwork(worldObj, xCoord, yCoord, zCoord);
 		
@@ -199,7 +191,7 @@ public class TileCBController extends TileBasicCBNetTile implements IEnergyRecei
 		
 		if(!isServer()) return;
 		
-		for(ModuleEntry me : allModules)
+		for(ModuleEntry me : net.allModules)
 		{
 			if(me.item instanceof ISignalProvider)
 				((ISignalProvider)me.item).provideSignals(new EventProvideSignals(me));
@@ -211,7 +203,7 @@ public class TileCBController extends TileBasicCBNetTile implements IEnergyRecei
 				((ISignalProviderTile)t).provideSignalsTile(new EventProvideSignalsTile(getCBNetwork()));
 		}
 		
-		for(ModuleEntry me : allModules)
+		for(ModuleEntry me : net.allModules)
 			me.item.onUpdate(new EventUpdateModule(me));
 		
 		for(ICBNetTile t : net.tiles)
@@ -238,7 +230,7 @@ public class TileCBController extends TileBasicCBNetTile implements IEnergyRecei
 	{
 		LatCoreMC.printChat(null, this + ": " + ch + " - " + on);
 		
-		for(ModuleEntry me : allModules)
+		for(ModuleEntry me : net.allModules)
 		{
 			if(me.item instanceof IToggable)
 				((IToggable)me.item).onChannelToggled(new EventChannelToggled(me, ch, on));
@@ -249,61 +241,11 @@ public class TileCBController extends TileBasicCBNetTile implements IEnergyRecei
 	
 	public void onBroken()
 	{
-		CBNetwork.notifyNetwork(worldObj, xCoord, yCoord, zCoord);
+		net.notifyNetwork();
 		super.onBroken();
 	}
 	
-	private void addToList(int x, int y, int z)
-	{
-		for(int i = 0; i < 6; i++)
-		{
-			int px = x + Facing.offsetsXForSide[i];
-			int py = y + Facing.offsetsYForSide[i];
-			int pz = z + Facing.offsetsZForSide[i];
-			
-			TileEntity te = worldObj.getTileEntity(px, py, pz);
-			
-			if(te != null && !te.isInvalid() && te instanceof ICBNetTile)
-			{
-				ICBNetTile ec = (ICBNetTile)te;
-				
-				if(ec != this && ec instanceof TileCBController)
-				{
-					hasConflict = true;
-					return;
-				}
-				
-				/*if(ec.isSideEnabled(Facing.oppositeSide[i]) && !network.contains(ec))
-				{
-					network.add(ec);
-					prevNetwork.remove(ec);
-					
-					if(ec instanceof TileCBCable)
-					{
-						TileCBCable tc = (TileCBCable)ec;
-						for(int b = 0; b < 6; b++) if(tc.boards[b] != null)
-						{
-							circuitBoards.add(tc.boards[b]);
-							
-							for(int mid = 0; mid < tc.boards[b].items.length; mid++)
-							{
-								if(tc.boards[b].items[mid] != null && tc.boards[b].items[mid].getItem() instanceof ItemModule)
-								{
-									ModuleEntry me = new ModuleEntry(getCBNetwork(), tc.boards[b], mid);
-									allModules.add(me);
-									
-									if(me.item instanceof IInvProvider) ((IInvProvider)me.item).updateInvNet(me, invNetwork);
-									if(me.item instanceof ITankProvider) ((ITankProvider)me.item).updateTankNet(me, tankNetwork);
-								}
-							}
-						}
-					}
-					
-					addToList(px, py, pz);
-				}*/
-			}
-		}
-	}
+	
 	
 	public boolean canConnectEnergy(ForgeDirection dir)
 	{ return true; }
@@ -354,7 +296,7 @@ public class TileCBController extends TileBasicCBNetTile implements IEnergyRecei
 	{
 		if(is == null) return false;
 		
-		for(InvEntry e : invNetwork)
+		for(InvEntry e : net.invNetwork)
 		{
 			if(IItemCard.Helper.isValid(e.filter, is))
 			{
@@ -370,7 +312,7 @@ public class TileCBController extends TileBasicCBNetTile implements IEnergyRecei
 	{
 		if(is == null) return false;
 		
-		for(InvEntry e : invNetwork)
+		for(InvEntry e : net.invNetwork)
 		{
 			if(IItemCard.Helper.isValid(e.filter, is))
 			{

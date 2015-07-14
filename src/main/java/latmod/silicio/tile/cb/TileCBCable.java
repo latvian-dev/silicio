@@ -83,7 +83,7 @@ public class TileCBCable extends TileBasicCBNetTile implements IPaintable, IGuiT
 		for(int s = 0; s < 6; s++)
 		{
 			canReceive[s] = false;
-			if(net.hasController() && canReceiveEnergy(s))
+			if(getCBNetwork().hasWorkingController() && canReceiveEnergy(s))
 				canReceive[s] = true;
 		}
 		
@@ -359,7 +359,7 @@ public class TileCBCable extends TileBasicCBNetTile implements IPaintable, IGuiT
 	}
 	
 	public double getRelStoredEnergy()
-	{ return net.hasController() ? (net.controller.storage.getEnergyStored() / (double)net.controller.storage.getMaxEnergyStored()) : 0; }
+	{ return getCBNetwork().hasWorkingController() ? (getCBNetwork().controller.storage.getEnergyStored() / (double)getCBNetwork().controller.storage.getMaxEnergyStored()) : 0; }
 	
 	public static NBTTagCompound guiData(int side, int gui, int module)
 	{
@@ -463,13 +463,13 @@ public class TileCBCable extends TileBasicCBNetTile implements IPaintable, IGuiT
 	{ return canReceive[f.ordinal()]; }
 	
 	public int getEnergyStored(ForgeDirection f)
-	{ return net.hasController() ? net.controller.getEnergyStored(f) : 0; }
+	{ return getCBNetwork().hasWorkingController() ? getCBNetwork().controller.getEnergyStored(f) : 0; }
 	
 	public int getMaxEnergyStored(ForgeDirection f)
-	{ return net.hasController() ? net.controller.getMaxEnergyStored(f) : 0; }
+	{ return getCBNetwork().hasWorkingController() ? getCBNetwork().controller.getMaxEnergyStored(f) : 0; }
 	
 	public int receiveEnergy(ForgeDirection f, int e, boolean b)
-	{ return (net.hasController() && canConnectEnergy(f)) ? net.controller.receiveEnergy(f, e, b) : 0; }
+	{ return (getCBNetwork().hasWorkingController() && canConnectEnergy(f)) ? getCBNetwork().controller.receiveEnergy(f, e, b) : 0; }
 	
 	public void setDisabled(int side, boolean b)
 	{
@@ -508,7 +508,7 @@ public class TileCBCable extends TileBasicCBNetTile implements IPaintable, IGuiT
 	}
 	
 	public LMSecurity getSecurity()
-	{ if(net.hasController()) return net.controller.getSecurity(); return security; }
+	{ return getCBNetwork().hasWorkingController() ? getCBNetwork().controller.getSecurity() : security; }
 	
 	public boolean canPlayerInteract(EntityPlayer ep, boolean breakBlock)
 	{ return getSecurity().canInteract(ep); }

@@ -32,7 +32,7 @@ public class TileModuleCopier extends TileInvLM implements IGuiTile, ICBNetTile,
 	{
 		super(3);
 		energyStorage = new EnergyStorage(4800);
-		net = new CBNetwork(null);
+		net = new CBNetwork();
 	}
 	
 	public void readTileData(NBTTagCompound tag)

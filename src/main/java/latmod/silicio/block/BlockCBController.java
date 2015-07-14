@@ -38,6 +38,6 @@ public class BlockCBController extends BlockSil
 	public IIcon getIcon(IBlockAccess iba, int x, int y, int z, int s)
 	{
 		TileCBController t = getTile(TileCBController.class, iba, x, y, z);
-		return (t != null && t.hasConflict) ? icon_conflict : blockIcon;
+		return (t != null && t.getCBNetwork().hasConflict) ? icon_conflict : blockIcon;
 	}
 }
