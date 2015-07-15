@@ -1,6 +1,6 @@
 package latmod.silicio.item.modules.config;
 
-import latmod.ftbu.core.InvUtils;
+import latmod.ftbu.core.inv.InvUtils;
 import latmod.ftbu.core.util.FastList;
 import latmod.ftbu.mod.FTBU;
 import latmod.silicio.gui.GuiModuleSettings;

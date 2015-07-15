@@ -1,6 +1,6 @@
 package latmod.silicio.item;
-import latmod.ftbu.core.ODItems;
 import latmod.ftbu.core.client.LatCoreMCClient;
+import latmod.ftbu.core.inv.ODItems;
 import latmod.silicio.*;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.item.ItemStack;

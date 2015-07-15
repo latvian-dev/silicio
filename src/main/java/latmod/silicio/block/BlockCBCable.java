@@ -1,8 +1,8 @@
 package latmod.silicio.block;
 import java.util.List;
 
-import latmod.ftbu.core.ODItems;
 import latmod.ftbu.core.client.LatCoreMCClient;
+import latmod.ftbu.core.inv.ODItems;
 import latmod.ftbu.core.tile.TileLM;
 import latmod.ftbu.core.util.*;
 import latmod.silicio.SilMat;

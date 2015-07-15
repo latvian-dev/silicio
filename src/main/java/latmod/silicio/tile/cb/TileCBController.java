@@ -4,6 +4,7 @@ import java.util.List;
 
 import latmod.ftbu.core.*;
 import latmod.ftbu.core.gui.ContainerEmpty;
+import latmod.ftbu.core.inv.InvUtils;
 import latmod.ftbu.core.tile.*;
 import latmod.ftbu.core.util.*;
 import latmod.ftbu.core.waila.WailaDataAccessor;
