@@ -147,7 +147,7 @@ public class TileCBController extends TileBasicCBNetTile implements IEnergyRecei
 			if(worldObj.setBlockToAir(xCoord, yCoord, zCoord))
 			{
 				e.printStackTrace();
-				LatCoreMC.printChat(BroadcastSender.inst, "CBController @ " + LatCore.stripInt(xCoord, yCoord, zCoord) + " crashed!");
+				LatCoreMC.printChat(BroadcastSender.inst, "CBController @ " + LMStringUtils.stripI(xCoord, yCoord, zCoord) + " crashed!");
 				InvUtils.dropItem(worldObj, xCoord + 0.5D, yCoord + 0.5D, zCoord + 0.5D, new ItemStack(SilItems.b_cbcontroller), 10);
 			}
 		}
