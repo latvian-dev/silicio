@@ -17,8 +17,9 @@ public class ItemMaterialsSil extends ItemSil
 		"silicon_gem",
 		"silicon_dust",
 		"circuit",
-		"laser_crystal",
+		"lapis_crystal",
 		"module_logic",
+		"redstone_crystal",
 	};
 	
 	@SideOnly(Side.CLIENT)
@@ -38,23 +39,26 @@ public class ItemMaterialsSil extends ItemSil
 		SilItems.Modules.EMPTY = new ItemStack(this, 1, 0);
 		SilItems.Modules.INPUT = new ItemStack(this, 1, 1);
 		SilItems.Modules.OUTPUT = new ItemStack(this, 1, 2);
-		SilMat.SILICON = new ItemStack(this, 1, 3);
+		SilMat.SILICON_ITEM = new ItemStack(this, 1, 3);
 		SilMat.SILICON_DUST = new ItemStack(this, 1, 4);
 		SilMat.CIRCUIT = new ItemStack(this, 1, 5);
-		SilMat.LASER_CRYSTAL = new ItemStack(this, 1, 6);
+		SilMat.LAPIS_CRYSTAL = new ItemStack(this, 1, 6);
 		SilItems.Modules.LOGIC = new ItemStack(this, 1, 7);
+		SilMat.REDSTONE_CRYSTAL = new ItemStack(this, 1, 8);
+		
+		SilMat.SILICON = SilConfig.General.siliconOD ? ODItems.SILICON : SilMat.SILICON_ITEM;
 	}
 	
 	public void loadRecipes()
 	{
-		mod.recipes.addSmelting(SilMat.SILICON, SilMat.SILICON_DUST);
+		mod.recipes.addSmelting(SilMat.SILICON_ITEM, SilMat.SILICON_DUST);
 		
 		mod.recipes.addRecipe(SilMat.CIRCUIT, "CCC", "ISI", "CCC",
 				'C', SilItems.b_cbcable,
 				'S', SilMat.SILICON,
 				'I', ODItems.IRON);
 		
-		mod.recipes.addShapelessRecipe(SilItems.Modules.LOGIC, SilItems.Modules.EMPTY, SilMat.SILICON, ODItems.QUARTZ, ODItems.REDSTONE);
+		mod.recipes.addShapelessRecipe(SilItems.Modules.LOGIC, SilItems.Modules.EMPTY, ODItems.QUARTZ, SilMat.LAPIS_CRYSTAL, SilMat.REDSTONE_CRYSTAL);
 	}
 	
 	public String getUnlocalizedName(ItemStack is)

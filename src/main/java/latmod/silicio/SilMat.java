@@ -10,10 +10,12 @@ public class SilMat
 	public static ItemStack coverBlock = null;
 	public static Block coverBlockB = null;
 	
-	public static ItemStack SILICON;
+	public static Object SILICON;
+	public static ItemStack SILICON_ITEM;
 	public static ItemStack SILICON_DUST;
 	public static ItemStack CIRCUIT;
-	public static ItemStack LASER_CRYSTAL;
+	public static ItemStack LAPIS_CRYSTAL;
+	public static ItemStack REDSTONE_CRYSTAL;
 	
 	public static void init()
 	{

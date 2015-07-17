@@ -18,7 +18,8 @@ silicio:item.mat.module_input.name=Empty Input Module
 silicio:item.mat.module_output.name=Empty Output Module
 silicio:item.mat.module_logic.name=Empty Logic Module
 silicio:item.mat.circuit.name=Integrated Circuit
-silicio:item.mat.laser_crystal.name=Laser Crystal
+silicio:item.mat.lapis_crystal.name=Lapis Crystal
+silicio:item.mat.redstone_crystal.name=Redstone Crystal
 
 silicio:item.circuit_board.name=Circuit Board
 

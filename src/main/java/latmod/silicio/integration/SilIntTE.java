@@ -17,17 +17,19 @@ public class SilIntTE
 		if(SilConfig.General.disableAllCrafting) return;
 		
 		// Circuit Board //
-		addSmelter(new ItemStack(SilItems.i_circuit_board), SilItems.Modules.EMPTY, LMRecipes.size(SilMat.SILICON, 8), 1200);
+		
+		addSmelter(new ItemStack(SilItems.i_circuit_board), SilMat.CIRCUIT, LMRecipes.size(SilMat.SILICON_ITEM, 8), 1200);
 		
 		// Materials //
 		addSmelter(SilItems.Modules.EMPTY, SilMat.CIRCUIT, new ItemStack(Items.iron_ingot, 8), 12000);
-		addSmelter(SilItems.Modules.INPUT, SilItems.Modules.EMPTY, new ItemStack(Blocks.hopper), 1200);
-		addSmelter(SilItems.Modules.OUTPUT, SilItems.Modules.EMPTY, new ItemStack(Blocks.dropper), 1200);
+		addSmelter(SilItems.Modules.INPUT, SilItems.Modules.EMPTY, SilMat.LAPIS_CRYSTAL, 1200);
+		addSmelter(SilItems.Modules.OUTPUT, SilItems.Modules.EMPTY, SilMat.REDSTONE_CRYSTAL, 1200);
 		
 		addPulverizer(SilMat.SILICON_DUST, SilMat.SILICON, 2400);
 		addPulverizer(SilMat.SILICON_DUST, Blocks.sand, 4800);
 		
-		addSmelter(SilMat.LASER_CRYSTAL, new ItemStack(Items.dye, 1, 4), new ItemStack(Blocks.glass, 4), 48000);
+		addSmelter(SilMat.LAPIS_CRYSTAL, new ItemStack(Items.dye, 4, 4), new ItemStack(Blocks.glass), 4800);
+		addSmelter(SilMat.REDSTONE_CRYSTAL, new ItemStack(Items.redstone, 4), new ItemStack(Blocks.glass), 4800);
 		
 		Silicio.mod.recipes.addRecipe(new ItemStack(SilItems.b_cbcontroller), "SIS", "CFC", "SIS",
 				'S', SilMat.SILICON,
@@ -38,7 +40,7 @@ public class SilIntTE
 		Silicio.mod.recipes.addRecipe(new ItemStack(SilItems.b_module_copier), " C ", "MFM", "GLG",
 				'C', SilMat.CIRCUIT,
 				'M', SilItems.Modules.EMPTY,
-				'L', SilMat.LASER_CRYSTAL,
+				'L', SilMat.LAPIS_CRYSTAL,
 				'F', BlockFrame.frameMachineBasic,
 				'G', "gearTin");
 	}
