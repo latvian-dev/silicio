@@ -1,6 +1,6 @@
 package latmod.silicio.item;
 
-import latmod.ftbu.core.inv.InvUtils;
+import latmod.ftbu.core.inv.LMInvUtils;
 import net.minecraft.item.ItemStack;
 
 public interface IItemCard
@@ -15,7 +15,7 @@ public interface IItemCard
 			if(filter == null) return true;
 			if(filter.getItem() instanceof IItemCard)
 				return ((IItemCard)filter.getItem()).isItemValid(filter, item);
-			return InvUtils.itemsEquals(filter, item, false, true);
+			return LMInvUtils.itemsEquals(filter, item, false, true);
 		}
 	}
 }

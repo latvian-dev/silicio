@@ -1,6 +1,6 @@
 package latmod.silicio.item.modules.io;
 
-import latmod.ftbu.core.inv.InvUtils;
+import latmod.ftbu.core.inv.LMInvUtils;
 import latmod.silicio.SilItems;
 import latmod.silicio.item.modules.IOType;
 import latmod.silicio.item.modules.config.*;
@@ -63,14 +63,14 @@ public class ItemModuleItemOutput extends ItemModuleIO
 				
 				for(int i = 0; i < ips; i++)
 				{
-					int idx = InvUtils.getFirstIndexWhereFits(inv, itemT, e.board.sideOpposite);
+					int idx = LMInvUtils.getFirstIndexWhereFits(inv, itemT, e.board.sideOpposite);
 					
 					if(idx != -1 && (pw == 0 || e.net.controller.hasEnergy(pw)) && e.net.controller.requestItem(itemT, false))
 					{
 						if(pw > 0) e.net.controller.extractEnergy(pw);
 						
 						ItemStack is0 = inv.getStackInSlot(idx);
-						if(is0 == null) is0 = InvUtils.singleCopy(itemT);
+						if(is0 == null) is0 = LMInvUtils.singleCopy(itemT);
 						else is0.stackSize++;
 						inv.setInventorySlotContents(idx, is0);
 						//inv.markDirty();

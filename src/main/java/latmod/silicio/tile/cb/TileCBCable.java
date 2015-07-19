@@ -3,7 +3,7 @@ import java.util.*;
 
 import latmod.ftbu.core.*;
 import latmod.ftbu.core.gui.ContainerEmpty;
-import latmod.ftbu.core.inv.InvUtils;
+import latmod.ftbu.core.inv.LMInvUtils;
 import latmod.ftbu.core.tile.*;
 import latmod.ftbu.core.util.*;
 import latmod.ftbu.core.waila.WailaDataAccessor;
@@ -17,7 +17,7 @@ import latmod.silicio.item.modules.io.ItemModuleEnergyInput;
 import latmod.silicio.tile.cb.events.*;
 import net.minecraft.block.Block;
 import net.minecraft.client.gui.GuiScreen;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.*;
 import net.minecraft.init.Blocks;
 import net.minecraft.inventory.Container;
 import net.minecraft.item.*;
@@ -223,13 +223,13 @@ public class TileCBCable extends TileBasicCBNetTile implements IPaintable, IGuiT
 		
 		if(mop == null) return false;
 		
-		boolean isWrench = InvUtils.isWrench(is);
+		boolean isWrench = LMInvUtils.isWrench(is);
 		
 		int id = -1;
 		
 		if(!hasCover)
 		{
-			if(is != null && SilMat.coverBlock != null && InvUtils.itemsEquals(is, SilMat.coverBlock, false, true))
+			if(is != null && SilMat.coverBlock != null && LMInvUtils.itemsEquals(is, SilMat.coverBlock, false, true))
 			{
 				if(isServer())
 				{
@@ -251,7 +251,7 @@ public class TileCBCable extends TileBasicCBNetTile implements IPaintable, IGuiT
 				if(isServer() && mop.subHit == 6 && ep.isSneaking() && isWrench)
 				{
 					if(worldObj.setBlockToAir(xCoord, yCoord, zCoord))
-						InvUtils.dropItem(worldObj, xCoord + 0.5D, yCoord + 0.5D, zCoord + 0.5D, new ItemStack(SilItems.b_cbcable), 8);
+						LMInvUtils.dropItem(worldObj, xCoord + 0.5D, yCoord + 0.5D, zCoord + 0.5D, new ItemStack(SilItems.b_cbcable), 8);
 				}
 			}
 		}
@@ -290,7 +290,7 @@ public class TileCBCable extends TileBasicCBNetTile implements IPaintable, IGuiT
 				{
 					hasCover = false;
 					if(!ep.capabilities.isCreativeMode && SilMat.coverBlock != null)
-						InvUtils.dropItem(ep, SilMat.coverBlock);
+						LMInvUtils.dropItem(ep, SilMat.coverBlock);
 					markDirty();
 				}
 			}
@@ -300,12 +300,12 @@ public class TileCBCable extends TileBasicCBNetTile implements IPaintable, IGuiT
 			if(is != null && ep.isSneaking() && isWrench)
 			{
 				if(!ep.capabilities.isCreativeMode)
-					InvUtils.dropItem(ep, new ItemStack(SilItems.i_circuit_board));
+					LMInvUtils.dropItem(ep, new ItemStack(SilItems.i_circuit_board));
 				
 				for(int i = 0; i < boards[id].items.length; i++)
 				{
 					if(boards[id].items[i] != null && boards[id].items[i].stackSize > 0)
-						InvUtils.dropItem(ep, boards[id].items[i]);
+						LMInvUtils.dropItem(ep, boards[id].items[i]);
 				}
 				
 				boards[id] = null;
@@ -327,14 +327,14 @@ public class TileCBCable extends TileBasicCBNetTile implements IPaintable, IGuiT
 		if(isServer())
 		{
 			if(hasCover && SilMat.coverBlock != null)
-				InvUtils.dropItem(worldObj, xCoord + 0.5D, yCoord + 0.5D, zCoord + 0.5D, SilMat.coverBlock, 8);
+				LMInvUtils.dropItem(worldObj, xCoord + 0.5D, yCoord + 0.5D, zCoord + 0.5D, SilMat.coverBlock, 8);
 			
 			for(int i = 0; i < boards.length; i++)
 			{
 				if(boards[i] != null)
 				{
-					InvUtils.dropItem(worldObj, xCoord + 0.5D, yCoord + 0.5D, zCoord + 0.5D, new ItemStack(SilItems.i_circuit_board), 8);
-					InvUtils.dropAllItems(worldObj, xCoord + 0.5D, yCoord + 0.5D, zCoord + 0.5D, boards[i].items);
+					LMInvUtils.dropItem(worldObj, xCoord + 0.5D, yCoord + 0.5D, zCoord + 0.5D, new ItemStack(SilItems.i_circuit_board), 8);
+					LMInvUtils.dropAllItems(worldObj, xCoord + 0.5D, yCoord + 0.5D, zCoord + 0.5D, boards[i].items);
 					boards[i] = null;
 				}
 			}
@@ -409,7 +409,7 @@ public class TileCBCable extends TileBasicCBNetTile implements IPaintable, IGuiT
 		return null;
 	}
 	
-	public void onClientAction(EntityPlayer ep, String action, NBTTagCompound data)
+	public void onClientAction(EntityPlayerMP ep, String action, NBTTagCompound data)
 	{
 		if(action.equals(ACTION_SET_CHANNEL))
 		{

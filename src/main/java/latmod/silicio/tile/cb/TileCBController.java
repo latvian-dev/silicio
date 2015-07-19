@@ -4,7 +4,7 @@ import java.util.List;
 
 import latmod.ftbu.core.*;
 import latmod.ftbu.core.gui.ContainerEmpty;
-import latmod.ftbu.core.inv.InvUtils;
+import latmod.ftbu.core.inv.LMInvUtils;
 import latmod.ftbu.core.tile.*;
 import latmod.ftbu.core.util.*;
 import latmod.ftbu.core.waila.WailaDataAccessor;
@@ -148,7 +148,7 @@ public class TileCBController extends TileBasicCBNetTile implements IEnergyRecei
 			{
 				e.printStackTrace();
 				LatCoreMC.printChat(BroadcastSender.inst, "CBController @ " + LMStringUtils.stripI(xCoord, yCoord, zCoord) + " crashed!");
-				InvUtils.dropItem(worldObj, xCoord + 0.5D, yCoord + 0.5D, zCoord + 0.5D, new ItemStack(SilItems.b_cbcontroller), 10);
+				LMInvUtils.dropItem(worldObj, xCoord + 0.5D, yCoord + 0.5D, zCoord + 0.5D, new ItemStack(SilItems.b_cbcontroller), 10);
 			}
 		}
 		
@@ -301,7 +301,7 @@ public class TileCBController extends TileBasicCBNetTile implements IEnergyRecei
 		{
 			if(IItemCard.Helper.isValid(e.filter, is))
 			{
-				if(InvUtils.addSingleItemToInv(is, e.inv, e.side, !simulate))
+				if(LMInvUtils.addSingleItemToInv(is, e.inv, e.side, !simulate))
 					return true;
 			}
 		}
@@ -317,13 +317,13 @@ public class TileCBController extends TileBasicCBNetTile implements IEnergyRecei
 		{
 			if(IItemCard.Helper.isValid(e.filter, is))
 			{
-				int idx = InvUtils.getFirstFilledIndex(e.inv, is, e.side);
+				int idx = LMInvUtils.getFirstFilledIndex(e.inv, is, e.side);
 				
 				if(idx != -1)
 				{
 					if(!simulate)
 					{
-						e.inv.setInventorySlotContents(idx, InvUtils.reduceItem(e.inv.getStackInSlot(idx)));
+						e.inv.setInventorySlotContents(idx, LMInvUtils.reduceItem(e.inv.getStackInSlot(idx)));
 						e.inv.markDirty();
 					}
 					

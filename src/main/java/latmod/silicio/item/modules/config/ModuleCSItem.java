@@ -1,6 +1,6 @@
 package latmod.silicio.item.modules.config;
 
-import latmod.ftbu.core.inv.InvUtils;
+import latmod.ftbu.core.inv.LMInvUtils;
 import latmod.ftbu.core.util.FastList;
 import latmod.ftbu.mod.FTBU;
 import latmod.silicio.gui.GuiModuleSettings;
@@ -20,7 +20,7 @@ public class ModuleCSItem extends ModuleConfigSegment
 	@SideOnly(Side.CLIENT)
 	public void buttonClicked(GuiModuleSettings g)
 	{
-		ItemStack is = InvUtils.singleCopy(g.container.player.inventory.getItemStack());
+		ItemStack is = LMInvUtils.singleCopy(g.container.player.inventory.getItemStack());
 		
 		if(is == null && !FTBU.proxy.isShiftDown()) return;
 		

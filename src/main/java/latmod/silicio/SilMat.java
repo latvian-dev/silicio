@@ -1,7 +1,7 @@
 package latmod.silicio;
 
 import latmod.ftbu.core.LatCoreMC;
-import latmod.ftbu.core.inv.InvUtils;
+import latmod.ftbu.core.inv.LMInvUtils;
 import net.minecraft.block.Block;
 import net.minecraft.item.ItemStack;
 
@@ -29,7 +29,7 @@ public class SilMat
 		
 		if(SilConfig.General.coverBlock != null && !SilConfig.General.coverBlock.isEmpty())
 		{
-			coverBlock = InvUtils.singleCopy(InvUtils.parseItem(SilConfig.General.coverBlock));
+			coverBlock = LMInvUtils.singleCopy(LMInvUtils.parseItem(SilConfig.General.coverBlock));
 			if(coverBlock != null) coverBlockB = Block.getBlockFromItem(coverBlock.getItem());
 			else LatCoreMC.logger.warn("Block " + SilConfig.General.coverBlock + " not found!");
 		}

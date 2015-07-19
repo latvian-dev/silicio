@@ -50,7 +50,7 @@ public class ItemModulePainter extends ItemModuleIO implements IToggable
 	
 	public void loadRecipes()
 	{
-		ItemStack is = InvUtils.parseItem("LatBlocks:painterParts@3");
+		ItemStack is = LMInvUtils.parseItem("LatBlocks:painterParts@3");
 		
 		if(is != null)
 			mod.recipes.addShapelessRecipe(new ItemStack(this), SilItems.Modules.OUTPUT, is);

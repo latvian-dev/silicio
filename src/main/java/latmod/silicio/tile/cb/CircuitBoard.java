@@ -1,5 +1,5 @@
 package latmod.silicio.tile.cb;
-import latmod.ftbu.core.inv.InvUtils;
+import latmod.ftbu.core.inv.LMInvUtils;
 import latmod.silicio.item.modules.ItemModule;
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
@@ -36,13 +36,13 @@ public class CircuitBoard implements IInventory
 	
 	public void readTileData(NBTTagCompound tag)
 	{
-		InvUtils.readItemsFromNBT(items, tag, "Items");
+		LMInvUtils.readItemsFromNBT(items, tag, "Items");
 		redstoneOut = tag.getBoolean("RSOut");
 	}
 	
 	public void writeTileData(NBTTagCompound tag)
 	{
-		if(items != null) InvUtils.writeItemsToNBT(items, tag, "Items");
+		if(items != null) LMInvUtils.writeItemsToNBT(items, tag, "Items");
 		tag.setBoolean("RSOut", redstoneOut);
 	}
 	
@@ -76,10 +76,10 @@ public class CircuitBoard implements IInventory
 	{ return items[i]; }
 	
 	public ItemStack decrStackSize(int slot, int amt)
-	{ return InvUtils.decrStackSize(this, slot, amt); }
+	{ return LMInvUtils.decrStackSize(this, slot, amt); }
 	
 	public ItemStack getStackInSlotOnClosing(int i)
-	{ return InvUtils.getStackInSlotOnClosing(this, i); }
+	{ return LMInvUtils.getStackInSlotOnClosing(this, i); }
 	
 	public void setInventorySlotContents(int i, ItemStack is)
 	{ items[i] = is; }

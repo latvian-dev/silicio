@@ -46,6 +46,7 @@ public class ItemMaterialsSil extends ItemSil
 		SilItems.Modules.LOGIC = new ItemStack(this, 1, 7);
 		SilMat.REDSTONE_CRYSTAL = new ItemStack(this, 1, 8);
 		
+		if(SilConfig.General.siliconOD) ODItems.add(ODItems.SILICON, SilMat.SILICON_ITEM);
 		SilMat.SILICON = SilConfig.General.siliconOD ? ODItems.SILICON : SilMat.SILICON_ITEM;
 	}
 	

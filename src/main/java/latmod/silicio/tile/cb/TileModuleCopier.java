@@ -3,7 +3,7 @@ package latmod.silicio.tile.cb;
 import java.util.List;
 
 import latmod.ftbu.core.LatCoreMC;
-import latmod.ftbu.core.inv.InvUtils;
+import latmod.ftbu.core.inv.LMInvUtils;
 import latmod.ftbu.core.tile.*;
 import latmod.ftbu.core.waila.WailaDataAccessor;
 import latmod.silicio.gui.GuiModuleCopier;
@@ -40,7 +40,7 @@ public class TileModuleCopier extends TileInvLM implements IGuiTile, ICBNetTile,
 	{
 		super.readTileData(tag);
 		energyStorage.readFromNBT(tag);
-		item = InvUtils.loadStack(tag, "Item");
+		item = LMInvUtils.loadStack(tag, "Item");
 		progress = tag.getShort("Prog");
 	}
 	
@@ -48,7 +48,7 @@ public class TileModuleCopier extends TileInvLM implements IGuiTile, ICBNetTile,
 	{
 		super.writeTileData(tag);
 		energyStorage.writeToNBT(tag);
-		InvUtils.saveStack(tag, "Item", item);
+		LMInvUtils.saveStack(tag, "Item", item);
 		tag.setShort("Prog", (short)progress);
 	}
 	
@@ -70,11 +70,11 @@ public class TileModuleCopier extends TileInvLM implements IGuiTile, ICBNetTile,
 		{
 			if(items[0] != null && items[1] != null && energyStorage.getEnergyStored() >= energyRequired && items[0].getItem() instanceof ItemModule)
 			{
-				if(items[1].hasTagCompound() && InvUtils.itemsEquals(items[0], items[1], false, false))
+				if(items[1].hasTagCompound() && LMInvUtils.itemsEquals(items[0], items[1], false, false))
 				{
-					item = InvUtils.singleCopy(items[0]);
+					item = LMInvUtils.singleCopy(items[0]);
 					item.setTagCompound(items[1].getTagCompound());
-					items[0] = InvUtils.reduceItem(items[0]);
+					items[0] = LMInvUtils.reduceItem(items[0]);
 					progress = 1;
 					energyStorage.extractEnergy(energyRequired, false);
 					markDirty();
@@ -84,7 +84,7 @@ public class TileModuleCopier extends TileInvLM implements IGuiTile, ICBNetTile,
 		
 		if(progress >= maxProg)
 		{
-			if(server && item != null && InvUtils.addSingleItemToInv(item, this, new int[] { 2 }, -1, true))
+			if(server && item != null && LMInvUtils.addSingleItemToInv(item, this, new int[] { 2 }, -1, true))
 			{
 				item = null;
 				progress = 0;
