@@ -65,9 +65,9 @@ public class TileCBCable extends TileBasicCBNetTile implements IPaintable, IGuiT
 		if(isServer()) markDirty();
 	}
 	
-	public void onPlaced()
+	public void onLoaded()
 	{
-		super.onPlaced();
+		super.onLoaded();
 		updateRenderSides();
 	}
 	
