@@ -4,6 +4,7 @@ import java.util.*;
 import latmod.ftbu.core.*;
 import latmod.ftbu.core.gui.ContainerEmpty;
 import latmod.ftbu.core.inv.LMInvUtils;
+import latmod.ftbu.core.paint.*;
 import latmod.ftbu.core.tile.*;
 import latmod.ftbu.core.util.*;
 import latmod.ftbu.core.waila.WailaDataAccessor;
@@ -216,7 +217,7 @@ public class TileCBCable extends TileBasicCBNetTile implements IPaintable, IGuiT
 	
 	public boolean onRightClick(EntityPlayer ep, ItemStack is, int side, float x, float y, float z)
 	{
-		if(is != null && is.getItem() instanceof IPaintable.IPainterItem)
+		if(is != null && is.getItem() instanceof IPainterItem)
 			return false;
 		
 		MovingObjectPosition mop = MathHelperLM.rayTrace(ep);

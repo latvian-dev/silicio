@@ -2,7 +2,7 @@ package latmod.silicio.item.modules.io;
 
 import latmod.ftbu.core.EnumDyeColor;
 import latmod.ftbu.core.inv.*;
-import latmod.ftbu.core.tile.IPaintable.Paint;
+import latmod.ftbu.core.paint.Paint;
 import latmod.silicio.SilItems;
 import latmod.silicio.item.modules.*;
 import latmod.silicio.item.modules.config.*;
