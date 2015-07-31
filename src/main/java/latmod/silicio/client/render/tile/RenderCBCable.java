@@ -140,7 +140,7 @@ public class RenderCBCable extends TileRenderer<TileCBCable>
 			
 			double d = 0D;//0.001D;
 			renderBlocks.fullBlock.setBounds(d, d, d, 1D - d, 1D - d, 1D - d);
-			renderBlocks.blockAccess = t.getWorldObj();
+			renderBlocks.setInst(t.getWorldObj());
 			renderBlocks.renderAllFaces = true;
 			renderBlocks.setRenderBounds(renderBlocks.fullBlock);
 			renderBlocks.renderStandardBlockIcons(t.getBlockType(), t.xCoord, t.yCoord, t.zCoord, icons, true);
