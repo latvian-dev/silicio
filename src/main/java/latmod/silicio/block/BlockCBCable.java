@@ -169,7 +169,7 @@ public class BlockCBCable extends BlockSil
 	public int isProvidingWeakPower(IBlockAccess iba, int x, int y, int z, int s)
 	{
 		TileCBCable t = (TileCBCable)iba.getTileEntity(x, y, z);
-		return (t != null && t.isOutputtingRS(MathHelperLM.getDir(s).getOpposite().ordinal())) ? 15 : 0;
+		return (t != null && t.isOutputtingRS(Facing.oppositeSide[s])) ? 15 : 0;
 	}
 	
 	public boolean canConnectRedstone(IBlockAccess iba, int x, int y, int z, int side)

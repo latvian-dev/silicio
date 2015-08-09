@@ -16,17 +16,12 @@ public class SilConfig extends LMConfig implements IServerConfig
 	
 	public void readConfig(NBTTagCompound tag)
 	{
-		General.coverBlock = tag.getString("CB");
-		
 		//boolean[] b = readBools(tag, "C");
 		//General.bool = b[0];
-		
-		SilMat.updateCoverBlock();
 	}
 	
 	public void writeConfig(NBTTagCompound tag, EntityPlayerMP ep)
 	{
-		tag.setString("CB", General.coverBlock);
 		//writeBools(tag, "C",
 		//General.bool);
 	}
@@ -35,14 +30,12 @@ public class SilConfig extends LMConfig implements IServerConfig
 	{
 		public static boolean disableAllCrafting;
 		public static boolean enableTERecipes;
-		public static String coverBlock;
 		public static boolean siliconOD;
 		
 		public static void load(Category c)
 		{
 			disableAllCrafting = c.getBool("disableAllCrafting", false);
 			enableTERecipes = c.getBool("enableTERecipes", true);
-			coverBlock = c.getString("coverBlock", "LatBlocks:paintable");
 			siliconOD = c.getBool("siliconOD", true);
 			
 			c.setComment("disableAllCrafting", "Set to true to disable all crafting recipes");
