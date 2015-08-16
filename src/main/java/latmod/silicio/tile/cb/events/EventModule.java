@@ -1,6 +1,6 @@
 package latmod.silicio.tile.cb.events;
 
-import latmod.ftbu.core.util.LatCore;
+import latmod.ftbu.core.util.LMUtils;
 import latmod.silicio.item.modules.ItemModule;
 import latmod.silicio.tile.cb.ModuleEntry;
 import net.minecraft.item.ItemStack;
@@ -16,7 +16,7 @@ public class EventModule extends EventBoard
 	{ return module.stack; }
 	
 	public int hashCode()
-	{ return LatCore.hashCode(super.hashCode(), module.moduleID); }
+	{ return LMUtils.hashCode(super.hashCode(), module.moduleID); }
 	
 	public int getChannel(int i)
 	{ return ItemModule.getChannel(module.stack, i); }

@@ -1,7 +1,7 @@
 package latmod.silicio.item.modules.logic;
 
 import latmod.ftbu.core.inv.ODItems;
-import latmod.silicio.*;
+import latmod.silicio.SilItems;
 import latmod.silicio.item.modules.*;
 import latmod.silicio.tile.cb.events.EventProvideSignals;
 import net.minecraft.item.ItemStack;
@@ -27,7 +27,7 @@ public class ItemModuleGateOr extends ItemModuleLogic implements ISignalProvider
 	
 	public void loadRecipes()
 	{
-		mod.recipes.addShapelessRecipe(new ItemStack(this), SilItems.Modules.LOGIC, SilMat.SILICON, ODItems.REDSTONE);
+		mod.recipes.addShapelessRecipe(new ItemStack(this), SilItems.Modules.LOGIC, ODItems.SILICON, ODItems.REDSTONE);
 	}
 	
 	public void provideSignals(EventProvideSignals e)

@@ -1,6 +1,7 @@
 package latmod.silicio.item.modules.logic;
 
-import latmod.silicio.*;
+import latmod.ftbu.core.inv.ODItems;
+import latmod.silicio.SilItems;
 import latmod.silicio.item.modules.*;
 import latmod.silicio.tile.cb.events.EventProvideSignals;
 import net.minecraft.init.Blocks;
@@ -24,7 +25,7 @@ public class ItemModuleGateNot extends ItemModuleLogic implements ISignalProvide
 	
 	public void loadRecipes()
 	{
-		mod.recipes.addShapelessRecipe(new ItemStack(this), SilItems.Modules.LOGIC, SilMat.SILICON, Blocks.redstone_torch);
+		mod.recipes.addShapelessRecipe(new ItemStack(this), SilItems.Modules.LOGIC, ODItems.SILICON, Blocks.redstone_torch);
 	}
 	
 	public void provideSignals(EventProvideSignals e)

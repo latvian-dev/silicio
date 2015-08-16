@@ -1,8 +1,12 @@
 package latmod.silicio.integration;
 
-import latmod.ftbu.core.recipes.*;
+import latmod.ftbu.core.inv.ODItems;
+import latmod.ftbu.core.item.MaterialItem;
+import latmod.ftbu.core.recipes.StackEntry;
 import latmod.ftbu.core.util.FastList;
+import latmod.latblocks.item.ItemMaterialsLB;
 import latmod.silicio.*;
+import latmod.silicio.item.ItemMaterialsSil;
 import net.minecraft.init.*;
 import net.minecraft.item.ItemStack;
 import cofh.thermalexpansion.block.simple.BlockFrame;
@@ -18,29 +22,29 @@ public class SilIntTE
 		
 		// Circuit Board //
 		
-		addSmelter(new ItemStack(SilItems.i_circuit_board), SilMat.CIRCUIT, LMRecipes.size(SilMat.SILICON_ITEM, 8), 1200);
+		addSmelter(new ItemStack(SilItems.i_circuit_board), ItemMaterialsSil.CIRCUIT, ItemMaterialsSil.SILICON_GEM.getStack(8), 1200);
 		
 		// Materials //
-		addSmelter(SilItems.Modules.EMPTY, SilMat.CIRCUIT, new ItemStack(Items.iron_ingot, 8), 12000);
-		addSmelter(SilItems.Modules.INPUT, SilItems.Modules.EMPTY, SilMat.LAPIS_CRYSTAL, 1200);
-		addSmelter(SilItems.Modules.OUTPUT, SilItems.Modules.EMPTY, SilMat.REDSTONE_CRYSTAL, 1200);
+		addSmelter(SilItems.Modules.EMPTY, ItemMaterialsSil.CIRCUIT, new ItemStack(Items.iron_ingot, 8), 12000);
+		addSmelter(SilItems.Modules.INPUT, SilItems.Modules.EMPTY, ItemMaterialsSil.BLUE_CRYSTAL, 1200);
+		addSmelter(SilItems.Modules.OUTPUT, SilItems.Modules.EMPTY, ItemMaterialsSil.RED_CRYSTAL, 1200);
 		
-		addPulverizer(SilMat.SILICON_DUST, SilMat.SILICON, 2400);
-		addPulverizer(SilMat.SILICON_DUST, Blocks.sand, 4800);
+		addPulverizer(ItemMaterialsSil.SILICON_DUST, ItemMaterialsSil.SILICON_GEM, 2400);
+		addPulverizer(ItemMaterialsSil.SILICON_DUST, Blocks.sand, 4800);
 		
-		addSmelter(SilMat.LAPIS_CRYSTAL, new ItemStack(Items.dye, 4, 4), new ItemStack(Blocks.glass), 4800);
-		addSmelter(SilMat.REDSTONE_CRYSTAL, new ItemStack(Items.redstone, 4), new ItemStack(Blocks.glass), 4800);
+		addSmelter(ItemMaterialsSil.BLUE_CRYSTAL, ItemMaterialsLB.DUST_GLOWIUM_B, new ItemStack(Blocks.glass), 4800);
+		addSmelter(ItemMaterialsSil.RED_CRYSTAL, ItemMaterialsLB.DUST_GLOWIUM_R, new ItemStack(Blocks.glass), 4800);
 		
 		Silicio.mod.recipes.addRecipe(new ItemStack(SilItems.b_cbcontroller), "SIS", "CFC", "SIS",
-				'S', SilMat.SILICON,
+				'S', ODItems.SILICON,
 				'F', BlockFrame.frameTesseractFull,
 				'C', SilItems.b_cbcable,
-				'I', SilMat.CIRCUIT);
+				'I', ItemMaterialsSil.CIRCUIT);
 		
 		Silicio.mod.recipes.addRecipe(new ItemStack(SilItems.b_module_copier), " C ", "MFM", "GLG",
-				'C', SilMat.CIRCUIT,
+				'C', ItemMaterialsSil.CIRCUIT,
 				'M', SilItems.Modules.EMPTY,
-				'L', SilMat.LAPIS_CRYSTAL,
+				'L', ItemMaterialsSil.BLUE_CRYSTAL,
 				'F', BlockFrame.frameMachineBasic,
 				'G', "gearTin");
 	}
@@ -58,9 +62,15 @@ public class SilIntTE
 		}
 	}
 	
-	private static void addPulverizer(ItemStack out, Object in, int energy)
-	{ addPulverizer(out, in, energy, null, 0); }
+	private static ItemStack getStack(Object o)
+	{
+		if(o == null) return null;
+		return (o instanceof MaterialItem) ? ((MaterialItem)o).getStack() : (ItemStack)o;
+	}
 	
-	private static void addSmelter(ItemStack out, ItemStack in1, ItemStack in2, int energy)
-	{ SmelterManager.addRecipe(energy, in2, in1, out); }
+	private static void addPulverizer(Object out, Object in, int energy)
+	{ addPulverizer(getStack(out), in, energy, null, 0); }
+	
+	private static void addSmelter(Object out, Object in1, Object in2, int energy)
+	{ SmelterManager.addRecipe(energy, getStack(in2), getStack(in1), getStack(out)); }
 }

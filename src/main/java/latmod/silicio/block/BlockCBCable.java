@@ -5,7 +5,7 @@ import latmod.ftbu.core.client.LatCoreMCClient;
 import latmod.ftbu.core.inv.ODItems;
 import latmod.ftbu.core.tile.TileLM;
 import latmod.ftbu.core.util.*;
-import latmod.silicio.SilMat;
+import latmod.silicio.item.ItemMaterialsSil;
 import latmod.silicio.tile.cb.TileCBCable;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.Minecraft;
@@ -63,7 +63,7 @@ public class BlockCBCable extends BlockSil
 		mod.recipes.addRecipe(new ItemStack(this, 16), "RRR", "SES", "RRR",
 				'R', oreName,
 				'E', ODItems.LAPIS,
-				'S', SilMat.SILICON_DUST);
+				'S', ItemMaterialsSil.SILICON_DUST);
 	}
 	
 	public void setBlockBoundsForItemRender()

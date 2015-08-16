@@ -1,6 +1,6 @@
 package latmod.silicio.tile.cb.events;
 
-import latmod.ftbu.core.util.LatCore;
+import latmod.ftbu.core.util.LMUtils;
 import latmod.silicio.tile.cb.*;
 
 public class EventBoard extends EventCB
@@ -12,5 +12,5 @@ public class EventBoard extends EventCB
 	{ super(c); board = cb; cable = board.cable; }
 	
 	public int hashCode()
-	{ return LatCore.hashCode(super.hashCode(), cable.xCoord, cable.yCoord, cable.zCoord, board.side); }
+	{ return LMUtils.hashCode(super.hashCode(), cable.xCoord, cable.yCoord, cable.zCoord, board.side); }
 }

@@ -1,11 +1,12 @@
 package latmod.silicio;
 
+import latmod.ftbu.core.item.MaterialItem;
 import latmod.silicio.block.*;
 import latmod.silicio.item.*;
+import latmod.silicio.item.armor.*;
 import latmod.silicio.item.modules.ItemModule;
 import latmod.silicio.item.modules.io.*;
 import latmod.silicio.item.modules.logic.*;
-import net.minecraft.item.ItemStack;
 
 public class SilItems
 {
@@ -17,6 +18,10 @@ public class SilItems
 	
 	public static ItemMaterialsSil i_mat;
 	public static ItemCircuitBoard i_circuit_board;
+	public static ItemXSuit i_xsuit_helm;
+	public static ItemXSuit i_xsuit_body;
+	public static ItemXSuit i_xsuit_legs;
+	public static ItemXSuit i_xsuit_boots;
 	
 	public static void init()
 	{
@@ -29,15 +34,20 @@ public class SilItems
 		i_mat = new ItemMaterialsSil("materials").register();
 		i_circuit_board = new ItemCircuitBoard("circuit_board").register();
 		
+		i_xsuit_helm = new ItemXSuitHelm("xsuit_helm").register();
+		i_xsuit_body = new ItemXSuitBody("xsuit_body").register();
+		i_xsuit_legs = new ItemXSuitLegs("xsuit_legs").register();
+		i_xsuit_boots = new ItemXSuitBoots("xsuit_boots").register();
+		
 		Modules.init();
 	}
 	
 	public static class Modules
 	{
-		public static ItemStack EMPTY;
-		public static ItemStack INPUT;
-		public static ItemStack OUTPUT;
-		public static ItemStack LOGIC;
+		public static MaterialItem EMPTY;
+		public static MaterialItem INPUT;
+		public static MaterialItem OUTPUT;
+		public static MaterialItem LOGIC;
 		
 		public static ItemModule i_command_block;
 		public static ItemModule i_light_sensor;

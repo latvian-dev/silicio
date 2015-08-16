@@ -42,8 +42,6 @@ public class Silicio
 	@Mod.EventHandler
 	public void postInit(FMLPostInitializationEvent e)
 	{
-		SilMat.init();
-		
 		if(!SilConfig.General.disableAllCrafting)
 			mod.loadRecipes();
 		

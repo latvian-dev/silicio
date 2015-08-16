@@ -11,15 +11,16 @@ silicio:tile.computer_io.name=Circuit Board ComputerIO
 
 ### Items ###
 
-silicio:item.mat.silicon_gem.name=Silicon
-silicio:item.mat.silicon_dust.name=Silicon Dust
-silicio:item.mat.module_empty.name=Empty Module
-silicio:item.mat.module_input.name=Empty Input Module
-silicio:item.mat.module_output.name=Empty Output Module
-silicio:item.mat.module_logic.name=Empty Logic Module
-silicio:item.mat.circuit.name=Integrated Circuit
-silicio:item.mat.lapis_crystal.name=Lapis Crystal
-silicio:item.mat.redstone_crystal.name=Redstone Crystal
+silicio:item.module_empty.name=Empty Module
+silicio:item.module_input.name=Empty Input Module
+silicio:item.module_output.name=Empty Output Module
+silicio:item.module_logic.name=Empty Logic Module
+silicio:item.silicon_gem.name=Silicon
+silicio:item.silicon_dust.name=Silicon Dust
+silicio:item.circuit.name=Integrated Circuit
+silicio:item.blue_crystal.name=Blue Crystal
+silicio:item.red_crystal.name=Red Crystal
+silicio:item.xsuit_plate.name=XSuit Plate
 
 silicio:item.circuit_board.name=Circuit Board
 

@@ -67,7 +67,7 @@ public abstract class ItemModule extends ItemSil
 			IntMap m = getChannelMap(is);
 			
 			for(int i = 0; i < m.size(); i++)
-				l.add(m.keys.get(i) + ": " + LatCore.Colors.getHex(m.values.get(i)));
+				l.add(m.keys.get(i) + ": " + LMColorUtils.getHex(m.values.get(i)));
 		}
 	}
 	

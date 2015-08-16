@@ -9,7 +9,8 @@ import latmod.ftbu.core.tile.*;
 import latmod.ftbu.core.util.*;
 import latmod.ftbu.core.waila.WailaDataAccessor;
 import latmod.ftbu.mod.FTBU;
-import latmod.silicio.*;
+import latmod.latblocks.LatBlocksItems;
+import latmod.silicio.SilItems;
 import latmod.silicio.gui.*;
 import latmod.silicio.gui.container.*;
 import latmod.silicio.item.modules.ItemModule;
@@ -230,7 +231,7 @@ public class TileCBCable extends TileBasicCBNetTile implements IPaintable, IGuiT
 		
 		if(!hasCover)
 		{
-			if(is != null && SilMat.coverBlock != null && LMInvUtils.itemsEquals(is, SilMat.coverBlock, false, true))
+			if(is != null && is.getItem() == LatBlocksItems.b_paintable.getItem())
 			{
 				if(isServer())
 				{
@@ -290,8 +291,8 @@ public class TileCBCable extends TileBasicCBNetTile implements IPaintable, IGuiT
 				else if(hasCover)
 				{
 					hasCover = false;
-					if(!ep.capabilities.isCreativeMode && SilMat.coverBlock != null)
-						LMInvUtils.dropItem(ep, SilMat.coverBlock);
+					if(!ep.capabilities.isCreativeMode)
+						LMInvUtils.dropItem(ep, new ItemStack(LatBlocksItems.b_paintable));
 					markDirty();
 				}
 			}
@@ -327,8 +328,7 @@ public class TileCBCable extends TileBasicCBNetTile implements IPaintable, IGuiT
 		
 		if(isServer())
 		{
-			if(hasCover && SilMat.coverBlock != null)
-				LMInvUtils.dropItem(worldObj, xCoord + 0.5D, yCoord + 0.5D, zCoord + 0.5D, SilMat.coverBlock, 8);
+			if(hasCover) LMInvUtils.dropItem(worldObj, xCoord + 0.5D, yCoord + 0.5D, zCoord + 0.5D, new ItemStack(LatBlocksItems.b_paintable), 8);
 			
 			for(int i = 0; i < boards.length; i++)
 			{
