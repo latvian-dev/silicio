@@ -23,6 +23,10 @@ silicio:item.red_crystal.name=Red Crystal
 silicio:item.xsuit_plate.name=XSuit Plate
 
 silicio:item.circuit_board.name=Circuit Board
+silicio:item.xsuit_helm.name=XSuit Helmet
+silicio:item.xsuit_body.name=XSuit Chestplate
+silicio:item.xsuit_legs.name=XSuit Leggings
+silicio:item.xsuit_boots.name=XSuit Boots
 
 # Modules #
 silicio:item.cbm_desc=Circuit Board Module

@@ -21,7 +21,7 @@ public abstract class ItemXSuit extends ItemArmor implements IItemLM
 	{ LatBlocks.mod.addItem(this); return this; }
 	
 	public String getUnlocalizedName(ItemStack is)
-	{ return LatBlocks.mod.getItemName(itemName); }
+	{ return Silicio.mod.getItemName(itemName); }
 	
 	public void loadRecipes()
 	{
