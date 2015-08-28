@@ -1,6 +1,6 @@
 package latmod.silicio.gui;
 
-import latmod.ftbu.core.FTBULang;
+import latmod.ftbu.core.client.FTBULang;
 import latmod.ftbu.core.gui.*;
 import latmod.ftbu.core.util.*;
 import latmod.silicio.item.modules.config.ModuleCSNum;
