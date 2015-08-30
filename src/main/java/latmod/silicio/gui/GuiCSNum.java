@@ -96,14 +96,14 @@ public class GuiCSNum extends GuiModule
 		};
 	}
 	
-	public void addWidgets(FastList<WidgetLM> l)
+	public void addWidgets()
 	{
 		textBox.text = "" + config.get(parent.board.items[parent.moduleID]);
 		
-		l.add(buttonCancel);
-		l.add(buttonSave);
-		l.addAll(buttonsInc);
-		l.add(textBox);
+		mainPanel.add(buttonCancel);
+		mainPanel.add(buttonSave);
+		mainPanel.addAll(buttonsInc);
+		mainPanel.add(textBox);
 	}
 	
 	public void drawText(FastList<String> l)

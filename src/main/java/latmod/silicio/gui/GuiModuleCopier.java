@@ -1,6 +1,5 @@
 package latmod.silicio.gui;
 import latmod.ftbu.core.gui.*;
-import latmod.ftbu.core.util.FastList;
 import latmod.silicio.gui.container.ContainerModuleCopier;
 import latmod.silicio.tile.cb.TileModuleCopier;
 import cpw.mods.fml.relauncher.*;
@@ -20,7 +19,7 @@ public class GuiModuleCopier extends GuiLM
 		ySize = 166;
 	}
 	
-	public void addWidgets(FastList<WidgetLM> l)
+	public void addWidgets()
 	{
 	}
 	

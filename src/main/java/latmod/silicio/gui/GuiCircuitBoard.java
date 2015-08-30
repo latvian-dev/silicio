@@ -44,14 +44,14 @@ public class GuiCircuitBoard extends GuiLM
 		buttonSettings.title = FTBULang.button_settings;
 	}
 	
-	public void addWidgets(FastList<WidgetLM> l)
+	public void addWidgets()
 	{
-		l.add(buttonSettings);
+		mainPanel.add(buttonSettings);
 	}
 	
 	public void drawBackground()
 	{
 		super.drawBackground();
-		buttonSettings.render(Icons.settings);
+		buttonSettings.render(GuiIcons.settings);
 	}
 }

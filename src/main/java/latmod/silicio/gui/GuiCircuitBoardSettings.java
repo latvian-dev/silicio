@@ -1,7 +1,6 @@
 package latmod.silicio.gui;
 import latmod.ftbu.core.client.FTBULang;
 import latmod.ftbu.core.gui.*;
-import latmod.ftbu.core.util.FastList;
 import latmod.silicio.Silicio;
 import latmod.silicio.gui.container.ContainerCircuitBoardSettings;
 import latmod.silicio.item.modules.ItemModule;
@@ -58,17 +57,17 @@ public class GuiCircuitBoardSettings extends GuiLM
 		}
 	}
 	
-	public void addWidgets(FastList<WidgetLM> l)
+	public void addWidgets()
 	{
-		l.add(buttonBack);
-		l.addAll(itemButtons);
+		mainPanel.add(buttonBack);
+		mainPanel.addAll(itemButtons);
 	}
 	
 	public void drawBackground()
 	{
 		super.drawBackground();
 		
-		buttonBack.render(Icons.back);
+		buttonBack.render(GuiIcons.back);
 		
 		for(int i = 0; i < itemButtons.length; i++)
 		{

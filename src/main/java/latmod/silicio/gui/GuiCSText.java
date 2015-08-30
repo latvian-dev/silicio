@@ -66,11 +66,11 @@ public class GuiCSText extends GuiModule
 		textBox.text = c.get(parent.board.items[parent.moduleID]);
 	}
 	
-	public void addWidgets(FastList<WidgetLM> l)
+	public void addWidgets()
 	{
-		l.add(buttonCancel);
-		l.add(buttonSave);
-		l.add(textBox);
+		mainPanel.add(buttonCancel);
+		mainPanel.add(buttonSave);
+		mainPanel.add(textBox);
 	}
 	
 	public void drawText(FastList<String> l)

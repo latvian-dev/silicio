@@ -2,7 +2,6 @@ package latmod.silicio.gui;
 
 import latmod.ftbu.core.client.FTBULang;
 import latmod.ftbu.core.gui.*;
-import latmod.ftbu.core.util.FastList;
 import latmod.silicio.item.modules.ItemModule;
 import latmod.silicio.tile.cb.*;
 import net.minecraft.util.ResourceLocation;
@@ -106,11 +105,11 @@ public class GuiSelectChannels extends GuiLM
 		}
 	}
 	
-	public void addWidgets(FastList<WidgetLM> l)
+	public void addWidgets()
 	{
-		l.add(buttonBack);
-		l.addAll(buttonSelectIO);
-		l.addAll(allChannels);
+		mainPanel.add(buttonBack);
+		mainPanel.addAll(buttonSelectIO);
+		mainPanel.addAll(allChannels);
 	}
 	
 	private void sendSetChannel(int ch)

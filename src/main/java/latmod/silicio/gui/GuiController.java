@@ -1,7 +1,6 @@
 package latmod.silicio.gui;
 
 import latmod.ftbu.core.gui.*;
-import latmod.ftbu.core.util.FastList;
 import latmod.silicio.tile.cb.TileCBController;
 import net.minecraft.util.ResourceLocation;
 import cpw.mods.fml.relauncher.*;
@@ -35,9 +34,9 @@ public class GuiController extends GuiLM
 		}
 	}
 	
-	public void addWidgets(FastList<WidgetLM> l)
+	public void addWidgets()
 	{
-		l.addAll(channels);
+		mainPanel.addAll(channels);
 	}
 	
 	public void drawBackground()

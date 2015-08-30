@@ -117,12 +117,12 @@ public class GuiModuleSettings extends GuiLM
 	public GuiModuleSettings(GuiModuleSettings parent)
 	{ this(new ContainerModuleSettings(parent.container.player, parent.board), parent.moduleID); }
 	
-	public void addWidgets(FastList<WidgetLM> l)
+	public void addWidgets()
 	{
-		l.add(buttonBack);
+		mainPanel.add(buttonBack);
 		if(module.getChannelCount() > 0)
-			l.add(buttonChannels);
-		l.addAll(buttonsConfig);
+			mainPanel.add(buttonChannels);
+		mainPanel.addAll(buttonsConfig);
 	}
 	
 	public void drawBackground()
