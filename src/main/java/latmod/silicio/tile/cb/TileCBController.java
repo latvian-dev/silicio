@@ -144,7 +144,7 @@ public class TileCBController extends TileBasicCBNetTile implements IEnergyRecei
 		{
 			net.hasConflict = true;
 			
-			if(worldObj.setBlockToAir(xCoord, yCoord, zCoord))
+			if(isServer() && worldObj.setBlockToAir(xCoord, yCoord, zCoord))
 			{
 				e.printStackTrace();
 				LatCoreMC.printChat(BroadcastSender.inst, "CBController @ " + LMStringUtils.stripI(xCoord, yCoord, zCoord) + " crashed!");

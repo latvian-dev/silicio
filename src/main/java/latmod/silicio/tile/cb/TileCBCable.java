@@ -155,7 +155,7 @@ public class TileCBCable extends TileBasicCBNetTile implements IPaintable, IGuiT
 	
 	public boolean setPaint(PaintData p)
 	{
-		if(p.paint != null && p.paint.block != null && p.paint.block != Blocks.glass && !p.paint.block.renderAsNormalBlock()) return false;
+		if(p.paint != null && !isPaintValid(0, p.paint)) return false;
 		
 		if(p.player.isSneaking())
 		{
@@ -174,6 +174,9 @@ public class TileCBCable extends TileBasicCBNetTile implements IPaintable, IGuiT
 		
 		return false;
 	}
+	
+	public boolean isPaintValid(int side, Paint p)
+	{ return p.block == Blocks.glass || p.block.renderAsNormalBlock(); }
 	
 	public static boolean connectCable(TileCBCable c, int s)
 	{
