@@ -6,8 +6,8 @@
 
 package dan200.computercraft.api.peripheral;
 
-import net.minecraft.world.World;
 import dan200.computercraft.api.filesystem.*;
+import net.minecraft.world.World;
 
 /**
  * The interface passed to peripherals by computers or turtles, providing methods

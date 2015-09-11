@@ -1,8 +1,8 @@
 package latmod.silicio.client.render.tile;
 
+import cpw.mods.fml.relauncher.*;
 import net.minecraft.client.model.*;
 import net.minecraft.entity.Entity;
-import cpw.mods.fml.relauncher.*;
 
 /**
  * CBCable - LatvianModder

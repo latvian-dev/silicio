@@ -2,6 +2,8 @@ package latmod.silicio.tile.cb;
 
 import java.util.List;
 
+import cofh.api.energy.*;
+import cpw.mods.fml.relauncher.*;
 import latmod.ftbu.core.*;
 import latmod.ftbu.core.gui.ContainerEmpty;
 import latmod.ftbu.core.inv.LMInvUtils;
@@ -20,8 +22,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.common.util.ForgeDirection;
-import cofh.api.energy.*;
-import cpw.mods.fml.relauncher.*;
 
 public class TileCBController extends TileBasicCBNetTile implements IEnergyReceiver, IWailaTile.Body, ISecureTile, IGuiTile // CBNetwork
 {

@@ -1,6 +1,8 @@
 package latmod.silicio.tile.cb;
 import java.util.*;
 
+import cofh.api.energy.IEnergyReceiver;
+import cpw.mods.fml.relauncher.*;
 import latmod.ftbu.core.*;
 import latmod.ftbu.core.gui.ContainerEmpty;
 import latmod.ftbu.core.inv.LMInvUtils;
@@ -27,8 +29,6 @@ import net.minecraft.nbt.*;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.*;
 import net.minecraftforge.common.util.ForgeDirection;
-import cofh.api.energy.IEnergyReceiver;
-import cpw.mods.fml.relauncher.*;
 
 // BlockCBCable //
 public class TileCBCable extends TileBasicCBNetTile implements IPaintable, IGuiTile, IEnergyReceiver, IWailaTile.Body, ISecureTile

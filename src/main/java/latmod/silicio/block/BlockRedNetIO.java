@@ -1,4 +1,5 @@
 package latmod.silicio.block;
+import cpw.mods.fml.relauncher.*;
 import latmod.ftbu.core.tile.TileLM;
 import latmod.silicio.tile.cb.TileRedNetIO;
 import net.minecraft.block.material.Material;
@@ -8,7 +9,6 @@ import net.minecraft.world.*;
 import net.minecraftforge.common.util.ForgeDirection;
 import powercrystals.minefactoryreloaded.api.rednet.IRedNetOmniNode;
 import powercrystals.minefactoryreloaded.api.rednet.connectivity.RedNetConnectionType;
-import cpw.mods.fml.relauncher.*;
 
 public class BlockRedNetIO extends BlockSil implements IRedNetOmniNode
 {

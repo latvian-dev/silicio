@@ -1,12 +1,12 @@
 package latmod.silicio.gui;
 
+import cpw.mods.fml.relauncher.*;
 import latmod.ftbu.core.client.FTBULang;
 import latmod.ftbu.core.gui.*;
 import latmod.ftbu.core.util.*;
 import latmod.silicio.item.modules.config.ModuleCSNum;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.*;
-import cpw.mods.fml.relauncher.*;
 
 @SideOnly(Side.CLIENT)
 public class GuiCSNum extends GuiModule

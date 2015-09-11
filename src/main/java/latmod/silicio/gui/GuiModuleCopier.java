@@ -1,8 +1,8 @@
 package latmod.silicio.gui;
+import cpw.mods.fml.relauncher.*;
 import latmod.ftbu.core.gui.*;
 import latmod.silicio.gui.container.ContainerModuleCopier;
 import latmod.silicio.tile.cb.TileModuleCopier;
-import cpw.mods.fml.relauncher.*;
 
 @SideOnly(Side.CLIENT)
 public class GuiModuleCopier extends GuiLM

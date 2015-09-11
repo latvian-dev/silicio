@@ -2,6 +2,7 @@ package latmod.silicio.tile.cb;
 
 import java.util.*;
 
+import cpw.mods.fml.relauncher.*;
 import latmod.ftbu.core.LatCoreMC;
 import latmod.ftbu.core.inv.LMInvUtils;
 import latmod.ftbu.core.tile.*;
@@ -14,7 +15,6 @@ import net.minecraft.inventory.Container;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.common.util.ForgeDirection;
-import cpw.mods.fml.relauncher.*;
 
 public class TileRedNetIO extends TileBasicCBNetTile implements IWailaTile.Body, IGuiTile, ISignalProviderTile, IToggableTile // BlockRedNetIO
 {

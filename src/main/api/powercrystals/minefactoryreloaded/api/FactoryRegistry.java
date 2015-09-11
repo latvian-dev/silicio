@@ -3,7 +3,7 @@ package powercrystals.minefactoryreloaded.api;
 import java.lang.reflect.*;
 
 import cpw.mods.fml.common.Loader;
-import cpw.mods.fml.common.event.*;
+import cpw.mods.fml.common.event.FMLInterModComms;
 import cpw.mods.fml.common.event.FMLInterModComms.IMCMessage;
 
 /**

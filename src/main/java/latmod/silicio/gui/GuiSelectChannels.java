@@ -1,11 +1,11 @@
 package latmod.silicio.gui;
 
+import cpw.mods.fml.relauncher.*;
 import latmod.ftbu.core.client.FTBULang;
 import latmod.ftbu.core.gui.*;
 import latmod.silicio.item.modules.ItemModule;
 import latmod.silicio.tile.cb.*;
 import net.minecraft.util.ResourceLocation;
-import cpw.mods.fml.relauncher.*;
 
 @SideOnly(Side.CLIENT)
 public class GuiSelectChannels extends GuiLM

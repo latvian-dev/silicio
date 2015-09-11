@@ -1,8 +1,8 @@
 package latmod.silicio.item;
+import cpw.mods.fml.relauncher.*;
 import latmod.ftbu.core.util.FastList;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
-import cpw.mods.fml.relauncher.*;
 
 public class ItemCircuitBoard extends ItemSil
 {

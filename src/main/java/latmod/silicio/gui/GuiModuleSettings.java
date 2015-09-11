@@ -1,5 +1,8 @@
 package latmod.silicio.gui;
 
+import org.lwjgl.opengl.*;
+
+import cpw.mods.fml.relauncher.*;
 import latmod.ftbu.core.client.FTBULang;
 import latmod.ftbu.core.gui.*;
 import latmod.ftbu.core.util.FastList;
@@ -13,10 +16,6 @@ import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.*;
 import net.minecraftforge.fluids.*;
-
-import org.lwjgl.opengl.*;
-
-import cpw.mods.fml.relauncher.*;
 
 @SideOnly(Side.CLIENT)
 public class GuiModuleSettings extends GuiLM

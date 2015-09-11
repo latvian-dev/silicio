@@ -1,10 +1,10 @@
 package latmod.silicio.item;
+import cpw.mods.fml.relauncher.*;
 import latmod.ftbu.core.LMMod;
 import latmod.ftbu.core.inv.ODItems;
 import latmod.ftbu.core.item.*;
 import latmod.silicio.*;
 import net.minecraft.creativetab.CreativeTabs;
-import cpw.mods.fml.relauncher.*;
 
 public class ItemMaterialsSil extends ItemMaterialsLM // ItemMaterialsLB
 {

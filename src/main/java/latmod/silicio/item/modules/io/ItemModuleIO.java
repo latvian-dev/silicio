@@ -1,10 +1,10 @@
 package latmod.silicio.item.modules.io;
 
+import cpw.mods.fml.relauncher.*;
 import latmod.silicio.item.modules.*;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
-import cpw.mods.fml.relauncher.*;
 
 public abstract class ItemModuleIO extends ItemModule
 {

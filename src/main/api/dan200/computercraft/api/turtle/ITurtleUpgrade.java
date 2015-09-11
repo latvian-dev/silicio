@@ -6,9 +6,9 @@
 
 package dan200.computercraft.api.turtle;
 
+import dan200.computercraft.api.peripheral.IPeripheral;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
-import dan200.computercraft.api.peripheral.IPeripheral;
 
 /**
  * The primary interface for defining an turtle for Turtles. A turtle turtle

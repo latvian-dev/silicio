@@ -1,9 +1,9 @@
 package latmod.silicio.gui;
 
+import cpw.mods.fml.relauncher.*;
 import latmod.ftbu.core.gui.*;
 import latmod.silicio.tile.cb.TileCBController;
 import net.minecraft.util.ResourceLocation;
-import cpw.mods.fml.relauncher.*;
 
 @SideOnly(Side.CLIENT)
 public class GuiController extends GuiLM

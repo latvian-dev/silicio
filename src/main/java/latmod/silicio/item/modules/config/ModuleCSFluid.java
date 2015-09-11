@@ -1,5 +1,6 @@
 package latmod.silicio.item.modules.config;
 
+import cpw.mods.fml.relauncher.*;
 import latmod.ftbu.core.inv.LMInvUtils;
 import latmod.ftbu.core.util.FastList;
 import latmod.ftbu.mod.FTBU;
@@ -9,7 +10,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraftforge.fluids.FluidStack;
-import cpw.mods.fml.relauncher.*;
 
 public class ModuleCSFluid extends ModuleConfigSegment
 {

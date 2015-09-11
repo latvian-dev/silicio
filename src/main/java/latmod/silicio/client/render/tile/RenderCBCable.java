@@ -1,15 +1,14 @@
 package latmod.silicio.client.render.tile;
 
+import org.lwjgl.opengl.*;
+
+import cpw.mods.fml.relauncher.*;
 import latmod.ftbu.core.client.*;
 import latmod.silicio.*;
 import latmod.silicio.tile.cb.TileCBCable;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.util.*;
-
-import org.lwjgl.opengl.*;
-
-import cpw.mods.fml.relauncher.*;
 
 @SideOnly(Side.CLIENT)
 public class RenderCBCable extends TileRenderer<TileCBCable>

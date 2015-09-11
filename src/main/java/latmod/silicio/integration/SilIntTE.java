@@ -1,5 +1,7 @@
 package latmod.silicio.integration;
 
+import cofh.thermalexpansion.block.simple.BlockFrame;
+import cofh.thermalexpansion.util.crafting.*;
 import latmod.ftbu.core.inv.ODItems;
 import latmod.ftbu.core.item.MaterialItem;
 import latmod.ftbu.core.recipes.StackEntry;
@@ -9,8 +11,6 @@ import latmod.silicio.*;
 import latmod.silicio.item.ItemMaterialsSil;
 import net.minecraft.init.*;
 import net.minecraft.item.ItemStack;
-import cofh.thermalexpansion.block.simple.BlockFrame;
-import cofh.thermalexpansion.util.crafting.*;
 
 public class SilIntTE
 {

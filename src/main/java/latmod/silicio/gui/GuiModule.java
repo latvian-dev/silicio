@@ -1,10 +1,10 @@
 package latmod.silicio.gui;
 
+import cpw.mods.fml.relauncher.*;
 import latmod.ftbu.core.gui.*;
 import latmod.silicio.Silicio;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ResourceLocation;
-import cpw.mods.fml.relauncher.*;
 
 @SideOnly(Side.CLIENT)
 public abstract class GuiModule extends GuiLM

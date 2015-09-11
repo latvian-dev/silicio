@@ -1,11 +1,11 @@
 package latmod.silicio.block;
+import cpw.mods.fml.relauncher.*;
 import latmod.ftbu.core.tile.TileLM;
 import latmod.silicio.tile.cb.TileCBController;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.*;
-import cpw.mods.fml.relauncher.*;
 
 public class BlockCBController extends BlockSil
 {

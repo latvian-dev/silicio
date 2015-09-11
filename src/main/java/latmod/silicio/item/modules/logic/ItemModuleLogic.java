@@ -1,8 +1,8 @@
 package latmod.silicio.item.modules.logic;
 
+import cpw.mods.fml.relauncher.*;
 import latmod.silicio.item.modules.ItemModule;
 import net.minecraft.client.renderer.texture.IIconRegister;
-import cpw.mods.fml.relauncher.*;
 
 public abstract class ItemModuleLogic extends ItemModule
 {

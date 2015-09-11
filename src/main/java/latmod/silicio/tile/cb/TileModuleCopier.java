@@ -2,6 +2,8 @@ package latmod.silicio.tile.cb;
 
 import java.util.List;
 
+import cofh.api.energy.EnergyStorage;
+import cpw.mods.fml.relauncher.*;
 import latmod.ftbu.core.LatCoreMC;
 import latmod.ftbu.core.inv.LMInvUtils;
 import latmod.ftbu.core.tile.*;
@@ -15,8 +17,6 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.*;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import cofh.api.energy.EnergyStorage;
-import cpw.mods.fml.relauncher.*;
 
 public class TileModuleCopier extends TileInvLM implements IGuiTile, ICBNetTile, ICBEnergyTile, IWailaTile.Body, ISidedInventory
 {

@@ -1,10 +1,10 @@
 package latmod.silicio.integration;
 
+import dan200.computercraft.api.ComputerCraftAPI;
+import dan200.computercraft.api.peripheral.*;
 import latmod.silicio.tile.cb.TileComputerIO;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
-import dan200.computercraft.api.ComputerCraftAPI;
-import dan200.computercraft.api.peripheral.*;
 
 public class SilIntCC implements IPeripheralProvider
 {

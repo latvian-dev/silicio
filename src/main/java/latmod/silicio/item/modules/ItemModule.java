@@ -1,4 +1,5 @@
 package latmod.silicio.item.modules;
+import cpw.mods.fml.relauncher.*;
 import latmod.ftbu.core.LatCoreMC;
 import latmod.ftbu.core.util.*;
 import latmod.silicio.item.ItemSil;
@@ -13,7 +14,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
-import cpw.mods.fml.relauncher.*;
 
 public abstract class ItemModule extends ItemSil
 {

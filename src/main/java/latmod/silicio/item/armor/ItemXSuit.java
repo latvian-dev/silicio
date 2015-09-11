@@ -1,11 +1,11 @@
 package latmod.silicio.item.armor;
+import cpw.mods.fml.relauncher.*;
 import latmod.ftbu.core.item.IItemLM;
 import latmod.latblocks.LatBlocks;
 import latmod.silicio.Silicio;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.Entity;
 import net.minecraft.item.*;
-import cpw.mods.fml.relauncher.*;
 
 public abstract class ItemXSuit extends ItemArmor implements IItemLM
 {

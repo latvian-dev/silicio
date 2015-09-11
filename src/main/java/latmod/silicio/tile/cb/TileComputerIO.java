@@ -1,10 +1,10 @@
 package latmod.silicio.tile.cb;
 
+import dan200.computercraft.api.lua.*;
+import dan200.computercraft.api.peripheral.*;
 import latmod.ftbu.core.util.IntList;
 import latmod.silicio.tile.cb.events.*;
 import net.minecraft.nbt.NBTTagCompound;
-import dan200.computercraft.api.lua.*;
-import dan200.computercraft.api.peripheral.*;
 
 public class TileComputerIO extends TileBasicCBNetTile implements IPeripheral, IToggableTile, ISignalProviderTile // BlockComputerIO
 {

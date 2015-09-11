@@ -1,10 +1,10 @@
 package latmod.silicio.item.modules.io;
 
+import cofh.api.energy.IEnergyReceiver;
 import latmod.silicio.item.modules.IOType;
 import latmod.silicio.tile.cb.events.EventUpdateModule;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.common.util.ForgeDirection;
-import cofh.api.energy.IEnergyReceiver;
 
 public class ItemModuleEnergyOutput extends ItemModuleIO
 {

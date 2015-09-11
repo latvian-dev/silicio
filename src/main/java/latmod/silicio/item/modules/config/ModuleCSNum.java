@@ -1,12 +1,12 @@
 package latmod.silicio.item.modules.config;
 
+import cpw.mods.fml.relauncher.*;
 import latmod.ftbu.core.util.FastList;
 import latmod.silicio.gui.*;
 import latmod.silicio.tile.cb.CircuitBoard;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.MathHelper;
-import cpw.mods.fml.relauncher.*;
 
 public class ModuleCSNum extends ModuleConfigSegment
 {

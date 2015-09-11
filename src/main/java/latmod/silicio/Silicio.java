@@ -1,10 +1,10 @@
 package latmod.silicio;
+import cpw.mods.fml.common.*;
+import cpw.mods.fml.common.event.*;
 import latmod.ftbu.core.LMMod;
 import latmod.silicio.integration.SilInt;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.ItemStack;
-import cpw.mods.fml.common.*;
-import cpw.mods.fml.common.event.*;
 
 @Mod(modid = Silicio.MOD_ID, name = "Silicio", version = "@VERSION@", dependencies = "required-after:FTBU;required-after:LatBlocks;after:ThermalExpansion;after:ComputerCraft;after:BuildCraft")
 public class Silicio

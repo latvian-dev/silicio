@@ -1,8 +1,8 @@
 package latmod.silicio.client;
+import cpw.mods.fml.relauncher.*;
 import latmod.silicio.SilCommon;
 import latmod.silicio.client.render.tile.RenderCBCable;
 import latmod.silicio.tile.cb.TileCBCable;
-import cpw.mods.fml.relauncher.*;
 
 @SideOnly(Side.CLIENT)
 public class SilClient extends SilCommon
