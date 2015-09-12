@@ -69,7 +69,7 @@ public class GuiModuleSettings extends GuiLM
 			}
 		};
 		
-		buttonBack.title = FTBULang.button_back;
+		buttonBack.title = FTBULang.button_back();
 		
 		buttonsConfig = new ConfigButton[12];
 		

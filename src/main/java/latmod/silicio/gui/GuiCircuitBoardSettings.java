@@ -30,7 +30,7 @@ public class GuiCircuitBoardSettings extends GuiLM
 			}
 		};
 		
-		buttonBack.title = FTBULang.button_back;
+		buttonBack.title = FTBULang.button_back();
 		
 		itemButtons = new ItemButtonLM[board.items.length];
 		

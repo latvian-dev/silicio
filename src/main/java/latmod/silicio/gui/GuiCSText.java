@@ -37,7 +37,7 @@ public class GuiCSText extends GuiModule
 			}
 		};
 		
-		buttonCancel.title = FTBULang.button_cancel;
+		buttonCancel.title = FTBULang.button_cancel();
 		
 		buttonSave = new ButtonLM(this, 89, 29, 78, 16)
 		{
@@ -55,7 +55,7 @@ public class GuiCSText extends GuiModule
 			}
 		};
 		
-		buttonSave.title = FTBULang.button_save;
+		buttonSave.title = FTBULang.button_save();
 		
 		textBox = new TextBoxLM(this, 8, 9, 159, 16)
 		{

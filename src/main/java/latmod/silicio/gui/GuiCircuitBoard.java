@@ -37,11 +37,11 @@ public class GuiCircuitBoard extends GuiLM
 				l.add(title);
 				
 				if(board.cable.getCBNetwork().controller == null)
-					l.add(EnumChatFormatting.GRAY + "No Controller!");
+					l.add(EnumChatFormatting.GRAY + "No Controller!");//LANG
 			}
 		};
 		
-		buttonSettings.title = FTBULang.button_settings;
+		buttonSettings.title = FTBULang.button_settings();
 	}
 	
 	public void addWidgets()

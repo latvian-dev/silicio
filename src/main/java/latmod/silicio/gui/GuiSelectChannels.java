@@ -47,7 +47,7 @@ public class GuiSelectChannels extends GuiLM
 			}
 		};
 		
-		buttonBack.title = FTBULang.button_back;
+		buttonBack.title = FTBULang.button_back();
 		
 		int chCount = module.getChannelCount();
 		if(chCount > 16) chCount = 16;

@@ -41,7 +41,7 @@ public class GuiCSNum extends GuiModule
 			}
 		};
 		
-		buttonCancel.title = FTBULang.button_cancel;
+		buttonCancel.title = FTBULang.button_cancel();
 		
 		buttonSave = new ButtonLM(this, 89, 29, 78, 16)
 		{
@@ -61,7 +61,7 @@ public class GuiCSNum extends GuiModule
 			}
 		};
 		
-		buttonSave.title = FTBULang.button_save;
+		buttonSave.title = FTBULang.button_save();
 		
 		for(int bi = 0; bi < buttonsInc.length; bi++)
 		{
