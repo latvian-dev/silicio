@@ -127,7 +127,7 @@ public class TileCBCable extends TileBasicCBNetTile implements IPaintable, IGuiT
 		hasCover = tag.getBoolean("HasCover");
 		Paint.readFromNBT(tag, "Paint", paint);
 
-		Converter.toBools(isDisabled, tag.getIntArray("Disabled"), true);
+		Converter.toBools(isDisabled, IntList.asList(tag.getIntArray("Disabled")), true);
 	}
 	
 	public void writeTileData(NBTTagCompound tag)
@@ -149,8 +149,8 @@ public class TileCBCable extends TileBasicCBNetTile implements IPaintable, IGuiT
 		tag.setBoolean("HasCover", hasCover);
 		Paint.writeToNBT(tag, "Paint", paint);
 		
-		int[] idx = Converter.fromBools(isDisabled, true);
-		if(idx.length > 0) tag.setIntArray("Disabled", idx);
+		IntList idx = Converter.fromBools(isDisabled, true);
+		if(idx.size() > 0) tag.setIntArray("Disabled", idx.toArray());
 	}
 	
 	public boolean setPaint(PaintData p)
@@ -224,7 +224,7 @@ public class TileCBCable extends TileBasicCBNetTile implements IPaintable, IGuiT
 		if(is != null && is.getItem() instanceof IPainterItem)
 			return false;
 		
-		MovingObjectPosition mop = MathHelperLM.rayTrace(ep);
+		MovingObjectPosition mop = MathHelperMC.rayTrace(ep);
 		
 		if(mop == null) return false;
 		

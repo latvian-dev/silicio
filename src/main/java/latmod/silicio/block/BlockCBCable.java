@@ -224,7 +224,7 @@ public class BlockCBCable extends BlockSil
 					boxes1[i] = null;
 			}
 			
-			return MathHelperLM.collisionRayTrace(w, x, y, z, start, end, boxes1);
+			return MathHelperMC.collisionRayTrace(w, x, y, z, start, end, boxes1);
 		}
 		
 		return null;
