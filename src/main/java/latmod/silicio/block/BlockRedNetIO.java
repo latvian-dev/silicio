@@ -1,6 +1,6 @@
 package latmod.silicio.block;
 import cpw.mods.fml.relauncher.*;
-import latmod.ftbu.core.tile.TileLM;
+import latmod.ftbu.tile.TileLM;
 import latmod.silicio.tile.cb.TileRedNetIO;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;

@@ -4,10 +4,10 @@ import java.util.List;
 
 import cofh.api.energy.EnergyStorage;
 import cpw.mods.fml.relauncher.*;
-import latmod.ftbu.core.LatCoreMC;
-import latmod.ftbu.core.inv.LMInvUtils;
-import latmod.ftbu.core.tile.*;
-import latmod.ftbu.core.waila.WailaDataAccessor;
+import latmod.ftbu.inv.LMInvUtils;
+import latmod.ftbu.tile.*;
+import latmod.ftbu.util.LatCoreMC;
+import latmod.ftbu.waila.WailaDataAccessor;
 import latmod.silicio.gui.GuiModuleCopier;
 import latmod.silicio.gui.container.ContainerModuleCopier;
 import latmod.silicio.item.modules.ItemModule;

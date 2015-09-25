@@ -1,6 +1,6 @@
 package latmod.silicio.item;
 
-import latmod.ftbu.core.inv.LMInvUtils;
+import latmod.ftbu.inv.LMInvUtils;
 import net.minecraft.item.ItemStack;
 
 public interface IItemCard

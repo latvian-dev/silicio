@@ -3,7 +3,7 @@ package latmod.silicio.client.render.tile;
 import org.lwjgl.opengl.*;
 
 import cpw.mods.fml.relauncher.*;
-import latmod.ftbu.core.client.*;
+import latmod.ftbu.util.client.*;
 import latmod.silicio.*;
 import latmod.silicio.tile.cb.TileCBCable;
 import net.minecraft.client.Minecraft;

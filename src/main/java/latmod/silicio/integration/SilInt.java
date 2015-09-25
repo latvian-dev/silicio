@@ -1,6 +1,6 @@
 package latmod.silicio.integration;
 
-import latmod.ftbu.core.LatCoreMC;
+import latmod.ftbu.util.LatCoreMC;
 import latmod.silicio.Silicio;
 
 public class SilInt

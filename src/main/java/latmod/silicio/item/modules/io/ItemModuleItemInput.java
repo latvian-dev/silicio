@@ -1,6 +1,6 @@
 package latmod.silicio.item.modules.io;
 
-import latmod.ftbu.core.inv.LMInvUtils;
+import latmod.ftbu.inv.LMInvUtils;
 import latmod.silicio.SilItems;
 import latmod.silicio.item.modules.IOType;
 import latmod.silicio.item.modules.config.*;

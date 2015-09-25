@@ -1,7 +1,7 @@
 package latmod.silicio.item.modules;
 import cpw.mods.fml.relauncher.*;
-import latmod.ftbu.core.LatCoreMC;
-import latmod.ftbu.core.util.*;
+import latmod.core.util.*;
+import latmod.ftbu.util.LatCoreMC;
 import latmod.silicio.item.ItemSil;
 import latmod.silicio.item.modules.config.ModuleConfigSegment;
 import latmod.silicio.item.modules.io.ItemModuleIO;

@@ -1,6 +1,6 @@
 package latmod.silicio.tile.cb.events;
 
-import latmod.ftbu.core.util.LMUtils;
+import latmod.core.util.LMUtils;
 import latmod.silicio.tile.cb.*;
 
 public class EventBoard extends EventCB

@@ -1,5 +1,5 @@
 package latmod.silicio.tile.cb;
-import latmod.ftbu.core.inv.LMInvUtils;
+import latmod.ftbu.inv.LMInvUtils;
 import latmod.silicio.item.modules.ItemModule;
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;

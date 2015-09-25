@@ -1,8 +1,8 @@
 package latmod.silicio.item.modules.io;
 
-import latmod.ftbu.core.EnumDyeColor;
-import latmod.ftbu.core.inv.*;
-import latmod.ftbu.core.paint.Paint;
+import latmod.ftbu.inv.*;
+import latmod.ftbu.paint.Paint;
+import latmod.ftbu.util.EnumDyeColor;
 import latmod.silicio.SilItems;
 import latmod.silicio.item.modules.*;
 import latmod.silicio.item.modules.config.*;

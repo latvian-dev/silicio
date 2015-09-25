@@ -1,6 +1,6 @@
 package latmod.silicio.tile.cb;
 
-import latmod.ftbu.core.tile.TileLM;
+import latmod.ftbu.tile.TileLM;
 import latmod.silicio.tile.cb.events.EventCB;
 
 public class TileBasicCBNetTile extends TileLM implements ICBNetTile

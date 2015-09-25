@@ -1,6 +1,6 @@
 package latmod.silicio;
 
-import latmod.ftbu.core.item.MaterialItem;
+import latmod.ftbu.item.MaterialItem;
 import latmod.silicio.block.*;
 import latmod.silicio.item.*;
 import latmod.silicio.item.armor.*;

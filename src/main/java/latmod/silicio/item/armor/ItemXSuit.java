@@ -1,6 +1,6 @@
 package latmod.silicio.item.armor;
 import cpw.mods.fml.relauncher.*;
-import latmod.ftbu.core.item.IItemLM;
+import latmod.ftbu.item.IItemLM;
 import latmod.latblocks.LatBlocks;
 import latmod.silicio.Silicio;
 import net.minecraft.client.renderer.texture.IIconRegister;

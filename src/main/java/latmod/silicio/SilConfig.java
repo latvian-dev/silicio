@@ -1,6 +1,7 @@
 package latmod.silicio;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
-import latmod.ftbu.core.*;
+import latmod.ftbu.api.IServerConfig;
+import latmod.ftbu.util.LMConfig;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.nbt.NBTTagCompound;
 
