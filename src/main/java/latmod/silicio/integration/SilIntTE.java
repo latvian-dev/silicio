@@ -5,9 +5,10 @@ import cofh.thermalexpansion.util.crafting.*;
 import latmod.core.util.FastList;
 import latmod.ftbu.inv.ODItems;
 import latmod.ftbu.item.MaterialItem;
-import latmod.ftbu.recipes.StackEntry;
+import latmod.ftbu.recipes.StackArray;
 import latmod.latblocks.item.ItemMaterialsLB;
 import latmod.silicio.*;
+import latmod.silicio.config.SilConfigGeneral;
 import latmod.silicio.item.ItemMaterialsSil;
 import net.minecraft.init.*;
 import net.minecraft.item.ItemStack;
@@ -18,7 +19,7 @@ public class SilIntTE
 	
 	public static void onLoaded() throws Exception
 	{
-		if(SilConfig.General.disableAllCrafting) return;
+		if(SilConfigGeneral.disableAllCrafting.get()) return;
 		
 		// Circuit Board //
 		
@@ -51,7 +52,7 @@ public class SilIntTE
 	
 	private static void addPulverizer(ItemStack out, Object in, int energy, ItemStack out2, int out2chance)
 	{
-		FastList<ItemStack> inItems = StackEntry.getItems(in);
+		FastList<ItemStack> inItems = StackArray.getItems(in);
 		
 		if(inItems.size() > 0)
 		{

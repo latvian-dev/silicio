@@ -17,7 +17,7 @@ public class SilInt
 		{
 			try
 			{
-				LatCoreMC.invokeStatic(c, "onLoaded");
+				//FIXME: LatCoreMC.invokeStatic(c, "onLoaded");
 				Silicio.mod.logger.info(m + " integration loaded");
 			}
 			catch(Exception ex)

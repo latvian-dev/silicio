@@ -2,6 +2,7 @@ package latmod.silicio;
 import cpw.mods.fml.common.*;
 import cpw.mods.fml.common.event.*;
 import latmod.ftbu.util.LMMod;
+import latmod.silicio.config.*;
 import latmod.silicio.integration.SilInt;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.ItemStack;
@@ -24,8 +25,8 @@ public class Silicio
 	@Mod.EventHandler
 	public void preInit(FMLPreInitializationEvent e)
 	{
-		LMMod.init(this, new SilConfig(e), null);
-		
+		LMMod.init(this);
+		SilConfig.load();
 		SilItems.init();
 		mod.onPostLoaded();
 		
@@ -42,7 +43,7 @@ public class Silicio
 	@Mod.EventHandler
 	public void postInit(FMLPostInitializationEvent e)
 	{
-		if(!SilConfig.General.disableAllCrafting)
+		if(!SilConfigGeneral.disableAllCrafting.get())
 			mod.loadRecipes();
 		
 		SilInt.onLoadedAll();
