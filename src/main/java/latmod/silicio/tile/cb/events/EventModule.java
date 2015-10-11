@@ -1,6 +1,6 @@
 package latmod.silicio.tile.cb.events;
 
-import latmod.core.util.LMUtils;
+import latmod.lib.LMUtils;
 import latmod.silicio.item.modules.ItemModule;
 import latmod.silicio.tile.cb.ModuleEntry;
 import net.minecraft.item.ItemStack;

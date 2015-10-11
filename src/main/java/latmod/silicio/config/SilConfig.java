@@ -1,8 +1,9 @@
 package latmod.silicio.config;
 import java.io.File;
 
-import latmod.ftbu.api.config.*;
+import latmod.ftbu.api.config.ConfigListRegistry;
 import latmod.ftbu.util.LatCoreMC;
+import latmod.lib.config.ConfigFile;
 import latmod.silicio.Silicio;
 
 public class SilConfig
@@ -13,7 +14,7 @@ public class SilConfig
 	{
 		configFile = new ConfigFile(Silicio.mod.modID, new File(LatCoreMC.configFolder, "/LatMod/Silicio.txt"), true);
 		SilConfigGeneral.load(configFile);
-		ConfigFileRegistry.add(configFile);
+		ConfigListRegistry.add(configFile);
 		configFile.load();
 	}
 }

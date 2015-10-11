@@ -1,8 +1,8 @@
 package latmod.silicio.gui;
 import cpw.mods.fml.relauncher.*;
-import latmod.core.util.FastList;
 import latmod.ftbu.util.client.FTBULang;
 import latmod.ftbu.util.gui.*;
+import latmod.lib.FastList;
 import latmod.silicio.Silicio;
 import latmod.silicio.gui.container.ContainerCircuitBoard;
 import latmod.silicio.tile.cb.*;

@@ -3,11 +3,11 @@ package latmod.silicio.tile.cb;
 import java.util.*;
 
 import cpw.mods.fml.relauncher.*;
-import latmod.core.util.IntList;
 import latmod.ftbu.inv.LMInvUtils;
 import latmod.ftbu.tile.*;
 import latmod.ftbu.util.LatCoreMC;
 import latmod.ftbu.waila.WailaDataAccessor;
+import latmod.lib.IntList;
 import latmod.silicio.tile.cb.events.*;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.entity.player.EntityPlayer;

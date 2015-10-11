@@ -1,6 +1,6 @@
 package latmod.silicio.tile.cb;
 
-import latmod.core.util.*;
+import latmod.lib.*;
 import latmod.silicio.tile.cb.events.EventCB;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Facing;

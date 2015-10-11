@@ -1,7 +1,7 @@
 package latmod.silicio.item.modules.config;
 
 import cpw.mods.fml.relauncher.*;
-import latmod.core.util.FastList;
+import latmod.lib.FastList;
 import latmod.silicio.gui.GuiModuleSettings;
 import latmod.silicio.tile.cb.CircuitBoard;
 import net.minecraft.item.ItemStack;

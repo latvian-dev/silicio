@@ -3,7 +3,6 @@ import java.util.*;
 
 import cofh.api.energy.IEnergyReceiver;
 import cpw.mods.fml.relauncher.*;
-import latmod.core.util.*;
 import latmod.ftbu.inv.LMInvUtils;
 import latmod.ftbu.mod.FTBU;
 import latmod.ftbu.paint.*;
@@ -12,6 +11,7 @@ import latmod.ftbu.util.*;
 import latmod.ftbu.util.gui.ContainerEmpty;
 import latmod.ftbu.waila.WailaDataAccessor;
 import latmod.latblocks.LatBlocksItems;
+import latmod.lib.*;
 import latmod.silicio.SilItems;
 import latmod.silicio.gui.*;
 import latmod.silicio.gui.container.*;

@@ -1,6 +1,6 @@
 package latmod.silicio.config;
 
-import latmod.ftbu.api.config.*;
+import latmod.lib.config.*;
 
 public class SilConfigGeneral
 {

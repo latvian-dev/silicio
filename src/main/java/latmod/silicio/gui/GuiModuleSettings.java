@@ -3,9 +3,9 @@ package latmod.silicio.gui;
 import org.lwjgl.opengl.*;
 
 import cpw.mods.fml.relauncher.*;
-import latmod.core.util.FastList;
 import latmod.ftbu.util.client.FTBULang;
 import latmod.ftbu.util.gui.*;
+import latmod.lib.FastList;
 import latmod.silicio.gui.container.ContainerModuleSettings;
 import latmod.silicio.item.modules.ItemModule;
 import latmod.silicio.item.modules.config.*;

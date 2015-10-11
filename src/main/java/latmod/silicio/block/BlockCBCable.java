@@ -2,11 +2,11 @@ package latmod.silicio.block;
 import java.util.List;
 
 import cpw.mods.fml.relauncher.*;
-import latmod.core.util.FastList;
 import latmod.ftbu.inv.ODItems;
 import latmod.ftbu.tile.TileLM;
 import latmod.ftbu.util.MathHelperMC;
 import latmod.ftbu.util.client.LatCoreMCClient;
+import latmod.lib.FastList;
 import latmod.silicio.item.ItemMaterialsSil;
 import latmod.silicio.tile.cb.TileCBCable;
 import net.minecraft.block.material.Material;

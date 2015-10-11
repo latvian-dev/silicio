@@ -4,12 +4,12 @@ import java.util.List;
 
 import cofh.api.energy.*;
 import cpw.mods.fml.relauncher.*;
-import latmod.core.util.*;
 import latmod.ftbu.inv.LMInvUtils;
 import latmod.ftbu.tile.*;
 import latmod.ftbu.util.*;
 import latmod.ftbu.util.gui.ContainerEmpty;
 import latmod.ftbu.waila.WailaDataAccessor;
+import latmod.lib.*;
 import latmod.silicio.SilItems;
 import latmod.silicio.gui.GuiController;
 import latmod.silicio.item.IItemCard;

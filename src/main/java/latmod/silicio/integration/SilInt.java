@@ -1,5 +1,7 @@
 package latmod.silicio.integration;
 
+import java.lang.reflect.Method;
+
 import latmod.ftbu.util.LatCoreMC;
 import latmod.silicio.Silicio;
 
@@ -9,6 +11,7 @@ public class SilInt
 	{
 		load("ThermalExpansion", "latmod.silicio.integration.SilIntTE");
 		load("ComputerCraft", "latmod.silicio.integration.SilIntCC");
+		//TODO: Use EventFTBULoaded.POST
 	}
 	
 	private static final void load(String m, String c)
@@ -17,7 +20,9 @@ public class SilInt
 		{
 			try
 			{
-				//FIXME: LatCoreMC.invokeStatic(c, "onLoaded");
+				Class<?> clazz = Class.forName(c);
+				Method method = clazz.getMethod("onLoaded");
+				method.invoke(null);
 				Silicio.mod.logger.info(m + " integration loaded");
 			}
 			catch(Exception ex)
