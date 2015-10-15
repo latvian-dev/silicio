@@ -12,7 +12,7 @@ public class SilConfig
 	
 	public static void load()
 	{
-		configFile = new ConfigFile(Silicio.mod.modID, new File(LatCoreMC.configFolder, "/LatMod/Silicio.txt"), true);
+		configFile = new ConfigFile(Silicio.mod.modID, new File(LatCoreMC.configFolder, "/LatMod/Silicio.json"), true);
 		SilConfigGeneral.load(configFile);
 		ConfigListRegistry.add(configFile);
 		configFile.load();
