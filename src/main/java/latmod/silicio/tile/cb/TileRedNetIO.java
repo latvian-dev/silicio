@@ -3,8 +3,8 @@ package latmod.silicio.tile.cb;
 import java.util.*;
 
 import cpw.mods.fml.relauncher.*;
+import latmod.ftbu.api.tile.*;
 import latmod.ftbu.inv.LMInvUtils;
-import latmod.ftbu.tile.*;
 import latmod.ftbu.util.LatCoreMC;
 import latmod.ftbu.waila.WailaDataAccessor;
 import latmod.lib.IntList;

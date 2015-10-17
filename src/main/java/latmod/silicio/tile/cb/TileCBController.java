@@ -4,8 +4,8 @@ import java.util.List;
 
 import cofh.api.energy.*;
 import cpw.mods.fml.relauncher.*;
+import latmod.ftbu.api.tile.*;
 import latmod.ftbu.inv.LMInvUtils;
-import latmod.ftbu.tile.*;
 import latmod.ftbu.util.*;
 import latmod.ftbu.util.gui.ContainerEmpty;
 import latmod.ftbu.waila.WailaDataAccessor;
