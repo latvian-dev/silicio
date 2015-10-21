@@ -2,10 +2,10 @@ package latmod.silicio.block;
 import java.util.List;
 
 import cpw.mods.fml.relauncher.*;
-import latmod.ftbu.inv.ODItems;
+import ftb.lib.MathHelperMC;
+import ftb.lib.client.FTBLibClient;
+import ftb.lib.item.ODItems;
 import latmod.ftbu.tile.TileLM;
-import latmod.ftbu.util.MathHelperMC;
-import latmod.ftbu.util.client.LatCoreMCClient;
 import latmod.lib.FastList;
 import latmod.silicio.item.ItemMaterialsSil;
 import latmod.silicio.tile.cb.TileCBCable;
@@ -162,7 +162,7 @@ public class BlockCBCable extends BlockSil
 	
 	@SideOnly(Side.CLIENT)
 	public IIcon getIcon(IBlockAccess iba, int x, int y, int z, int s)
-	{ return LatCoreMCClient.blockNullIcon; }
+	{ return FTBLibClient.blockNullIcon; }
 	
 	public boolean isSideSolid(IBlockAccess iba, int x, int y, int z, ForgeDirection side)
 	{ return true; }

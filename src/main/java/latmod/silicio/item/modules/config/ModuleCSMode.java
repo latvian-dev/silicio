@@ -1,7 +1,7 @@
 package latmod.silicio.item.modules.config;
 
 import cpw.mods.fml.relauncher.*;
-import latmod.ftbu.mod.FTBU;
+import ftb.lib.mod.FTBLibMod;
 import latmod.lib.FastList;
 import latmod.silicio.gui.GuiModuleSettings;
 import latmod.silicio.tile.cb.CircuitBoard;
@@ -53,7 +53,7 @@ public class ModuleCSMode extends ModuleConfigSegment
 	public void addButtonDesc(GuiModuleSettings g, FastList<String> s)
 	{
 		int mode = get(g.board.items[g.moduleID]);
-		if(FTBU.proxy.isShiftDown())
+		if(FTBLibMod.proxy.isShiftDown())
 		{
 			for(int i = 0; i < modes.length; i++)
 			{

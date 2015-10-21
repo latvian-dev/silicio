@@ -1,6 +1,6 @@
 package latmod.silicio.item;
 import cpw.mods.fml.relauncher.*;
-import latmod.ftbu.inv.ODItems;
+import ftb.lib.item.ODItems;
 import latmod.ftbu.item.*;
 import latmod.ftbu.util.LMMod;
 import latmod.silicio.*;

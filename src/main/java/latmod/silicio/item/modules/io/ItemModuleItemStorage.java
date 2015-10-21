@@ -1,6 +1,6 @@
 package latmod.silicio.item.modules.io;
 
-import latmod.ftbu.inv.ODItems;
+import ftb.lib.item.ODItems;
 import latmod.lib.FastList;
 import latmod.silicio.SilItems;
 import latmod.silicio.item.modules.*;

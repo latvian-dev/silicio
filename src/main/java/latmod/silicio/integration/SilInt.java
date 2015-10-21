@@ -2,7 +2,7 @@ package latmod.silicio.integration;
 
 import java.lang.reflect.Method;
 
-import latmod.ftbu.util.LatCoreMC;
+import ftb.lib.FTBLib;
 import latmod.silicio.Silicio;
 
 public class SilInt
@@ -16,7 +16,7 @@ public class SilInt
 	
 	private static final void load(String m, String c)
 	{
-		if(LatCoreMC.isModInstalled(m))
+		if(FTBLib.isModInstalled(m))
 		{
 			try
 			{

@@ -4,9 +4,10 @@ import java.util.List;
 
 import cofh.api.energy.*;
 import cpw.mods.fml.relauncher.*;
+import ftb.lib.*;
+import ftb.lib.item.LMInvUtils;
 import latmod.ftbu.api.tile.*;
-import latmod.ftbu.inv.LMInvUtils;
-import latmod.ftbu.util.*;
+import latmod.ftbu.util.LatCoreMC;
 import latmod.ftbu.util.gui.ContainerEmpty;
 import latmod.ftbu.waila.WailaDataAccessor;
 import latmod.lib.*;
@@ -147,7 +148,7 @@ public class TileCBController extends TileBasicCBNetTile implements IEnergyRecei
 			if(isServer() && worldObj.setBlockToAir(xCoord, yCoord, zCoord))
 			{
 				e.printStackTrace();
-				LatCoreMC.printChat(BroadcastSender.inst, "CBController @ " + LMStringUtils.stripI(xCoord, yCoord, zCoord) + " crashed!");
+				FTBLib.printChat(BroadcastSender.inst, "CBController @ " + LMStringUtils.stripI(xCoord, yCoord, zCoord) + " crashed!");
 				LMInvUtils.dropItem(worldObj, xCoord + 0.5D, yCoord + 0.5D, zCoord + 0.5D, new ItemStack(SilItems.b_cbcontroller), 10);
 			}
 		}
@@ -229,7 +230,7 @@ public class TileCBController extends TileBasicCBNetTile implements IEnergyRecei
 	
 	private void channelChanged(int ch, boolean on)
 	{
-		LatCoreMC.printChat(null, this + ": " + ch + " - " + on);
+		FTBLib.printChat(null, this + ": " + ch + " - " + on);
 		
 		for(ModuleEntry me : net.allModules)
 		{

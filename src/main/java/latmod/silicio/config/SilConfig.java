@@ -1,8 +1,8 @@
 package latmod.silicio.config;
 import java.io.File;
 
-import ftb.lib.mod.FTBLib;
-import latmod.ftbu.api.config.ConfigListRegistry;
+import ftb.lib.FTBLib;
+import ftb.lib.api.config.ConfigListRegistry;
 import latmod.lib.config.ConfigFile;
 import latmod.silicio.Silicio;
 

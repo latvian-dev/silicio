@@ -3,6 +3,7 @@ package latmod.silicio.client.render.tile;
 import org.lwjgl.opengl.*;
 
 import cpw.mods.fml.relauncher.*;
+import ftb.lib.client.FTBLibClient;
 import latmod.ftbu.util.client.*;
 import latmod.silicio.*;
 import latmod.silicio.tile.cb.TileCBCable;
@@ -73,7 +74,7 @@ public class RenderCBCable extends TileRenderer<TileCBCable>
 			{
 				float sc = 1.01F;
 				GL11.glScalef(sc, sc, sc);
-				LatCoreMCClient.pushMaxBrightness();
+				FTBLibClient.pushMaxBrightness();
 				GL11.glDisable(GL11.GL_LIGHTING);
 				
 				Minecraft.getMinecraft().getTextureManager().bindTexture(texture_on);
@@ -103,7 +104,7 @@ public class RenderCBCable extends TileRenderer<TileCBCable>
 				}
 				
 				GL11.glColor4f(1F, 1F, 1F, 1F);
-				LatCoreMCClient.popMaxBrightness();
+				FTBLibClient.popMaxBrightness();
 				GL11.glEnable(GL11.GL_LIGHTING);
 			}
 		}
@@ -133,7 +134,7 @@ public class RenderCBCable extends TileRenderer<TileCBCable>
 				}
 				else
 				{
-					icons[i] = LatCoreMCClient.blockNullIcon;
+					icons[i] = FTBLibClient.blockNullIcon;
 				}
 			}
 			

@@ -3,10 +3,11 @@ import java.util.*;
 
 import cofh.api.energy.IEnergyReceiver;
 import cpw.mods.fml.relauncher.*;
+import ftb.lib.MathHelperMC;
+import ftb.lib.item.LMInvUtils;
+import ftb.lib.mod.FTBLibMod;
 import latmod.ftbu.api.paint.*;
 import latmod.ftbu.api.tile.*;
-import latmod.ftbu.inv.LMInvUtils;
-import latmod.ftbu.mod.FTBU;
 import latmod.ftbu.util.*;
 import latmod.ftbu.util.gui.ContainerEmpty;
 import latmod.ftbu.waila.WailaDataAccessor;
@@ -352,7 +353,7 @@ public class TileCBCable extends TileBasicCBNetTile implements IPaintable, IGuiT
 		TileEntity te = worldObj.getTileEntity(xCoord + Facing.offsetsXForSide[i], yCoord + Facing.offsetsYForSide[i], zCoord + Facing.offsetsZForSide[i]);
 		if(te instanceof ICBNetTile) return true;
 		
-		EntityPlayer clientP = FTBU.proxy.getClientPlayer();
+		EntityPlayer clientP = FTBLibMod.proxy.getClientPlayer();
 		
 		if(clientP != null && clientP.getHeldItem() != null)
 		{

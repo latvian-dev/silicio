@@ -2,7 +2,7 @@ package latmod.silicio.integration;
 
 import cofh.thermalexpansion.block.simple.BlockFrame;
 import cofh.thermalexpansion.util.crafting.*;
-import latmod.ftbu.inv.ODItems;
+import ftb.lib.item.ODItems;
 import latmod.ftbu.item.MaterialItem;
 import latmod.ftbu.recipes.StackArray;
 import latmod.latblocks.item.ItemMaterialsLB;

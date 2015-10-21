@@ -1,8 +1,8 @@
 package latmod.silicio.item.modules.config;
 
 import cpw.mods.fml.relauncher.*;
-import latmod.ftbu.inv.LMInvUtils;
-import latmod.ftbu.mod.FTBU;
+import ftb.lib.item.LMInvUtils;
+import ftb.lib.mod.FTBLibMod;
 import latmod.lib.FastList;
 import latmod.silicio.gui.GuiModuleSettings;
 import latmod.silicio.tile.cb.CircuitBoard;
@@ -22,7 +22,7 @@ public class ModuleCSItem extends ModuleConfigSegment
 	{
 		ItemStack is = LMInvUtils.singleCopy(g.container.player.inventory.getItemStack());
 		
-		if(is == null && !FTBU.proxy.isShiftDown()) return;
+		if(is == null && !FTBLibMod.proxy.isShiftDown()) return;
 		
 		if(isValid(is))
 		{

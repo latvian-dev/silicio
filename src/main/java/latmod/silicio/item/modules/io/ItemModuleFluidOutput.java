@@ -1,6 +1,6 @@
 package latmod.silicio.item.modules.io;
 
-import latmod.ftbu.util.LatCoreMC;
+import ftb.lib.FTBLib;
 import latmod.silicio.SilItems;
 import latmod.silicio.item.modules.IOType;
 import latmod.silicio.item.modules.config.*;
@@ -80,7 +80,7 @@ public class ItemModuleFluidOutput extends ItemModuleIO
 							{
 								drain = entry.tank.drain(entry.sideF, fill, true);
 								left -= fh.fill(e.board.sideF, drain, true);
-								if(left < 0) LatCoreMC.printChat(null, "Error!");
+								if(left < 0) FTBLib.printChat(null, "Error!");
 								if(left <= 0) return;
 							}
 						}

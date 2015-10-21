@@ -1,6 +1,6 @@
 package latmod.silicio.item.modules;
 import cpw.mods.fml.relauncher.*;
-import latmod.ftbu.util.LatCoreMC;
+import ftb.lib.FTBLib;
 import latmod.lib.*;
 import latmod.silicio.item.ItemSil;
 import latmod.silicio.item.modules.config.ModuleConfigSegment;
@@ -76,7 +76,7 @@ public abstract class ItemModule extends ItemSil
 		if(!w.isRemote && ep.isSneaking() && is.stackTagCompound != null)
 		{
 			is.stackTagCompound = null;
-			LatCoreMC.printChat(ep, "Configuration cleared");
+			FTBLib.printChat(ep, "Configuration cleared");
 		}
 		
 		return is;
