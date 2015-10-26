@@ -1,6 +1,7 @@
 package latmod.silicio.gui;
 import cpw.mods.fml.relauncher.*;
-import latmod.ftbu.util.gui.*;
+import ftb.lib.client.TextureCoords;
+import latmod.ftbu.util.gui.GuiLM;
 import latmod.silicio.gui.container.ContainerModuleCopier;
 import latmod.silicio.tile.cb.TileModuleCopier;
 
@@ -26,6 +27,6 @@ public class GuiModuleCopier extends GuiLM
 	public void drawBackground()
 	{
 		super.drawBackground();
-		texBar.render(this, 86, 35, (int)(22 * tile.getProgressF()), 15);
+		render(texBar, 86, 35, (int)(22 * tile.getProgressF()), 15);
 	}
 }

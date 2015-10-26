@@ -1,6 +1,7 @@
 package latmod.silicio.gui;
 
 import cpw.mods.fml.relauncher.*;
+import ftb.lib.client.TextureCoords;
 import latmod.ftbu.util.client.FTBULang;
 import latmod.ftbu.util.gui.*;
 import latmod.silicio.item.modules.ItemModule;
@@ -126,21 +127,21 @@ public class GuiSelectChannels extends GuiLM
 			else buttonSelectIO[i].render(iconOutput);
 			
 			if(selectedIO == i)
-				iconIOPressed.render(this, buttonSelectIO[i].posX, buttonSelectIO[i].posY, 8, 8);
+				render(iconIOPressed, buttonSelectIO[i].posX, buttonSelectIO[i].posY, 8, 8);
 		}
 		
 		for(ButtonLM b : allChannels)
 		{
 			if(b.customID == ItemModule.getChannel(board.items[moduleID], selectedIO))
-				iconSelChannel.render(this, b.posX - 1, b.posY - 1, 10, 10);
+				render(iconSelChannel, b.posX - 1, b.posY - 1, 10, 10);
 			
 			if(b.customID >= 0 && board.cable.getCBNetwork().hasController())
 			{
 				if(board.cable.getCBNetwork().controller.channels.contains(b.customID))
-					iconChannelEnabled.render(this, b.posX, b.posY, 8, 8);
+					render(iconChannelEnabled, b.posX, b.posY, 8, 8);
 			}
 		}
 		
-		iconBack.render(this, buttonBack.posX, buttonBack.posY, buttonBack.width, buttonBack.height);
+		render(iconBack, buttonBack.posX, buttonBack.posY, buttonBack.width, buttonBack.height);
 	}
 }

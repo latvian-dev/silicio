@@ -3,6 +3,7 @@ package latmod.silicio.gui;
 import org.lwjgl.opengl.*;
 
 import cpw.mods.fml.relauncher.*;
+import ftb.lib.client.TextureCoords;
 import latmod.ftbu.util.client.FTBULang;
 import latmod.ftbu.util.gui.*;
 import latmod.lib.FastList;

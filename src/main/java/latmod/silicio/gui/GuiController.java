@@ -1,6 +1,7 @@
 package latmod.silicio.gui;
 
 import cpw.mods.fml.relauncher.*;
+import ftb.lib.client.TextureCoords;
 import latmod.ftbu.util.gui.*;
 import latmod.silicio.tile.cb.TileCBController;
 import net.minecraft.util.ResourceLocation;
@@ -46,7 +47,7 @@ public class GuiController extends GuiLM
 		for(int i = 0; i < channels.length; i++)
 		{
 			if(controller.channels.contains(i))
-				iconChannelEnabled.render(this, channels[i].posX, channels[i].posY, 8, 8);
+				render(iconChannelEnabled, channels[i].posX, channels[i].posY, 8, 8);
 		}
 	}
 }
