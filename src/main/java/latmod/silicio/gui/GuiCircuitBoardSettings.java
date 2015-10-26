@@ -72,7 +72,7 @@ public class GuiCircuitBoardSettings extends GuiLM
 		for(int i = 0; i < itemButtons.length; i++)
 		{
 			if(itemButtons[i] != null)
-				itemButtons[i].render();
+				itemButtons[i].renderWidget();
 		}
 	}
 }
