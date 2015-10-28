@@ -37,7 +37,7 @@ public class GuiCircuitBoard extends GuiLM
 				l.add(title);
 				
 				if(board.cable.getCBNetwork().controller == null)
-					l.add(EnumChatFormatting.GRAY + "No Controller!");//LANG
+					l.add(EnumChatFormatting.GRAY + "No Controller!");
 			}
 		};
 		
