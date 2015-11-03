@@ -3,12 +3,13 @@ import java.util.*;
 
 import cofh.api.energy.IEnergyReceiver;
 import cpw.mods.fml.relauncher.*;
-import ftb.lib.MathHelperMC;
+import ftb.lib.*;
+import ftb.lib.api.gui.IGuiTile;
 import ftb.lib.item.LMInvUtils;
 import ftb.lib.mod.FTBLibMod;
 import latmod.ftbu.api.paint.*;
 import latmod.ftbu.api.tile.*;
-import latmod.ftbu.util.*;
+import latmod.ftbu.util.LMSecurity;
 import latmod.ftbu.util.gui.ContainerEmpty;
 import latmod.ftbu.waila.WailaDataAccessor;
 import latmod.latblocks.LatBlocksItems;
@@ -319,7 +320,7 @@ public class TileCBCable extends TileBasicCBNetTile implements IPaintable, IGuiT
 			}
 			else
 			{
-				LatCoreMC.openGui(ep, this, guiData(id, 0, -1));
+				FTBLib.openGui(ep, this, guiData(id, 0, -1));
 			}
 		}
 		

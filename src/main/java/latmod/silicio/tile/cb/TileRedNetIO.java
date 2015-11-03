@@ -3,9 +3,10 @@ package latmod.silicio.tile.cb;
 import java.util.*;
 
 import cpw.mods.fml.relauncher.*;
+import ftb.lib.FTBLib;
+import ftb.lib.api.gui.IGuiTile;
 import ftb.lib.item.LMInvUtils;
-import latmod.ftbu.api.tile.*;
-import latmod.ftbu.util.LatCoreMC;
+import latmod.ftbu.api.tile.IWailaTile;
 import latmod.ftbu.waila.WailaDataAccessor;
 import latmod.lib.IntList;
 import latmod.silicio.tile.cb.events.*;
@@ -50,7 +51,7 @@ public class TileRedNetIO extends TileBasicCBNetTile implements IWailaTile.Body,
 		{
 			if(LMInvUtils.isWrench(is))
 			{ if(inputSide != side) { inputSide = side; markDirty(); } }
-			else LatCoreMC.openGui(ep, this, null);
+			else FTBLib.openGui(ep, this, null);
 		}
 		
 		return true;

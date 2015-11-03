@@ -5,9 +5,9 @@ import java.util.List;
 import cofh.api.energy.*;
 import cpw.mods.fml.relauncher.*;
 import ftb.lib.*;
+import ftb.lib.api.gui.IGuiTile;
 import ftb.lib.item.LMInvUtils;
 import latmod.ftbu.api.tile.*;
-import latmod.ftbu.util.LatCoreMC;
 import latmod.ftbu.util.gui.ContainerEmpty;
 import latmod.ftbu.waila.WailaDataAccessor;
 import latmod.lib.*;
@@ -105,7 +105,7 @@ public class TileCBController extends TileBasicCBNetTile implements IEnergyRecei
 	}
 	
 	public boolean onRightClick(EntityPlayer ep, ItemStack is, int side, float x, float y, float z)
-	{ if(isServer()) LatCoreMC.openGui(ep, this, null); return true; }
+	{ if(isServer()) FTBLib.openGui(ep, this, null); return true; }
 	
 	public boolean canConnect(ForgeDirection side)
 	{ return true; }

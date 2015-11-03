@@ -4,10 +4,11 @@ import java.util.List;
 
 import cofh.api.energy.EnergyStorage;
 import cpw.mods.fml.relauncher.*;
+import ftb.lib.FTBLib;
+import ftb.lib.api.gui.IGuiTile;
 import ftb.lib.item.LMInvUtils;
-import latmod.ftbu.api.tile.*;
+import latmod.ftbu.api.tile.IWailaTile;
 import latmod.ftbu.tile.TileInvLM;
-import latmod.ftbu.util.LatCoreMC;
 import latmod.ftbu.waila.WailaDataAccessor;
 import latmod.silicio.gui.GuiModuleCopier;
 import latmod.silicio.gui.container.ContainerModuleCopier;
@@ -54,7 +55,7 @@ public class TileModuleCopier extends TileInvLM implements IGuiTile, ICBNetTile,
 	}
 	
 	public boolean onRightClick(EntityPlayer ep, ItemStack is, int side, float x, float y, float z)
-	{ if(isServer()) LatCoreMC.openGui(ep, this, null); return true; }
+	{ if(isServer()) FTBLib.openGui(ep, this, null); return true; }
 	
 	public Container getContainer(EntityPlayer ep, NBTTagCompound data)
 	{ return new ContainerModuleCopier(ep, this); }
