@@ -29,9 +29,6 @@ public interface IComputerAccess
 	 */
 	public String mount( String desiredLocation, IMount mount );
 
-    /**
-     * TODO: Document me
-     */
     public String mount( String desiredLocation, IMount mount, String driveName );
 
 	/**
@@ -47,9 +44,6 @@ public interface IComputerAccess
 	 */
 	public String mountWritable( String desiredLocation, IWritableMount mount );
 
-    /**
-     * TODO: Document me
-     */
     public String mountWritable( String desiredLocation, IWritableMount mount, String driveName );
 
 	/**

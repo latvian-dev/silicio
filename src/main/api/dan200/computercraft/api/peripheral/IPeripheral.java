@@ -91,9 +91,6 @@ public interface IPeripheral
 	 * @see		#detach
 	 */
     public void detach( IComputerAccess computer );
-
-    /**
-     * TODO: Document me
-     */
+    
     public boolean equals( IPeripheral other );
 }

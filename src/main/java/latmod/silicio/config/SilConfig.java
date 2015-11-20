@@ -14,7 +14,7 @@ public class SilConfig
 	{
 		configFile = new ConfigFile(Silicio.mod.modID, new File(FTBLib.folderConfig, "Silicio.json"), true);
 		SilConfigGeneral.load(configFile);
-		ConfigListRegistry.add(configFile);
+		ConfigListRegistry.instance.add(configFile);
 		configFile.load();
 	}
 }

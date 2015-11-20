@@ -42,17 +42,7 @@ public interface ILuaContext
 	 */
 	public Object[] yield( Object[] arguments ) throws InterruptedException;
 
-    /**
-     * TODO: Document me
-     * @param task
-     * @return
-     */
     public Object[] executeMainThreadTask( ILuaTask task ) throws LuaException, InterruptedException;
 
-    /**
-     * TODO: Document me
-     * @param task
-     * @return
-     */
     public long issueMainThreadTask( ILuaTask task ) throws LuaException;
 }
