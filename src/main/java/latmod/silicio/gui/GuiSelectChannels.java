@@ -2,8 +2,9 @@ package latmod.silicio.gui;
 
 import cpw.mods.fml.relauncher.*;
 import ftb.lib.client.TextureCoords;
+import ftb.lib.gui.*;
+import ftb.lib.gui.widgets.ButtonLM;
 import latmod.ftbu.util.client.FTBULang;
-import latmod.ftbu.util.gui.*;
 import latmod.silicio.item.modules.ItemModule;
 import latmod.silicio.tile.cb.*;
 import net.minecraft.util.ResourceLocation;

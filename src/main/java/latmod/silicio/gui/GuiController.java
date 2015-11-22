@@ -2,7 +2,8 @@ package latmod.silicio.gui;
 
 import cpw.mods.fml.relauncher.*;
 import ftb.lib.client.TextureCoords;
-import latmod.ftbu.util.gui.*;
+import ftb.lib.gui.*;
+import ftb.lib.gui.widgets.*;
 import latmod.silicio.tile.cb.TileCBController;
 import net.minecraft.util.ResourceLocation;
 

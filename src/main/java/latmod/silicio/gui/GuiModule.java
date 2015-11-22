@@ -1,7 +1,7 @@
 package latmod.silicio.gui;
 
 import cpw.mods.fml.relauncher.*;
-import latmod.ftbu.util.gui.*;
+import ftb.lib.gui.*;
 import latmod.silicio.Silicio;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ResourceLocation;

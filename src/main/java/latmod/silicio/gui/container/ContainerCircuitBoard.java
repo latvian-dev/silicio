@@ -1,5 +1,5 @@
 package latmod.silicio.gui.container;
-import latmod.ftbu.util.gui.ContainerLM;
+import ftb.lib.gui.ContainerLM;
 import latmod.silicio.tile.cb.CircuitBoard;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Slot;

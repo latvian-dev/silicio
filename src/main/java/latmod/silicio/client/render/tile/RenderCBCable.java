@@ -1,9 +1,9 @@
 package latmod.silicio.client.render.tile;
 
-import org.lwjgl.opengl.*;
+import org.lwjgl.opengl.GL11;
 
 import cpw.mods.fml.relauncher.*;
-import ftb.lib.client.FTBLibClient;
+import ftb.lib.client.*;
 import latmod.ftbu.util.client.*;
 import latmod.silicio.*;
 import latmod.silicio.tile.cb.TileCBCable;
@@ -31,13 +31,13 @@ public class RenderCBCable extends TileRenderer<TileCBCable>
 	{
 		//if(true) return;
 		
-		GL11.glPushMatrix();
-		GL11.glEnable(GL12.GL_RESCALE_NORMAL);
-		GL11.glColor4f(1F, 1F, 1F, 1F);
+		GlStateManager.pushMatrix();
+		GlStateManager.enableRescaleNormal();
+		GlStateManager.color(1F, 1F, 1F, 1F);
 		
-		GL11.glTranslated(rx, ry + 1D, rz + 1D);
-		GL11.glScaled(1D, -1D, -1D);
-		GL11.glTranslated(0.5D, 0.5D, 0.5D);
+		GlStateManager.translate(rx, ry + 1F, rz + 1F);
+		GlStateManager.scale(1F, -1F, -1F);
+		GlStateManager.translate(0.5F, 0.5F, 0.5F);
 		
 		Minecraft.getMinecraft().getTextureManager().bindTexture(texture_off);
 		
@@ -73,19 +73,19 @@ public class RenderCBCable extends TileRenderer<TileCBCable>
 			if(c > 0)
 			{
 				float sc = 1.01F;
-				GL11.glScalef(sc, sc, sc);
+				GlStateManager.scale(sc, sc, sc);
 				FTBLibClient.pushMaxBrightness();
-				GL11.glDisable(GL11.GL_LIGHTING);
+				GlStateManager.disableLighting();
 				
 				Minecraft.getMinecraft().getTextureManager().bindTexture(texture_on);
 				
 				if(t.getCBNetwork().hasConflict())
-					GL11.glColor4f(1F, 0F, 0F, 0.5F);
+					GlStateManager.color(1F, 0F, 0F, 0.5F);
 				else
-					GL11.glColor4f(0F, 1F, 1F, 0.5F);
+					GlStateManager.color(0F, 1F, 1F, 0.5F);
 				
-				GL11.glEnable(GL11.GL_BLEND);
-				GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
+				GlStateManager.enableBlend();
+				GlStateManager.blendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
 				
 				if(c != 2) model.center.render(s);
 				
@@ -95,7 +95,7 @@ public class RenderCBCable extends TileRenderer<TileCBCable>
 						model.cable[i].render(s);
 				}
 				
-				GL11.glDisable(GL11.GL_BLEND);
+				GlStateManager.disableBlend();
 				
 				for(int i = 0; i < 6; i++)
 				{
@@ -103,23 +103,23 @@ public class RenderCBCable extends TileRenderer<TileCBCable>
 						model.board[i].render(s);
 				}
 				
-				GL11.glColor4f(1F, 1F, 1F, 1F);
+				GlStateManager.color(1F, 1F, 1F, 1F);
 				FTBLibClient.popMaxBrightness();
-				GL11.glEnable(GL11.GL_LIGHTING);
+				GlStateManager.enableLighting();
 			}
 		}
 		
-		GL11.glPopMatrix();
-		GL11.glDisable(GL12.GL_RESCALE_NORMAL);
+		GlStateManager.popMatrix();
+		GlStateManager.disableRescaleNormal();
 		
 		if(t.hasCover)
 		{
-			GL11.glPushMatrix();
-			GL11.glTranslated(rx + 0.5D, ry + 0.5D, rz + 0.5D);
-			GL11.glDisable(GL11.GL_LIGHTING);
-			GL11.glDisable(GL11.GL_CULL_FACE);
+			GlStateManager.pushMatrix();
+			GlStateManager.translate(rx + 0.5D, ry + 0.5D, rz + 0.5D);
+			GlStateManager.disableLighting();
+			GlStateManager.disableCull();
 			
-			Minecraft.getMinecraft().getTextureManager().bindTexture(TextureMap.locationBlocksTexture);
+			FTBLibClient.setTexture(TextureMap.locationBlocksTexture);
 			
 			IIcon[] icons = new IIcon[6];
 			
@@ -145,9 +145,9 @@ public class RenderCBCable extends TileRenderer<TileCBCable>
 			renderBlocks.setRenderBounds(renderBlocks.fullBlock);
 			renderBlocks.renderStandardBlockIcons(t.getBlockType(), t.xCoord, t.yCoord, t.zCoord, icons, true);
 			
-			GL11.glEnable(GL11.GL_CULL_FACE);
-			GL11.glEnable(GL11.GL_LIGHTING);
-			GL11.glPopMatrix();
+			GlStateManager.enableCull();
+			GlStateManager.enableLighting();
+			GlStateManager.popMatrix();
 		}
 	}
 }

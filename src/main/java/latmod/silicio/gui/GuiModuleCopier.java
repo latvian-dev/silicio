@@ -1,7 +1,7 @@
 package latmod.silicio.gui;
 import cpw.mods.fml.relauncher.*;
 import ftb.lib.client.TextureCoords;
-import latmod.ftbu.util.gui.GuiLM;
+import ftb.lib.gui.GuiLM;
 import latmod.silicio.gui.container.ContainerModuleCopier;
 import latmod.silicio.tile.cb.TileModuleCopier;
 

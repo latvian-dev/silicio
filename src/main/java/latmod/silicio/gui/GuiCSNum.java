@@ -1,8 +1,8 @@
 package latmod.silicio.gui;
 
 import cpw.mods.fml.relauncher.*;
+import ftb.lib.gui.widgets.*;
 import latmod.ftbu.util.client.FTBULang;
-import latmod.ftbu.util.gui.*;
 import latmod.lib.*;
 import latmod.silicio.item.modules.config.ModuleCSNum;
 import net.minecraft.nbt.NBTTagCompound;

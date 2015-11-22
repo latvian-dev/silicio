@@ -1,17 +1,15 @@
 package latmod.silicio.gui;
 
-import org.lwjgl.opengl.*;
-
 import cpw.mods.fml.relauncher.*;
-import ftb.lib.client.TextureCoords;
+import ftb.lib.client.*;
+import ftb.lib.gui.GuiLM;
+import ftb.lib.gui.widgets.ButtonLM;
 import latmod.ftbu.util.client.FTBULang;
-import latmod.ftbu.util.gui.*;
 import latmod.lib.FastList;
 import latmod.silicio.gui.container.ContainerModuleSettings;
 import latmod.silicio.item.modules.ItemModule;
 import latmod.silicio.item.modules.config.*;
 import latmod.silicio.tile.cb.*;
-import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.renderer.entity.RenderItem;
 import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.item.ItemStack;
@@ -139,22 +137,7 @@ public class GuiModuleSettings extends GuiLM
 			if(b.itemStack != null)
 			{
 				b.render(icon_cfg_empty);
-				
-				GL11.glPushMatrix();
-				GL11.glTranslatef(b.posX + guiLeft + 2.5F, b.posY + guiTop + 2.5F, 0F);
-				GL11.glPushAttrib(GL11.GL_ENABLE_BIT);
-				RenderHelper.enableGUIStandardItemLighting();
-				GL11.glDisable(GL11.GL_LIGHTING);
-				GL11.glEnable(GL12.GL_RESCALE_NORMAL);
-				GL11.glEnable(GL11.GL_COLOR_MATERIAL);
-				GL11.glEnable(GL11.GL_LIGHTING);
-				renderItem.renderItemIntoGUI(mc.fontRenderer, mc.getTextureManager(), b.itemStack, 0, 0, false);
-				renderItem.renderItemOverlayIntoGUI(mc.fontRenderer, mc.getTextureManager(), b.itemStack, 0, 0);
-				GL11.glDisable(GL11.GL_LIGHTING);
-				GL11.glDepthMask(true);
-				GL11.glEnable(GL11.GL_DEPTH_TEST);
-				GL11.glPopAttrib();
-				GL11.glPopMatrix();
+				FTBLibClient.renderGuiItem(b.itemStack, renderItem, mc.fontRenderer, b.getAX(), b.getAY());
 			}
 			else if(b.fluidStack != null)
 			{
@@ -167,12 +150,12 @@ public class GuiModuleSettings extends GuiLM
 				
 				if(ic != null)
 				{
-					GL11.glPushMatrix();
+					GlStateManager.pushMatrix();
 					setTexture(TextureMap.locationBlocksTexture);
-					GL11.glTranslatef(b.posX + guiLeft + 2.5F, b.posY + guiTop + 2.5F, 0F);
+					GlStateManager.translate(b.posX + guiLeft + 2.5F, b.posY + guiTop + 2.5F, 0F);
 					drawWrappedIcon(ic, 0, 0, 16, 16);
 					setTexture(thisTex);
-					GL11.glPopMatrix();
+					GlStateManager.popMatrix();
 				}
 			}
 			else if(b.background != null) b.render(b.background);

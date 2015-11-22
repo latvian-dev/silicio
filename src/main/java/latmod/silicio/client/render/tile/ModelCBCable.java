@@ -1,6 +1,7 @@
 package latmod.silicio.client.render.tile;
 
 import cpw.mods.fml.relauncher.*;
+import latmod.lib.MathHelperLM;
 import net.minecraft.client.model.*;
 import net.minecraft.entity.Entity;
 
@@ -27,8 +28,8 @@ public class ModelCBCable extends ModelBase // RenderCBCable
 		
 		//float PI = 3.141592653589793F;
 		//float PI2 = 1.5707963267948966F;
-		float PI = (float)Math.PI;
-		float PI2 = (float)(Math.PI * 0.5D);
+		float PI = MathHelperLM.PI_F;
+		float PI2 = MathHelperLM.HALF_PI_F;
 		
 		cable[0] = new ModelRenderer(this, 16, 0);
 		cable[0].setRotationPoint(0F, 0F, 0F);
