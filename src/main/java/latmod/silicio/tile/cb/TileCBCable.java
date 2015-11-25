@@ -151,7 +151,8 @@ public class TileCBCable extends TileBasicCBNetTile implements IPaintable, IGuiT
 		tag.setBoolean("HasCover", hasCover);
 		Paint.writeToNBT(tag, "Paint", paint);
 		
-		IntList idx = Converter.fromBools(isDisabled, true);
+		IntList idx = new IntList();
+		Converter.fromBools(isDisabled, idx, true);
 		if(idx.size() > 0) tag.setIntArray("Disabled", idx.toArray());
 	}
 	
