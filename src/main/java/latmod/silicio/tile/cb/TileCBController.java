@@ -346,7 +346,7 @@ public class TileCBController extends TileBasicCBNetTile implements IEnergyRecei
 	public static String getChannelName(int i)
 	{
 		if(i < 0) return "Disabled";
-		return (EnumDyeColor.VALUES[i % 16].toString() + " #" + (i / 16 + 1));
+		return (EnumMCColor.VALUES[i % 16].toString() + " #" + (i / 16 + 1));
 	}
 	
 	public boolean canPlayerInteract(EntityPlayer ep, boolean breakBlock)

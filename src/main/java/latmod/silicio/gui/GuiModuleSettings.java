@@ -1,10 +1,10 @@
 package latmod.silicio.gui;
 
 import cpw.mods.fml.relauncher.*;
+import ftb.lib.api.gui.FTBLibLang;
 import ftb.lib.client.*;
 import ftb.lib.gui.GuiLM;
 import ftb.lib.gui.widgets.ButtonLM;
-import latmod.ftbu.util.client.FTBULang;
 import latmod.lib.FastList;
 import latmod.silicio.gui.container.ContainerModuleSettings;
 import latmod.silicio.item.modules.ItemModule;
@@ -68,7 +68,7 @@ public class GuiModuleSettings extends GuiLM
 			}
 		};
 		
-		buttonBack.title = FTBULang.button_back();
+		buttonBack.title = FTBLibLang.button_back();
 		
 		buttonsConfig = new ConfigButton[12];
 		

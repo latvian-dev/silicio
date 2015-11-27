@@ -1,10 +1,10 @@
 package latmod.silicio.gui;
 
 import cpw.mods.fml.relauncher.*;
+import ftb.lib.api.gui.FTBLibLang;
 import ftb.lib.client.TextureCoords;
 import ftb.lib.gui.*;
 import ftb.lib.gui.widgets.ButtonLM;
-import latmod.ftbu.util.client.FTBULang;
 import latmod.silicio.item.modules.ItemModule;
 import latmod.silicio.tile.cb.*;
 import net.minecraft.util.ResourceLocation;
@@ -49,7 +49,7 @@ public class GuiSelectChannels extends GuiLM
 			}
 		};
 		
-		buttonBack.title = FTBULang.button_back();
+		buttonBack.title = FTBLibLang.button_back();
 		
 		int chCount = module.getChannelCount();
 		if(chCount > 16) chCount = 16;

@@ -1,8 +1,8 @@
 package latmod.silicio.gui;
 
 import cpw.mods.fml.relauncher.*;
+import ftb.lib.api.gui.FTBLibLang;
 import ftb.lib.gui.widgets.*;
-import latmod.ftbu.util.client.FTBULang;
 import latmod.lib.*;
 import latmod.silicio.item.modules.config.ModuleCSNum;
 import net.minecraft.nbt.NBTTagCompound;
@@ -41,7 +41,7 @@ public class GuiCSNum extends GuiModule
 			}
 		};
 		
-		buttonCancel.title = FTBULang.button_cancel();
+		buttonCancel.title = FTBLibLang.button_cancel();
 		
 		buttonSave = new ButtonLM(this, 89, 29, 78, 16)
 		{
@@ -61,7 +61,7 @@ public class GuiCSNum extends GuiModule
 			}
 		};
 		
-		buttonSave.title = FTBULang.button_save();
+		buttonSave.title = FTBLibLang.button_save();
 		
 		for(int bi = 0; bi < buttonsInc.length; bi++)
 		{

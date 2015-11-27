@@ -1,9 +1,8 @@
 package latmod.silicio.gui;
 import cpw.mods.fml.relauncher.*;
-import ftb.lib.api.gui.GuiIcons;
+import ftb.lib.api.gui.*;
 import ftb.lib.gui.GuiLM;
 import ftb.lib.gui.widgets.*;
-import latmod.ftbu.util.client.FTBULang;
 import latmod.silicio.Silicio;
 import latmod.silicio.gui.container.ContainerCircuitBoardSettings;
 import latmod.silicio.item.modules.ItemModule;
@@ -32,7 +31,7 @@ public class GuiCircuitBoardSettings extends GuiLM
 			}
 		};
 		
-		buttonBack.title = FTBULang.button_back();
+		buttonBack.title = FTBLibLang.button_back();
 		
 		itemButtons = new ItemButtonLM[board.items.length];
 		

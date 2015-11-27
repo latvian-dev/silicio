@@ -1,6 +1,6 @@
 package latmod.silicio.item.modules.io;
 
-import ftb.lib.EnumDyeColor;
+import ftb.lib.EnumMCColor;
 import ftb.lib.item.*;
 import latmod.ftbu.api.paint.Paint;
 import latmod.silicio.SilItems;
@@ -58,10 +58,10 @@ public class ItemModulePainter extends ItemModuleIO implements IToggable
 			mod.recipes.addRecipe(new ItemStack(this), "1D2", "DMD", "3D4",
 					'M', SilItems.Modules.OUTPUT,
 					'D', ODItems.DIAMOND,
-					'1', EnumDyeColor.BLUE.dyeName,
-					'2', EnumDyeColor.GREEN.dyeName,
-					'3', EnumDyeColor.YELLOW.dyeName,
-					'4', EnumDyeColor.RED.dyeName);
+					'1', EnumMCColor.BLUE.dyeName,
+					'2', EnumMCColor.GREEN.dyeName,
+					'3', EnumMCColor.YELLOW.dyeName,
+					'4', EnumMCColor.RED.dyeName);
 	}
 	
 	public void onChannelToggled(EventChannelToggled e)
