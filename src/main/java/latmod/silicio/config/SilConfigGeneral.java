@@ -6,9 +6,9 @@ public class SilConfigGeneral
 {
 	public static final ConfigGroup group = new ConfigGroup("general");
 	
-	public static final ConfigEntryBool disableAllCrafting = new ConfigEntryBool("disableAllCrafting", false);
-	public static final ConfigEntryBool enableTERecipes = new ConfigEntryBool("enableTERecipes", true);
-	public static final ConfigEntryBool siliconRecipe = new ConfigEntryBool("siliconRecipe", true);
+	public static final ConfigEntryBool disableAllCrafting = new ConfigEntryBool("disable_all_crafting", false);
+	public static final ConfigEntryBool enableTERecipes = new ConfigEntryBool("enable_te_recipes", true).setInfo("Enable ThermalExpansion recipes");
+	public static final ConfigEntryBool siliconRecipe = new ConfigEntryBool("silicon_recipe", true);
 	
 	public static void load(ConfigFile f)
 	{
