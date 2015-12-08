@@ -2,16 +2,15 @@ package latmod.silicio.integration;
 
 import java.lang.reflect.Method;
 
-import ftb.lib.FTBLib;
+import ftb.lib.*;
 import latmod.silicio.Silicio;
 
 public class SilInt
 {
 	public static final void onLoadedAll()
 	{
-		load("ThermalExpansion", "latmod.silicio.integration.SilIntTE");
-		load("ComputerCraft", "latmod.silicio.integration.SilIntCC");
-		//TODO: Use EventFTBULoaded.POST
+		load(OtherMods.THERMAL_EXPANSION, "latmod.silicio.integration.SilIntTE");
+		load(OtherMods.COMPUTER_CRAFT, "latmod.silicio.integration.SilIntCC");
 	}
 	
 	private static final void load(String m, String c)
