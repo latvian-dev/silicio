@@ -9,7 +9,6 @@ import net.minecraft.creativetab.CreativeTabs;
 public class ItemMaterialsSil extends ItemMaterialsLM // ItemMaterialsLB
 {
 	public static MaterialItem SILICON_GEM;
-	public static MaterialItem SILICON_DUST;
 	
 	public static MaterialItem CIRCUIT;
 	public static MaterialItem BLUE_CRYSTAL;
@@ -64,14 +63,6 @@ public class ItemMaterialsSil extends ItemMaterialsLM // ItemMaterialsLB
 				ODItems.add(ODItems.SILICON, getStack());
 			}
 			
-			public void loadRecipes()
-			{
-				mod.recipes.addSmelting(getStack(), SILICON_DUST.getStack());
-			}
-		});
-		
-		add(SILICON_DUST = new MaterialItem(this, 4, "silicon_dust")
-		{
 			public void loadRecipes()
 			{
 			}

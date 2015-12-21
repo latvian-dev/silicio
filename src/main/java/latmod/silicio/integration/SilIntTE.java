@@ -30,8 +30,7 @@ public class SilIntTE
 		addSmelter(SilItems.Modules.INPUT, SilItems.Modules.EMPTY, ItemMaterialsSil.BLUE_CRYSTAL, 1200);
 		addSmelter(SilItems.Modules.OUTPUT, SilItems.Modules.EMPTY, ItemMaterialsSil.RED_CRYSTAL, 1200);
 		
-		addPulverizer(ItemMaterialsSil.SILICON_DUST, ItemMaterialsSil.SILICON_GEM, 2400);
-		addPulverizer(ItemMaterialsSil.SILICON_DUST, Blocks.sand, 4800);
+		addPulverizer(ItemMaterialsSil.SILICON_GEM, Blocks.sand, 2400);
 		
 		addSmelter(ItemMaterialsSil.BLUE_CRYSTAL, ItemMaterialsLB.DUST_GLOWIUM_B, new ItemStack(Blocks.glass), 4800);
 		addSmelter(ItemMaterialsSil.RED_CRYSTAL, ItemMaterialsLB.DUST_GLOWIUM_R, new ItemStack(Blocks.glass), 4800);

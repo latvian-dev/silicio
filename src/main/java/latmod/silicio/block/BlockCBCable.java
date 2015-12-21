@@ -64,7 +64,7 @@ public class BlockCBCable extends BlockSil
 		mod.recipes.addRecipe(new ItemStack(this, 16), "RRR", "SES", "RRR",
 				'R', oreName,
 				'E', ODItems.LAPIS,
-				'S', ItemMaterialsSil.SILICON_DUST);
+				'S', ItemMaterialsSil.SILICON_GEM);
 	}
 	
 	public void setBlockBoundsForItemRender()

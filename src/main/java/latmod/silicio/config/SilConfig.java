@@ -3,7 +3,7 @@ import java.io.File;
 
 import ftb.lib.FTBLib;
 import ftb.lib.api.config.ConfigRegistry;
-import latmod.lib.config.ConfigFile;
+import latmod.lib.config.*;
 
 public class SilConfig
 {
@@ -13,7 +13,7 @@ public class SilConfig
 	{
 		configFile = new ConfigFile("silicio", new File(FTBLib.folderConfig, "Silicio.json"));
 		configFile.configGroup.setName("Silicio");
-		SilConfigGeneral.load(configFile);
+		configFile.add(new ConfigGroup("general").addAll(SilConfigGeneral.class));
 		ConfigRegistry.add(configFile);
 		configFile.load();
 	}
