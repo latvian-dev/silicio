@@ -1,5 +1,7 @@
 package latmod.silicio.gui;
 
+import java.util.List;
+
 import cpw.mods.fml.relauncher.*;
 import ftb.lib.api.gui.FTBLibLang;
 import ftb.lib.gui.widgets.*;
@@ -81,7 +83,7 @@ public class GuiCSNum extends GuiModule
 					}
 				}
 				
-				public void addMouseOverText(FastList<String> l)
+				public void addMouseOverText(List<String> l)
 				{ l.add((inc[bf] < 0 ? "" : "+") + (inc[bf] * (isShiftKeyDown() ? 10 : 1))); }
 			};
 		}

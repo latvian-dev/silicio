@@ -1,9 +1,10 @@
 package latmod.silicio.gui;
+import java.util.List;
+
 import cpw.mods.fml.relauncher.*;
 import ftb.lib.api.gui.*;
 import ftb.lib.gui.GuiLM;
 import ftb.lib.gui.widgets.ButtonLM;
-import latmod.lib.FastList;
 import latmod.silicio.Silicio;
 import latmod.silicio.gui.container.ContainerCircuitBoard;
 import latmod.silicio.tile.cb.*;
@@ -33,7 +34,7 @@ public class GuiCircuitBoard extends GuiLM
 				}
 			}
 			
-			public void addMouseOverText(FastList<String> l)
+			public void addMouseOverText(List<String> l)
 			{
 				l.add(title);
 				

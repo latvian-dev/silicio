@@ -1,5 +1,7 @@
 package latmod.silicio.gui;
 
+import java.util.List;
+
 import cpw.mods.fml.relauncher.*;
 import ftb.lib.api.gui.FTBLibLang;
 import ftb.lib.client.*;
@@ -85,7 +87,7 @@ public class GuiModuleSettings extends GuiLM
 					mcs.buttonClicked(GuiModuleSettings.this);
 				}
 				
-				public void addMouseOverText(FastList<String> l)
+				public void addMouseOverText(List<String> l)
 				{
 					l.add(mcs.title);
 					FastList<String> l1 = new FastList<String>();
