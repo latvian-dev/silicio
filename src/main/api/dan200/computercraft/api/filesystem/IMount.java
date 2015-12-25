@@ -6,10 +6,10 @@
 
 package dan200.computercraft.api.filesystem;
 
+import net.minecraft.world.World;
+
 import java.io.*;
 import java.util.List;
-
-import net.minecraft.world.World;
 
 /**
  * Represents a read only part of a virtual filesystem that can be mounted onto a computercraft using IComputerAccess.mount().

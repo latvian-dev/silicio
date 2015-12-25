@@ -40,7 +40,7 @@ public class GuiSelectChannels extends GuiLM
 		moduleID = id;
 		module = board.getModule(moduleID);
 		
-		buttonBack = new ButtonLM(this, 166, 2, iconBack.widthI, iconBack.heightI)
+		buttonBack = new ButtonLM(this, 166, 2, iconBack.widthI(), iconBack.heightI())
 		{
 			public void onButtonPressed(int b)
 			{

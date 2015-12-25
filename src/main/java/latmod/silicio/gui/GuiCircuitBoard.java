@@ -1,5 +1,4 @@
 package latmod.silicio.gui;
-import java.util.List;
 
 import cpw.mods.fml.relauncher.*;
 import ftb.lib.api.gui.*;
@@ -9,6 +8,8 @@ import latmod.silicio.Silicio;
 import latmod.silicio.gui.container.ContainerCircuitBoard;
 import latmod.silicio.tile.cb.*;
 import net.minecraft.util.EnumChatFormatting;
+
+import java.util.List;
 
 @SideOnly(Side.CLIENT)
 public class GuiCircuitBoard extends GuiLM

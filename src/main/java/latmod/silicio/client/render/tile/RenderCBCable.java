@@ -1,7 +1,5 @@
 package latmod.silicio.client.render.tile;
 
-import org.lwjgl.opengl.GL11;
-
 import cpw.mods.fml.relauncher.*;
 import ftb.lib.client.*;
 import latmod.ftbu.util.client.*;
@@ -10,6 +8,7 @@ import latmod.silicio.tile.cb.TileCBCable;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.util.*;
+import org.lwjgl.opengl.GL11;
 
 @SideOnly(Side.CLIENT)
 public class RenderCBCable extends TileRenderer<TileCBCable>

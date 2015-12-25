@@ -1,7 +1,5 @@
 package latmod.silicio.gui;
 
-import java.util.List;
-
 import cpw.mods.fml.relauncher.*;
 import ftb.lib.api.gui.FTBLibLang;
 import ftb.lib.gui.widgets.*;
@@ -9,6 +7,8 @@ import latmod.lib.*;
 import latmod.silicio.item.modules.config.ModuleCSNum;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.*;
+
+import java.util.List;
 
 @SideOnly(Side.CLIENT)
 public class GuiCSNum extends GuiModule

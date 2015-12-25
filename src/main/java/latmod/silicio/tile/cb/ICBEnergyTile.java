@@ -1,8 +1,8 @@
 package latmod.silicio.tile.cb;
 
-import java.util.List;
-
 import cofh.api.energy.EnergyStorage;
+
+import java.util.List;
 
 public interface ICBEnergyTile extends ICBNetTile
 {

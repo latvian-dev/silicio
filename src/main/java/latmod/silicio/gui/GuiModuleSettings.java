@@ -1,7 +1,5 @@
 package latmod.silicio.gui;
 
-import java.util.List;
-
 import cpw.mods.fml.relauncher.*;
 import ftb.lib.api.gui.FTBLibLang;
 import ftb.lib.client.*;
@@ -17,6 +15,8 @@ import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.*;
 import net.minecraftforge.fluids.*;
+
+import java.util.List;
 
 @SideOnly(Side.CLIENT)
 public class GuiModuleSettings extends GuiLM

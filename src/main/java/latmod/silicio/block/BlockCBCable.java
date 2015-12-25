@@ -1,5 +1,4 @@
 package latmod.silicio.block;
-import java.util.List;
 
 import cpw.mods.fml.relauncher.*;
 import ftb.lib.MathHelperMC;
@@ -19,6 +18,8 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.*;
 import net.minecraft.world.*;
 import net.minecraftforge.common.util.ForgeDirection;
+
+import java.util.List;
 
 public class BlockCBCable extends BlockSil
 {

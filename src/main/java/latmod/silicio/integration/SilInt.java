@@ -1,9 +1,9 @@
 package latmod.silicio.integration;
 
-import java.lang.reflect.Method;
-
 import ftb.lib.*;
 import latmod.silicio.Silicio;
+
+import java.lang.reflect.Method;
 
 public class SilInt
 {

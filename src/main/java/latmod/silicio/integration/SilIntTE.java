@@ -1,13 +1,10 @@
 package latmod.silicio.integration;
 
-import cofh.thermalexpansion.block.simple.BlockFrame;
-import cofh.thermalexpansion.util.crafting.*;
-import ftb.lib.item.ODItems;
 import latmod.ftbu.item.MaterialItem;
 import latmod.ftbu.recipes.StackArray;
 import latmod.latblocks.item.ItemMaterialsLB;
 import latmod.lib.FastList;
-import latmod.silicio.*;
+import latmod.silicio.SilItems;
 import latmod.silicio.config.SilConfigGeneral;
 import latmod.silicio.item.ItemMaterialsSil;
 import net.minecraft.init.*;
@@ -34,7 +31,8 @@ public class SilIntTE
 		
 		addSmelter(ItemMaterialsSil.BLUE_CRYSTAL, ItemMaterialsLB.DUST_GLOWIUM_B, new ItemStack(Blocks.glass), 4800);
 		addSmelter(ItemMaterialsSil.RED_CRYSTAL, ItemMaterialsLB.DUST_GLOWIUM_R, new ItemStack(Blocks.glass), 4800);
-		
+
+		/*
 		Silicio.mod.recipes.addRecipe(new ItemStack(SilItems.b_cbcontroller), "SIS", "CFC", "SIS",
 				'S', ODItems.SILICON,
 				'F', BlockFrame.frameTesseractFull,
@@ -47,6 +45,7 @@ public class SilIntTE
 				'L', ItemMaterialsSil.BLUE_CRYSTAL,
 				'F', BlockFrame.frameMachineBasic,
 				'G', "gearTin");
+				*/
 	}
 	
 	private static void addPulverizer(ItemStack out, Object in, int energy, ItemStack out2, int out2chance)
@@ -55,10 +54,12 @@ public class SilIntTE
 		
 		if(inItems.size() > 0)
 		{
+			/*
 			if(addAllOreItems) for(int i = 0; i < inItems.size(); i++)
 				PulverizerManager.addRecipe(energy, inItems.get(i), out, out2, out2chance, true);
 			else
 				PulverizerManager.addRecipe(energy, inItems.get(0), out, out2, out2chance, true);
+				*/
 		}
 	}
 	
@@ -72,5 +73,6 @@ public class SilIntTE
 	{ addPulverizer(getStack(out), in, energy, null, 0); }
 	
 	private static void addSmelter(Object out, Object in1, Object in2, int energy)
-	{ SmelterManager.addRecipe(energy, getStack(in2), getStack(in1), getStack(out)); }
+	//{ SmelterManager.addRecipe(energy, getStack(in2), getStack(in1), getStack(out)); }
+	{ }
 }

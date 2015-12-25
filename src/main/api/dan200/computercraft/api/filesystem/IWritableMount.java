@@ -6,9 +6,9 @@
 
 package dan200.computercraft.api.filesystem;
 
-import java.io.*;
-
 import net.minecraft.world.World;
+
+import java.io.*;
 
 /**
  * Represents a part of a virtual filesystem that can be mounted onto a computercraft using IComputerAccess.mount() or IComputerAccess.mountWritable(), that can also be written to.

@@ -1,9 +1,9 @@
 package powercrystals.minefactoryreloaded.api;
 
-import java.util.*;
-
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.world.World;
+
+import java.util.*;
 
 /**
  * Defines a grindable entity for the Grinder.

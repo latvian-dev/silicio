@@ -6,14 +6,14 @@
 
 package dan200.computercraft.api;
 
-import java.lang.reflect.Method;
-
 import dan200.computercraft.api.filesystem.*;
 import dan200.computercraft.api.media.IMediaProvider;
 import dan200.computercraft.api.peripheral.IPeripheralProvider;
 import dan200.computercraft.api.redstone.IBundledRedstoneProvider;
 import dan200.computercraft.api.turtle.ITurtleUpgrade;
 import net.minecraft.world.World;
+
+import java.lang.reflect.Method;
 
 /**
  * The static entry point to the ComputerCraft API.

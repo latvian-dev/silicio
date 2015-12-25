@@ -1,10 +1,10 @@
 package powercrystals.minefactoryreloaded.api;
 
-import java.util.*;
-
 import net.minecraft.block.Block;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
+
+import java.util.*;
 
 /**
  * Defines a fruit entry for the Fruit Picker.
