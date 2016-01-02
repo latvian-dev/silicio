@@ -33,7 +33,8 @@ public class TileRedNetIO extends TileBasicCBNetTile implements IWailaTile.Body,
 	{
 		super.readTileData(tag);
 		inputSide = tag.getByte("Side");
-		inputs.setAll(tag.getIntArray("Inputs"));
+		inputs.clear();
+		inputs.addAll(tag.getIntArray("Inputs"));
 		linked = tag.getIntArray("Linked");
 	}
 	

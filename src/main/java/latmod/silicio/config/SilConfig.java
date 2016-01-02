@@ -14,7 +14,7 @@ public class SilConfig
 	{
 		configFile = new ConfigFile("silicio", new File(FTBLib.folderConfig, "Silicio.json"));
 		configFile.configGroup.setName("Silicio");
-		configFile.add(new ConfigGroup("general").addAll(SilConfigGeneral.class));
+		configFile.add(new ConfigGroup("general").addAll(SilConfigGeneral.class, null, false));
 		ConfigRegistry.add(configFile);
 		configFile.load();
 	}

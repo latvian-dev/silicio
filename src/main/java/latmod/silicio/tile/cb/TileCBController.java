@@ -48,7 +48,8 @@ public class TileCBController extends TileBasicCBNetTile implements IEnergyRecei
 	{
 		super.readTileData(tag);
 		storage.readFromNBT(tag);
-		channels.setAll(tag.getIntArray("Channels"));
+		channels.clear();
+		channels.addAll(tag.getIntArray("Channels"));
 	}
 	
 	public void writeTileData(NBTTagCompound tag)
@@ -70,7 +71,8 @@ public class TileCBController extends TileBasicCBNetTile implements IEnergyRecei
 	
 	public void readTileServerData(NBTTagCompound tag)
 	{
-		prevChannels.setAll(tag.getIntArray("PChannels"));
+		prevChannels.clear();
+		prevChannels.addAll(tag.getIntArray("PChannels"));
 	}
 	
 	public void writeTileServerData(NBTTagCompound tag)
