@@ -12,7 +12,7 @@ public class SilConfig
 	
 	public static void load()
 	{
-		configFile = new ConfigFile("silicio", new File(FTBLib.folderConfig, "Silicio.json"));
+		configFile = new ConfigFile("silicio", new File(FTBLib.folderConfig, "LatMod/Silicio.json"));
 		configFile.configGroup.setName("Silicio");
 		configFile.add(new ConfigGroup("general").addAll(SilConfigGeneral.class, null, false));
 		ConfigRegistry.add(configFile);
