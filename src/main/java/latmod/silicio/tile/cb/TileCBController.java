@@ -164,7 +164,7 @@ public class TileCBController extends TileBasicCBNetTile implements IEnergyRecei
 	
 	public void onUpdateCB()
 	{
-		IntList prevChannels = channels.copy();
+		IntList prevChannels = channels.clone();
 		channels.clear();
 		
 		if(pNetworkSize != net.tiles.size())
