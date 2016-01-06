@@ -3,12 +3,13 @@ package latmod.silicio.item.modules.config;
 import cpw.mods.fml.relauncher.*;
 import ftb.lib.item.LMInvUtils;
 import ftb.lib.mod.FTBLibMod;
-import latmod.lib.FastList;
 import latmod.silicio.gui.GuiModuleSettings;
 import latmod.silicio.tile.cb.CircuitBoard;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumChatFormatting;
+
+import java.util.List;
 
 public class ModuleCSItem extends ModuleConfigSegment
 {
@@ -60,7 +61,7 @@ public class ModuleCSItem extends ModuleConfigSegment
 	
 	@SuppressWarnings("all")
 	@SideOnly(Side.CLIENT)
-	public void addButtonDesc(GuiModuleSettings g, FastList<String> s)
+	public void addButtonDesc(GuiModuleSettings g, List<String> s)
 	{
 		ItemStack item = getItem(g.board.items[g.moduleID]);
 		if(item != null)

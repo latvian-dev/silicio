@@ -1,7 +1,6 @@
 package latmod.silicio.item.modules.io;
 
 import ftb.lib.item.ODItems;
-import latmod.lib.FastList;
 import latmod.silicio.SilItems;
 import latmod.silicio.item.modules.*;
 import latmod.silicio.item.modules.config.*;
@@ -10,6 +9,8 @@ import net.minecraft.init.Blocks;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
+
+import java.util.List;
 
 public class ItemModuleItemStorage extends ItemModuleIO implements IInvProvider
 {
@@ -36,7 +37,7 @@ public class ItemModuleItemStorage extends ItemModuleIO implements IInvProvider
 	
 	public void loadRecipes()
 	{
-		mod.recipes.addRecipe(new ItemStack(this), "RWT", "PMP",
+		getMod().recipes.addRecipe(new ItemStack(this), "RWT", "PMP",
 				'R', ODItems.REDSTONE,
 				'P', ODItems.IRON,
 				'M', SilItems.Modules.EMPTY,
@@ -44,7 +45,7 @@ public class ItemModuleItemStorage extends ItemModuleIO implements IInvProvider
 				'W', Blocks.chest);
 	}
 	
-	public void updateInvNet(ModuleEntry e, FastList<InvEntry> l)
+	public void updateInvNet(ModuleEntry e, List<InvEntry> l)
 	{
 		TileEntity te = e.board.getFacingTile();
 		if(te != null && !te.isInvalid() && te instanceof IInventory)

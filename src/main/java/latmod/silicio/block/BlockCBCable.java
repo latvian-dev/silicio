@@ -5,7 +5,6 @@ import ftb.lib.MathHelperMC;
 import ftb.lib.client.FTBLibClient;
 import ftb.lib.item.ODItems;
 import latmod.ftbu.tile.TileLM;
-import latmod.lib.FastList;
 import latmod.silicio.item.ItemMaterialsSil;
 import latmod.silicio.tile.cb.TileCBCable;
 import net.minecraft.block.material.Material;
@@ -19,7 +18,7 @@ import net.minecraft.util.*;
 import net.minecraft.world.*;
 import net.minecraftforge.common.util.ForgeDirection;
 
-import java.util.List;
+import java.util.*;
 
 public class BlockCBCable extends BlockSil
 {
@@ -46,7 +45,7 @@ public class BlockCBCable extends BlockSil
 		super(s, Material.iron);
 		setHardness(0.4F);
 		isBlockContainer = true;
-		mod.addTile(TileCBCable.class, s);
+		getMod().addTile(TileCBCable.class, s);
 	}
 	
 	public boolean canHarvestBlock(EntityPlayer ep, int meta)
@@ -61,8 +60,8 @@ public class BlockCBCable extends BlockSil
 		
 		if(!ODItems.hasOre(oreName)) oreName = ODItems.RUBBER;
 		if(!ODItems.hasOre(oreName)) oreName = ODItems.SLIMEBALL;
-		
-		mod.recipes.addRecipe(new ItemStack(this, 16), "RRR", "SES", "RRR",
+
+		getMod().recipes.addRecipe(new ItemStack(this, 16), "RRR", "SES", "RRR",
 				'R', oreName,
 				'E', ODItems.LAPIS,
 				'S', ItemMaterialsSil.SILICON_GEM);
@@ -77,7 +76,7 @@ public class BlockCBCable extends BlockSil
 	@SuppressWarnings("all")
 	public void addCollisionBoxesToList(World w, int x, int y, int z, AxisAlignedBB bb, List l, Entity e)
 	{
-		FastList<AxisAlignedBB> boxes1 = new FastList<AxisAlignedBB>();
+		ArrayList<AxisAlignedBB> boxes1 = new ArrayList<AxisAlignedBB>();
 		
 		float s = pipeBorder;
 		
@@ -157,8 +156,8 @@ public class BlockCBCable extends BlockSil
 	@SideOnly(Side.CLIENT)
 	public void registerBlockIcons(IIconRegister ir)
 	{
-		blockIcon = ir.registerIcon(mod.assets + "cable_item");
-		icon_cover = ir.registerIcon(mod.assets + "cable_cover");
+		blockIcon = ir.registerIcon(getMod().assets + "cable_item");
+		icon_cover = ir.registerIcon(getMod().assets + "cable_cover");
 	}
 	
 	@SideOnly(Side.CLIENT)

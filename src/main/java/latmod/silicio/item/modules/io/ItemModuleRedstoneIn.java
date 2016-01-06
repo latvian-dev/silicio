@@ -25,7 +25,7 @@ public class ItemModuleRedstoneIn extends ItemModuleIO implements ISignalProvide
 	
 	public void loadRecipes()
 	{
-		mod.recipes.addRecipe(new ItemStack(this), "R", "M",
+		getMod().recipes.addRecipe(new ItemStack(this), "R", "M",
 				'R', ODItems.REDSTONE,
 				'M', SilItems.Modules.INPUT);
 	}

@@ -23,9 +23,9 @@ public abstract class ItemModuleIO extends ItemModule
 	@SideOnly(Side.CLIENT)
 	public void registerIcons(IIconRegister ir)
 	{
-		itemIcon = ir.registerIcon(mod.assets + "modules/io/" + iconString);
-		icon_input = ir.registerIcon(mod.assets + "modules/io/input");
-		icon_output = ir.registerIcon(mod.assets + "modules/io/output");
+		itemIcon = ir.registerIcon(getMod().assets + "modules/io/" + iconString);
+		icon_input = ir.registerIcon(getMod().assets + "modules/io/input");
+		icon_output = ir.registerIcon(getMod().assets + "modules/io/output");
 	}
 	
 	@SideOnly(Side.CLIENT)

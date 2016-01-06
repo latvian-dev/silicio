@@ -3,12 +3,13 @@ package latmod.silicio.integration;
 import latmod.ftbu.item.MaterialItem;
 import latmod.ftbu.recipes.StackArray;
 import latmod.latblocks.item.ItemMaterialsLB;
-import latmod.lib.FastList;
 import latmod.silicio.SilItems;
 import latmod.silicio.config.SilConfigGeneral;
 import latmod.silicio.item.ItemMaterialsSil;
 import net.minecraft.init.*;
 import net.minecraft.item.ItemStack;
+
+import java.util.Collection;
 
 public class SilIntTE
 {
@@ -50,9 +51,9 @@ public class SilIntTE
 	
 	private static void addPulverizer(ItemStack out, Object in, int energy, ItemStack out2, int out2chance)
 	{
-		FastList<ItemStack> inItems = StackArray.getItems(in);
+		Collection<ItemStack> inItems = StackArray.getItems(in);
 		
-		if(inItems.size() > 0)
+		if(!inItems.isEmpty())
 		{
 			/*
 			if(addAllOreItems) for(int i = 0; i < inItems.size(); i++)

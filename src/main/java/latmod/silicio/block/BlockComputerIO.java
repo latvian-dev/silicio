@@ -11,7 +11,7 @@ public class BlockComputerIO extends BlockSil
 		super(s, Material.iron);
 		setHardness(1.5F);
 		isBlockContainer = true;
-		mod.addTile(TileComputerIO.class, s);
+		getMod().addTile(TileComputerIO.class, s);
 	}
 	
 	public void loadRecipes()

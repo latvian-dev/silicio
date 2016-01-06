@@ -1,9 +1,10 @@
 package latmod.silicio.item.modules;
 
-import latmod.lib.FastList;
 import latmod.silicio.tile.cb.*;
+
+import java.util.List;
 
 public interface ITankProvider
 {
-	public void updateTankNet(ModuleEntry e, FastList<TankEntry> l);
+	public void updateTankNet(ModuleEntry e, List<TankEntry> l);
 }

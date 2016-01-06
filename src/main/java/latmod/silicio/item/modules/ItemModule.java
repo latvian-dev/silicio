@@ -15,6 +15,8 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 
+import java.util.*;
+
 public abstract class ItemModule extends ItemSil
 {
 	public final boolean isIOModule = (this instanceof ItemModuleIO);
@@ -22,7 +24,7 @@ public abstract class ItemModule extends ItemSil
 	
 	public static final String NBT_TAG = "CMap";
 	
-	public final FastList<ModuleConfigSegment> moduleConfig;
+	public final List<ModuleConfigSegment> moduleConfig;
 	protected final String[] channelNames;
 	
 	public ItemModule(String s)
@@ -31,7 +33,7 @@ public abstract class ItemModule extends ItemSil
 		setMaxStackSize(8);
 		setTextureName(s);
 		
-		moduleConfig = new FastList<ModuleConfigSegment>();
+		moduleConfig = new ArrayList<>();
 		channelNames = new String[getChannelCount()];
 	}
 	
@@ -55,12 +57,12 @@ public abstract class ItemModule extends ItemSil
 	
 	@SideOnly(Side.CLIENT)
 	public void registerIcons(IIconRegister ir)
-	{ itemIcon = ir.registerIcon(mod.assets + "modules/" + itemName.substring(4)); }
+	{ itemIcon = ir.registerIcon(getMod().assets + "modules/" + itemName.substring(4)); }
 	
 	@SideOnly(Side.CLIENT)
-	public void addInfo(ItemStack is, EntityPlayer ep, FastList<String> l)
+	public void addInfo(ItemStack is, EntityPlayer ep, List<String> l)
 	{
-		l.add(StatCollector.translateToLocal(mod.assets + "item.cbm_desc"));
+		l.add(StatCollector.translateToLocal(getMod().assets + "item.cbm_desc"));
 		if(hasData(is))
 		{
 			l.add("Preconfigured");

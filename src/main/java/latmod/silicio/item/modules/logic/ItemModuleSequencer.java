@@ -31,7 +31,7 @@ public class ItemModuleSequencer extends ItemModuleLogic implements ISignalProvi
 	
 	public void loadRecipes()
 	{
-		mod.recipes.addRecipe(new ItemStack(this), " R ", "RTR", " R ", 
+		getMod().recipes.addRecipe(new ItemStack(this), " R ", "RTR", " R ",
 				'T', SilItems.Modules.i_timer,
 				'R', Blocks.redstone_torch);
 	}

@@ -1,11 +1,12 @@
 package latmod.silicio.item.modules.config;
 
 import cpw.mods.fml.relauncher.*;
-import latmod.lib.FastList;
 import latmod.silicio.gui.*;
 import latmod.silicio.tile.cb.CircuitBoard;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+
+import java.util.List;
 
 public class ModuleCSString extends ModuleConfigSegment
 {
@@ -36,7 +37,7 @@ public class ModuleCSString extends ModuleConfigSegment
 	}
 	
 	@SideOnly(Side.CLIENT)
-	public void addButtonDesc(GuiModuleSettings g, FastList<String> s)
+	public void addButtonDesc(GuiModuleSettings g, List<String> s)
 	{ String s1 = get(g.board.items[g.moduleID]); if(!s1.isEmpty()) s.add(s1); }
 	
 	public boolean isValid(String s)

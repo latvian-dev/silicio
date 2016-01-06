@@ -1,8 +1,10 @@
 package latmod.silicio.item;
+
 import cpw.mods.fml.relauncher.*;
-import latmod.lib.FastList;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
+
+import java.util.List;
 
 public class ItemCircuitBoard extends ItemSil
 {
@@ -17,7 +19,7 @@ public class ItemCircuitBoard extends ItemSil
 	}
 	
 	@SideOnly(Side.CLIENT)
-	public void addInfo(ItemStack is, EntityPlayer ep, FastList<String> l)
+	public void addInfo(ItemStack is, EntityPlayer ep, List<String> l)
 	{
 	}
 }

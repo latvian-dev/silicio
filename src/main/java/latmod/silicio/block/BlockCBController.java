@@ -17,7 +17,7 @@ public class BlockCBController extends BlockSil
 		super(s, Material.iron);
 		setHardness(1.5F);
 		isBlockContainer = true;
-		mod.addTile(TileCBController.class, s);
+		getMod().addTile(TileCBController.class, s);
 	}
 	
 	public void loadRecipes()
@@ -30,8 +30,8 @@ public class BlockCBController extends BlockSil
 	@SideOnly(Side.CLIENT)
 	public void registerBlockIcons(IIconRegister ir)
 	{
-		blockIcon = ir.registerIcon(mod.assets + "controller");
-		icon_conflict = ir.registerIcon(mod.assets + "controller_conflict");
+		blockIcon = ir.registerIcon(getMod().assets + "controller");
+		icon_conflict = ir.registerIcon(getMod().assets + "controller_conflict");
 	}
 	
 	@SideOnly(Side.CLIENT)

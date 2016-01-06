@@ -50,7 +50,7 @@ public class ItemModuleFluidInput extends ItemModuleIO
 	
 	public void loadRecipes()
 	{
-		mod.recipes.addRecipe(new ItemStack(this), "F", "M",
+		getMod().recipes.addRecipe(new ItemStack(this), "F", "M",
 				'M', SilItems.Modules.INPUT,
 				'F', SilItems.Modules.i_fluid_storage);
 	}

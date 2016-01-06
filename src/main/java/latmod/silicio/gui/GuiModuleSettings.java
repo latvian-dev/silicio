@@ -5,7 +5,6 @@ import ftb.lib.api.gui.FTBLibLang;
 import ftb.lib.client.*;
 import ftb.lib.gui.GuiLM;
 import ftb.lib.gui.widgets.ButtonLM;
-import latmod.lib.FastList;
 import latmod.silicio.gui.container.ContainerModuleSettings;
 import latmod.silicio.item.modules.ItemModule;
 import latmod.silicio.item.modules.config.*;
@@ -16,7 +15,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.*;
 import net.minecraftforge.fluids.*;
 
-import java.util.List;
+import java.util.*;
 
 @SideOnly(Side.CLIENT)
 public class GuiModuleSettings extends GuiLM
@@ -90,7 +89,7 @@ public class GuiModuleSettings extends GuiLM
 				public void addMouseOverText(List<String> l)
 				{
 					l.add(mcs.title);
-					FastList<String> l1 = new FastList<String>();
+					ArrayList<String> l1 = new ArrayList<>();
 					mcs.addButtonDesc(GuiModuleSettings.this, l1);
 					for(String s : l1) l.add(EnumChatFormatting.DARK_GRAY + s);
 				}

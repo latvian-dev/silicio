@@ -27,7 +27,7 @@ public class ItemModuleGateXOr extends ItemModuleLogic implements ISignalProvide
 	
 	public void loadRecipes()
 	{
-		mod.recipes.addShapelessRecipe(new ItemStack(this), SilItems.Modules.i_gate_or, Blocks.redstone_torch);
+		getMod().recipes.addShapelessRecipe(new ItemStack(this), SilItems.Modules.i_gate_or, Blocks.redstone_torch);
 	}
 	
 	public void provideSignals(EventProvideSignals e)

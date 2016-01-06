@@ -20,7 +20,7 @@ public class BlockRedNetIO extends BlockSil implements IRedNetOmniNode
 		super(s, Material.iron);
 		setHardness(1.5F);
 		isBlockContainer = true;
-		mod.addTile(TileRedNetIO.class, s);
+		getMod().addTile(TileRedNetIO.class, s);
 	}
 	
 	public void loadRecipes()
@@ -33,8 +33,8 @@ public class BlockRedNetIO extends BlockSil implements IRedNetOmniNode
 	@SideOnly(Side.CLIENT)
 	public void registerBlockIcons(IIconRegister ir)
 	{
-		blockIcon = ir.registerIcon(mod.assets + "rednet_io");
-		icon_input = ir.registerIcon(mod.assets + "rednet_io_input");
+		blockIcon = ir.registerIcon(getMod().assets + "rednet_io");
+		icon_input = ir.registerIcon(getMod().assets + "rednet_io_input");
 	}
 	
 	@SideOnly(Side.CLIENT)

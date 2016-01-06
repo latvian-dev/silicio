@@ -29,7 +29,7 @@ public class ItemModuleLightSensor extends ItemModuleIO implements ISignalProvid
 	
 	public void loadRecipes()
 	{
-		mod.recipes.addRecipe(new ItemStack(this), "S", "M",
+		getMod().recipes.addRecipe(new ItemStack(this), "S", "M",
 				'S', Blocks.daylight_detector,
 				'M', SilItems.Modules.EMPTY);
 	}

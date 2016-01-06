@@ -13,5 +13,5 @@ public abstract class ItemModuleLogic extends ItemModule
 	
 	@SideOnly(Side.CLIENT)
 	public void registerIcons(IIconRegister ir)
-	{ itemIcon = ir.registerIcon(mod.assets + "modules/logic/" + itemName.substring(4)); }
+	{ itemIcon = ir.registerIcon(getMod().assets + "modules/logic/" + itemName.substring(4)); }
 }

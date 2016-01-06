@@ -2,12 +2,13 @@ package latmod.silicio.item.modules.config;
 
 import cpw.mods.fml.relauncher.*;
 import ftb.lib.mod.FTBLibMod;
-import latmod.lib.FastList;
 import latmod.silicio.gui.GuiModuleSettings;
 import latmod.silicio.tile.cb.CircuitBoard;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.*;
+
+import java.util.List;
 
 public class ModuleCSMode extends ModuleConfigSegment
 {
@@ -50,7 +51,7 @@ public class ModuleCSMode extends ModuleConfigSegment
 	}
 	
 	@SideOnly(Side.CLIENT)
-	public void addButtonDesc(GuiModuleSettings g, FastList<String> s)
+	public void addButtonDesc(GuiModuleSettings g, List<String> s)
 	{
 		int mode = get(g.board.items[g.moduleID]);
 		if(FTBLibMod.proxy.isShiftDown())

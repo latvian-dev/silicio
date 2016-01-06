@@ -39,7 +39,7 @@ public class ItemModuleFluidOutput extends ItemModuleIO
 	
 	public void loadRecipes()
 	{
-		mod.recipes.addRecipe(new ItemStack(this), "F", "M",
+		getMod().recipes.addRecipe(new ItemStack(this), "F", "M",
 				'M', SilItems.Modules.OUTPUT,
 				'F', SilItems.Modules.i_fluid_storage);
 	}

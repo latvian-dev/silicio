@@ -6,23 +6,25 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Facing;
 import net.minecraft.world.World;
 
+import java.util.*;
+
 public class CBNetwork
 {
 	public TileCBController controller = null;
-	public final FastList<ICBNetTile> tiles;
-	public final FastList<CircuitBoard> circuitBoards;
-	public final FastList<ModuleEntry> allModules;
-	public final FastList<InvEntry> invNetwork;
-	public final FastList<TankEntry> tankNetwork;
+	public final List<ICBNetTile> tiles;
+	public final List<CircuitBoard> circuitBoards;
+	public final List<ModuleEntry> allModules;
+	public final List<InvEntry> invNetwork;
+	public final List<TankEntry> tankNetwork;
 	public boolean hasConflict;
 	
 	public CBNetwork()
 	{
-		tiles = new FastList<ICBNetTile>();
-		circuitBoards = new FastList<CircuitBoard>();
-		allModules = new FastList<ModuleEntry>();
-		invNetwork = new FastList<InvEntry>();
-		tankNetwork = new FastList<TankEntry>();
+		tiles = new ArrayList<>();
+		circuitBoards = new ArrayList<>();
+		allModules = new ArrayList<>();
+		invNetwork = new ArrayList<>();
+		tankNetwork = new ArrayList<>();
 	}
 	
 	public boolean hasController()
@@ -110,7 +112,7 @@ public class CBNetwork
 		
 		net.controller = tempIntList.isEmpty() ? null : (TileCBController)net.tiles.get(tempIntList.get(0));
 		if(tempIntList.size() > 1) net.hasConflict = true;
-		net.tiles.removeAll(tempIntList.toArray());
+		LMListUtils.removeAll(net.tiles, tempIntList);
 	}
 	
 	public void updateOtherNetworks()

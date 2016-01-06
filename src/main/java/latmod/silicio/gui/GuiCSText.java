@@ -3,10 +3,11 @@ package latmod.silicio.gui;
 import cpw.mods.fml.relauncher.*;
 import ftb.lib.api.gui.FTBLibLang;
 import ftb.lib.gui.widgets.*;
-import latmod.lib.FastList;
 import latmod.silicio.item.modules.config.ModuleCSString;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.*;
+
+import java.util.List;
 
 @SideOnly(Side.CLIENT)
 public class GuiCSText extends GuiModule
@@ -73,7 +74,7 @@ public class GuiCSText extends GuiModule
 		mainPanel.add(textBox);
 	}
 	
-	public void drawText(FastList<String> l)
+	public void drawText(List<String> l)
 	{
 		textBox.render(12, 13, 0xFFFFFFFF);
 		super.drawText(l);

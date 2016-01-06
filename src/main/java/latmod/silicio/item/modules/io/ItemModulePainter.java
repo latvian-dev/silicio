@@ -53,9 +53,9 @@ public class ItemModulePainter extends ItemModuleIO implements IToggable
 		ItemStack is = ItemStackTypeAdapter.parseItem("LatBlocks:painterParts 1 3");
 		
 		if(is != null)
-			mod.recipes.addShapelessRecipe(new ItemStack(this), SilItems.Modules.OUTPUT, is);
+			getMod().recipes.addShapelessRecipe(new ItemStack(this), SilItems.Modules.OUTPUT, is);
 		else
-			mod.recipes.addRecipe(new ItemStack(this), "1D2", "DMD", "3D4",
+			getMod().recipes.addRecipe(new ItemStack(this), "1D2", "DMD", "3D4",
 					'M', SilItems.Modules.OUTPUT,
 					'D', ODItems.DIAMOND,
 					'1', EnumMCColor.BLUE.dyeName,

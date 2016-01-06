@@ -52,7 +52,7 @@ public class ItemMaterialsSil extends ItemMaterialsLM // ItemMaterialsLB
 		{
 			public void loadRecipes()
 			{
-				mod.recipes.addShapelessRecipe(getStack(), SilItems.Modules.EMPTY, ODItems.QUARTZ, BLUE_CRYSTAL, RED_CRYSTAL);
+				getMod().recipes.addShapelessRecipe(getStack(), SilItems.Modules.EMPTY, ODItems.QUARTZ, BLUE_CRYSTAL, RED_CRYSTAL);
 			}
 		});
 		
@@ -72,7 +72,7 @@ public class ItemMaterialsSil extends ItemMaterialsLM // ItemMaterialsLB
 		{
 			public void loadRecipes()
 			{
-				mod.recipes.addRecipe(getStack(), "CCC", "ISI", "CCC",
+				getMod().recipes.addRecipe(getStack(), "CCC", "ISI", "CCC",
 						'C', SilItems.b_cbcable,
 						'S', ODItems.SILICON,
 						'I', ODItems.IRON);

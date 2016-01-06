@@ -11,7 +11,7 @@ public class BlockModuleCopier extends BlockSil
 		super(s, Material.iron);
 		setHardness(1.5F);
 		isBlockContainer = true;
-		mod.addTile(TileModuleCopier.class, s);
+		getMod().addTile(TileModuleCopier.class, s);
 	}
 	
 	public void loadRecipes()

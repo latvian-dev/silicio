@@ -28,7 +28,7 @@ public class ItemModuleTimer extends ItemModuleLogic implements ISignalProvider
 	
 	public void loadRecipes()
 	{
-		mod.recipes.addShapelessRecipe(new ItemStack(this), SilItems.Modules.LOGIC, Items.clock, Blocks.redstone_torch);
+		getMod().recipes.addShapelessRecipe(new ItemStack(this), SilItems.Modules.LOGIC, Items.clock, Blocks.redstone_torch);
 	}
 	
 	public void provideSignals(EventProvideSignals e)

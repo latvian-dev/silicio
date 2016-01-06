@@ -33,7 +33,7 @@ public class ItemModuleCrafting extends ItemModuleIO implements IToggable
 	
 	public void loadRecipes()
 	{
-		mod.recipes.addRecipe(new ItemStack(this), " C ", "IMO",
+		getMod().recipes.addRecipe(new ItemStack(this), " C ", "IMO",
 				'C', Blocks.crafting_table,
 				'M', SilItems.Modules.EMPTY,
 				'I', SilItems.Modules.i_item_in,

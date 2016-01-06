@@ -108,7 +108,7 @@ public class GuiCSNum extends GuiModule
 		mainPanel.add(textBox);
 	}
 	
-	public void drawText(FastList<String> l)
+	public void drawText(List<String> l)
 	{
 		textBox.renderCentred(textBox.posX + textBox.width / 2, 13, 0xFFFFFFFF);
 		super.drawText(l);

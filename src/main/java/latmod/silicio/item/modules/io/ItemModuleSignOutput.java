@@ -43,7 +43,7 @@ public class ItemModuleSignOutput extends ItemModuleIO implements IToggable
 	
 	public void loadRecipes()
 	{
-		mod.recipes.addRecipe(new ItemStack(this), "S", "M",
+		getMod().recipes.addRecipe(new ItemStack(this), "S", "M",
 				'M', SilItems.Modules.OUTPUT,
 				'S', Items.sign);
 	}

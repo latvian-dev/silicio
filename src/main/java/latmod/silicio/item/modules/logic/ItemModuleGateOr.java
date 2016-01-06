@@ -27,7 +27,7 @@ public class ItemModuleGateOr extends ItemModuleLogic implements ISignalProvider
 	
 	public void loadRecipes()
 	{
-		mod.recipes.addShapelessRecipe(new ItemStack(this), SilItems.Modules.LOGIC, ODItems.SILICON, ODItems.REDSTONE);
+		getMod().recipes.addShapelessRecipe(new ItemStack(this), SilItems.Modules.LOGIC, ODItems.SILICON, ODItems.REDSTONE);
 	}
 	
 	public void provideSignals(EventProvideSignals e)
