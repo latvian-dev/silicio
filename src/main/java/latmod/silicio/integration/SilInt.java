@@ -28,7 +28,8 @@ public class SilInt
 			{
 				ex.printStackTrace();
 				Silicio.mod.logger.warn("Failed to load " + m + " integration!");
-			};
+			}
+			;
 		}
 	}
 }

@@ -1,4 +1,5 @@
 package latmod.silicio;
+
 import cpw.mods.fml.common.*;
 import cpw.mods.fml.common.event.*;
 import latmod.ftbu.util.LMMod;
@@ -43,8 +44,7 @@ public class Silicio
 	@Mod.EventHandler
 	public void postInit(FMLPostInitializationEvent e)
 	{
-		if(!SilConfigGeneral.disableAllCrafting.get())
-			mod.loadRecipes();
+		if(!SilConfigGeneral.disableAllCrafting.get()) mod.loadRecipes();
 		
 		SilInt.onLoadedAll();
 	}

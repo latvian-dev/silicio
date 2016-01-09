@@ -12,8 +12,8 @@ public class ItemModuleFluidInput extends ItemModuleIO
 	public static final ModuleCSFluid cs_fluid = new ModuleCSFluid(0, "Fluid");
 	public static final ModuleCSMode cs_mode = new ModuleCSMode(1, "Mode");
 	
-	public static final int[] mBucketsPerSecond = { 200, 1000, 4000, 16000 };
-	public static final int[] powerUse = { 0, 10, 200, 1200 };
+	public static final int[] mBucketsPerSecond = {200, 1000, 4000, 16000};
+	public static final int[] powerUse = {0, 10, 200, 1200};
 	
 	public ItemModuleFluidInput(String s)
 	{
@@ -50,8 +50,6 @@ public class ItemModuleFluidInput extends ItemModuleIO
 	
 	public void loadRecipes()
 	{
-		getMod().recipes.addRecipe(new ItemStack(this), "F", "M",
-				'M', SilItems.Modules.INPUT,
-				'F', SilItems.Modules.i_fluid_storage);
+		getMod().recipes.addRecipe(new ItemStack(this), "F", "M", 'M', SilItems.Modules.INPUT, 'F', SilItems.Modules.i_fluid_storage);
 	}
 }

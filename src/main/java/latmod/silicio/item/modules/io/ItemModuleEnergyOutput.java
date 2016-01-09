@@ -35,7 +35,7 @@ public class ItemModuleEnergyOutput extends ItemModuleIO
 			
 			if(te != null && !te.isInvalid() && te instanceof IEnergyReceiver)
 			{
-				IEnergyReceiver ie = (IEnergyReceiver)te;
+				IEnergyReceiver ie = (IEnergyReceiver) te;
 				
 				if(ie.canConnectEnergy(ForgeDirection.VALID_DIRECTIONS[e.board.sideOpposite]))
 					e.net.controller.extractEnergy(ie.receiveEnergy(ForgeDirection.VALID_DIRECTIONS[e.board.sideOpposite], Math.min(e.net.controller.storage.getMaxExtract(), e.net.controller.storage.getEnergyStored()), false));

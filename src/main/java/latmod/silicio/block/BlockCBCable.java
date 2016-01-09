@@ -61,10 +61,7 @@ public class BlockCBCable extends BlockSil
 		if(!ODItems.hasOre(oreName)) oreName = ODItems.RUBBER;
 		if(!ODItems.hasOre(oreName)) oreName = ODItems.SLIMEBALL;
 
-		getMod().recipes.addRecipe(new ItemStack(this, 16), "RRR", "SES", "RRR",
-				'R', oreName,
-				'E', ODItems.LAPIS,
-				'S', ItemMaterialsSil.SILICON_GEM);
+		getMod().recipes.addRecipe(new ItemStack(this, 16), "RRR", "SES", "RRR", 'R', oreName, 'E', ODItems.LAPIS, 'S', ItemMaterialsSil.SILICON_GEM);
 	}
 	
 	public void setBlockBoundsForItemRender()
@@ -86,7 +83,7 @@ public class BlockCBCable extends BlockSil
 		
 		if(te != null && te instanceof TileCBCable)
 		{
-			TileCBCable t = (TileCBCable)te;
+			TileCBCable t = (TileCBCable) te;
 			
 			if(t.isInvalid() || t.hasCover)
 			{
@@ -123,7 +120,7 @@ public class BlockCBCable extends BlockSil
 		
 		if(te != null && te instanceof TileCBCable)
 		{
-			TileCBCable t = (TileCBCable)te;
+			TileCBCable t = (TileCBCable) te;
 			
 			if(t.isInvalid() || t.hasCover)
 			{
@@ -140,7 +137,7 @@ public class BlockCBCable extends BlockSil
 			boolean z0 = TileCBCable.connectCable(t, 2);
 			boolean z1 = TileCBCable.connectCable(t, 3);
 			
-			setBlockBounds(x0 ? 0F : s, y0 ? 0F : s, z0 ? 0F: s, x1 ? 1F : 1F - s, y1 ? 1F: 1F - s, z1 ? 1F : 1F - s);
+			setBlockBounds(x0 ? 0F : s, y0 ? 0F : s, z0 ? 0F : s, x1 ? 1F : 1F - s, y1 ? 1F : 1F - s, z1 ? 1F : 1F - s);
 		}
 	}
 	
@@ -169,13 +166,13 @@ public class BlockCBCable extends BlockSil
 	
 	public int isProvidingWeakPower(IBlockAccess iba, int x, int y, int z, int s)
 	{
-		TileCBCable t = (TileCBCable)iba.getTileEntity(x, y, z);
+		TileCBCable t = (TileCBCable) iba.getTileEntity(x, y, z);
 		return (t != null && t.isOutputtingRS(Facing.oppositeSide[s])) ? 15 : 0;
 	}
 	
 	public boolean canConnectRedstone(IBlockAccess iba, int x, int y, int z, int side)
 	{
-		TileCBCable t = (TileCBCable)iba.getTileEntity(x, y, z);
+		TileCBCable t = (TileCBCable) iba.getTileEntity(x, y, z);
 		return (t != null && t.getBoard(side) != null);
 	}
 	
@@ -186,7 +183,7 @@ public class BlockCBCable extends BlockSil
 		
 		if(te != null && te instanceof TileCBCable)
 		{
-			if(((TileCBCable)te).hasCover)
+			if(((TileCBCable) te).hasCover)
 			{
 				return AxisAlignedBB.getBoundingBox(x, y, z, x + 1D, y + 1D, z + 1D);
 			}
@@ -196,9 +193,12 @@ public class BlockCBCable extends BlockSil
 			if(mop != null && mop.subHit >= 0 && mop.subHit < boxes.length)
 			{
 				AxisAlignedBB aabb = boxes[mop.subHit].copy();
-				aabb.minX += x; aabb.maxX += x;
-				aabb.minY += y; aabb.maxY += y;
-				aabb.minZ += z; aabb.maxZ += z;
+				aabb.minX += x;
+				aabb.maxX += x;
+				aabb.minY += y;
+				aabb.maxY += y;
+				aabb.minZ += z;
+				aabb.maxZ += z;
 				return aabb;
 			}
 		}
@@ -212,7 +212,7 @@ public class BlockCBCable extends BlockSil
 		
 		if(te != null && te instanceof TileCBCable)
 		{
-			if(((TileCBCable)te).hasCover)
+			if(((TileCBCable) te).hasCover)
 			{
 				return super.collisionRayTrace(w, x, y, z, start, end);
 			}
@@ -221,8 +221,7 @@ public class BlockCBCable extends BlockSil
 			
 			for(int i = 0; i < boxes.length; i++)
 			{
-				if(!((TileCBCable)te).isAABBEnabled(i))
-					boxes1[i] = null;
+				if(!((TileCBCable) te).isAABBEnabled(i)) boxes1[i] = null;
 			}
 			
 			return MathHelperMC.collisionRayTrace(w, x, y, z, start, end, boxes1);

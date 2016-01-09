@@ -49,8 +49,7 @@ public class RenderCBCable extends TileRenderer<TileCBCable>
 			if(t.renderCableSide[i])
 			{
 				model.cable[i].render(s);
-				if(t.boards[i] != null)
-					model.board[i].render(s);
+				if(t.boards[i] != null) model.board[i].render(s);
 			}
 		}
 		
@@ -63,9 +62,7 @@ public class RenderCBCable extends TileRenderer<TileCBCable>
 			
 			if(c == 2)
 			{
-				if(!((t.renderCableSide[0] && t.renderCableSide[1] && !t.renderCableSide[2] && !t.renderCableSide[3] && !t.renderCableSide[4] && !t.renderCableSide[5])
-				|| (!t.renderCableSide[0] && !t.renderCableSide[1] && t.renderCableSide[2] && t.renderCableSide[3] && !t.renderCableSide[4] && !t.renderCableSide[5])
-				|| (!t.renderCableSide[0] && !t.renderCableSide[1] && !t.renderCableSide[2] && !t.renderCableSide[3] && t.renderCableSide[4] && t.renderCableSide[5])))
+				if(!((t.renderCableSide[0] && t.renderCableSide[1] && !t.renderCableSide[2] && !t.renderCableSide[3] && !t.renderCableSide[4] && !t.renderCableSide[5]) || (!t.renderCableSide[0] && !t.renderCableSide[1] && t.renderCableSide[2] && t.renderCableSide[3] && !t.renderCableSide[4] && !t.renderCableSide[5]) || (!t.renderCableSide[0] && !t.renderCableSide[1] && !t.renderCableSide[2] && !t.renderCableSide[3] && t.renderCableSide[4] && t.renderCableSide[5])))
 					c = 1;
 			}
 			
@@ -78,10 +75,8 @@ public class RenderCBCable extends TileRenderer<TileCBCable>
 				
 				Minecraft.getMinecraft().getTextureManager().bindTexture(texture_on);
 				
-				if(t.getCBNetwork().hasConflict())
-					GlStateManager.color(1F, 0F, 0F, 0.5F);
-				else
-					GlStateManager.color(0F, 1F, 1F, 0.5F);
+				if(t.getCBNetwork().hasConflict()) GlStateManager.color(1F, 0F, 0F, 0.5F);
+				else GlStateManager.color(0F, 1F, 1F, 0.5F);
 				
 				GlStateManager.enableBlend();
 				GlStateManager.blendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
@@ -90,16 +85,14 @@ public class RenderCBCable extends TileRenderer<TileCBCable>
 				
 				for(int i = 0; i < 6; i++)
 				{
-					if(t.boards[i] != null || t.getBlock(i) == SilItems.b_cbcontroller)
-						model.cable[i].render(s);
+					if(t.boards[i] != null || t.getBlock(i) == SilItems.b_cbcontroller) model.cable[i].render(s);
 				}
 				
 				GlStateManager.disableBlend();
 				
 				for(int i = 0; i < 6; i++)
 				{
-					if(t.boards[i] != null)
-						model.board[i].render(s);
+					if(t.boards[i] != null) model.board[i].render(s);
 				}
 				
 				GlStateManager.color(1F, 1F, 1F, 1F);

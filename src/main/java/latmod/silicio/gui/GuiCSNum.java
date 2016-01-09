@@ -22,8 +22,8 @@ public class GuiCSNum extends GuiModule
 	public final TextBoxLM textBox;
 	
 	public final ButtonLM buttonsInc[] = new ButtonLM[4];
-	public final int inc[] = { -100, -1, 1, 100 };
-	public final int incX[] = { 8, 25, 100, 117 };
+	public final int inc[] = {-100, -1, 1, 100};
+	public final int incX[] = {8, 25, 100, 117};
 	
 	public GuiCSNum(GuiModuleSettings g, ModuleCSNum c)
 	{

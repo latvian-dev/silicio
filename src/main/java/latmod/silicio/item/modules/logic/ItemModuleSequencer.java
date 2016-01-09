@@ -31,15 +31,13 @@ public class ItemModuleSequencer extends ItemModuleLogic implements ISignalProvi
 	
 	public void loadRecipes()
 	{
-		getMod().recipes.addRecipe(new ItemStack(this), " R ", "RTR", " R ",
-				'T', SilItems.Modules.i_timer,
-				'R', Blocks.redstone_torch);
+		getMod().recipes.addRecipe(new ItemStack(this), " R ", "RTR", " R ", 'T', SilItems.Modules.i_timer, 'R', Blocks.redstone_torch);
 	}
 	
 	public void provideSignals(EventProvideSignals e)
 	{
 		int t = cs_timer.get(e.item());
-		int p = (int)((e.net.controller.tick / t) % 4L);
+		int p = (int) ((e.net.controller.tick / t) % 4L);
 		e.setEnabled(p);
 	}
 }

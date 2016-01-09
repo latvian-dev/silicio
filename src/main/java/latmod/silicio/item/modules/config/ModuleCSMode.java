@@ -12,7 +12,7 @@ import java.util.List;
 
 public class ModuleCSMode extends ModuleConfigSegment
 {
-	public String[] modes = { "Default" };
+	public String[] modes = {"Default"};
 	public String[] desc = null;
 	public int defaultValue = 0;
 	
@@ -20,10 +20,16 @@ public class ModuleCSMode extends ModuleConfigSegment
 	{ super(i, s); }
 	
 	public void setModes(int def, String... m)
-	{ defaultValue = def; modes = m; }
+	{
+		defaultValue = def;
+		modes = m;
+	}
 	
 	public void setDesc(int mode, String d)
-	{ if(desc == null) desc = new String[modes.length]; desc[mode] = d; }
+	{
+		if(desc == null) desc = new String[modes.length];
+		desc[mode] = d;
+	}
 	
 	@SideOnly(Side.CLIENT)
 	public void buttonClicked(GuiModuleSettings g)
@@ -46,7 +52,7 @@ public class ModuleCSMode extends ModuleConfigSegment
 	public void set(ItemStack is, int b)
 	{
 		NBTTagCompound tag = data(is);
-		tag.setByte(SID, (byte)b);
+		tag.setByte(SID, (byte) b);
 		setData(is, tag);
 	}
 	
@@ -65,8 +71,7 @@ public class ModuleCSMode extends ModuleConfigSegment
 		else
 		{
 			s.add(modes[mode]);
-			if(desc != null && desc[mode] != null)
-				s.add(desc[mode]);
+			if(desc != null && desc[mode] != null) s.add(desc[mode]);
 		}
 	}
 }

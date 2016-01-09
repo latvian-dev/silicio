@@ -10,7 +10,10 @@ public class EventModule extends EventBoard
 	public final ModuleEntry module;
 	
 	public EventModule(ModuleEntry e)
-	{ super(e.net, e.board); module = e; }
+	{
+		super(e.net, e.board);
+		module = e;
+	}
 	
 	public ItemStack item()
 	{ return module.stack; }

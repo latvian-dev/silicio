@@ -36,7 +36,7 @@ public class GuiSelectChannels extends GuiLM
 		
 		xSize = 166;
 		ySize = 98;
-		board = (CircuitBoard)c.inv;
+		board = (CircuitBoard) c.inv;
 		moduleID = id;
 		module = board.getModule(moduleID);
 		
@@ -123,12 +123,10 @@ public class GuiSelectChannels extends GuiLM
 		
 		for(int i = 0; i < buttonSelectIO.length; i++)
 		{
-			if(module.getChannelType(buttonSelectIO[i].customID).isInput())
-				buttonSelectIO[i].render(iconInput);
+			if(module.getChannelType(buttonSelectIO[i].customID).isInput()) buttonSelectIO[i].render(iconInput);
 			else buttonSelectIO[i].render(iconOutput);
 			
-			if(selectedIO == i)
-				render(iconIOPressed, buttonSelectIO[i].posX, buttonSelectIO[i].posY, 8, 8);
+			if(selectedIO == i) render(iconIOPressed, buttonSelectIO[i].posX, buttonSelectIO[i].posY, 8, 8);
 		}
 		
 		for(ButtonLM b : allChannels)

@@ -1,4 +1,5 @@
 package latmod.silicio.item.armor;
+
 import cpw.mods.fml.relauncher.*;
 import latmod.ftbu.api.item.IItemLM;
 import latmod.latblocks.LatBlocks;
@@ -18,7 +19,10 @@ public abstract class ItemXSuit extends ItemArmor implements IItemLM
 	}
 	
 	public ItemXSuit register()
-	{ LatBlocks.mod.addItem(this); return this; }
+	{
+		LatBlocks.mod.addItem(this);
+		return this;
+	}
 	
 	public String getUnlocalizedName(ItemStack is)
 	{ return Silicio.mod.getItemName(itemName); }
@@ -28,7 +32,7 @@ public abstract class ItemXSuit extends ItemArmor implements IItemLM
 	}
 	
 	public String getArmorTexture(ItemStack stack, Entity entity, int slot, String type)
-    { return Silicio.mod.assets + "textures/items/armor/xsuit_" + (slot == 3 ? "1" : "0") + ".png"; }
+	{ return Silicio.mod.assets + "textures/items/armor/xsuit_" + (slot == 3 ? "1" : "0") + ".png"; }
 	
 	public String getItemID()
 	{ return itemName; }

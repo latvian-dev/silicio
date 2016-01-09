@@ -20,7 +20,10 @@ public class ModuleCSString extends ModuleConfigSegment
 	{ g.mc.displayGuiScreen(new GuiCSText(g, this)); }
 	
 	public void onConfigReceived(CircuitBoard cb, int MID, NBTTagCompound data)
-	{ set(cb.items[MID], data.getString("V")); cb.cable.markDirty(); }
+	{
+		set(cb.items[MID], data.getString("V"));
+		cb.cable.markDirty();
+	}
 	
 	public String get(ItemStack is)
 	{
@@ -38,7 +41,10 @@ public class ModuleCSString extends ModuleConfigSegment
 	
 	@SideOnly(Side.CLIENT)
 	public void addButtonDesc(GuiModuleSettings g, List<String> s)
-	{ String s1 = get(g.board.items[g.moduleID]); if(!s1.isEmpty()) s.add(s1); }
+	{
+		String s1 = get(g.board.items[g.moduleID]);
+		if(!s1.isEmpty()) s.add(s1);
+	}
 	
 	public boolean isValid(String s)
 	{ return true; }

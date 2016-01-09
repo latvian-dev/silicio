@@ -91,7 +91,7 @@ public class ModelCBCable extends ModelBase // RenderCBCable
 	}
 	
 	public void render(Entity e, float f, float f1, float f2, float f3, float f4, float f5)
-	{ 
+	{
 	}
 	
 	public void setRotateAngle(ModelRenderer m, float x, float y, float z)

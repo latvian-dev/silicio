@@ -22,7 +22,7 @@ public class GuiController extends GuiLM
 		
 		xSize = 166;
 		ySize = 85;
-		controller = (TileCBController)c.inv;
+		controller = (TileCBController) c.inv;
 		
 		channels = new ButtonLM[TileCBController.MAX_CHANNEL];
 		
@@ -47,8 +47,7 @@ public class GuiController extends GuiLM
 		
 		for(int i = 0; i < channels.length; i++)
 		{
-			if(controller.channels.contains(i))
-				render(iconChannelEnabled, channels[i].posX, channels[i].posY, 8, 8);
+			if(controller.channels.contains(i)) render(iconChannelEnabled, channels[i].posX, channels[i].posY, 8, 8);
 		}
 	}
 }

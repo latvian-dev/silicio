@@ -1,5 +1,8 @@
 package latmod.silicio.block;
+
+import cpw.mods.fml.common.Optional;
 import cpw.mods.fml.relauncher.*;
+import ftb.lib.OtherMods;
 import latmod.ftbu.tile.TileLM;
 import latmod.silicio.tile.cb.TileRedNetIO;
 import net.minecraft.block.material.Material;
@@ -7,10 +10,9 @@ import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.*;
 import net.minecraftforge.common.util.ForgeDirection;
-import powercrystals.minefactoryreloaded.api.rednet.IRedNetOmniNode;
-import powercrystals.minefactoryreloaded.api.rednet.connectivity.RedNetConnectionType;
 
-public class BlockRedNetIO extends BlockSil implements IRedNetOmniNode
+@Optional.Interface(iface = "powercrystals.minefactoryreloaded.api.rednet.IRedNetOmniNode", modid = OtherMods.MFR)
+public class BlockRedNetIO extends BlockSil implements powercrystals.minefactoryreloaded.api.rednet.IRedNetOmniNode
 {
 	@SideOnly(Side.CLIENT)
 	public IIcon icon_input;
@@ -50,19 +52,20 @@ public class BlockRedNetIO extends BlockSil implements IRedNetOmniNode
 	
 	public void onInputsChanged(World world, int x, int y, int z, ForgeDirection side, int[] inputValues)
 	{
-		TileRedNetIO t = (TileRedNetIO)world.getTileEntity(x, y, z);
+		TileRedNetIO t = (TileRedNetIO) world.getTileEntity(x, y, z);
 		if(t != null && !t.isInvalid()) t.onInputsChanged(side, inputValues);
 	}
 	
 	public void onInputChanged(World world, int x, int y, int z, ForgeDirection side, int inputValue)
-	{ onInputsChanged(world, x, y, z, side, new int[] { inputValue }); }
-	
-	public RedNetConnectionType getConnectionType(World world, int x, int y, int z, ForgeDirection side)
-	{ return RedNetConnectionType.CableAll; }
+	{ onInputsChanged(world, x, y, z, side, new int[] {inputValue}); }
+
+	@Optional.Method(modid = OtherMods.MFR)
+	public powercrystals.minefactoryreloaded.api.rednet.connectivity.RedNetConnectionType getConnectionType(World world, int x, int y, int z, ForgeDirection side)
+	{ return powercrystals.minefactoryreloaded.api.rednet.connectivity.RedNetConnectionType.CableAll; }
 	
 	public int[] getOutputValues(World world, int x, int y, int z, ForgeDirection side)
 	{
-		TileRedNetIO t = (TileRedNetIO)world.getTileEntity(x, y, z);
+		TileRedNetIO t = (TileRedNetIO) world.getTileEntity(x, y, z);
 		if(t != null && !t.isInvalid()) return t.getOutputValues(side);
 		return new int[16];
 	}

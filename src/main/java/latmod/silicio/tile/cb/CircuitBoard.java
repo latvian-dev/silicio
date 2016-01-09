@@ -1,4 +1,5 @@
 package latmod.silicio.tile.cb;
+
 import ftb.lib.item.LMInvUtils;
 import latmod.silicio.item.modules.ItemModule;
 import net.minecraft.block.Block;
@@ -49,7 +50,7 @@ public class CircuitBoard implements IInventory
 	public ItemModule getModule(int moduleID)
 	{
 		if(moduleID < 0 || moduleID >= items.length || items[moduleID] == null) return null;
-		if(items[moduleID].getItem() instanceof ItemModule) return (ItemModule)items[moduleID].getItem();
+		if(items[moduleID].getItem() instanceof ItemModule) return (ItemModule) items[moduleID].getItem();
 		return null;
 	}
 	
@@ -100,6 +101,7 @@ public class CircuitBoard implements IInventory
 	{ return false; }
 	
 	public void openInventory() { }
+
 	public void closeInventory() { }
 	
 	public boolean isItemValidForSlot(int i, ItemStack is)

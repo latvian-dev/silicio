@@ -8,5 +8,9 @@ public class EventChannelToggledTile extends EventCB
 	public final boolean on;
 	
 	public EventChannelToggledTile(CBNetwork c, int ch, boolean b)
-	{ super(c); channel = ch; on = b; }
+	{
+		super(c);
+		channel = ch;
+		on = b;
+	}
 }

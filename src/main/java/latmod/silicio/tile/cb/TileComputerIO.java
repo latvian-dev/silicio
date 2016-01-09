@@ -1,15 +1,18 @@
 package latmod.silicio.tile.cb;
 
+import cpw.mods.fml.common.Optional;
 import dan200.computercraft.api.lua.*;
 import dan200.computercraft.api.peripheral.*;
+import ftb.lib.OtherMods;
 import latmod.lib.IntList;
 import latmod.silicio.tile.cb.events.*;
 import net.minecraft.nbt.NBTTagCompound;
 
+@Optional.Interface(iface = "dan200.computercraft.api.peripheral.IPeripheral", modid = OtherMods.COMPUTER_CRAFT)
 public class TileComputerIO extends TileBasicCBNetTile implements IPeripheral, IToggableTile, ISignalProviderTile // BlockComputerIO
 {
 	public IntList enabledChannels = new IntList();
-	private IComputerAccess attachedComputer = null;
+	private Object attachedComputer;
 	
 	public void readTileData(NBTTagCompound tag)
 	{
@@ -38,47 +41,50 @@ public class TileComputerIO extends TileBasicCBNetTile implements IPeripheral, I
 	{ return "cb_io"; }
 	
 	public String[] getMethodNames()
-	{ return new String[] { "setChannel", "getChannel" }; }
-	
+	{ return new String[] {"setChannel", "getChannel"}; }
+
+	@Optional.Method(modid = OtherMods.COMPUTER_CRAFT)
 	public Object[] callMethod(IComputerAccess computer, ILuaContext context, int method, Object[] arguments) throws LuaException, InterruptedException
 	{
 		if(method == 0)
 		{
 			if(arguments != null && arguments.length == 2)
 			{
-				int c = ((Number)arguments[0]).intValue() - 1;
-				boolean b = ((Boolean)arguments[1]).booleanValue();
+				int c = ((Number) arguments[0]).intValue() - 1;
+				boolean b = ((Boolean) arguments[1]).booleanValue();
 				
 				if(!b) enabledChannels.removeValue(c);
-				else if(!enabledChannels.contains(c))
-					enabledChannels.add(c);
+				else if(!enabledChannels.contains(c)) enabledChannels.add(c);
 			}
 		}
 		else if(method == 1)
 		{
 			if(!getCBNetwork().hasWorkingController() || arguments == null || arguments.length < 1)
-				return new Object[] { false };
+				return new Object[] {false};
 			
-			int c = ((Number)arguments[0]).intValue() - 1;
-			return new Object[] { getCBNetwork().controller.channels.contains(c) };
+			int c = ((Number) arguments[0]).intValue() - 1;
+			return new Object[] {getCBNetwork().controller.channels.contains(c)};
 		}
 		
 		return null;
 	}
-	
+
+	@Optional.Method(modid = OtherMods.COMPUTER_CRAFT)
 	public void attach(IComputerAccess computer)
 	{ if(attachedComputer == null) attachedComputer = computer; }
-	
+
+	@Optional.Method(modid = OtherMods.COMPUTER_CRAFT)
 	public void detach(IComputerAccess computer)
 	{ if(attachedComputer != null && computer.equals(attachedComputer)) attachedComputer = null; }
-	
+
+	@Optional.Method(modid = OtherMods.COMPUTER_CRAFT)
 	public boolean equals(IPeripheral other)
 	{ return super.equals(other); }
-	
+
 	public void onChannelToggledTile(EventChannelToggledTile e)
 	{
 		if(getCBNetwork().hasWorkingController() && attachedComputer != null)
-			attachedComputer.queueEvent("cb_channel", new Object[] { (e.channel + 1), e.on });
+			((IComputerAccess)attachedComputer).queueEvent("cb_channel", new Object[] {(e.channel + 1), e.on});
 	}
 	
 	public void provideSignalsTile(EventProvideSignalsTile e)

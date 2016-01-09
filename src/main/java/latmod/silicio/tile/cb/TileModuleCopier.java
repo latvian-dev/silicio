@@ -51,11 +51,14 @@ public class TileModuleCopier extends TileInvLM implements IGuiTile, ICBNetTile,
 		super.writeTileData(tag);
 		energyStorage.writeToNBT(tag);
 		LMInvUtils.saveStack(tag, "Item", item);
-		tag.setShort("Prog", (short)progress);
+		tag.setShort("Prog", (short) progress);
 	}
 	
 	public boolean onRightClick(EntityPlayer ep, ItemStack is, int side, float x, float y, float z)
-	{ if(isServer()) FTBLib.openGui(ep, this, null); return true; }
+	{
+		if(isServer()) FTBLib.openGui(ep, this, null);
+		return true;
+	}
 	
 	public Container getContainer(EntityPlayer ep, NBTTagCompound data)
 	{ return new ContainerModuleCopier(ep, this); }
@@ -86,15 +89,14 @@ public class TileModuleCopier extends TileInvLM implements IGuiTile, ICBNetTile,
 		
 		if(progress >= maxProg)
 		{
-			if(server && item != null && LMInvUtils.addSingleItemToInv(item, this, new int[] { 2 }, -1, true))
+			if(server && item != null && LMInvUtils.addSingleItemToInv(item, this, new int[] {2}, -1, true))
 			{
 				item = null;
 				progress = 0;
 				markDirty();
 			}
 		}
-		else if(progress >= 1)
-			progress++;
+		else if(progress >= 1) progress++;
 	}
 	
 	public void onUpdateCB()
@@ -111,10 +113,10 @@ public class TileModuleCopier extends TileInvLM implements IGuiTile, ICBNetTile,
 	{ ICBEnergyTile.Helper.addWaila(energyStorage, info); }
 	
 	public float getProgressF()
-	{ return progress > 0 ? (progress + 1) / (float)maxProg : 0; }
+	{ return progress > 0 ? (progress + 1) / (float) maxProg : 0; }
 	
 	public int[] getAccessibleSlotsFromSide(int s)
-	{ return s == 0 ? new int[] { 2 } : new int[] { 0 }; }
+	{ return s == 0 ? new int[] {2} : new int[] {0}; }
 	
 	public boolean canInsertItem(int i, ItemStack is, int s)
 	{ return is != null && is.getItem() instanceof ItemModule; }

@@ -52,16 +52,9 @@ public class ItemModulePainter extends ItemModuleIO implements IToggable
 	{
 		ItemStack is = ItemStackTypeAdapter.parseItem("LatBlocks:painterParts 1 3");
 		
-		if(is != null)
-			getMod().recipes.addShapelessRecipe(new ItemStack(this), SilItems.Modules.OUTPUT, is);
+		if(is != null) getMod().recipes.addShapelessRecipe(new ItemStack(this), SilItems.Modules.OUTPUT, is);
 		else
-			getMod().recipes.addRecipe(new ItemStack(this), "1D2", "DMD", "3D4",
-					'M', SilItems.Modules.OUTPUT,
-					'D', ODItems.DIAMOND,
-					'1', EnumMCColor.BLUE.dyeName,
-					'2', EnumMCColor.GREEN.dyeName,
-					'3', EnumMCColor.YELLOW.dyeName,
-					'4', EnumMCColor.RED.dyeName);
+			getMod().recipes.addRecipe(new ItemStack(this), "1D2", "DMD", "3D4", 'M', SilItems.Modules.OUTPUT, 'D', ODItems.DIAMOND, '1', EnumMCColor.BLUE.dyeName, '2', EnumMCColor.GREEN.dyeName, '3', EnumMCColor.YELLOW.dyeName, '4', EnumMCColor.RED.dyeName);
 	}
 	
 	public void onChannelToggled(EventChannelToggled e)

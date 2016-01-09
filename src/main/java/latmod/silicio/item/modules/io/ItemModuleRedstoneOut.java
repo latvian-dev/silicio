@@ -25,9 +25,7 @@ public class ItemModuleRedstoneOut extends ItemModuleIO
 	
 	public void loadRecipes()
 	{
-		getMod().recipes.addRecipe(new ItemStack(this), "R", "M",
-				'R', ODItems.REDSTONE,
-				'M', SilItems.Modules.OUTPUT);
+		getMod().recipes.addRecipe(new ItemStack(this), "R", "M", 'R', ODItems.REDSTONE, 'M', SilItems.Modules.OUTPUT);
 	}
 	
 	public void onUpdate(EventUpdateModule e)

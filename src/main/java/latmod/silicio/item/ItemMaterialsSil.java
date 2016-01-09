@@ -1,4 +1,5 @@
 package latmod.silicio.item;
+
 import cpw.mods.fml.relauncher.*;
 import ftb.lib.item.ODItems;
 import latmod.ftbu.item.*;
@@ -72,10 +73,7 @@ public class ItemMaterialsSil extends ItemMaterialsLM // ItemMaterialsLB
 		{
 			public void loadRecipes()
 			{
-				getMod().recipes.addRecipe(getStack(), "CCC", "ISI", "CCC",
-						'C', SilItems.b_cbcable,
-						'S', ODItems.SILICON,
-						'I', ODItems.IRON);
+				getMod().recipes.addRecipe(getStack(), "CCC", "ISI", "CCC", 'C', SilItems.b_cbcable, 'S', ODItems.SILICON, 'I', ODItems.IRON);
 			}
 		});
 		

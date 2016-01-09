@@ -12,7 +12,13 @@ public class TankEntry implements Comparable<TankEntry>
 	public final FluidStack filter;
 	
 	public TankEntry(IFluidHandler h, int s, int p, FluidStack fs)
-	{ tank = h; side = s; priority = p; filter = fs; sideF = ForgeDirection.VALID_DIRECTIONS[side]; }
+	{
+		tank = h;
+		side = s;
+		priority = p;
+		filter = fs;
+		sideF = ForgeDirection.VALID_DIRECTIONS[side];
+	}
 	
 	public int compareTo(TankEntry o)
 	{ return Integer.compare(priority, o.priority); }

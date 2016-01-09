@@ -38,9 +38,7 @@ public class ItemModuleItemOutput extends ItemModuleIO
 	
 	public void loadRecipes()
 	{
-		getMod().recipes.addRecipe(new ItemStack(this), "F", "M",
-				'M', SilItems.Modules.OUTPUT,
-				'F', SilItems.Modules.i_item_storage);
+		getMod().recipes.addRecipe(new ItemStack(this), "F", "M", 'M', SilItems.Modules.OUTPUT, 'F', SilItems.Modules.i_item_storage);
 	}
 	
 	public void onUpdate(EventUpdateModule e)
@@ -55,7 +53,7 @@ public class ItemModuleItemOutput extends ItemModuleIO
 			
 			if(te != null && !te.isInvalid() && te instanceof IInventory)
 			{
-				IInventory inv = (IInventory)te;
+				IInventory inv = (IInventory) te;
 				
 				int mode = cs_mode.get(e.item());
 				int ips = ItemModuleItemInput.itemsPerSecond[mode];

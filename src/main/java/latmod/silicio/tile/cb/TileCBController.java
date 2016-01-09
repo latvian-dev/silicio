@@ -100,14 +100,19 @@ public class TileCBController extends TileBasicCBNetTile implements IEnergyRecei
 			
 			if(cables > 0 || otherDevices > 0) info.add("Cables | Other Devices: " + cables + " | " + otherDevices);
 			
-			if(!net.circuitBoards.isEmpty() || !net.allModules.isEmpty()) info.add("Boards | Modules: " + net.circuitBoards.size() + " | " + net.allModules.size());
-			if(!net.invNetwork.isEmpty() || !net.tankNetwork.isEmpty()) info.add("Chests | Tanks: " + net.invNetwork.size() + " | " + net.tankNetwork.size());
+			if(!net.circuitBoards.isEmpty() || !net.allModules.isEmpty())
+				info.add("Boards | Modules: " + net.circuitBoards.size() + " | " + net.allModules.size());
+			if(!net.invNetwork.isEmpty() || !net.tankNetwork.isEmpty())
+				info.add("Chests | Tanks: " + net.invNetwork.size() + " | " + net.tankNetwork.size());
 			if(!channels.isEmpty()) info.add("Enabled Channels: " + channels.size());
 		}
 	}
 	
 	public boolean onRightClick(EntityPlayer ep, ItemStack is, int side, float x, float y, float z)
-	{ if(isServer()) FTBLib.openGui(ep, this, null); return true; }
+	{
+		if(isServer()) FTBLib.openGui(ep, this, null);
+		return true;
+	}
 	
 	public boolean canConnect(ForgeDirection side)
 	{ return true; }
@@ -129,8 +134,7 @@ public class TileCBController extends TileBasicCBNetTile implements IEnergyRecei
 			
 			for(ICBNetTile t : net.tiles)
 			{
-				if(t instanceof ICBEnergyTile)
-					((TileEntity)t).markDirty();
+				if(t instanceof ICBEnergyTile) ((TileEntity) t).markDirty();
 			}
 		}
 		
@@ -158,8 +162,7 @@ public class TileCBController extends TileBasicCBNetTile implements IEnergyRecei
 		//for(ICBNetTile t : prevNetwork)
 		//	t.onCBNetworkEvent(new EventControllerDisconnected(getCBNetwork(), false));
 		
-		if(pHasConflict != net.hasConflict)
-			markDirty();
+		if(pHasConflict != net.hasConflict) markDirty();
 	}
 	
 	public void onUpdateCB()
@@ -185,7 +188,7 @@ public class TileCBController extends TileBasicCBNetTile implements IEnergyRecei
 		{
 			if(t instanceof ICBEnergyTile && storage.getEnergyStored() > 0)
 			{
-				EnergyStorage e = ((ICBEnergyTile)t).getEnergyStorage();
+				EnergyStorage e = ((ICBEnergyTile) t).getEnergyStorage();
 				
 				int d = Math.min(e.getMaxReceive(), storage.getMaxExtract());
 				d = Math.min(d, Math.min(storage.getEnergyStored(), e.getMaxEnergyStored() - e.getEnergyStored()));
@@ -198,13 +201,13 @@ public class TileCBController extends TileBasicCBNetTile implements IEnergyRecei
 		for(ModuleEntry me : net.allModules)
 		{
 			if(me.item instanceof ISignalProvider)
-				((ISignalProvider)me.item).provideSignals(new EventProvideSignals(me));
+				((ISignalProvider) me.item).provideSignals(new EventProvideSignals(me));
 		}
 		
 		for(ICBNetTile t : net.tiles)
 		{
 			if(t instanceof ISignalProviderTile)
-				((ISignalProviderTile)t).provideSignalsTile(new EventProvideSignalsTile(getCBNetwork()));
+				((ISignalProviderTile) t).provideSignalsTile(new EventProvideSignalsTile(getCBNetwork()));
 		}
 		
 		for(ModuleEntry me : net.allModules)
@@ -217,15 +220,13 @@ public class TileCBController extends TileBasicCBNetTile implements IEnergyRecei
 			for(int i = 0; i < channels.size(); i++)
 			{
 				int ch = channels.get(i);
-				if(!prevChannels.contains(ch))
-					channelChanged(ch, true);
+				if(!prevChannels.contains(ch)) channelChanged(ch, true);
 			}
 			
 			for(int i = 0; i < prevChannels.size(); i++)
 			{
 				int ch = prevChannels.get(i);
-				if(!channels.contains(ch))
-					channelChanged(ch, false);
+				if(!channels.contains(ch)) channelChanged(ch, false);
 			}
 		}
 	}
@@ -237,7 +238,7 @@ public class TileCBController extends TileBasicCBNetTile implements IEnergyRecei
 		for(ModuleEntry me : net.allModules)
 		{
 			if(me.item instanceof IToggable)
-				((IToggable)me.item).onChannelToggled(new EventChannelToggled(me, ch, on));
+				((IToggable) me.item).onChannelToggled(new EventChannelToggled(me, ch, on));
 		}
 		
 		net.sendEvent(new EventChannelToggledTile(getCBNetwork(), ch, on));
@@ -250,7 +251,6 @@ public class TileCBController extends TileBasicCBNetTile implements IEnergyRecei
 	}
 	
 	
-	
 	public boolean canConnectEnergy(ForgeDirection dir)
 	{ return true; }
 	
@@ -260,7 +260,8 @@ public class TileCBController extends TileBasicCBNetTile implements IEnergyRecei
 	public int receiveEnergy(ForgeDirection dir, int e, boolean simulate)
 	{
 		int i = storage.receiveEnergy(e, simulate);
-		if(i != 0) energyChanged = true; return i;
+		if(i != 0) energyChanged = true;
+		return i;
 	}
 	
 	public int receiveEnergy(int e)
@@ -269,7 +270,8 @@ public class TileCBController extends TileBasicCBNetTile implements IEnergyRecei
 	public int extractEnergy(ForgeDirection dir, int e, boolean simulate)
 	{
 		int i = storage.extractEnergy(e, simulate);
-		if(i != 0) energyChanged = true; return i;
+		if(i != 0) energyChanged = true;
+		return i;
 	}
 	
 	public int extractEnergy(int e)
@@ -292,7 +294,10 @@ public class TileCBController extends TileBasicCBNetTile implements IEnergyRecei
 	{
 		if(ch == -1) return false;
 		if(!channels.contains(ch))
-		{ channels.add(ch); return true; }
+		{
+			channels.add(ch);
+			return true;
+		}
 		return false;
 	}
 	
@@ -304,8 +309,7 @@ public class TileCBController extends TileBasicCBNetTile implements IEnergyRecei
 		{
 			if(IItemCard.Helper.isValid(e.filter, is))
 			{
-				if(LMInvUtils.addSingleItemToInv(is, e.inv, e.side, !simulate))
-					return true;
+				if(LMInvUtils.addSingleItemToInv(is, e.inv, e.side, !simulate)) return true;
 			}
 		}
 		

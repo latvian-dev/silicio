@@ -45,7 +45,7 @@ public class GuiModuleSettings extends GuiLM
 		super(c, thisTex);
 		xSize = 176;
 		ySize = 142;
-		board = (CircuitBoard)c.inv;
+		board = (CircuitBoard) c.inv;
 		moduleID = id;
 		module = board.getModule(moduleID);
 		
@@ -100,13 +100,13 @@ public class GuiModuleSettings extends GuiLM
 			else if(mcs instanceof ModuleCSItem)
 			{
 				buttonsConfig[mcs.ID].background = icon_cfg_item;
-				ItemStack is = ((ModuleCSItem)mcs).getItem(board.items[moduleID]);
+				ItemStack is = ((ModuleCSItem) mcs).getItem(board.items[moduleID]);
 				if(is != null) buttonsConfig[mcs.ID].itemStack = is;
 			}
 			else if(mcs instanceof ModuleCSFluid)
 			{
 				buttonsConfig[mcs.ID].background = icon_cfg_fluid;
-				FluidStack fs = ((ModuleCSFluid)mcs).getFluid(board.items[moduleID]);
+				FluidStack fs = ((ModuleCSFluid) mcs).getFluid(board.items[moduleID]);
 				if(fs != null) buttonsConfig[mcs.ID].fluidStack = fs;
 			}
 			else buttonsConfig[mcs.ID].background = icon_cfg_text;
@@ -119,8 +119,7 @@ public class GuiModuleSettings extends GuiLM
 	public void addWidgets()
 	{
 		mainPanel.add(buttonBack);
-		if(module.getChannelCount() > 0)
-			mainPanel.add(buttonChannels);
+		if(module.getChannelCount() > 0) mainPanel.add(buttonChannels);
 		mainPanel.addAll(buttonsConfig);
 	}
 	
@@ -128,8 +127,7 @@ public class GuiModuleSettings extends GuiLM
 	{
 		super.drawBackground();
 		
-		if(module.getChannelCount() > 0)
-			buttonChannels.render(icon_channels);
+		if(module.getChannelCount() > 0) buttonChannels.render(icon_channels);
 		
 		for(ConfigButton b : buttonsConfig)
 		{
@@ -146,8 +144,7 @@ public class GuiModuleSettings extends GuiLM
 				Fluid fl = b.fluidStack.getFluid();
 				
 				IIcon ic = fl.getStillIcon();
-				if(ic == null && fl.getBlock() != null)
-					ic = fl.getBlock().getBlockTextureFromSide(1);
+				if(ic == null && fl.getBlock() != null) ic = fl.getBlock().getBlockTextureFromSide(1);
 				
 				if(ic != null)
 				{

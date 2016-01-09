@@ -13,8 +13,7 @@ public interface IItemCard
 		{
 			if(item == null) return false;
 			if(filter == null) return true;
-			if(filter.getItem() instanceof IItemCard)
-				return ((IItemCard)filter.getItem()).isItemValid(filter, item);
+			if(filter.getItem() instanceof IItemCard) return ((IItemCard) filter.getItem()).isItemValid(filter, item);
 			return LMInvUtils.itemsEquals(filter, item, false, true);
 		}
 	}

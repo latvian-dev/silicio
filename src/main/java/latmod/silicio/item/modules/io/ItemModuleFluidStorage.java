@@ -37,18 +37,13 @@ public class ItemModuleFluidStorage extends ItemModuleIO implements ITankProvide
 	
 	public void loadRecipes()
 	{
-		getMod().recipes.addRecipe(new ItemStack(this), "RWT", "PMP",
-				'R', ODItems.REDSTONE,
-				'P', ODItems.IRON,
-				'M', SilItems.Modules.EMPTY,
-				'T', SilItems.b_cbcable,
-				'W', Items.bucket);
+		getMod().recipes.addRecipe(new ItemStack(this), "RWT", "PMP", 'R', ODItems.REDSTONE, 'P', ODItems.IRON, 'M', SilItems.Modules.EMPTY, 'T', SilItems.b_cbcable, 'W', Items.bucket);
 	}
 	
 	public void updateTankNet(ModuleEntry e, List<TankEntry> l)
 	{
 		TileEntity te = e.board.getFacingTile();
 		if(te != null && !te.isInvalid() && te instanceof IFluidHandler)
-			l.add(new TankEntry((IFluidHandler)te, e.board.sideOpposite, cs_priority.get(e.stack), cs_filter.getFluid(e.stack)));
+			l.add(new TankEntry((IFluidHandler) te, e.board.sideOpposite, cs_priority.get(e.stack), cs_filter.getFluid(e.stack)));
 	}
 }

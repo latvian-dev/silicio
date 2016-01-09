@@ -17,6 +17,6 @@ public class ModuleEntry
 		board = cb;
 		moduleID = mid;
 		stack = cb.items[moduleID];
-		item = (ItemModule)stack.getItem();
+		item = (ItemModule) stack.getItem();
 	}
 }

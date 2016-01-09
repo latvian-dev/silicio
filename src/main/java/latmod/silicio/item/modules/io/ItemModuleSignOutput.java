@@ -43,9 +43,7 @@ public class ItemModuleSignOutput extends ItemModuleIO implements IToggable
 	
 	public void loadRecipes()
 	{
-		getMod().recipes.addRecipe(new ItemStack(this), "S", "M",
-				'M', SilItems.Modules.OUTPUT,
-				'S', Items.sign);
+		getMod().recipes.addRecipe(new ItemStack(this), "S", "M", 'M', SilItems.Modules.OUTPUT, 'S', Items.sign);
 	}
 	
 	public void onChannelToggled(EventChannelToggled e)
@@ -56,7 +54,7 @@ public class ItemModuleSignOutput extends ItemModuleIO implements IToggable
 			
 			if(e.board.cable.isServer() && te != null && te instanceof TileEntitySign)
 			{
-				TileEntitySign tes = (TileEntitySign)te;
+				TileEntitySign tes = (TileEntitySign) te;
 				
 				for(int i = 0; i < 4; i++)
 				{

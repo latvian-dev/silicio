@@ -41,7 +41,7 @@ public class TileRedNetIO extends TileBasicCBNetTile implements IWailaTile.Body,
 	public void writeTileData(NBTTagCompound tag)
 	{
 		super.writeTileData(tag);
-		tag.setByte("Side", (byte)inputSide);
+		tag.setByte("Side", (byte) inputSide);
 		tag.setIntArray("Inputs", inputs.toArray());
 		tag.setIntArray("Linked", linked);
 	}
@@ -51,7 +51,13 @@ public class TileRedNetIO extends TileBasicCBNetTile implements IWailaTile.Body,
 		if(isServer())
 		{
 			if(LMInvUtils.isWrench(is))
-			{ if(inputSide != side) { inputSide = side; markDirty(); } }
+			{
+				if(inputSide != side)
+				{
+					inputSide = side;
+					markDirty();
+				}
+			}
 			else FTBLib.openGui(ep, this, null);
 		}
 		
@@ -103,8 +109,7 @@ public class TileRedNetIO extends TileBasicCBNetTile implements IWailaTile.Body,
 		for(int i = 0; i < inputs.size(); i++)
 		{
 			int j = inputs.get(i);
-			if(j >= 0 && j < linked.length)
-				e.setEnabled0(linked[j]);
+			if(j >= 0 && j < linked.length) e.setEnabled0(linked[j]);
 		}
 	}
 	

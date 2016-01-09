@@ -25,9 +25,7 @@ public class ItemModuleChatOutput extends ItemModuleIO implements IToggable
 	
 	public void loadRecipes()
 	{
-		getMod().recipes.addRecipe(new ItemStack(this), "B", "M",
-				'B', Blocks.beacon,
-				'M', SilItems.Modules.i_sign_out);
+		getMod().recipes.addRecipe(new ItemStack(this), "B", "M", 'B', Blocks.beacon, 'M', SilItems.Modules.i_sign_out);
 	}
 	
 	public void onChannelToggled(EventChannelToggled e)

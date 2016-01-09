@@ -67,7 +67,7 @@ public class SilIntTE
 	private static ItemStack getStack(Object o)
 	{
 		if(o == null) return null;
-		return (o instanceof MaterialItem) ? ((MaterialItem)o).getStack() : (ItemStack)o;
+		return (o instanceof MaterialItem) ? ((MaterialItem) o).getStack() : (ItemStack) o;
 	}
 	
 	private static void addPulverizer(Object out, Object in, int energy)

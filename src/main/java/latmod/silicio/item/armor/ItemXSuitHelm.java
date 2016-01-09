@@ -13,8 +13,7 @@ public class ItemXSuitHelm extends ItemXSuit implements ILBGlasses
 	
 	public void loadRecipes()
 	{
-		Silicio.mod.recipes.addRecipe(new ItemStack(this), "PPP", "P P",
-				'P', ItemMaterialsSil.XSUIT_PLATE);
+		Silicio.mod.recipes.addRecipe(new ItemStack(this), "PPP", "P P", 'P', ItemMaterialsSil.XSUIT_PLATE);
 	}
 	
 	public boolean areLBGlassesActive(ItemStack is, EntityPlayer ep)

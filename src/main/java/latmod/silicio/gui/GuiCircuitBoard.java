@@ -22,7 +22,7 @@ public class GuiCircuitBoard extends GuiLM
 		super(c, Silicio.mod.getLocation("textures/gui/circuitBoard.png"));
 		ySize = 138;
 		
-		board = (CircuitBoard)c.inv;
+		board = (CircuitBoard) c.inv;
 		
 		buttonSettings = new ButtonLM(this, 146, 21, 16, 16)
 		{
@@ -39,8 +39,7 @@ public class GuiCircuitBoard extends GuiLM
 			{
 				l.add(title);
 				
-				if(board.cable.getCBNetwork().controller == null)
-					l.add(EnumChatFormatting.GRAY + "No Controller!");
+				if(board.cable.getCBNetwork().controller == null) l.add(EnumChatFormatting.GRAY + "No Controller!");
 			}
 		};
 		

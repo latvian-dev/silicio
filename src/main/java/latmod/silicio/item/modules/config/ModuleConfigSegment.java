@@ -15,19 +15,21 @@ public abstract class ModuleConfigSegment
 	public final String title;
 	
 	public ModuleConfigSegment(int i, String s)
-	{ ID = i; SID = "" + ID; title = s; }
+	{
+		ID = i;
+		SID = "" + ID;
+		title = s;
+	}
 	
 	public NBTTagCompound data(ItemStack is)
 	{
-		if(is.stackTagCompound == null)
-			is.stackTagCompound = new NBTTagCompound();
+		if(is.stackTagCompound == null) is.stackTagCompound = new NBTTagCompound();
 		return is.stackTagCompound.getCompoundTag("Config");
 	}
 	
 	public void setData(ItemStack is, NBTTagCompound tag)
 	{
-		if(is.stackTagCompound == null)
-			is.stackTagCompound = new NBTTagCompound();
+		if(is.stackTagCompound == null) is.stackTagCompound = new NBTTagCompound();
 		is.stackTagCompound.setTag("Config", tag);
 	}
 	

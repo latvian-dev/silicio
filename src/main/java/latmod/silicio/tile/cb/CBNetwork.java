@@ -86,15 +86,14 @@ public class CBNetwork
 	public static ICBNetTile getNetTile(World w, int x, int y, int z)
 	{
 		TileEntity te = w.getTileEntity(x, y, z);
-		return (te != null && te instanceof ICBNetTile) ? (ICBNetTile)te : null;
+		return (te != null && te instanceof ICBNetTile) ? (ICBNetTile) te : null;
 	}
 	
 	public static CBNetwork create(World w, int x, int y, int z)
 	{
 		ICBNetTile t0 = getNetTile(w, x, y, z);
 		
-		if(t0 != null && t0.getCBNetwork().hasController())
-			return t0.getCBNetwork().controller.getCBNetwork();
+		if(t0 != null && t0.getCBNetwork().hasController()) return t0.getCBNetwork().controller.getCBNetwork();
 		
 		CBNetwork net = new CBNetwork();
 		update(net, w, x, y, z);
@@ -110,7 +109,7 @@ public class CBNetwork
 		addToList(net, w, x, y, z);
 		net.updateOtherNetworks();
 		
-		net.controller = tempIntList.isEmpty() ? null : (TileCBController)net.tiles.get(tempIntList.get(0));
+		net.controller = tempIntList.isEmpty() ? null : (TileCBController) net.tiles.get(tempIntList.get(0));
 		if(tempIntList.size() > 1) net.hasConflict = true;
 		LMListUtils.removeAll(net.tiles, tempIntList);
 	}
@@ -136,10 +135,9 @@ public class CBNetwork
 			
 			if(te != null && te instanceof ICBNetTile)
 			{
-				if(te instanceof TileCBController)
-					tempIntList.add(net.tiles.size());
+				if(te instanceof TileCBController) tempIntList.add(net.tiles.size());
 				
-				ICBNetTile ec = (ICBNetTile)te;
+				ICBNetTile ec = (ICBNetTile) te;
 				
 				if(ec.isSideEnabled(Facing.oppositeSide[i]) && !net.tiles.contains(ec))
 				{

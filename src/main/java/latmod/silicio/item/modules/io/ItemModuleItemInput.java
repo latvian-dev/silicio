@@ -14,8 +14,8 @@ public class ItemModuleItemInput extends ItemModuleIO
 	public static final ModuleCSItem cs_filter = new ModuleCSItem(0, "Filter");
 	public static final ModuleCSMode cs_mode = new ModuleCSMode(1, "Mode");
 	
-	public static final int[] itemsPerSecond = { 1, 4, 16, 64 };
-	public static final int[] powerUse = { 0, 10, 200, 1200 };
+	public static final int[] itemsPerSecond = {1, 4, 16, 64};
+	public static final int[] powerUse = {0, 10, 200, 1200};
 	
 	public ItemModuleItemInput(String s)
 	{
@@ -41,9 +41,7 @@ public class ItemModuleItemInput extends ItemModuleIO
 	
 	public void loadRecipes()
 	{
-		getMod().recipes.addRecipe(new ItemStack(this), "F", "M",
-				'M', SilItems.Modules.INPUT,
-				'F', SilItems.Modules.i_item_storage);
+		getMod().recipes.addRecipe(new ItemStack(this), "F", "M", 'M', SilItems.Modules.INPUT, 'F', SilItems.Modules.i_item_storage);
 	}
 	
 	public void onUpdate(EventUpdateModule e)
@@ -56,7 +54,7 @@ public class ItemModuleItemInput extends ItemModuleIO
 			
 			if(te != null && !te.isInvalid() && te instanceof IInventory)
 			{
-				IInventory inv = (IInventory)te;
+				IInventory inv = (IInventory) te;
 				
 				int mode = cs_mode.get(e.item());
 				int ips = itemsPerSecond[mode];

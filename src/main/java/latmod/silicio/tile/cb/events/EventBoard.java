@@ -9,7 +9,11 @@ public class EventBoard extends EventCB
 	public final CircuitBoard board;
 	
 	public EventBoard(CBNetwork c, CircuitBoard cb)
-	{ super(c); board = cb; cable = board.cable; }
+	{
+		super(c);
+		board = cb;
+		cable = board.cable;
+	}
 	
 	public int hashCode()
 	{ return LMUtils.hashCode(super.hashCode(), cable.xCoord, cable.yCoord, cable.zCoord, board.side); }

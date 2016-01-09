@@ -37,18 +37,13 @@ public class ItemModuleItemStorage extends ItemModuleIO implements IInvProvider
 	
 	public void loadRecipes()
 	{
-		getMod().recipes.addRecipe(new ItemStack(this), "RWT", "PMP",
-				'R', ODItems.REDSTONE,
-				'P', ODItems.IRON,
-				'M', SilItems.Modules.EMPTY,
-				'T', SilItems.b_cbcable,
-				'W', Blocks.chest);
+		getMod().recipes.addRecipe(new ItemStack(this), "RWT", "PMP", 'R', ODItems.REDSTONE, 'P', ODItems.IRON, 'M', SilItems.Modules.EMPTY, 'T', SilItems.b_cbcable, 'W', Blocks.chest);
 	}
 	
 	public void updateInvNet(ModuleEntry e, List<InvEntry> l)
 	{
 		TileEntity te = e.board.getFacingTile();
 		if(te != null && !te.isInvalid() && te instanceof IInventory)
-			l.add(new InvEntry((IInventory)te, e.board.sideOpposite, cs_priority.get(e.stack), cs_filter.getItem(e.stack)));
+			l.add(new InvEntry((IInventory) te, e.board.sideOpposite, cs_priority.get(e.stack), cs_filter.getItem(e.stack)));
 	}
 }

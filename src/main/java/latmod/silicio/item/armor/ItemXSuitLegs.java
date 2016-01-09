@@ -11,7 +11,6 @@ public class ItemXSuitLegs extends ItemXSuit
 	
 	public void loadRecipes()
 	{
-		Silicio.mod.recipes.addRecipe(new ItemStack(this), "PPP", "P P", "P P",
-				'P', ItemMaterialsSil.XSUIT_PLATE);
+		Silicio.mod.recipes.addRecipe(new ItemStack(this), "PPP", "P P", "P P", 'P', ItemMaterialsSil.XSUIT_PLATE);
 	}
 }

@@ -23,14 +23,22 @@ public class ModuleCSNum extends ModuleConfigSegment
 	{ defValue = def; }
 	
 	public void setValues(int def, int min, int max, int scroll)
-	{ defValue = def; minValue = min; maxValue = max; scrollValue = scroll; }
+	{
+		defValue = def;
+		minValue = min;
+		maxValue = max;
+		scrollValue = scroll;
+	}
 	
 	@SideOnly(Side.CLIENT)
 	public void buttonClicked(GuiModuleSettings g)
 	{ g.mc.displayGuiScreen(new GuiCSNum(g, this)); }
 	
 	public void onConfigReceived(CircuitBoard cb, int MID, NBTTagCompound data)
-	{ set(cb.items[MID], data.getInteger("V")); cb.cable.markDirty(); }
+	{
+		set(cb.items[MID], data.getInteger("V"));
+		cb.cable.markDirty();
+	}
 	
 	public int get(ItemStack is)
 	{

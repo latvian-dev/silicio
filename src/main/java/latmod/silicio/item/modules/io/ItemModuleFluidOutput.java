@@ -39,9 +39,7 @@ public class ItemModuleFluidOutput extends ItemModuleIO
 	
 	public void loadRecipes()
 	{
-		getMod().recipes.addRecipe(new ItemStack(this), "F", "M",
-				'M', SilItems.Modules.OUTPUT,
-				'F', SilItems.Modules.i_fluid_storage);
+		getMod().recipes.addRecipe(new ItemStack(this), "F", "M", 'M', SilItems.Modules.OUTPUT, 'F', SilItems.Modules.i_fluid_storage);
 	}
 	
 	public void onUpdate(EventUpdateModule e)
@@ -60,7 +58,7 @@ public class ItemModuleFluidOutput extends ItemModuleIO
 			
 			if(te != null && !te.isInvalid() && te instanceof IFluidHandler)
 			{
-				IFluidHandler fh = (IFluidHandler)te;
+				IFluidHandler fh = (IFluidHandler) te;
 				if(!fh.canFill(e.board.sideOppositeF, fs.getFluid())) return;
 				
 				FluidTankInfo[] info = fh.getTankInfo(e.board.sideOppositeF);

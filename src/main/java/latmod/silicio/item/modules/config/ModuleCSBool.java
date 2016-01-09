@@ -20,7 +20,10 @@ public class ModuleCSBool extends ModuleConfigSegment
 	{ clientConfig(g.board, g.moduleID, null); }
 	
 	public void onConfigReceived(CircuitBoard cb, int MID, NBTTagCompound data)
-	{ set(cb.items[MID], !get(cb.items[MID])); cb.cable.markDirty(); }
+	{
+		set(cb.items[MID], !get(cb.items[MID]));
+		cb.cable.markDirty();
+	}
 	
 	public boolean get(ItemStack is)
 	{

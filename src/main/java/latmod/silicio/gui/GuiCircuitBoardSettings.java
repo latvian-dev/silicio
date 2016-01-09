@@ -1,4 +1,5 @@
 package latmod.silicio.gui;
+
 import cpw.mods.fml.relauncher.*;
 import ftb.lib.api.gui.*;
 import ftb.lib.gui.GuiLM;
@@ -20,7 +21,7 @@ public class GuiCircuitBoardSettings extends GuiLM
 		super(c, Silicio.mod.getLocation("textures/gui/circuitBoardSettings.png"));
 		ySize = 138;
 		
-		board = (CircuitBoard)c.inv;
+		board = (CircuitBoard) c.inv;
 		
 		buttonBack = new ButtonLM(this, 146, 21, 16, 16)
 		{
@@ -36,26 +37,26 @@ public class GuiCircuitBoardSettings extends GuiLM
 		itemButtons = new ItemButtonLM[board.items.length];
 		
 		for(int y = 0; y < 2; y++)
-		for(int x = 0; x < 6; x++)
-		{
-			final int id = x + y * 6;
-			
-			if(board.items[id] != null && board.items[id].getItem() instanceof ItemModule)
+			for(int x = 0; x < 6; x++)
 			{
-				itemButtons[id] = new ItemButtonLM(this, 9 + x * 22, 10 + y * 22, 18, 18)
+				final int id = x + y * 6;
+
+				if(board.items[id] != null && board.items[id].getItem() instanceof ItemModule)
 				{
-					public void onButtonPressed(int b)
+					itemButtons[id] = new ItemButtonLM(this, 9 + x * 22, 10 + y * 22, 18, 18)
 					{
-						playClickSound();
-						board.cable.clientOpenGui(TileCBCable.guiData(board.side, 2, id));
-					}
-				};
-				
-				itemButtons[id].setItem(board.items[id]);
-				itemButtons[id].title = itemButtons[id].item.getDisplayName();
-				//itemButtons[id].setBackground(button_pressed);
+						public void onButtonPressed(int b)
+						{
+							playClickSound();
+							board.cable.clientOpenGui(TileCBCable.guiData(board.side, 2, id));
+						}
+					};
+
+					itemButtons[id].setItem(board.items[id]);
+					itemButtons[id].title = itemButtons[id].item.getDisplayName();
+					//itemButtons[id].setBackground(button_pressed);
+				}
 			}
-		}
 	}
 	
 	public void addWidgets()
@@ -72,8 +73,7 @@ public class GuiCircuitBoardSettings extends GuiLM
 		
 		for(int i = 0; i < itemButtons.length; i++)
 		{
-			if(itemButtons[i] != null)
-				itemButtons[i].renderWidget();
+			if(itemButtons[i] != null) itemButtons[i].renderWidget();
 		}
 	}
 }

@@ -1,4 +1,5 @@
 package latmod.silicio.gui.container;
+
 import ftb.lib.gui.ContainerLM;
 import latmod.silicio.tile.cb.CircuitBoard;
 import net.minecraft.entity.player.EntityPlayer;
@@ -13,15 +14,14 @@ public class ContainerCircuitBoard extends ContainerLM
 		
 		for(int y = 0; y < 2; y++)
 			for(int x = 0; x < 6; x++)
-			addSlotToContainer(new Slot(t, x + y * 6, 9 + x * 22, 10 + y * 22));
+				addSlotToContainer(new Slot(t, x + y * 6, 9 + x * 22, 10 + y * 22));
 		
 		addPlayerSlots(56);
 	}
 	
 	public ItemStack transferStackInSlot(EntityPlayer ep, int i)
 	{
-		if (i < iinv.getSizeInventory())
-			return super.transferStackInSlot(ep, i);
+		if(i < iinv.getSizeInventory()) return super.transferStackInSlot(ep, i);
 		return null;
 	}
 }

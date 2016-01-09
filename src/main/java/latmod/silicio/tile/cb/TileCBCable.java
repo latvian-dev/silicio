@@ -58,7 +58,7 @@ public class TileCBCable extends TileBasicCBNetTile implements IPaintable, IGuiT
 			
 			TileEntity te = getTile(i);
 			if(te != null && !te.isInvalid() && te instanceof TileCBCable)
-				if(((TileCBCable)te).hasCover && ((TileCBCable)te).paint[Facing.oppositeSide[i]] != null)
+				if(((TileCBCable) te).hasCover && ((TileCBCable) te).paint[Facing.oppositeSide[i]] != null)
 					renderCover[i] = false;
 		}
 	}
@@ -89,8 +89,7 @@ public class TileCBCable extends TileBasicCBNetTile implements IPaintable, IGuiT
 		for(int s = 0; s < 6; s++)
 		{
 			canReceive[s] = false;
-			if(getCBNetwork().hasWorkingController() && canReceiveEnergy(s))
-				canReceive[s] = true;
+			if(getCBNetwork().hasWorkingController() && canReceiveEnergy(s)) canReceive[s] = true;
 		}
 		
 		for(int s = 0; s < boards.length; s++)
@@ -116,10 +115,9 @@ public class TileCBCable extends TileBasicCBNetTile implements IPaintable, IGuiT
 	{
 		Arrays.fill(boards, null);
 		
-		NBTTagList l = (NBTTagList)tag.getTag("Boards");
+		NBTTagList l = (NBTTagList) tag.getTag("Boards");
 		
-		if(l != null && l.tagCount() > 0)
-		for(int i = 0; i < l.tagCount(); i++)
+		if(l != null && l.tagCount() > 0) for(int i = 0; i < l.tagCount(); i++)
 		{
 			NBTTagCompound tag1 = l.getCompoundTagAt(i);
 			int id = tag1.getByte("ID");
@@ -138,16 +136,15 @@ public class TileCBCable extends TileBasicCBNetTile implements IPaintable, IGuiT
 		NBTTagList l = new NBTTagList();
 		
 		for(int i = 0; i < boards.length; i++)
-		if(boards[i] != null)
-		{
-			NBTTagCompound tag1 = new NBTTagCompound();
-			boards[i].writeTileData(tag1);
-			tag1.setByte("ID", (byte)i);
-			l.appendTag(tag1);
-		}
+			if(boards[i] != null)
+			{
+				NBTTagCompound tag1 = new NBTTagCompound();
+				boards[i].writeTileData(tag1);
+				tag1.setByte("ID", (byte) i);
+				l.appendTag(tag1);
+			}
 		
-		if(l.tagCount() > 0)
-			tag.setTag("Boards", l);
+		if(l.tagCount() > 0) tag.setTag("Boards", l);
 		
 		tag.setBoolean("HasCover", hasCover);
 		Paint.writeToNBT(tag, "Paint", paint);
@@ -186,7 +183,7 @@ public class TileCBCable extends TileBasicCBNetTile implements IPaintable, IGuiT
 	{
 		if(!c.isSideEnabled(s)) return false;
 		TileEntity te = c.worldObj.getTileEntity(c.xCoord + Facing.offsetsXForSide[s], c.yCoord + Facing.offsetsYForSide[s], c.zCoord + Facing.offsetsZForSide[s]);
-		return (te != null && te instanceof ICBNetTile && ((ICBNetTile)te).isSideEnabled(Facing.oppositeSide[s]));
+		return (te != null && te instanceof ICBNetTile && ((ICBNetTile) te).isSideEnabled(Facing.oppositeSide[s]));
 	}
 	
 	private boolean canReceiveEnergy(int s)
@@ -208,14 +205,13 @@ public class TileCBCable extends TileBasicCBNetTile implements IPaintable, IGuiT
 
 	public CircuitBoard getBoard(int side)
 	{
-		if(side >= 0 && side < boards.length)
-			return boards[side]; return null;
+		if(side >= 0 && side < boards.length) return boards[side];
+		return null;
 	}
 	
 	public CircuitBoard getBoard(ForgeDirection dir)
 	{
-		if(dir == null || dir == ForgeDirection.UNKNOWN)
-			return null;
+		if(dir == null || dir == ForgeDirection.UNKNOWN) return null;
 		return getBoard(dir.ordinal());
 	}
 	
@@ -225,8 +221,7 @@ public class TileCBCable extends TileBasicCBNetTile implements IPaintable, IGuiT
 	
 	public boolean onRightClick(EntityPlayer ep, ItemStack is, int side, float x, float y, float z)
 	{
-		if(is != null && is.getItem() instanceof IPainterItem)
-			return false;
+		if(is != null && is.getItem() instanceof IPainterItem) return false;
 		
 		MovingObjectPosition mop = MathHelperMC.rayTrace(ep);
 		
@@ -244,8 +239,7 @@ public class TileCBCable extends TileBasicCBNetTile implements IPaintable, IGuiT
 				{
 					hasCover = true;
 					
-					if(!ep.capabilities.isCreativeMode)
-						is.stackSize--;
+					if(!ep.capabilities.isCreativeMode) is.stackSize--;
 					
 					markDirty();
 				}
@@ -308,8 +302,7 @@ public class TileCBCable extends TileBasicCBNetTile implements IPaintable, IGuiT
 		{
 			if(is != null && ep.isSneaking() && isWrench)
 			{
-				if(!ep.capabilities.isCreativeMode)
-					LMInvUtils.dropItem(ep, new ItemStack(SilItems.i_circuit_board));
+				if(!ep.capabilities.isCreativeMode) LMInvUtils.dropItem(ep, new ItemStack(SilItems.i_circuit_board));
 				
 				for(int i = 0; i < boards[id].items.length; i++)
 				{
@@ -335,7 +328,8 @@ public class TileCBCable extends TileBasicCBNetTile implements IPaintable, IGuiT
 		
 		if(isServer())
 		{
-			if(hasCover) LMInvUtils.dropItem(worldObj, xCoord + 0.5D, yCoord + 0.5D, zCoord + 0.5D, new ItemStack(LatBlocksItems.b_paintable), 8);
+			if(hasCover)
+				LMInvUtils.dropItem(worldObj, xCoord + 0.5D, yCoord + 0.5D, zCoord + 0.5D, new ItemStack(LatBlocksItems.b_paintable), 8);
 			
 			for(int i = 0; i < boards.length; i++)
 			{
@@ -361,21 +355,22 @@ public class TileCBCable extends TileBasicCBNetTile implements IPaintable, IGuiT
 		if(clientP != null && clientP.getHeldItem() != null)
 		{
 			Item item = clientP.getHeldItem().getItem();
-			if((item == SilItems.i_circuit_board && !worldObj.isAirBlock(xCoord + Facing.offsetsXForSide[i], yCoord + Facing.offsetsYForSide[i], zCoord + Facing.offsetsZForSide[i]))) return true;
+			if((item == SilItems.i_circuit_board && !worldObj.isAirBlock(xCoord + Facing.offsetsXForSide[i], yCoord + Facing.offsetsYForSide[i], zCoord + Facing.offsetsZForSide[i])))
+				return true;
 		}
 		
 		return false;
 	}
 	
 	public double getRelStoredEnergy()
-	{ return getCBNetwork().hasWorkingController() ? (getCBNetwork().controller.storage.getEnergyStored() / (double)getCBNetwork().controller.storage.getMaxEnergyStored()) : 0; }
+	{ return getCBNetwork().hasWorkingController() ? (getCBNetwork().controller.storage.getEnergyStored() / (double) getCBNetwork().controller.storage.getMaxEnergyStored()) : 0; }
 	
 	public static NBTTagCompound guiData(int side, int gui, int module)
 	{
 		NBTTagCompound data = new NBTTagCompound();
-		data.setByte("Side", (byte)side);
-		data.setByte("Gui", (byte)gui);
-		if(module > 0) data.setByte("MID", (byte)module);
+		data.setByte("Side", (byte) side);
+		data.setByte("Gui", (byte) gui);
+		if(module > 0) data.setByte("MID", (byte) module);
 		return data;
 	}
 	
@@ -434,9 +429,9 @@ public class TileCBCable extends TileBasicCBNetTile implements IPaintable, IGuiT
 			int side = data.getByte("F");
 			int moduleID = data.getByte("M");
 			int id = data.getByte("I");
-			NBTTagCompound tag = (NBTTagCompound)data.getTag("D");
+			NBTTagCompound tag = (NBTTagCompound) data.getTag("D");
 			
-			for(ModuleConfigSegment mcs : ((ItemModule)boards[side].items[moduleID].getItem()).moduleConfig)
+			for(ModuleConfigSegment mcs : ((ItemModule) boards[side].items[moduleID].getItem()).moduleConfig)
 			{
 				if(mcs.ID == id)
 				{
@@ -451,9 +446,9 @@ public class TileCBCable extends TileBasicCBNetTile implements IPaintable, IGuiT
 	public void clientSetChannel(int side, int moduleID, int id, int ch)
 	{
 		NBTTagCompound data = new NBTTagCompound();
-		data.setByte("F", (byte)side);
-		data.setByte("M", (byte)moduleID);
-		data.setByte("I", (byte)id);
+		data.setByte("F", (byte) side);
+		data.setByte("M", (byte) moduleID);
+		data.setByte("I", (byte) id);
 		data.setInteger("C", ch);
 		sendClientAction(ACTION_SET_CHANNEL, data);
 	}
@@ -461,9 +456,9 @@ public class TileCBCable extends TileBasicCBNetTile implements IPaintable, IGuiT
 	public void clientModuleConfig(CircuitBoard cb, int moduleID, int c, NBTTagCompound tag)
 	{
 		NBTTagCompound data = new NBTTagCompound();
-		data.setByte("F", (byte)cb.side);
-		data.setByte("M", (byte)moduleID);
-		data.setByte("I", (byte)c);
+		data.setByte("F", (byte) cb.side);
+		data.setByte("M", (byte) moduleID);
+		data.setByte("I", (byte) c);
 		if(tag != null) data.setTag("D", tag);
 		sendClientAction(ACTION_MODULE_CONFIG, data);
 	}
@@ -492,7 +487,7 @@ public class TileCBCable extends TileBasicCBNetTile implements IPaintable, IGuiT
 			TileEntity te = worldObj.getTileEntity(xCoord + Facing.offsetsXForSide[side], yCoord + Facing.offsetsYForSide[side], zCoord + Facing.offsetsZForSide[side]);
 			if(te != null && !te.isInvalid() && te instanceof TileCBCable)
 			{
-				TileCBCable t = (TileCBCable)te;
+				TileCBCable t = (TileCBCable) te;
 				if(t.isDisabled[Facing.oppositeSide[side]] != b)
 				{
 					t.isDisabled[Facing.oppositeSide[side]] = b;
@@ -526,6 +521,6 @@ public class TileCBCable extends TileBasicCBNetTile implements IPaintable, IGuiT
 	{ printOwner(ep); }
 
 	@SideOnly(Side.CLIENT)
-    public AxisAlignedBB getRenderBoundingBox()
-    { return AxisAlignedBB.getBoundingBox(xCoord, yCoord, zCoord, xCoord + 1D, yCoord + 1D, zCoord + 1D); }
+	public AxisAlignedBB getRenderBoundingBox()
+	{ return AxisAlignedBB.getBoundingBox(xCoord, yCoord, zCoord, xCoord + 1D, yCoord + 1D, zCoord + 1D); }
 }

@@ -1,4 +1,5 @@
 package latmod.silicio.item.modules;
+
 import cpw.mods.fml.relauncher.*;
 import ftb.lib.FTBLib;
 import latmod.lib.*;
@@ -47,8 +48,10 @@ public abstract class ItemModule extends ItemSil
 	{ return IOType.NONE; }
 	
 	public String getChannelName(int c)
-	{ if(channelNames[c] != null) return channelNames[c];
-	return "#" + (c + 1) + (getChannelType(c).isInput() ? " [Input]" : " [Output]"); }
+	{
+		if(channelNames[c] != null) return channelNames[c];
+		return "#" + (c + 1) + (getChannelType(c).isInput() ? " [Input]" : " [Output]");
+	}
 	
 	public boolean isItemTool(ItemStack is)
 	{ return is.stackTagCompound != null; }

@@ -41,7 +41,7 @@ public class ItemModuleCommandBlock extends ItemModuleLogic implements IToggable
 		{
 			MinecraftServer ms = MinecraftServer.getServer();
 
-			if (ms != null && ms.isCommandBlockEnabled())
+			if(ms != null && ms.isCommandBlockEnabled())
 			{
 				ICommandManager icm = ms.getCommandManager();
 				icm.executeCommand(new CmdModuleICS(e.board), cmd);

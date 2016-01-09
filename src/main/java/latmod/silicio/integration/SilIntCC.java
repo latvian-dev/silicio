@@ -17,8 +17,7 @@ public class SilIntCC implements IPeripheralProvider
 	{
 		TileEntity te = world.getTileEntity(x, y, z);
 		
-		if(te != null && te instanceof TileComputerIO)
-			return (TileComputerIO)te;
+		if(te != null && te instanceof TileComputerIO) return (TileComputerIO) te;
 		
 		return null;
 	}
