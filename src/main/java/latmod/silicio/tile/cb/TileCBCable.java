@@ -127,7 +127,7 @@ public class TileCBCable extends TileBasicCBNetTile implements IPaintable, IGuiT
 		
 		hasCover = tag.getBoolean("HasCover");
 		Paint.readFromNBT(tag, "Paint", paint);
-
+		
 		Converter.toBools(isDisabled, IntList.asList(tag.getIntArray("Disabled")), true);
 	}
 	
@@ -199,10 +199,10 @@ public class TileCBCable extends TileBasicCBNetTile implements IPaintable, IGuiT
 		
 		return false;
 	}
-
+	
 	public boolean isOutputtingRS(int s)
 	{ return boards[s] != null && boards[s].redstoneOut; }
-
+	
 	public CircuitBoard getBoard(int side)
 	{
 		if(side >= 0 && side < boards.length) return boards[side];
@@ -519,7 +519,7 @@ public class TileCBCable extends TileBasicCBNetTile implements IPaintable, IGuiT
 	
 	public void onPlayerNotOwner(EntityPlayer ep, boolean breakBlock)
 	{ printOwner(ep); }
-
+	
 	@SideOnly(Side.CLIENT)
 	public AxisAlignedBB getRenderBoundingBox()
 	{ return AxisAlignedBB.getBoundingBox(xCoord, yCoord, zCoord, xCoord + 1D, yCoord + 1D, zCoord + 1D); }

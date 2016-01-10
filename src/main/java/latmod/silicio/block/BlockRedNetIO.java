@@ -58,7 +58,7 @@ public class BlockRedNetIO extends BlockSil implements powercrystals.minefactory
 	
 	public void onInputChanged(World world, int x, int y, int z, ForgeDirection side, int inputValue)
 	{ onInputsChanged(world, x, y, z, side, new int[] {inputValue}); }
-
+	
 	@Optional.Method(modid = OtherMods.MFR)
 	public powercrystals.minefactoryreloaded.api.rednet.connectivity.RedNetConnectionType getConnectionType(World world, int x, int y, int z, ForgeDirection side)
 	{ return powercrystals.minefactoryreloaded.api.rednet.connectivity.RedNetConnectionType.CableAll; }

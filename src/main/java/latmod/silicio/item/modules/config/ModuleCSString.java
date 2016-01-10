@@ -14,7 +14,7 @@ public class ModuleCSString extends ModuleConfigSegment
 	
 	public ModuleCSString(int i, String s)
 	{ super(i, s); }
-
+	
 	@SideOnly(Side.CLIENT)
 	public void buttonClicked(GuiModuleSettings g)
 	{ g.mc.displayGuiScreen(new GuiCSText(g, this)); }

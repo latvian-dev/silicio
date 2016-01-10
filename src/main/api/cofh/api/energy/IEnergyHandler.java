@@ -11,9 +11,9 @@ import net.minecraftforge.common.util.ForgeDirection;
  */
 public interface IEnergyHandler extends IEnergyProvider, IEnergyReceiver
 {
-
+	
 	// merely a convenience interface (remove these methods in 1.8; provided here for back-compat via compiler doing things)
-
+	
 	/**
 	 * Add energy to an IEnergyReceiver, internal distribution is left entirely to the IEnergyReceiver.
 	 *
@@ -24,7 +24,7 @@ public interface IEnergyHandler extends IEnergyProvider, IEnergyReceiver
 	 */
 	@Override
 	int receiveEnergy(ForgeDirection from, int maxReceive, boolean simulate);
-
+	
 	/**
 	 * Remove energy from an IEnergyProvider, internal distribution is left entirely to the IEnergyProvider.
 	 *
@@ -35,18 +35,18 @@ public interface IEnergyHandler extends IEnergyProvider, IEnergyReceiver
 	 */
 	@Override
 	int extractEnergy(ForgeDirection from, int maxExtract, boolean simulate);
-
-
+	
+	
 	/**
 	 * Returns the amount of energy currently stored.
 	 */
 	@Override
 	int getEnergyStored(ForgeDirection from);
-
+	
 	/**
 	 * Returns the maximum amount of energy that can be stored.
 	 */
 	@Override
 	int getMaxEnergyStored(ForgeDirection from);
-
+	
 }

@@ -11,7 +11,7 @@ import net.minecraftforge.common.util.ForgeDirection;
  */
 public interface IEnergyReceiver extends IEnergyConnection
 {
-
+	
 	/**
 	 * Add energy to an IEnergyReceiver, internal distribution is left entirely to the IEnergyReceiver.
 	 *
@@ -21,15 +21,15 @@ public interface IEnergyReceiver extends IEnergyConnection
 	 * @return Amount of energy that was (or would have been, if simulated) received.
 	 */
 	int receiveEnergy(ForgeDirection from, int maxReceive, boolean simulate);
-
+	
 	/**
 	 * Returns the amount of energy currently stored.
 	 */
 	int getEnergyStored(ForgeDirection from);
-
+	
 	/**
 	 * Returns the maximum amount of energy that can be stored.
 	 */
 	int getMaxEnergyStored(ForgeDirection from);
-
+	
 }

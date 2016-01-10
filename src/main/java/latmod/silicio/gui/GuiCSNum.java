@@ -3,10 +3,8 @@ package latmod.silicio.gui;
 import cpw.mods.fml.relauncher.*;
 import ftb.lib.api.gui.FTBLibLang;
 import ftb.lib.gui.widgets.*;
-import latmod.lib.*;
 import latmod.silicio.item.modules.config.ModuleCSNum;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.*;
+import net.minecraft.util.ResourceLocation;
 
 import java.util.List;
 
@@ -49,6 +47,7 @@ public class GuiCSNum extends GuiModule
 		{
 			public void onButtonPressed(int b)
 			{
+				/*
 				Integer i = Converter.toInt(textBox.text);
 				
 				if(i != null && config.isValid(i.intValue()))
@@ -59,7 +58,7 @@ public class GuiCSNum extends GuiModule
 					
 					playClickSound();
 					mc.displayGuiScreen(new GuiModuleSettings(parent));
-				}
+				}*/
 			}
 		};
 		
@@ -73,6 +72,7 @@ public class GuiCSNum extends GuiModule
 			{
 				public void onButtonPressed(int b)
 				{
+					/*
 					Integer i = Converter.toInt(textBox.text);
 					
 					if(i != null && config.isValid(i))
@@ -80,7 +80,7 @@ public class GuiCSNum extends GuiModule
 						i += inc[bf] * (isShiftKeyDown() ? 10 : 1);
 						i = MathHelperLM.clampInt(i, config.minValue, config.maxValue);
 						textBox.text = "" + i;
-					}
+					}*/
 				}
 				
 				public void addMouseOverText(List<String> l)
@@ -92,8 +92,10 @@ public class GuiCSNum extends GuiModule
 		{
 			public String getText()
 			{
+				return "";
+				/*
 				Integer i = Converter.toInt(textBox.text);
-				return ((i != null && config.isValid(i.intValue())) ? EnumChatFormatting.WHITE : EnumChatFormatting.RED) + text;
+				return ((i != null && config.isValid(i.intValue())) ? EnumChatFormatting.WHITE : EnumChatFormatting.RED) + text;*/
 			}
 		};
 	}

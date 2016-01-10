@@ -40,7 +40,7 @@ public class GuiCircuitBoardSettings extends GuiLM
 			for(int x = 0; x < 6; x++)
 			{
 				final int id = x + y * 6;
-
+				
 				if(board.items[id] != null && board.items[id].getItem() instanceof ItemModule)
 				{
 					itemButtons[id] = new ItemButtonLM(this, 9 + x * 22, 10 + y * 22, 18, 18)
@@ -51,7 +51,7 @@ public class GuiCircuitBoardSettings extends GuiLM
 							board.cable.clientOpenGui(TileCBCable.guiData(board.side, 2, id));
 						}
 					};
-
+					
 					itemButtons[id].setItem(board.items[id]);
 					itemButtons[id].title = itemButtons[id].item.getDisplayName();
 					//itemButtons[id].setBackground(button_pressed);

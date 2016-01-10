@@ -42,7 +42,7 @@ public class TileComputerIO extends TileBasicCBNetTile implements IPeripheral, I
 	
 	public String[] getMethodNames()
 	{ return new String[] {"setChannel", "getChannel"}; }
-
+	
 	@Optional.Method(modid = OtherMods.COMPUTER_CRAFT)
 	public Object[] callMethod(IComputerAccess computer, ILuaContext context, int method, Object[] arguments) throws LuaException, InterruptedException
 	{
@@ -68,23 +68,23 @@ public class TileComputerIO extends TileBasicCBNetTile implements IPeripheral, I
 		
 		return null;
 	}
-
+	
 	@Optional.Method(modid = OtherMods.COMPUTER_CRAFT)
 	public void attach(IComputerAccess computer)
 	{ if(attachedComputer == null) attachedComputer = computer; }
-
+	
 	@Optional.Method(modid = OtherMods.COMPUTER_CRAFT)
 	public void detach(IComputerAccess computer)
 	{ if(attachedComputer != null && computer.equals(attachedComputer)) attachedComputer = null; }
-
+	
 	@Optional.Method(modid = OtherMods.COMPUTER_CRAFT)
 	public boolean equals(IPeripheral other)
 	{ return super.equals(other); }
-
+	
 	public void onChannelToggledTile(EventChannelToggledTile e)
 	{
 		if(getCBNetwork().hasWorkingController() && attachedComputer != null)
-			((IComputerAccess)attachedComputer).queueEvent("cb_channel", new Object[] {(e.channel + 1), e.on});
+			((IComputerAccess) attachedComputer).queueEvent("cb_channel", new Object[] {(e.channel + 1), e.on});
 	}
 	
 	public void provideSignalsTile(EventProvideSignalsTile e)

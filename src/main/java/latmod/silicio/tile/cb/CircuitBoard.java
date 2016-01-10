@@ -101,7 +101,7 @@ public class CircuitBoard implements IInventory
 	{ return false; }
 	
 	public void openInventory() { }
-
+	
 	public void closeInventory() { }
 	
 	public boolean isItemValidForSlot(int i, ItemStack is)

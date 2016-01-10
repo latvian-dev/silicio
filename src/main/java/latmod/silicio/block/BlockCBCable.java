@@ -60,7 +60,7 @@ public class BlockCBCable extends BlockSil
 		
 		if(!ODItems.hasOre(oreName)) oreName = ODItems.RUBBER;
 		if(!ODItems.hasOre(oreName)) oreName = ODItems.SLIMEBALL;
-
+		
 		getMod().recipes.addRecipe(new ItemStack(this, 16), "RRR", "SES", "RRR", 'R', oreName, 'E', ODItems.LAPIS, 'S', ItemMaterialsSil.SILICON_GEM);
 	}
 	
