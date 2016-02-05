@@ -1,31 +1,17 @@
 package latmod.silicio;
 
-import latmod.ftbu.item.MaterialItem;
-import latmod.silicio.block.*;
-import latmod.silicio.item.*;
-import latmod.silicio.item.armor.*;
-import latmod.silicio.item.modules.ItemModule;
-import latmod.silicio.item.modules.io.*;
-import latmod.silicio.item.modules.logic.*;
+import latmod.silicio.block.BlockSiliconBlock;
 
 public class SilItems
 {
-	public static BlockCBCable b_cbcable;
-	public static BlockCBController b_cbcontroller;
-	public static BlockModuleCopier b_module_copier;
-	public static BlockRedNetIO b_rednet_io;
-	public static BlockComputerIO b_computer_io;
+	public static BlockSiliconBlock b_silicon_block;
+	//public static BlockCBCable b_cbcable;
 	
-	public static ItemMaterialsSil i_mat;
-	public static ItemCircuitBoard i_circuit_board;
-	public static ItemXSuit i_xsuit_helm;
-	public static ItemXSuit i_xsuit_body;
-	public static ItemXSuit i_xsuit_legs;
-	public static ItemXSuit i_xsuit_boots;
+	//public static ItemMaterialsSil i_mat;
 	
 	public static void init()
 	{
-		b_cbcable = new BlockCBCable("cable").register();
+		/*b_cbcable = new BlockCBCable("cable").register();
 		b_cbcontroller = new BlockCBController("controller").register();
 		b_module_copier = new BlockModuleCopier("module_copier").register();
 		b_rednet_io = new BlockRedNetIO("rednet_io").register();
@@ -34,14 +20,19 @@ public class SilItems
 		i_mat = new ItemMaterialsSil("materials").register();
 		i_circuit_board = new ItemCircuitBoard("circuit_board").register();
 		
-		i_xsuit_helm = new ItemXSuitHelm("xsuit_helm").register();
-		i_xsuit_body = new ItemXSuitBody("xsuit_body").register();
-		i_xsuit_legs = new ItemXSuitLegs("xsuit_legs").register();
-		i_xsuit_boots = new ItemXSuitBoots("xsuit_boots").register();
+		Silicio.mod.addItem(i_xsuit_helm = new ItemXSuitHelm("xsuit_helm"));
+		Silicio.mod.addItem(i_xsuit_body = new ItemXSuitBody("xsuit_body"));
+		Silicio.mod.addItem(i_xsuit_legs = new ItemXSuitLegs("xsuit_legs"));
+		Silicio.mod.addItem(i_xsuit_boots = new ItemXSuitBoots("xsuit_boots"));
 		
-		Modules.init();
+		*/
+		
+		Silicio.mod.addItem(b_silicon_block = new BlockSiliconBlock("silicon_block"));
+		
+		//Modules.init();
 	}
 	
+	/*
 	public static class Modules
 	{
 		public static MaterialItem EMPTY;
@@ -108,4 +99,5 @@ public class SilItems
 			i_sequencer = new ItemModuleSequencer("sequencer").register();
 		}
 	}
+	*/
 }

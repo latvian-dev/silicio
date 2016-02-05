@@ -1,11 +1,11 @@
 package latmod.silicio.block;
 
-import cpw.mods.fml.relauncher.*;
-import latmod.ftbu.block.BlockLM;
-import latmod.ftbu.util.LMMod;
+import ftb.lib.LMMod;
+import ftb.lib.api.block.BlockLM;
 import latmod.silicio.Silicio;
 import net.minecraft.block.material.Material;
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraftforge.fml.relauncher.*;
 
 public abstract class BlockSil extends BlockLM
 {
