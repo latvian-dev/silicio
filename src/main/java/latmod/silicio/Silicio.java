@@ -2,12 +2,11 @@ package latmod.silicio;
 
 import ftb.lib.LMMod;
 import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.common.*;
 import net.minecraftforge.fml.common.event.*;
 
-@Mod(modid = Silicio.MOD_ID, name = "Silicio", version = "@VERSION@", dependencies = "required-after:FTBU;required-after:LatBlocks;after:ThermalExpansion;after:ComputerCraft;after:BuildCraft")
+@Mod(modid = Silicio.MOD_ID, name = "Silicio", version = "@VERSION@", dependencies = "required-after:FTBL;after:ThermalExpansion;after:ComputerCraft;after:BuildCraft")
 public class Silicio
 {
 	protected static final String MOD_ID = "Silicio";
@@ -29,7 +28,7 @@ public class Silicio
 		SilItems.init();
 		mod.onPostLoaded();
 		
-		tab = mod.createTab("tab", new ItemStack(Items.apple));//new ItemStack(SilItems.b_cbcontroller));
+		tab = mod.createTab("tab", new ItemStack(SilItems.b_silicon_block));
 		
 		proxy.preInit();
 	}

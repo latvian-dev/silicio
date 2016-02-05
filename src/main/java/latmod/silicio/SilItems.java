@@ -1,6 +1,7 @@
 package latmod.silicio;
 
 import latmod.silicio.block.BlockSiliconBlock;
+import net.minecraftforge.fml.relauncher.*;
 
 public class SilItems
 {
@@ -30,6 +31,12 @@ public class SilItems
 		Silicio.mod.addItem(b_silicon_block = new BlockSiliconBlock("silicon_block"));
 		
 		//Modules.init();
+	}
+	
+	@SideOnly(Side.CLIENT)
+	public static void registerModels()
+	{
+		Silicio.mod.addItemModel(b_silicon_block, 0);
 	}
 	
 	/*

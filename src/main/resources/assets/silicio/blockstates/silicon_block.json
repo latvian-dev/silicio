@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "normal": {
+      "model": "silico:silicon_block"
+    }
+  }
+}
