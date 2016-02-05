@@ -4,8 +4,8 @@
     "textures": {
       "all": "silicio:blocks/silicon_block"
     },
-    "model": "cube_all",
-    "uvlock": true
+    "model": "silicio:silicon_block",
+    "transform": "forge:default-block"
   },
   "variants": {
     "normal": [
