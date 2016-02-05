@@ -2,6 +2,7 @@ itemGroup.silicio:tab=Silicio
 
 ### Blocks ###
 
+silicio:tile.silicon_block.name=Silicon Block
 silicio:tile.machine.name=Machine Block
 silicio:tile.cable.name=Circuit Board Cable
 silicio:tile.controller.name=Circuit Board Controller

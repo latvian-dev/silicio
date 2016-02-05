@@ -1,7 +1,7 @@
 {
   "textures": {
-    "particle": "blocks/silicon_block",
-    "texture": "blocks/silicon_block"
+    "particle": "silicio:blocks/silicon_block",
+    "texture": "silicio:blocks/silicon_block"
   },
   "elements": [
     {

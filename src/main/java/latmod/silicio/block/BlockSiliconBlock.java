@@ -12,13 +12,14 @@ import net.minecraftforge.fml.relauncher.*;
 public class BlockSiliconBlock extends BlockSil
 {
 	public BlockSiliconBlock(String s)
-	{
-		super(s, Material.rock);
-	}
+	{ super(s, Material.rock); }
 	
 	@SideOnly(Side.CLIENT)
 	public EnumWorldBlockLayer getBlockLayer()
 	{ return EnumWorldBlockLayer.TRANSLUCENT; }
+	
+	public boolean isOpaqueCube()
+	{ return false; }
 	
 	public TileLM createNewTileEntity(World w, int m)
 	{ return null; }
