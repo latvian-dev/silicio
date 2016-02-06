@@ -1,14 +1,16 @@
 package latmod.silicio;
 
-import latmod.silicio.block.BlockSiliconBlock;
-import net.minecraftforge.fml.relauncher.*;
+import latmod.silicio.block.*;
+import latmod.silicio.item.ItemSilMaterials;
 
 public class SilItems
 {
-	public static BlockSiliconBlock b_silicon_block;
+	public static BlockSimpleBlocks b_blocks;
+	public static BlockSiliconBlock b_silicon;
+	public static BlockSiliconGlass b_glass;
 	//public static BlockCBCable b_cbcable;
 	
-	//public static ItemMaterialsSil i_mat;
+	public static ItemSilMaterials i_mat;
 	
 	public static void init()
 	{
@@ -28,15 +30,13 @@ public class SilItems
 		
 		*/
 		
-		Silicio.mod.addItem(b_silicon_block = new BlockSiliconBlock("silicon_block"));
+		Silicio.mod.addItem(b_blocks = new BlockSimpleBlocks("blocks"));
+		Silicio.mod.addItem(b_silicon = new BlockSiliconBlock("silicon_block"));
+		Silicio.mod.addItem(b_glass = new BlockSiliconGlass("silicon_glass"));
+		
+		Silicio.mod.addItem(i_mat = new ItemSilMaterials("mat"));
 		
 		//Modules.init();
-	}
-	
-	@SideOnly(Side.CLIENT)
-	public static void registerModels()
-	{
-		Silicio.mod.addItemModel(b_silicon_block, 0);
 	}
 	
 	/*

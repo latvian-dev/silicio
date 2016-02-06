@@ -1,7 +1,6 @@
 package latmod.silicio;
 
-import ftb.lib.LMMod;
-import net.minecraft.creativetab.CreativeTabs;
+import ftb.lib.*;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.common.*;
 import net.minecraftforge.fml.common.event.*;
@@ -18,18 +17,19 @@ public class Silicio
 	public static SilCommon proxy;
 	
 	public static LMMod mod;
-	public static CreativeTabs tab;
+	public static CreativeTabLM tab;
 	
 	@Mod.EventHandler
 	public void preInit(FMLPreInitializationEvent e)
 	{
 		mod = LMMod.create(Silicio.MOD_ID);
+		tab = new CreativeTabLM("silicio").setMod(mod);
 		//SilConfig.load();
 		SilItems.init();
+		
+		tab.addIcon(new ItemStack(SilItems.b_silicon));
+		
 		mod.onPostLoaded();
-		
-		tab = mod.createTab("tab", new ItemStack(SilItems.b_silicon_block));
-		
 		proxy.preInit();
 	}
 	

@@ -1,0 +1,6 @@
+{
+  "parent": "ftbl:item/def_item",
+  "textures": {
+    "layer0": "silicio:items/materials/capacitor"
+  }
+}

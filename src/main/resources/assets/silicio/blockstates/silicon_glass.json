@@ -2,9 +2,9 @@
   "forge_marker": 1,
   "defaults": {
     "textures": {
-      "all": "silicio:blocks/silicon_block"
+      "all": "silicio:blocks/silicon_glass"
     },
-    "model": "silicio:silicon_block"
+    "model": "minecraft:cube_all"
   },
   "variants": {
     "normal": [

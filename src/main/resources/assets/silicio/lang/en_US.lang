@@ -1,4 +1,4 @@
-itemGroup.silicio:tab=Silicio
+itemGroup.silicio=Silicio
 
 ### Blocks ###
 
@@ -12,16 +12,37 @@ silicio:tile.computer_io.name=Circuit Board ComputerIO
 
 ### Items ###
 
-silicio:item.module_empty.name=Empty Module
-silicio:item.module_input.name=Empty Input Module
-silicio:item.module_output.name=Empty Output Module
-silicio:item.module_logic.name=Empty Logic Module
-silicio:item.silicon_gem.name=Silicon
-silicio:item.silicon_dust.name=Silicon Dust
-silicio:item.circuit.name=Integrated Circuit
-silicio:item.blue_crystal.name=Blue Crystal
-silicio:item.red_crystal.name=Red Crystal
-silicio:item.xsuit_plate.name=XSuit Plate
+# Materials #
+silicio:item.materials.silicon.name=Silicon
+silicio:item.materials.stone_shard.name=Stone Shard
+silicio:item.materials.iron_rod.name=Iron Rod
+silicio:item.materials.blue_goo.name=Blue Goo
+silicio:item.materials.laser_lens.name=Laser Lens
+silicio:item.materials.xsuit_plate.name=XSuit Plate
+
+silicio:item.materials.elemite_ingot.name=Elemite Ingot
+silicio:item.materials.elemite_nugget.name=Elemite Nugget
+silicio:item.materials.elemite_dust.name=Elemite Dust
+
+silicio:item.materials.wire.name=Wire
+silicio:item.materials.resistor.name=Resistor
+silicio:item.materials.capacitor.name=Capacitor
+silicio:item.materials.diode.name=Diode
+silicio:item.materials.transistor.name=Transistor
+silicio:item.materials.chip.name=Chip
+silicio:item.materials.processor.name=Processor
+silicio:item.materials.circuit.name=Circuit
+silicio:item.materials.circuit_wifi.name=Wireless Circuit
+silicio:item.materials.led_red.name=Red Led
+silicio:item.materials.led_green.name=Green Led
+silicio:item.materials.led_blue.name=Blue Led
+silicio:item.materials.led_rgb.name=RGB Led
+silicio:item.materials.led_matrix.name=Led Matrix
+
+silicio:item.materials.module_empty.name=Empty Module
+silicio:item.materials.module_input.name=Empty Input Module
+silicio:item.materials.module_output.name=Empty Output Module
+silicio:item.materials.module_logic.name=Empty Logic Module
 
 silicio:item.circuit_board.name=Circuit Board
 silicio:item.xsuit_helm.name=XSuit Helmet

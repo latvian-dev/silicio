@@ -1,0 +1,25 @@
+{
+  "forge_marker": 1,
+  "defaults": {
+    "textures": {
+      "texture": "silicio:blocks/silicon_block",
+      "particle": "silicio:blocks/silicon_block"
+    },
+    "model": "minecraft:cube_all",
+    "transform": "forge:default-block"
+  },
+  "variants": {
+    "variant": {
+      "dense_silicon": {
+        "textures": {
+          "all": "silicio:blocks/dense_silicon"
+        }
+      },
+      "elemite": {
+        "textures": {
+          "all": "silicio:blocks/elemite"
+        }
+      }
+    }
+  }
+}

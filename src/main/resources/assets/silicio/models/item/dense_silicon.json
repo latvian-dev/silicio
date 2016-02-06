@@ -1,0 +1,6 @@
+{
+  "parent": "ftbl:item/def_item_block",
+  "textures": {
+    "all": "silicio:blocks/dense_silicon"
+  }
+}
