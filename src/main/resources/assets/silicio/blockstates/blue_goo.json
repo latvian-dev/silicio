@@ -1,0 +1,15 @@
+{
+  "forge_marker": 1,
+  "defaults": {
+    "textures": {
+      "all": "silicio:blocks/blue_goo"
+    },
+    "model": "silicio:blue_goo"
+  },
+  "variants": {
+    "normal": [
+      {
+      }
+    ]
+  }
+}

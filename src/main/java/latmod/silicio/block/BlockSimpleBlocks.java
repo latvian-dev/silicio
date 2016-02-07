@@ -1,6 +1,8 @@
 package latmod.silicio.block;
 
 import ftb.lib.mod.FTBLibMod;
+import latmod.silicio.SilItems;
+import latmod.silicio.item.ItemSilMaterials;
 import net.minecraft.block.material.*;
 import net.minecraft.block.properties.PropertyEnum;
 import net.minecraft.block.state.*;
@@ -26,6 +28,16 @@ public class BlockSimpleBlocks extends BlockSil
 		setDefaultState(blockState.getBaseState().withProperty(VARIANT, EnumType.dense_silicon));
 	}
 	
+	public void loadRecipes()
+	{
+		getMod().recipes.addRecipe(EnumType.elemite.getStack(1), "III", "III", "III", 'I', ItemSilMaterials.ELEMITE_INGOT.getStack());
+		getMod().recipes.addShapelessRecipe(ItemSilMaterials.ELEMITE_INGOT.getStack(9), EnumType.elemite.getStack(1));
+		getMod().recipes.addSmelting(EnumType.elemite.getStack(1), new ItemStack(SilItems.b_blue_goo));
+		
+		getMod().recipes.addRecipe(EnumType.dense_silicon.getStack(1), "III", "III", "III", 'I', SilItems.b_silicon);
+		getMod().recipes.addShapelessRecipe(new ItemStack(SilItems.b_silicon, 1, 9), EnumType.dense_silicon.getStack(1));
+	}
+	
 	public TileEntity createNewTileEntity(World w, int m)
 	{ return null; }
 	
@@ -45,8 +57,8 @@ public class BlockSimpleBlocks extends BlockSil
 		}
 	}
 	
-	public int damageDropped(IBlockState state)
-	{ return state.getValue(VARIANT).meta; }
+	public String getUnlocalizedName(int damage)
+	{ return getMod().getBlockName(EnumType.byMetadata(damage).getName()); }
 	
 	@SideOnly(Side.CLIENT)
 	public void getSubBlocks(Item itemIn, CreativeTabs tab, List<ItemStack> list)
@@ -56,6 +68,9 @@ public class BlockSimpleBlocks extends BlockSil
 			list.add(new ItemStack(itemIn, 1, e.meta));
 		}
 	}
+	
+	public int damageDropped(IBlockState state)
+	{ return state.getValue(VARIANT).meta; }
 	
 	public IBlockState getStateFromMeta(int meta)
 	{ return getDefaultState().withProperty(VARIANT, EnumType.byMetadata(meta)); }
@@ -74,7 +89,7 @@ public class BlockSimpleBlocks extends BlockSil
 		dense_silicon(0, "dense_silicon", MapColor.blackColor),
 		elemite(1, "elemite", MapColor.blueColor);
 		
-		private static final EnumType[] META_LOOKUP = new EnumType[16];
+		private static final EnumType[] META_LOOKUP = new EnumType[values().length];
 		public final int meta;
 		public final MapColor mapColor;
 		
@@ -86,25 +101,20 @@ public class BlockSimpleBlocks extends BlockSil
 		
 		public static EnumType byMetadata(int meta)
 		{
-			if(meta < 0 || meta >= META_LOOKUP.length)
-			{
-				meta = 0;
-			}
-			
+			if(meta < 0 || meta >= META_LOOKUP.length) return META_LOOKUP[0];
 			return META_LOOKUP[meta];
 		}
 		
 		public String getName()
-		{
-			return name();
-		}
+		{ return name(); }
+		
+		public ItemStack getStack(int q)
+		{ return new ItemStack(SilItems.b_blocks, q, meta); }
 		
 		static
 		{
 			for(EnumType e : values())
-			{
 				META_LOOKUP[e.meta] = e;
-			}
 		}
 	}
 }

@@ -82,6 +82,8 @@ public class ItemSilMaterials extends ItemMaterialsLM
 		add(MODULE_INPUT = new MaterialItem(this, 61, "module_input"));
 		add(MODULE_OUTPUT = new MaterialItem(this, 62, "module_output"));
 		add(MODULE_LOGIC = new MaterialItem(this, 63, "module_logic"));
+		
+		ODItems.add(ODItems.IRON_ROD, IRON_ROD.getStack());
 	}
 	
 	public void loadRecipes()

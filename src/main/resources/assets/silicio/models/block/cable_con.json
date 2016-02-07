@@ -1,0 +1,58 @@
+{
+  "textures": {
+    "particle": "silicio:blocks/cable",
+    "texture": "silicio:blocks/cable"
+  },
+  "elements": [
+    {
+      "from": [
+        6,
+        6,
+        10
+      ],
+      "to": [
+        10,
+        10,
+        16
+      ],
+      "faces": {
+        "down": {
+          "uv": [
+            6,
+            0,
+            10,
+            6
+          ],
+          "texture": "#texture"
+        },
+        "up": {
+          "uv": [
+            6,
+            10,
+            10,
+            16
+          ],
+          "texture": "#texture"
+        },
+        "west": {
+          "uv": [
+            0,
+            6,
+            6,
+            10
+          ],
+          "texture": "#texture"
+        },
+        "east": {
+          "uv": [
+            10,
+            6,
+            16,
+            10
+          ],
+          "texture": "#texture"
+        }
+      }
+    }
+  ]
+}

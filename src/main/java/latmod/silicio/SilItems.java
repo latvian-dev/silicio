@@ -8,7 +8,9 @@ public class SilItems
 	public static BlockSimpleBlocks b_blocks;
 	public static BlockSiliconBlock b_silicon;
 	public static BlockSiliconGlass b_glass;
-	//public static BlockCBCable b_cbcable;
+	public static BlockBlueGoo b_blue_goo;
+	public static BlockCable b_cable;
+	public static BlockReactorCore b_reactor_core;
 	
 	public static ItemSilMaterials i_mat;
 	
@@ -33,6 +35,9 @@ public class SilItems
 		Silicio.mod.addItem(b_blocks = new BlockSimpleBlocks("blocks"));
 		Silicio.mod.addItem(b_silicon = new BlockSiliconBlock("silicon_block"));
 		Silicio.mod.addItem(b_glass = new BlockSiliconGlass("silicon_glass"));
+		Silicio.mod.addItem(b_blue_goo = new BlockBlueGoo("blue_goo"));
+		Silicio.mod.addItem(b_cable = new BlockCable("cable"));
+		Silicio.mod.addItem(b_reactor_core = new BlockReactorCore("reactor_core"));
 		
 		Silicio.mod.addItem(i_mat = new ItemSilMaterials("mat"));
 		

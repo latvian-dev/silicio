@@ -2,9 +2,14 @@ itemGroup.silicio=Silicio
 
 ### Blocks ###
 
+silicio:tile.dense_silicon.name=Dense Silicon Block
+silicio:tile.elemite.name=Elemite Block
 silicio:tile.silicon_block.name=Silicon Block
-silicio:tile.machine.name=Machine Block
+silicio:tile.silicon_glass.name=Silicon Glass
+silicio:tile.blue_goo.name=Blue Goo Block
 silicio:tile.cable.name=Circuit Board Cable
+silicio:tile.reactor_core.name=Antimatter Reactor Core
+
 silicio:tile.controller.name=Circuit Board Controller
 silicio:tile.module_copier.name=Module Copier
 silicio:tile.rednet_io.name=Circuit Board RedNetIO

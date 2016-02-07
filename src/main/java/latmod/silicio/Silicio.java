@@ -1,11 +1,12 @@
 package latmod.silicio;
 
 import ftb.lib.*;
+import latmod.silicio.multiparts.SilicioMultipartRegistry;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.common.*;
 import net.minecraftforge.fml.common.event.*;
 
-@Mod(modid = Silicio.MOD_ID, name = "Silicio", version = "@VERSION@", dependencies = "required-after:FTBL;after:ThermalExpansion;after:ComputerCraft;after:BuildCraft")
+@Mod(modid = Silicio.MOD_ID, name = "Silicio", version = "@VERSION@", dependencies = "required-after:FTBL;after:ComputerCraft;required-after:mcmultipart")
 public class Silicio
 {
 	protected static final String MOD_ID = "Silicio";
@@ -31,11 +32,13 @@ public class Silicio
 		
 		mod.onPostLoaded();
 		proxy.preInit();
+		
+		SilicioMultipartRegistry.init();
 	}
 	
 	@Mod.EventHandler
 	public void postInit(FMLPostInitializationEvent e)
 	{
-		//if(!SilConfigGeneral.disableAllCrafting.get()) mod.loadRecipes();
+		mod.loadRecipes();
 	}
 }

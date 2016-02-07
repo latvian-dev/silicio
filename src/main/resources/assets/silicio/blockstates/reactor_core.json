@@ -1,0 +1,15 @@
+{
+  "forge_marker": 1,
+  "defaults": {
+    "textures": {
+      "all": "silicio:blocks/reactor_core"
+    },
+    "model": "minecraft:cube_all"
+  },
+  "variants": {
+    "normal": [
+      {
+      }
+    ]
+  }
+}
