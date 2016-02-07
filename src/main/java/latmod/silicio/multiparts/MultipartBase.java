@@ -34,19 +34,16 @@ public abstract class MultipartBase extends Multipart implements IPartConverter.
 	
 	public void addCollisionBoxes(AxisAlignedBB mask, List<AxisAlignedBB> list, Entity e)
 	{
-		block.addCollisionBoxesToList(getWorld(), getPos(), getWorld().getBlockState(getPos()), mask, list, e);
-		
-		/*
-		List<AxisAlignedBB> list1 = new ArrayList<>();
-		block.addCollisionBoxesToList(getWorld(), getPos(), getWorld().getBlockState(getPos()), mask, list1, e);
-		
-		if(list1.isEmpty()) return;
 		BlockPos pos = getPos();
 		
-		for(AxisAlignedBB bb : list1)
+		block.addCollisionBoxesToList(getWorld(), pos, getWorld().getBlockState(pos), mask.offset(pos.getX(), pos.getY(), pos.getZ()), list, e);
+		
+		if(list.isEmpty()) return;
+		
+		for(int i = 0; i < list.size(); i++)
 		{
-			list1.add(bb.offset(-pos.getX(), -pos.getY(), -pos.getZ()));
-		}*/
+			list.set(i, list.get(i).offset(-pos.getX(), -pos.getY(), -pos.getZ()));
+		}
 	}
 	
 	public ItemStack getPickBlock(EntityPlayer player, PartMOP hit)
