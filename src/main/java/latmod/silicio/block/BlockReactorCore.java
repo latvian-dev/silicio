@@ -36,6 +36,6 @@ public class BlockReactorCore extends BlockSil
 	public boolean shouldSideBeRendered(IBlockAccess worldIn, BlockPos pos, EnumFacing side)
 	{
 		IBlockState iblockstate = worldIn.getBlockState(pos);
-		return iblockstate.getBlock() == this ? false : super.shouldSideBeRendered(worldIn, pos, side);
+		return iblockstate.getBlock() != this && super.shouldSideBeRendered(worldIn, pos, side);
 	}
 }

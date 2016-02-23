@@ -16,5 +16,6 @@ public class SilicioMultipartRegistry
 	{
 		MultipartRegistry.registerPart(mp.getClass(), id);
 		MultipartRegistry.registerPartConverter(mp);
+		MultipartRegistry.registerReversePartConverter(mp);
 	}
 }

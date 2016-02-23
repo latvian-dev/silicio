@@ -84,7 +84,7 @@ public class BlockSimpleBlocks extends BlockSil
 	protected BlockState createBlockState()
 	{ return new BlockState(this, VARIANT); }
 	
-	public static enum EnumType implements IStringSerializable
+	public enum EnumType implements IStringSerializable
 	{
 		dense_silicon(0, "dense_silicon", MapColor.blackColor),
 		elemite(1, "elemite", MapColor.blueColor);

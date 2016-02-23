@@ -17,7 +17,7 @@ import java.util.*;
 /**
  * Created by LatvianModder on 07.02.2016.
  */
-public abstract class MultipartBase extends Multipart implements IPartConverter.IPartConverter2
+public abstract class MultipartBase extends Multipart implements IPartConverter.IPartConverter2, IPartConverter.IReversePartConverter
 {
 	public final Block block;
 	
@@ -62,22 +62,26 @@ public abstract class MultipartBase extends Multipart implements IPartConverter.
 	}
 	
 	public BlockState createBlockState()
-	{ return new BlockState(MCMultiPartMod.multipart, block.getBlockState().getProperties().toArray(new IProperty[0])); }
+	{
+		Collection<IProperty> var = block.getBlockState().getProperties();
+		return new BlockState(MCMultiPartMod.multipart, var.toArray(new IProperty[var.size()]));
+	}
 	
 	public Collection<Block> getConvertableBlocks()
 	{ return Collections.singleton(block); }
 	
 	public Collection<? extends IMultipart> convertBlock(IBlockAccess w, BlockPos pos, boolean b)
-	{
-		IBlockState state = w.getBlockState(pos);
-		
-		if(state.getBlock() == block)
-		{
-			return Collections.singletonList(createNew());
-		}
-		
-		return null;
-	}
+	{ return Collections.singletonList(createNew()); }
 	
 	public abstract MultipartBase createNew();
+	
+	public boolean convertToBlock(IMultipartContainer c)
+	{
+		if(c.getParts().size() == 1)
+		{
+			IMultipart m = c.getParts().iterator().next();
+			if(m.getClass().equals(getClass())) return true;
+		}
+		return false;
+	}
 }

@@ -25,7 +25,6 @@ public class BlockCable extends BlockSil
 	public static final PropertyBool CON_S = PropertyBool.create("south");
 	public static final PropertyBool CON_W = PropertyBool.create("west");
 	public static final PropertyBool CON_E = PropertyBool.create("east");
-	public static final PropertyBool ACTIVE = PropertyBool.create("active");
 	
 	public static final float pipeBorder = 1F / 32F * 12F;
 	public static final AxisAlignedBB boxes[] = new AxisAlignedBB[7];
@@ -75,7 +74,7 @@ public class BlockCable extends BlockSil
 	{ return 0; }
 	
 	protected BlockState createBlockState()
-	{ return new BlockState(this, CON_D, CON_U, CON_N, CON_S, CON_W, CON_E, ACTIVE); }
+	{ return new BlockState(this, CON_D, CON_U, CON_N, CON_S, CON_W, CON_E); }
 	
 	public IBlockState getActualState(IBlockState state, IBlockAccess w, BlockPos pos)
 	{
@@ -86,8 +85,6 @@ public class BlockCable extends BlockSil
 		boolean conW = canConnectTo(w, pos.west());
 		boolean conE = canConnectTo(w, pos.east());
 		
-		boolean active = false;
-		
 		/*
 		TileEntity te = w.getTileEntity(pos);
 		
@@ -96,7 +93,7 @@ public class BlockCable extends BlockSil
 			active = ((TileCBCable)te).isActive();
 		}*/
 		
-		return state.withProperty(CON_D, conD).withProperty(CON_U, conU).withProperty(CON_N, conN).withProperty(CON_S, conS).withProperty(CON_W, conW).withProperty(CON_E, conE).withProperty(ACTIVE, active);
+		return state.withProperty(CON_D, conD).withProperty(CON_U, conU).withProperty(CON_N, conN).withProperty(CON_S, conS).withProperty(CON_W, conW).withProperty(CON_E, conE);
 	}
 	
 	public boolean canConnectTo(IBlockAccess w, BlockPos pos)

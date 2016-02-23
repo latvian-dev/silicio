@@ -7,15 +7,6 @@
     "model": "silicio:cable"
   },
   "variants": {
-    "active": {
-      "true": {
-        "textures": {
-          "texture": "silicio:blocks/cable_active"
-        }
-      },
-      "false": {
-      }
-    },
     "up": {
       "true": {
         "submodel": {
