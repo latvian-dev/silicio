@@ -2,86 +2,86 @@ itemGroup.silicio=Silicio
 
 ### Blocks ###
 
-silicio:tile.dense_silicon.name=Dense Silicon Block
-silicio:tile.elemite.name=Elemite Block
-silicio:tile.silicon_block.name=Silicon Block
-silicio:tile.silicon_glass.name=Silicon Glass
-silicio:tile.blue_goo.name=Blue Goo Block
-silicio:tile.cable.name=Circuit Board Cable
-silicio:tile.reactor_core.name=Antimatter Reactor Core
+silicio.tile.dense_silicon.name=Dense Silicon Block
+silicio.tile.elemite.name=Elemite Block
+silicio.tile.silicon_block.name=Silicon Block
+silicio.tile.silicon_glass.name=Silicon Glass
+silicio.tile.blue_goo.name=Blue Goo Block
+silicio.tile.cable.name=Circuit Board Cable
+silicio.tile.reactor_core.name=Antimatter Reactor Core
 
-silicio:tile.controller.name=Circuit Board Controller
-silicio:tile.module_copier.name=Module Copier
-silicio:tile.rednet_io.name=Circuit Board RedNetIO
-silicio:tile.computer_io.name=Circuit Board ComputerIO
+silicio.tile.controller.name=Circuit Board Controller
+silicio.tile.module_copier.name=Module Copier
+silicio.tile.rednet_io.name=Circuit Board RedNetIO
+silicio.tile.computer_io.name=Circuit Board ComputerIO
 
 ### Items ###
 
 # Materials #
-silicio:item.materials.silicon.name=Silicon
-silicio:item.materials.stone_shard.name=Stone Shard
-silicio:item.materials.iron_rod.name=Iron Rod
-silicio:item.materials.blue_goo.name=Blue Goo
-silicio:item.materials.laser_lens.name=Laser Lens
-silicio:item.materials.xsuit_plate.name=XSuit Plate
+silicio.item.materials.silicon.name=Silicon
+silicio.item.materials.stone_shard.name=Stone Shard
+silicio.item.materials.iron_rod.name=Iron Rod
+silicio.item.materials.blue_goo.name=Blue Goo
+silicio.item.materials.laser_lens.name=Laser Lens
+silicio.item.materials.xsuit_plate.name=XSuit Plate
 
-silicio:item.materials.elemite_ingot.name=Elemite Ingot
-silicio:item.materials.elemite_nugget.name=Elemite Nugget
-silicio:item.materials.elemite_dust.name=Elemite Dust
+silicio.item.materials.elemite_ingot.name=Elemite Ingot
+silicio.item.materials.elemite_nugget.name=Elemite Nugget
+silicio.item.materials.elemite_dust.name=Elemite Dust
 
-silicio:item.materials.wire.name=Wire
-silicio:item.materials.resistor.name=Resistor
-silicio:item.materials.capacitor.name=Capacitor
-silicio:item.materials.diode.name=Diode
-silicio:item.materials.transistor.name=Transistor
-silicio:item.materials.chip.name=Chip
-silicio:item.materials.processor.name=Processor
-silicio:item.materials.circuit.name=Circuit
-silicio:item.materials.circuit_wifi.name=Wireless Circuit
-silicio:item.materials.led_red.name=Red Led
-silicio:item.materials.led_green.name=Green Led
-silicio:item.materials.led_blue.name=Blue Led
-silicio:item.materials.led_rgb.name=RGB Led
-silicio:item.materials.led_matrix.name=Led Matrix
+silicio.item.materials.wire.name=Wire
+silicio.item.materials.resistor.name=Resistor
+silicio.item.materials.capacitor.name=Capacitor
+silicio.item.materials.diode.name=Diode
+silicio.item.materials.transistor.name=Transistor
+silicio.item.materials.chip.name=Chip
+silicio.item.materials.processor.name=Processor
+silicio.item.materials.circuit.name=Circuit
+silicio.item.materials.circuit_wifi.name=Wireless Circuit
+silicio.item.materials.led_red.name=Red Led
+silicio.item.materials.led_green.name=Green Led
+silicio.item.materials.led_blue.name=Blue Led
+silicio.item.materials.led_rgb.name=RGB Led
+silicio.item.materials.led_matrix.name=Led Matrix
 
-silicio:item.materials.module_empty.name=Empty Module
-silicio:item.materials.module_input.name=Empty Input Module
-silicio:item.materials.module_output.name=Empty Output Module
-silicio:item.materials.module_logic.name=Empty Logic Module
+silicio.item.materials.module_empty.name=Empty Module
+silicio.item.materials.module_input.name=Empty Input Module
+silicio.item.materials.module_output.name=Empty Output Module
+silicio.item.materials.module_logic.name=Empty Logic Module
 
-silicio:item.circuit_board.name=Circuit Board
-silicio:item.xsuit_helm.name=XSuit Helmet
-silicio:item.xsuit_body.name=XSuit Chestplate
-silicio:item.xsuit_legs.name=XSuit Leggings
-silicio:item.xsuit_boots.name=XSuit Boots
+silicio.item.circuit_board.name=Circuit Board
+silicio.item.xsuit_helm.name=XSuit Helmet
+silicio.item.xsuit_body.name=XSuit Chestplate
+silicio.item.xsuit_legs.name=XSuit Leggings
+silicio.item.xsuit_boots.name=XSuit Boots
 
 # Modules #
-silicio:item.cbm_desc=Circuit Board Module
+silicio.item.cbm_desc=Circuit Board Module
 
-silicio:item.cbm_command_block.name=Command Block
-silicio:item.cbm_light_sensor.name=Light Sensor
-silicio:item.cbm_sign_out.name=Sign Output
-silicio:item.cbm_chat_out.name=Chat Output
-silicio:item.cbm_crafting.name=Item Crafting
-silicio:item.cbm_painter.name=Cable Painter
+silicio.item.cbm_command_block.name=Command Block
+silicio.item.cbm_light_sensor.name=Light Sensor
+silicio.item.cbm_sign_out.name=Sign Output
+silicio.item.cbm_chat_out.name=Chat Output
+silicio.item.cbm_crafting.name=Item Crafting
+silicio.item.cbm_painter.name=Cable Painter
 
-silicio:item.cbm_rs_in.name=Redstone Input
-silicio:item.cbm_rs_out.name=Redstone Output
-silicio:item.cbm_energy_in.name=Energy Input
-silicio:item.cbm_energy_out.name=Energy Output
+silicio.item.cbm_rs_in.name=Redstone Input
+silicio.item.cbm_rs_out.name=Redstone Output
+silicio.item.cbm_energy_in.name=Energy Input
+silicio.item.cbm_energy_out.name=Energy Output
 
-silicio:item.cbm_item_storage.name=Item Storage
-silicio:item.cbm_item_in.name=Item Input
-silicio:item.cbm_item_out.name=Item Output
+silicio.item.cbm_item_storage.name=Item Storage
+silicio.item.cbm_item_in.name=Item Input
+silicio.item.cbm_item_out.name=Item Output
 
-silicio:item.cbm_fluid_storage.name=Fluid Storage
-silicio:item.cbm_fluid_in.name=Fluid Input
-silicio:item.cbm_fluid_out.name=Fluid Output
+silicio.item.cbm_fluid_storage.name=Fluid Storage
+silicio.item.cbm_fluid_in.name=Fluid Input
+silicio.item.cbm_fluid_out.name=Fluid Output
 
-silicio:item.cbm_gate_not.name=NOT Gate
-silicio:item.cbm_gate_and.name=AND Gate
-silicio:item.cbm_gate_or.name=OR Gate
-silicio:item.cbm_gate_xor.name=XOR Gate
+silicio.item.cbm_gate_not.name=NOT Gate
+silicio.item.cbm_gate_and.name=AND Gate
+silicio.item.cbm_gate_or.name=OR Gate
+silicio.item.cbm_gate_xor.name=XOR Gate
 
-silicio:item.cbm_timer.name=Timer Module
-silicio:item.cbm_sequencer.name=Sequencer Module
+silicio.item.cbm_timer.name=Timer Module
+silicio.item.cbm_sequencer.name=Sequencer Module
