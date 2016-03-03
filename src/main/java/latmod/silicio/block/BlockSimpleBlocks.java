@@ -8,9 +8,7 @@ import net.minecraft.block.properties.PropertyEnum;
 import net.minecraft.block.state.*;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.*;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.IStringSerializable;
-import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.*;
 
 import java.util.List;
@@ -30,16 +28,13 @@ public class BlockSimpleBlocks extends BlockSil
 	
 	public void loadRecipes()
 	{
-		getMod().recipes.addRecipe(EnumType.elemite.getStack(1), "III", "III", "III", 'I', ItemSilMaterials.ELEMITE_INGOT.getStack());
+		getMod().recipes.addRecipe(EnumType.elemite.getStack(1), "III", "III", "III", 'I', ItemSilMaterials.ELEMITE_INGOT.getStack(1));
 		getMod().recipes.addShapelessRecipe(ItemSilMaterials.ELEMITE_INGOT.getStack(9), EnumType.elemite.getStack(1));
 		getMod().recipes.addSmelting(EnumType.elemite.getStack(1), new ItemStack(SilItems.b_blue_goo));
 		
 		getMod().recipes.addRecipe(EnumType.dense_silicon.getStack(1), "III", "III", "III", 'I', SilItems.b_silicon);
 		getMod().recipes.addShapelessRecipe(new ItemStack(SilItems.b_silicon, 1, 9), EnumType.dense_silicon.getStack(1));
 	}
-	
-	public TileEntity createNewTileEntity(World w, int m)
-	{ return null; }
 	
 	public void onPostLoaded()
 	{

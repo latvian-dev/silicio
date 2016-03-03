@@ -9,7 +9,7 @@ public class SilicioMultipartRegistry
 {
 	public static void init()
 	{
-		register(new MultipartCable(), "silicio:cable");
+		//register(new MultipartCable(), "silicio:cable");
 	}
 	
 	public static void register(MultipartBase mp, String id)

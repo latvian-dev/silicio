@@ -5,7 +5,6 @@ import net.minecraft.block.material.*;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.*;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.*;
@@ -20,12 +19,9 @@ public class BlockBlueGoo extends BlockSil
 	
 	public void loadRecipes()
 	{
-		getMod().recipes.addRecipe(new ItemStack(this), "GGG", "GGG", "GGG", 'G', ItemSilMaterials.BLUE_GOO.getStack());
+		getMod().recipes.addRecipe(new ItemStack(this), "GGG", "GGG", "GGG", 'G', ItemSilMaterials.BLUE_GOO.getStack(1));
 		getMod().recipes.addShapelessRecipe(ItemSilMaterials.BLUE_GOO.getStack(9), this);
 	}
-	
-	public TileEntity createNewTileEntity(World w, int m)
-	{ return null; }
 	
 	public MapColor getMapColor(IBlockState state)
 	{ return MapColor.grassColor; }

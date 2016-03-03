@@ -1,6 +1,6 @@
 package latmod.silicio.item;
 
-import ftb.lib.LMMod;
+import ftb.lib.*;
 import ftb.lib.api.item.*;
 import latmod.silicio.Silicio;
 
@@ -83,10 +83,24 @@ public class ItemSilMaterials extends ItemMaterialsLM
 		add(MODULE_OUTPUT = new MaterialItem(this, 62, "module_output"));
 		add(MODULE_LOGIC = new MaterialItem(this, 63, "module_logic"));
 		
-		ODItems.add(ODItems.IRON_ROD, IRON_ROD.getStack());
+		ODItems.add(ODItems.IRON_ROD, IRON_ROD.getStack(1));
+		ODItems.add(ODItems.SILICON, SILICON.getStack(1));
 	}
 	
 	public void loadRecipes()
 	{
+		getMod().recipes.addRecipe(IRON_ROD.getStack(4), "I", "I", 'I', ODItems.IRON);
+		getMod().recipes.addRecipe(XSUIT_PLATE.getStack(1), "EEE", "ESE", "EEE", 'E', ELEMITE_INGOT.getStack(1), 'S', ODItems.SILICON);
+		
+		getMod().recipes.addRecipe(ELEMITE_INGOT.getStack(1), "EEE", "EEE", "EEE", 'E', ELEMITE_NUGGET.getStack(1));
+		getMod().recipes.addShapelessRecipe(ELEMITE_NUGGET.getStack(9), ELEMITE_INGOT.getStack(1));
+		
+		getMod().recipes.addSmelting(ELEMITE_INGOT.getStack(1), ELEMITE_DUST.getStack(1));
+		getMod().recipes.addSmelting(ELEMITE_INGOT.getStack(1), BLUE_GOO.getStack(1));
+		
+		getMod().recipes.addRecipe(MODULE_EMPTY.getStack(1), "III", "ICI", "III", 'I', ODItems.IRON, 'C', PROCESSOR.getStack(1));
+		getMod().recipes.addShapelessRecipe(MODULE_INPUT.getStack(1), MODULE_EMPTY.getStack(1), EnumMCColor.LIGHT_BLUE.dyeName);
+		getMod().recipes.addShapelessRecipe(MODULE_OUTPUT.getStack(1), MODULE_EMPTY.getStack(1), EnumMCColor.ORANGE.dyeName);
+		getMod().recipes.addShapelessRecipe(MODULE_LOGIC.getStack(1), MODULE_EMPTY.getStack(1), ODItems.SILICON);
 	}
 }

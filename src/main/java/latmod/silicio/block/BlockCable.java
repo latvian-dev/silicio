@@ -1,7 +1,6 @@
 package latmod.silicio.block;
 
-import latmod.silicio.multiparts.MultipartCable;
-import mcmultipart.multipart.*;
+import latmod.silicio.tile.*;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyBool;
 import net.minecraft.block.state.*;
@@ -31,7 +30,7 @@ public class BlockCable extends BlockSil
 	
 	static
 	{
-		double d = pipeBorder;
+		double d = pipeBorder - 1D / 32D;
 		boxes[0] = new AxisAlignedBB(d, 0D, d, 1D - d, d, 1D - d);
 		boxes[1] = new AxisAlignedBB(d, 1D - d, d, 1D - d, 1D, 1D - d);
 		boxes[2] = new AxisAlignedBB(d, d, 0D, 1D - d, 1D - d, d);
@@ -47,6 +46,16 @@ public class BlockCable extends BlockSil
 		setHardness(0.5F);
 	}
 	
+	public void onPostLoaded()
+	{
+		super.onPostLoaded();
+		getMod().addTile(TileCable.class, blockName);
+	}
+	
+	public void loadRecipes()
+	{
+	}
+	
 	public boolean canHarvestBlock(IBlockAccess world, BlockPos pos, EntityPlayer player)
 	{ return true; }
 	
@@ -60,8 +69,11 @@ public class BlockCable extends BlockSil
 	public boolean isOpaqueCube()
 	{ return false; }
 	
-	public TileEntity createNewTileEntity(World w, int m)
-	{ return null; }
+	public boolean hasTileEntity(IBlockState state)
+	{ return true; }
+	
+	public TileEntity createTileEntity(World w, IBlockState state)
+	{ return new TileCable(); }
 	
 	@SideOnly(Side.CLIENT)
 	public boolean shouldSideBeRendered(IBlockAccess worldIn, BlockPos pos, EnumFacing side)
@@ -78,12 +90,12 @@ public class BlockCable extends BlockSil
 	
 	public IBlockState getActualState(IBlockState state, IBlockAccess w, BlockPos pos)
 	{
-		boolean conD = canConnectTo(w, pos.down());
-		boolean conU = canConnectTo(w, pos.up());
-		boolean conN = canConnectTo(w, pos.north());
-		boolean conS = canConnectTo(w, pos.south());
-		boolean conW = canConnectTo(w, pos.west());
-		boolean conE = canConnectTo(w, pos.east());
+		boolean conD = canConnectTo(w, pos, EnumFacing.DOWN);
+		boolean conU = canConnectTo(w, pos, EnumFacing.UP);
+		boolean conN = canConnectTo(w, pos, EnumFacing.NORTH);
+		boolean conS = canConnectTo(w, pos, EnumFacing.SOUTH);
+		boolean conW = canConnectTo(w, pos, EnumFacing.WEST);
+		boolean conE = canConnectTo(w, pos, EnumFacing.EAST);
 		
 		/*
 		TileEntity te = w.getTileEntity(pos);
@@ -96,8 +108,9 @@ public class BlockCable extends BlockSil
 		return state.withProperty(CON_D, conD).withProperty(CON_U, conU).withProperty(CON_N, conN).withProperty(CON_S, conS).withProperty(CON_W, conW).withProperty(CON_E, conE);
 	}
 	
-	public boolean canConnectTo(IBlockAccess w, BlockPos pos)
+	public boolean canConnectTo(IBlockAccess w, BlockPos pos0, EnumFacing facing)
 	{
+		BlockPos pos = pos0.offset(facing);
 		IBlockState state = w.getBlockState(pos);
 		if(state.getBlock() == this) return true;
 		
@@ -105,12 +118,17 @@ public class BlockCable extends BlockSil
 		{
 			TileEntity te = w.getTileEntity(pos);
 			
-			if(te instanceof IMultipartContainer)
+			/*if(te instanceof IMultipartContainer)
 			{
 				for(IMultipart m : ((IMultipartContainer) te).getParts())
 				{
 					if(m instanceof MultipartCable) return true;
 				}
+			}*/
+			
+			if(te instanceof ICBNetTile)
+			{
+				return ((ICBNetTile) te).canCBConnect(facing.getOpposite());
 			}
 		}
 		
@@ -133,7 +151,7 @@ public class BlockCable extends BlockSil
 		
 		for(int i = 0; i < 6; i++)
 		{
-			if(canConnectTo(w, pos.offset(EnumFacing.VALUES[i])))
+			if(canConnectTo(w, pos, EnumFacing.VALUES[i]))
 			{
 				addIfIntersects(list, mask, boxes[i], ox, oy, oz);
 			}
@@ -150,12 +168,12 @@ public class BlockCable extends BlockSil
 	{
 		float s = pipeBorder - 1 / 32F;
 		
-		boolean x0 = canConnectTo(w, pos.west());
-		boolean x1 = canConnectTo(w, pos.east());
-		boolean y0 = canConnectTo(w, pos.down());
-		boolean y1 = canConnectTo(w, pos.up());
-		boolean z0 = canConnectTo(w, pos.north());
-		boolean z1 = canConnectTo(w, pos.south());
+		boolean x0 = canConnectTo(w, pos, EnumFacing.WEST);
+		boolean x1 = canConnectTo(w, pos, EnumFacing.EAST);
+		boolean y0 = canConnectTo(w, pos, EnumFacing.DOWN);
+		boolean y1 = canConnectTo(w, pos, EnumFacing.UP);
+		boolean z0 = canConnectTo(w, pos, EnumFacing.NORTH);
+		boolean z1 = canConnectTo(w, pos, EnumFacing.SOUTH);
 		
 		setBlockBounds(x0 ? 0F : s, y0 ? 0F : s, z0 ? 0F : s, x1 ? 1F : 1F - s, y1 ? 1F : 1F - s, z1 ? 1F : 1F - s);
 	}

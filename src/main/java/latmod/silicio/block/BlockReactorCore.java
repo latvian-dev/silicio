@@ -1,5 +1,6 @@
 package latmod.silicio.block;
 
+import latmod.silicio.tile.TileReactorCore;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Items;
@@ -22,6 +23,12 @@ public class BlockReactorCore extends BlockSil
 		getMod().recipes.addRecipe(new ItemStack(this), " S ", "SNS", " S ", 'S', BlockSimpleBlocks.EnumType.dense_silicon.getStack(1), 'N', Items.nether_star);
 	}
 	
+	public void onPostLoaded()
+	{
+		super.onPostLoaded();
+		getMod().addTile(TileReactorCore.class, blockName);
+	}
+	
 	@SideOnly(Side.CLIENT)
 	public EnumWorldBlockLayer getBlockLayer()
 	{ return EnumWorldBlockLayer.SOLID; }
@@ -29,8 +36,11 @@ public class BlockReactorCore extends BlockSil
 	public boolean isOpaqueCube()
 	{ return true; }
 	
-	public TileEntity createNewTileEntity(World w, int m)
-	{ return null; }
+	public boolean hasTileEntity(IBlockState state)
+	{ return true; }
+	
+	public TileEntity createTileEntity(World w, IBlockState state)
+	{ return new TileReactorCore(); }
 	
 	@SideOnly(Side.CLIENT)
 	public boolean shouldSideBeRendered(IBlockAccess worldIn, BlockPos pos, EnumFacing side)

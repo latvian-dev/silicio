@@ -1,0 +1,58 @@
+package latmod.silicio.tile;
+
+import net.minecraft.util.*;
+
+import java.util.*;
+
+/**
+ * Created by LatvianModder on 03.03.2016.
+ */
+public class CBNetwork
+{
+	public static final Map<BlockPos, ICBNetTile> network = new HashMap<>();
+	
+	public static void load(ICBNetTile t)
+	{
+		BlockPos pos = t.getPos();
+		network.put(pos, t);
+		notifyNetworkChange(pos);
+	}
+	
+	public static void unload(ICBNetTile t)
+	{
+		BlockPos pos = t.getPos();
+		network.remove(pos);
+		notifyNetworkChange(pos);
+	}
+	
+	private static void notifyNetworkChange(BlockPos pos)
+	{
+		for(ICBNetTile t : network.values())
+		{
+			t.onCBNetworkChanged(pos);
+		}
+	}
+	
+	public static List<ICBNetTile> getTilesAround(ICBNetTile tile)
+	{
+		ArrayList<ICBNetTile> list = new ArrayList<>();
+		if(network.isEmpty()) return list;
+		addTilesTo(tile, list, tile.getPos());
+		return list;
+	}
+	
+	private static void addTilesTo(ICBNetTile original, List<ICBNetTile> list, BlockPos pos)
+	{
+		for(EnumFacing f : EnumFacing.VALUES)
+		{
+			BlockPos pos1 = pos.offset(f);
+			ICBNetTile tile = network.get(pos1);
+			
+			if(tile != null && tile != original && !list.contains(tile) && tile.canCBConnect(f.getOpposite()))
+			{
+				list.add(tile);
+				addTilesTo(original, list, pos1);
+			}
+		}
+	}
+}

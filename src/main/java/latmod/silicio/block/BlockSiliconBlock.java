@@ -4,9 +4,8 @@ import latmod.silicio.item.ItemSilMaterials;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.ItemStack;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.*;
-import net.minecraft.world.*;
+import net.minecraft.world.IBlockAccess;
 import net.minecraftforge.fml.relauncher.*;
 
 /**
@@ -19,7 +18,7 @@ public class BlockSiliconBlock extends BlockSil
 	
 	public void loadRecipes()
 	{
-		getMod().recipes.addRecipe(new ItemStack(this), "SS", "SS", 'S', ItemSilMaterials.SILICON.getStack());
+		getMod().recipes.addRecipe(new ItemStack(this), "SS", "SS", 'S', ItemSilMaterials.SILICON.getStack(1));
 		getMod().recipes.addShapelessRecipe(ItemSilMaterials.SILICON.getStack(4), this);
 	}
 	
@@ -29,9 +28,6 @@ public class BlockSiliconBlock extends BlockSil
 	
 	public boolean isOpaqueCube()
 	{ return false; }
-	
-	public TileEntity createNewTileEntity(World w, int m)
-	{ return null; }
 	
 	@SideOnly(Side.CLIENT)
 	public boolean shouldSideBeRendered(IBlockAccess worldIn, BlockPos pos, EnumFacing side)
