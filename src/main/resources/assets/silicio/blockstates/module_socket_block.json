@@ -1,0 +1,79 @@
+{
+  "forge_marker": 1,
+  "defaults": {
+    "model": "silicio:module_socket_block"
+  },
+  "variants": {
+    "up": {
+      "true": {
+        "submodel": {
+          "up": {
+            "model": "silicio:module_socket",
+            "x": 90
+          }
+        }
+      },
+      "false": {
+      }
+    },
+    "down": {
+      "true": {
+        "submodel": {
+          "down": {
+            "model": "silicio:module_socket",
+            "x": 270
+          }
+        }
+      },
+      "false": {
+      }
+    },
+    "north": {
+      "true": {
+        "submodel": {
+          "north": {
+            "model": "silicio:module_socket",
+            "y": 180
+          }
+        }
+      },
+      "false": {
+      }
+    },
+    "south": {
+      "true": {
+        "submodel": {
+          "south": {
+            "model": "silicio:module_socket"
+          }
+        }
+      },
+      "false": {
+      }
+    },
+    "west": {
+      "true": {
+        "submodel": {
+          "west": {
+            "model": "silicio:module_socket",
+            "y": 90
+          }
+        }
+      },
+      "false": {
+      }
+    },
+    "east": {
+      "true": {
+        "submodel": {
+          "east": {
+            "model": "silicio:module_socket",
+            "y": 270
+          }
+        }
+      },
+      "false": {
+      }
+    }
+  }
+}

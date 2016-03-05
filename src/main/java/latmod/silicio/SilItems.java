@@ -1,7 +1,10 @@
 package latmod.silicio;
 
+import latmod.silicio.api.modules.*;
 import latmod.silicio.block.*;
-import latmod.silicio.item.ItemSilMaterials;
+import latmod.silicio.item.*;
+
+import java.util.*;
 
 public class SilItems
 {
@@ -9,10 +12,12 @@ public class SilItems
 	public static BlockSiliconBlock b_silicon;
 	public static BlockSiliconGlass b_glass;
 	public static BlockBlueGoo b_blue_goo;
-	public static BlockCable b_cable;
 	public static BlockReactorCore b_reactor_core;
+	public static BlockCable b_cable;
+	public static BlockModuleSocket b_module_socket;
 	
 	public static ItemSilMaterials i_mat;
+	public static Map<String, ItemModule> i_modules;
 	
 	public static void init()
 	{
@@ -36,10 +41,21 @@ public class SilItems
 		Silicio.mod.addItem(b_silicon = new BlockSiliconBlock("silicon_block"));
 		Silicio.mod.addItem(b_glass = new BlockSiliconGlass("silicon_glass"));
 		Silicio.mod.addItem(b_blue_goo = new BlockBlueGoo("blue_goo"));
-		Silicio.mod.addItem(b_cable = new BlockCable("cable"));
 		Silicio.mod.addItem(b_reactor_core = new BlockReactorCore("reactor_core"));
+		Silicio.mod.addItem(b_cable = new BlockCable("cable"));
+		Silicio.mod.addItem(b_module_socket = new BlockModuleSocket("module_socket_block"));
 		
 		Silicio.mod.addItem(i_mat = new ItemSilMaterials("mat"));
+		
+		ModuleRegistry.init();
+		
+		i_modules = new HashMap<>();
+		for(IModule m : ModuleRegistry.modules())
+		{
+			ItemModule module = new ItemModule(m);
+			Silicio.mod.addItem(module);
+			i_modules.put(m.getID(), module);
+		}
 		
 		//Modules.init();
 	}

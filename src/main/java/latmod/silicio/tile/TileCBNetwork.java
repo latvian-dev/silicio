@@ -1,6 +1,7 @@
 package latmod.silicio.tile;
 
 import ftb.lib.api.tile.TileLM;
+import latmod.silicio.api.tileentity.*;
 import net.minecraft.util.*;
 
 /**

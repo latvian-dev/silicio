@@ -1,4 +1,4 @@
-package latmod.silicio.tile;
+package latmod.silicio.api.tileentity;
 
 import net.minecraft.util.*;
 

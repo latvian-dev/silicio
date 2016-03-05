@@ -1,6 +1,7 @@
 package latmod.silicio.block;
 
-import latmod.silicio.tile.*;
+import latmod.silicio.api.tileentity.ICBNetTile;
+import latmod.silicio.tile.TileCable;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyBool;
 import net.minecraft.block.state.*;

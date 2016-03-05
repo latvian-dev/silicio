@@ -43,7 +43,7 @@ public class BlockSimpleBlocks extends BlockSil
 	
 	public void loadModels()
 	{
-		String modid = getMod().ID;
+		String modid = getMod().getID();
 		Item item = getItem();
 		
 		for(EnumType e : EnumType.values())
