@@ -27,7 +27,6 @@ public class BlockModuleSocket extends BlockSil
 	public BlockModuleSocket(String s)
 	{
 		super(s, Material.iron);
-		setDefaultState(createBlockState().getBaseState().withProperty(MODULE_D, false).withProperty(MODULE_U, false).withProperty(MODULE_N, false).withProperty(MODULE_S, false).withProperty(MODULE_W, false).withProperty(MODULE_E, false).withProperty(CENTER, true));
 	}
 	
 	public void onPostLoaded()

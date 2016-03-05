@@ -1,0 +1,20 @@
+{
+  "forge_marker": 1,
+  "defaults": {
+    "model": "minecraft:cube_all"
+  },
+  "variants": {
+    "conflict": {
+      "true": {
+        "textures": {
+          "all": "silicio:controller"
+        }
+      },
+      "false": {
+        "textures": {
+          "all": "silicio:controller_conflict"
+        }
+      }
+    }
+  }
+}

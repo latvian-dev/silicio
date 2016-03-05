@@ -22,7 +22,6 @@ public class BlockCBController extends BlockSil
 	public BlockCBController(String s)
 	{
 		super(s, Material.iron);
-		setDefaultState(createBlockState().getBaseState().withProperty(CONFLICT, false));
 	}
 	
 	public void onPostLoaded()

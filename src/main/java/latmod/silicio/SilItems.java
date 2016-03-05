@@ -16,6 +16,7 @@ public class SilItems
 	public static BlockReactorCore b_reactor_core;
 	public static BlockCable b_cable;
 	public static BlockModuleSocket b_module_socket;
+	public static BlockCBController b_cb_controller;
 	
 	public static ItemSilMaterials i_mat;
 	public static Map<String, ItemModule> i_modules;
@@ -46,6 +47,7 @@ public class SilItems
 		Silicio.mod.addItem(b_reactor_core = new BlockReactorCore("reactor_core"));
 		Silicio.mod.addItem(b_cable = new BlockCable("cable"));
 		Silicio.mod.addItem(b_module_socket = new BlockModuleSocket("module_socket_block"));
+		Silicio.mod.addItem(b_cb_controller = new BlockCBController("controller"));
 		
 		Silicio.mod.addItem(i_mat = new ItemSilMaterials("mat"));
 		
