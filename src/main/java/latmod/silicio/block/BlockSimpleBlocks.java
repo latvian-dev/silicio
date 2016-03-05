@@ -32,8 +32,8 @@ public class BlockSimpleBlocks extends BlockSil
 		getMod().recipes.addShapelessRecipe(ItemSilMaterials.ELEMITE_INGOT.getStack(9), EnumType.elemite.getStack(1));
 		getMod().recipes.addSmelting(EnumType.elemite.getStack(1), new ItemStack(SilItems.b_blue_goo));
 		
-		getMod().recipes.addRecipe(EnumType.dense_silicon.getStack(1), "III", "III", "III", 'I', SilItems.b_silicon);
-		getMod().recipes.addShapelessRecipe(new ItemStack(SilItems.b_silicon, 1, 9), EnumType.dense_silicon.getStack(1));
+		getMod().recipes.addRecipe(EnumType.dense_silicon.getStack(1), "III", "III", "III", 'I', SilItems.b_silicon_block);
+		getMod().recipes.addShapelessRecipe(new ItemStack(SilItems.b_silicon_block, 1, 9), EnumType.dense_silicon.getStack(1));
 	}
 	
 	public void onPostLoaded()

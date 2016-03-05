@@ -1,6 +1,7 @@
 package latmod.silicio.item;
 
 import ftb.lib.mod.FTBLibMod;
+import latmod.silicio.Silicio;
 import latmod.silicio.api.modules.*;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -13,9 +14,9 @@ import java.util.List;
  */
 public class ItemModule extends ItemSil implements IModuleItem
 {
-	public final IModule module;
+	public final Module module;
 	
-	public ItemModule(IModule m)
+	public ItemModule(Module m)
 	{
 		super("module_" + m.getID());
 		module = m;
@@ -33,14 +34,15 @@ public class ItemModule extends ItemSil implements IModuleItem
 	}
 	
 	public String getUnlocalizedName(ItemStack is)
-	{ return getMod().getItemName("module." + module.getID()); }
+	{ return getMod().getItemName("cbm_" + module.getID()); }
 	
 	@SideOnly(Side.CLIENT)
 	public void addInformation(ItemStack is, EntityPlayer ep, List<String> l, boolean b)
 	{
-		l.add("Socket Module");
+		l.add(Silicio.mod.translate("item.cbm_desc"));
+		module.addInformation(is, ep, l);
 	}
 	
-	public IModule getModule(ItemStack item)
+	public Module getModule(ItemStack item)
 	{ return module; }
 }

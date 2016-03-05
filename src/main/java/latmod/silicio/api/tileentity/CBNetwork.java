@@ -43,16 +43,29 @@ public class CBNetwork
 	
 	private static void addTilesTo(ICBNetTile original, List<ICBNetTile> list, BlockPos pos)
 	{
-		for(EnumFacing f : EnumFacing.VALUES)
+		for(int i = 0; i < 6; i++)
 		{
-			BlockPos pos1 = pos.offset(f);
+			BlockPos pos1 = pos.offset(EnumFacing.VALUES[i]);
 			ICBNetTile tile = network.get(pos1);
 			
-			if(tile != null && tile != original && !list.contains(tile) && tile.canCBConnect(f.getOpposite()))
+			if(tile != null && tile != original && !list.contains(tile) && tile.canCBConnect(EnumFacing.VALUES[i].getOpposite()))
 			{
 				list.add(tile);
 				addTilesTo(original, list, pos1);
 			}
 		}
+	}
+	
+	public static ICBController getController(ICBNetTile tile)
+	{
+		for(ICBNetTile t : getTilesAround(tile))
+		{
+			if(t instanceof ICBController && !((ICBController) t).hasConflict())
+			{
+				return ((ICBController) t);
+			}
+		}
+		
+		return null;
 	}
 }

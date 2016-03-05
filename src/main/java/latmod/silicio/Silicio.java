@@ -28,7 +28,7 @@ public class Silicio
 		//SilConfig.load();
 		SilItems.init();
 		
-		tab.addIcon(new ItemStack(SilItems.b_silicon));
+		tab.addIcon(new ItemStack(SilItems.b_silicon_block));
 		
 		mod.onPostLoaded();
 		proxy.preInit();

@@ -1,9 +1,12 @@
 package latmod.silicio.block;
 
+import latmod.silicio.SilItems;
+import latmod.silicio.item.ItemSilMaterials;
 import latmod.silicio.tile.TileModuleSocket;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyBool;
 import net.minecraft.block.state.*;
+import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.*;
 import net.minecraft.world.*;
@@ -19,16 +22,23 @@ public class BlockModuleSocket extends BlockSil
 	public static final PropertyBool MODULE_S = PropertyBool.create("south");
 	public static final PropertyBool MODULE_W = PropertyBool.create("west");
 	public static final PropertyBool MODULE_E = PropertyBool.create("east");
+	public static final PropertyBool CENTER = PropertyBool.create("center");
 	
 	public BlockModuleSocket(String s)
 	{
 		super(s, Material.iron);
+		setDefaultState(createBlockState().getBaseState().withProperty(MODULE_D, false).withProperty(MODULE_U, false).withProperty(MODULE_N, false).withProperty(MODULE_S, false).withProperty(MODULE_W, false).withProperty(MODULE_E, false).withProperty(CENTER, true));
 	}
 	
 	public void onPostLoaded()
 	{
 		super.onPostLoaded();
 		getMod().addTile(TileModuleSocket.class, blockName);
+	}
+	
+	public void loadRecipes()
+	{
+		getMod().recipes.addRecipe(new ItemStack(this), " P ", "PFP", " P ", 'P', ItemSilMaterials.PROCESSOR.getStack(1), 'F', SilItems.b_silicon_frame);
 	}
 	
 	public boolean hasTileEntity(IBlockState state)
@@ -44,7 +54,7 @@ public class BlockModuleSocket extends BlockSil
 	{ return 0; }
 	
 	protected BlockState createBlockState()
-	{ return new BlockState(this, MODULE_D, MODULE_U, MODULE_N, MODULE_S, MODULE_W, MODULE_E); }
+	{ return new BlockState(this, MODULE_D, MODULE_U, MODULE_N, MODULE_S, MODULE_W, MODULE_E, CENTER); }
 	
 	public IBlockState getActualState(IBlockState state, IBlockAccess w, BlockPos pos)
 	{
@@ -54,14 +64,14 @@ public class BlockModuleSocket extends BlockSil
 		
 		if(tile != null)
 		{
-			modD = tile.modules.containsKey(EnumFacing.DOWN);
-			modU = tile.modules.containsKey(EnumFacing.UP);
-			modN = tile.modules.containsKey(EnumFacing.NORTH);
-			modS = tile.modules.containsKey(EnumFacing.SOUTH);
-			modW = tile.modules.containsKey(EnumFacing.WEST);
-			modE = tile.modules.containsKey(EnumFacing.EAST);
+			modD = tile.hasModule(EnumFacing.DOWN);
+			modU = tile.hasModule(EnumFacing.UP);
+			modN = tile.hasModule(EnumFacing.NORTH);
+			modS = tile.hasModule(EnumFacing.SOUTH);
+			modW = tile.hasModule(EnumFacing.WEST);
+			modE = tile.hasModule(EnumFacing.EAST);
 		}
 		
-		return state.withProperty(MODULE_D, modD).withProperty(MODULE_U, modU).withProperty(MODULE_N, modN).withProperty(MODULE_S, modS).withProperty(MODULE_W, modW).withProperty(MODULE_E, modE);
+		return state.withProperty(MODULE_D, modD).withProperty(MODULE_U, modU).withProperty(MODULE_N, modN).withProperty(MODULE_S, modS).withProperty(MODULE_W, modW).withProperty(MODULE_E, modE).withProperty(CENTER, true);
 	}
 }

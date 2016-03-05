@@ -3,11 +3,11 @@ package latmod.silicio.tile;
 import ftb.lib.LMNBTUtils;
 import ftb.lib.api.item.LMInvUtils;
 import latmod.silicio.api.modules.*;
-import latmod.silicio.api.tileentity.IModuleSocketTile;
-import net.minecraft.entity.player.EntityPlayer;
+import latmod.silicio.api.tileentity.*;
+import net.minecraft.entity.player.*;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.*;
-import net.minecraft.util.EnumFacing;
+import net.minecraft.util.*;
 
 import java.util.*;
 
@@ -16,12 +16,16 @@ import java.util.*;
  */
 public class TileModuleSocket extends TileCBNetwork implements IModuleSocketTile
 {
-	public final Map<EnumFacing, ModuleContainer> modules;
+	private final Map<EnumFacing, ModuleContainer> modules;
+	private ICBController controller;
 	
 	public TileModuleSocket()
 	{
 		modules = new EnumMap<>(EnumFacing.class);
 	}
+	
+	public boolean rerenderBlock()
+	{ return true; }
 	
 	public void readTileData(NBTTagCompound tag)
 	{
@@ -35,7 +39,11 @@ public class TileModuleSocket extends TileCBNetwork implements IModuleSocketTile
 		{
 			NBTTagCompound tag1 = list.getCompoundTagAt(i);
 			ModuleContainer c = ModuleContainer.readFromNBT(this, tag1);
-			if(c != null) modules.put(c.facing, c);
+			if(c != null)
+			{
+				modules.put(c.facing, c);
+				c.module.init(c);
+			}
 		}
 	}
 	
@@ -59,11 +67,22 @@ public class TileModuleSocket extends TileCBNetwork implements IModuleSocketTile
 	{
 		if(is == null && ep.isSneaking())
 		{
-			if(modules.containsKey(side))
+			if(isServer())
 			{
-				LMInvUtils.giveItem(ep, modules.get(side).item.copy(), ep.inventory.currentItem);
-				modules.remove(side);
-				markDirty();
+				ModuleContainer c = modules.get(side);
+				
+				if(c != null)
+				{
+					c.module.onRemoved(c, (EntityPlayerMP) ep);
+					LMInvUtils.giveItem(ep, c.item.copy(), ep.inventory.currentItem);
+					modules.remove(side);
+					markDirty();
+					
+					if(controller != null)
+					{
+						controller.onCBNetworkChanged(getPos());
+					}
+				}
 			}
 			
 			return true;
@@ -71,38 +90,59 @@ public class TileModuleSocket extends TileCBNetwork implements IModuleSocketTile
 		
 		if(is != null && is.getItem() instanceof IModuleItem)
 		{
-			if(!modules.containsKey(side))
+			if(isServer() && !modules.containsKey(side))
 			{
-				IModule module = ModuleRegistry.getFromStack(is);
+				Module m = ModuleRegistry.getFromStack(is);
 				
-				if(module != null)
+				if(m != null)
 				{
-					ModuleContainer m = new ModuleContainer(this, side, LMInvUtils.singleCopy(is), module);
-					modules.put(m.facing, m);
+					ModuleContainer c = new ModuleContainer(this, side, LMInvUtils.singleCopy(is), m);
+					modules.put(c.facing, c);
 					is.stackSize--;
+					c.module.init(c);
+					c.module.onAdded(c, (EntityPlayerMP) ep);
 					markDirty();
+					
+					if(controller != null)
+					{
+						controller.onCBNetworkChanged(getPos());
+					}
 				}
 			}
 			
 			return true;
 		}
 		
-		return true;
+		return false;
 	}
 	
 	public void onUpdate()
 	{
-		for(ModuleContainer c : modules.values())
-		{
-			c.onUpdate();
-		}
 	}
 	
 	public boolean canCBConnect(EnumFacing facing)
+	{ return !hasModule(facing); }
+	
+	public boolean hasModule(EnumFacing facing)
+	{ return modules.containsKey(facing); }
+	
+	public void onCBNetworkChanged(BlockPos pos)
 	{
-		return !modules.containsKey(facing);
+		controller = CBNetwork.getController(this);
 	}
 	
-	public ModuleContainer getModule(EnumFacing facing)
-	{ return modules.get(facing); }
+	public ICBController getController()
+	{ return controller; }
+	
+	public Collection<ModuleContainer> getModules()
+	{ return modules.values(); }
+	
+	public void updateChannels()
+	{
+	}
+	
+	public int getState(int channel)
+	{
+		return 0;
+	}
 }

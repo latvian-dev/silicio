@@ -1,12 +1,16 @@
 package latmod.silicio.api.tileentity;
 
 import latmod.silicio.api.modules.ModuleContainer;
-import net.minecraft.util.EnumFacing;
+
+import java.util.Collection;
 
 /**
  * Created by LatvianModder on 05.03.2016.
  */
 public interface IModuleSocketTile extends ICBNetTile
 {
-	ModuleContainer getModule(EnumFacing facing);
+	ICBController getController();
+	Collection<ModuleContainer> getModules();
+	void updateChannels();
+	int getState(int channel);
 }

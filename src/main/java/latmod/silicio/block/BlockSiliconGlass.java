@@ -26,7 +26,7 @@ public class BlockSiliconGlass extends BlockSil
 	
 	public void loadRecipes()
 	{
-		getMod().recipes.addSmelting(new ItemStack(this), new ItemStack(SilItems.b_silicon));
+		getMod().recipes.addSmelting(new ItemStack(this), new ItemStack(SilItems.b_silicon_block));
 	}
 	
 	@SideOnly(Side.CLIENT)

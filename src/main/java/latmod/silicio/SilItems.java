@@ -9,7 +9,8 @@ import java.util.*;
 public class SilItems
 {
 	public static BlockSimpleBlocks b_blocks;
-	public static BlockSiliconBlock b_silicon;
+	public static BlockSiliconBlock b_silicon_block;
+	public static BlockSiliconFrame b_silicon_frame;
 	public static BlockSiliconGlass b_glass;
 	public static BlockBlueGoo b_blue_goo;
 	public static BlockReactorCore b_reactor_core;
@@ -38,7 +39,8 @@ public class SilItems
 		*/
 		
 		Silicio.mod.addItem(b_blocks = new BlockSimpleBlocks("blocks"));
-		Silicio.mod.addItem(b_silicon = new BlockSiliconBlock("silicon_block"));
+		Silicio.mod.addItem(b_silicon_block = new BlockSiliconBlock("silicon_block"));
+		Silicio.mod.addItem(b_silicon_frame = new BlockSiliconFrame("silicon_frame"));
 		Silicio.mod.addItem(b_glass = new BlockSiliconGlass("silicon_glass"));
 		Silicio.mod.addItem(b_blue_goo = new BlockBlueGoo("blue_goo"));
 		Silicio.mod.addItem(b_reactor_core = new BlockReactorCore("reactor_core"));
@@ -50,7 +52,7 @@ public class SilItems
 		ModuleRegistry.init();
 		
 		i_modules = new HashMap<>();
-		for(IModule m : ModuleRegistry.modules())
+		for(Module m : ModuleRegistry.modules())
 		{
 			ItemModule module = new ItemModule(m);
 			Silicio.mod.addItem(module);

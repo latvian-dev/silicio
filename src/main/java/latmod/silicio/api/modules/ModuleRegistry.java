@@ -1,6 +1,6 @@
 package latmod.silicio.api.modules;
 
-import latmod.silicio.modules.ModuleChatOutput;
+import latmod.silicio.modules.*;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.MinecraftForge;
 
@@ -11,28 +11,29 @@ import java.util.*;
  */
 public class ModuleRegistry
 {
-	private static final Map<String, IModule> map = new HashMap<>();
+	private static final Map<String, Module> map = new HashMap<>();
 	
 	public static void init()
 	{
-		register(new ModuleChatOutput());
+		register(new ModuleTimer("timer"));
+		register(new ModuleChatOutput("chat_out"));
 		
 		MinecraftForge.EVENT_BUS.post(new RegisterModulesEvent());
 	}
 	
-	public static void register(IModule m)
+	public static void register(Module m)
 	{ map.put(m.getID(), m); }
 	
-	public static Collection<IModule> modules()
+	public static Collection<Module> modules()
 	{ return map.values(); }
 	
-	public static IModule get(String s)
+	public static Module get(String s)
 	{
 		if(s == null || s.isEmpty()) return null;
 		return map.get(s);
 	}
 	
-	public static IModule getFromStack(ItemStack item)
+	public static Module getFromStack(ItemStack item)
 	{
 		if(item != null && item.getItem() instanceof IModuleItem)
 		{

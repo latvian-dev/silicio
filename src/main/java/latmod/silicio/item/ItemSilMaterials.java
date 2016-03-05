@@ -101,6 +101,6 @@ public class ItemSilMaterials extends ItemMaterialsLM
 		getMod().recipes.addRecipe(MODULE_EMPTY.getStack(1), "III", "ICI", "III", 'I', ODItems.IRON, 'C', PROCESSOR.getStack(1));
 		getMod().recipes.addShapelessRecipe(MODULE_INPUT.getStack(1), MODULE_EMPTY.getStack(1), EnumMCColor.LIGHT_BLUE.dyeName);
 		getMod().recipes.addShapelessRecipe(MODULE_OUTPUT.getStack(1), MODULE_EMPTY.getStack(1), EnumMCColor.ORANGE.dyeName);
-		getMod().recipes.addShapelessRecipe(MODULE_LOGIC.getStack(1), MODULE_EMPTY.getStack(1), ODItems.SILICON);
+		getMod().recipes.addShapelessRecipe(MODULE_LOGIC.getStack(1), MODULE_EMPTY.getStack(1), ODItems.REDSTONE);
 	}
 }

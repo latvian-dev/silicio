@@ -7,5 +7,5 @@ import net.minecraft.item.ItemStack;
  */
 public interface IModuleItem
 {
-	IModule getModule(ItemStack item);
+	Module getModule(ItemStack item);
 }
