@@ -3,6 +3,8 @@ package latmod.silicio.item;
 import ftb.lib.*;
 import ftb.lib.api.item.*;
 import latmod.silicio.Silicio;
+import net.minecraft.init.*;
+import net.minecraft.item.ItemStack;
 
 /**
  * Created by LatvianModder on 06.02.2016.
@@ -93,17 +95,32 @@ public class ItemSilMaterials extends ItemMaterialsLM
 	{
 		getMod().recipes.addRecipe(IRON_ROD.getStack(4), "I", "I", 'I', ODItems.IRON);
 		getMod().recipes.addShapelessRecipe(BLUE_GOO.getStack(1), ODItems.SLIMEBALL, ODItems.LAPIS, ODItems.IRON);
-		getMod().recipes.addRecipe(XSUIT_PLATE.getStack(1), "EEE", "ESE", "EEE", 'E', ELEMITE_INGOT.getStack(1), 'S', ODItems.SILICON);
+		getMod().recipes.addRecipe(XSUIT_PLATE.getStack(1), "EEE", "ESE", "EEE", 'E', ELEMITE_INGOT, 'S', ODItems.SILICON);
 		
-		getMod().recipes.addRecipe(ELEMITE_INGOT.getStack(1), "EEE", "EEE", "EEE", 'E', ELEMITE_NUGGET.getStack(1));
-		getMod().recipes.addShapelessRecipe(ELEMITE_NUGGET.getStack(9), ELEMITE_INGOT.getStack(1));
+		getMod().recipes.addRecipe(ELEMITE_INGOT.getStack(1), "EEE", "EEE", "EEE", 'E', ELEMITE_NUGGET);
+		getMod().recipes.addShapelessRecipe(ELEMITE_NUGGET.getStack(9), ELEMITE_INGOT);
 		
 		getMod().recipes.addSmelting(ELEMITE_INGOT.getStack(1), ELEMITE_DUST.getStack(1));
 		getMod().recipes.addSmelting(ELEMITE_INGOT.getStack(1), BLUE_GOO.getStack(1));
 		
+		getMod().recipes.addRecipe(WIRE.getStack(8), "WWW", "NNN", "WWW", 'N', ELEMITE_NUGGET, 'W', new ItemStack(Blocks.carpet, 1, ODItems.ANY));
+		getMod().recipes.addRecipe(RESISTOR.getStack(4), "WCW", 'C', Items.brick, 'W', WIRE);
+		getMod().recipes.addRecipe(CAPACITOR.getStack(4), "WCW", 'C', Items.clay_ball, 'W', WIRE);
+		getMod().recipes.addRecipe(DIODE.getStack(4), "WCW", 'C', ODItems.SILICON, 'W', WIRE);
+		getMod().recipes.addRecipe(TRANSISTOR.getStack(3), "DDD", "WWW", 'D', DIODE, 'W', WIRE);
+		getMod().recipes.addRecipe(CHIP.getStack(1), "TT", "TT", "TT", 'T', TRANSISTOR);
+		getMod().recipes.addRecipe(PROCESSOR.getStack(1), "CCC", "CSC", "CCC", 'C', CHIP, 'S', ODItems.SILICON);
+		getMod().recipes.addShapelessRecipe(CIRCUIT.getStack(1), PROCESSOR, WIRE, RESISTOR, CAPACITOR, TRANSISTOR, PROCESSOR, WIRE, WIRE);
+		getMod().recipes.addRecipe(CIRCUIT_WIFI.getStack(1), "EEE", "ECE", "EEE", 'C', CIRCUIT, 'E', Items.ender_pearl);
+		getMod().recipes.addShapelessRecipe(LED_RED.getStack(3), DIODE, EnumMCColor.RED.dyeName, ODItems.GLOWSTONE);
+		getMod().recipes.addShapelessRecipe(LED_GREEN.getStack(3), DIODE, EnumMCColor.GREEN.dyeName, ODItems.GLOWSTONE);
+		getMod().recipes.addShapelessRecipe(LED_BLUE.getStack(3), DIODE, EnumMCColor.BLUE.dyeName, ODItems.GLOWSTONE);
+		getMod().recipes.addShapelessRecipe(LED_RGB.getStack(3), LED_RED, LED_GREEN, LED_BLUE);
+		getMod().recipes.addRecipe(LED_MATRIX.getStack(1), "LLL", "LLL", "LLL", 'L', LED_RGB);
+		
 		getMod().recipes.addRecipe(MODULE_EMPTY.getStack(1), "III", "ICI", "III", 'I', ODItems.IRON, 'C', PROCESSOR.getStack(1));
-		getMod().recipes.addShapelessRecipe(MODULE_INPUT.getStack(1), MODULE_EMPTY.getStack(1), EnumMCColor.LIGHT_BLUE.dyeName);
-		getMod().recipes.addShapelessRecipe(MODULE_OUTPUT.getStack(1), MODULE_EMPTY.getStack(1), EnumMCColor.ORANGE.dyeName);
-		getMod().recipes.addShapelessRecipe(MODULE_LOGIC.getStack(1), MODULE_EMPTY.getStack(1), ODItems.REDSTONE);
+		getMod().recipes.addShapelessRecipe(MODULE_INPUT.getStack(1), MODULE_EMPTY, EnumMCColor.BLUE.dyeName);
+		getMod().recipes.addShapelessRecipe(MODULE_OUTPUT.getStack(1), MODULE_EMPTY, EnumMCColor.ORANGE.dyeName);
+		getMod().recipes.addShapelessRecipe(MODULE_LOGIC.getStack(1), MODULE_EMPTY, ODItems.REDSTONE);
 	}
 }

@@ -43,7 +43,7 @@ public class BlockModuleSocket extends BlockSil
 	
 	public void loadModels()
 	{
-		FTBLibMod.proxy.addItemModel(getMod().getID(), getItem(), 0, blockName, "center=true");
+		FTBLibMod.proxy.addItemModel(getMod().getID(), getItem(), 0, blockName, "center=true,down=false,east=false,north=false,south=false,up=false,west=false");
 	}
 	
 	public boolean hasTileEntity(IBlockState state)
