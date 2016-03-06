@@ -1,5 +1,8 @@
 package latmod.silicio.block;
 
+import ftb.lib.api.item.ODItems;
+import latmod.silicio.SilItems;
+import latmod.silicio.item.ItemSilMaterials;
 import latmod.silicio.tile.TileReactorCore;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -20,7 +23,7 @@ public class BlockReactorCore extends BlockSil
 	
 	public void loadRecipes()
 	{
-		getMod().recipes.addRecipe(new ItemStack(this), " S ", "SNS", " S ", 'S', BlockSimpleBlocks.EnumType.dense_silicon.getStack(1), 'N', Items.nether_star);
+		getMod().recipes.addRecipe(new ItemStack(this), " N ", "AFA", " G ", 'F', SilItems.b_silicon_frame, 'A', ItemSilMaterials.ANTIMATTER.getStack(1), 'N', Items.nether_star, 'G', ODItems.GLOWSTONE);
 	}
 	
 	public void onPostLoaded()
@@ -31,10 +34,10 @@ public class BlockReactorCore extends BlockSil
 	
 	@SideOnly(Side.CLIENT)
 	public EnumWorldBlockLayer getBlockLayer()
-	{ return EnumWorldBlockLayer.SOLID; }
+	{ return EnumWorldBlockLayer.CUTOUT; }
 	
 	public boolean isOpaqueCube()
-	{ return true; }
+	{ return false; }
 	
 	public boolean hasTileEntity(IBlockState state)
 	{ return true; }

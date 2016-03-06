@@ -1,19 +1,25 @@
 {
   "forge_marker": 1,
   "defaults": {
-    "model": "minecraft:cube_all"
+    "model": "minecraft:cube_all",
+    "textures": {
+      "all": "silicio:blocks/controller",
+      "particle": "silicio:blocks/controller"
+    }
   },
   "variants": {
+    "inventory": [
+      {
+        "transform": "forge:default-block"
+      }
+    ],
     "conflict": {
       "true": {
         "textures": {
-          "all": "silicio:controller"
+          "all": "silicio:blocks/controller_conflict"
         }
       },
       "false": {
-        "textures": {
-          "all": "silicio:controller_conflict"
-        }
       }
     }
   }

@@ -7,6 +7,11 @@
     "model": "minecraft:cube_all"
   },
   "variants": {
+    "inventory": [
+      {
+        "transform": "forge:default-block"
+      }
+    ],
     "normal": [
       {
       }

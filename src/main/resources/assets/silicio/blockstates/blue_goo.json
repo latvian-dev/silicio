@@ -7,6 +7,11 @@
     "model": "silicio:blue_goo"
   },
   "variants": {
+    "inventory": [
+      {
+        "transform": "forge:default-block"
+      }
+    ],
     "normal": [
       {
       }

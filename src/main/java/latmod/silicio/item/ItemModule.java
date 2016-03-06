@@ -1,6 +1,5 @@
 package latmod.silicio.item;
 
-import ftb.lib.mod.FTBLibMod;
 import latmod.silicio.Silicio;
 import latmod.silicio.api.modules.*;
 import net.minecraft.entity.player.EntityPlayer;
@@ -25,7 +24,7 @@ public class ItemModule extends ItemSil implements IModuleItem
 	
 	public void loadModels()
 	{
-		FTBLibMod.proxy.addItemModel(getMod().getID(), getItem(), 0, "modules/" + module.getID());
+		module.loadModels(this);
 	}
 	
 	public void loadRecipes()

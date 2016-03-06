@@ -10,5 +10,4 @@ public interface ICBController extends ICBNetTile
 	boolean hasConflict();
 	boolean getSignalState(int id);
 	List<ICBNetTile> getNetwork();
-	void updateModules(boolean refreshList);
 }

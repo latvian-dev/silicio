@@ -4,6 +4,11 @@
     "model": "silicio:silicon_frame"
   },
   "variants": {
+    "inventory": [
+      {
+        "transform": "forge:default-block"
+      }
+    ],
     "center": {
       "true": {
         "submodel": {

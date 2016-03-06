@@ -15,6 +15,7 @@ public class ItemSilMaterials extends ItemMaterialsLM
 	public static MaterialItem BLUE_GOO;
 	public static MaterialItem LASER_LENS;
 	public static MaterialItem XSUIT_PLATE;
+	public static MaterialItem ANTIMATTER;
 	
 	public static MaterialItem ELEMITE_INGOT;
 	public static MaterialItem ELEMITE_NUGGET;
@@ -58,6 +59,7 @@ public class ItemSilMaterials extends ItemMaterialsLM
 		add(BLUE_GOO = new MaterialItem(this, 3, "blue_goo"));
 		add(LASER_LENS = new MaterialItem(this, 4, "laser_lens"));
 		add(XSUIT_PLATE = new MaterialItem(this, 5, "xsuit_plate"));
+		add(ANTIMATTER = new MaterialItem(this, 6, "antimatter"));
 		
 		add(ELEMITE_INGOT = new MaterialItem(this, 10, "elemite_ingot"));
 		add(ELEMITE_NUGGET = new MaterialItem(this, 11, "elemite_nugget"));
@@ -90,6 +92,7 @@ public class ItemSilMaterials extends ItemMaterialsLM
 	public void loadRecipes()
 	{
 		getMod().recipes.addRecipe(IRON_ROD.getStack(4), "I", "I", 'I', ODItems.IRON);
+		getMod().recipes.addShapelessRecipe(BLUE_GOO.getStack(1), ODItems.SLIMEBALL, ODItems.LAPIS, ODItems.IRON);
 		getMod().recipes.addRecipe(XSUIT_PLATE.getStack(1), "EEE", "ESE", "EEE", 'E', ELEMITE_INGOT.getStack(1), 'S', ODItems.SILICON);
 		
 		getMod().recipes.addRecipe(ELEMITE_INGOT.getStack(1), "EEE", "EEE", "EEE", 'E', ELEMITE_NUGGET.getStack(1));

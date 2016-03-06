@@ -43,12 +43,11 @@ public class BlockSimpleBlocks extends BlockSil
 	
 	public void loadModels()
 	{
-		String modid = getMod().getID();
 		Item item = getItem();
 		
 		for(EnumType e : EnumType.values())
 		{
-			FTBLibMod.proxy.addItemModel(modid, item, e.meta, e.getName());
+			FTBLibMod.proxy.addItemModel(getMod().getID(), item, e.meta, blockName, "variant=" + e.getName());
 		}
 	}
 	
@@ -81,14 +80,14 @@ public class BlockSimpleBlocks extends BlockSil
 	
 	public enum EnumType implements IStringSerializable
 	{
-		dense_silicon(0, "dense_silicon", MapColor.blackColor),
-		elemite(1, "elemite", MapColor.blueColor);
+		dense_silicon(0, MapColor.blackColor),
+		elemite(1, MapColor.blueColor);
 		
 		private static final EnumType[] META_LOOKUP = new EnumType[values().length];
 		public final int meta;
 		public final MapColor mapColor;
 		
-		EnumType(int id, String s, MapColor c)
+		EnumType(int id, MapColor c)
 		{
 			meta = id;
 			mapColor = c;

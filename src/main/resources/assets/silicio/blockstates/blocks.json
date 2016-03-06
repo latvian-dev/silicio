@@ -2,13 +2,17 @@
   "forge_marker": 1,
   "defaults": {
     "textures": {
-      "texture": "silicio:blocks/silicon_block",
-      "particle": "silicio:blocks/silicon_block"
+      "all": "silicio:blocks/dense_silicon"
     },
     "model": "minecraft:cube_all",
     "transform": "forge:default-block"
   },
   "variants": {
+    "inventory": [
+      {
+        "transform": "forge:default-block"
+      }
+    ],
     "variant": {
       "dense_silicon": {
         "textures": {

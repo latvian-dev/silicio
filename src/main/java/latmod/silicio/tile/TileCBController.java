@@ -1,9 +1,12 @@
 package latmod.silicio.tile;
 
 import cofh.api.energy.*;
+import ftb.lib.FTBLib;
 import latmod.lib.IntList;
-import latmod.silicio.api.modules.ModuleContainer;
+import latmod.silicio.api.modules.*;
 import latmod.silicio.api.tileentity.*;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.*;
 
 import java.util.*;
@@ -14,18 +17,17 @@ import java.util.*;
 public class TileCBController extends TileCBNetwork implements ICBController, IEnergyReceiver
 {
 	public final EnergyStorage energyStorage;
-	private final Map<Integer, Integer> signalMap;
+	private final IntList signalList;
 	private List<ICBNetTile> network;
 	private List<ModuleContainer> modules;
 	
 	private boolean hasConflict = false;
 	private boolean updateNetwork = false;
-	private int updateModules = 0;
 	
 	public TileCBController()
 	{
 		energyStorage = new EnergyStorage(1000000);
-		signalMap = new HashMap<>();
+		signalList = new IntList().setDefVal(0);
 		network = new ArrayList<>();
 		modules = new ArrayList<>();
 	}
@@ -38,41 +40,70 @@ public class TileCBController extends TileCBNetwork implements ICBController, IE
 		super.onLoad();
 	}
 	
+	public boolean onRightClick(EntityPlayer ep, ItemStack is, EnumFacing side, float x, float y, float z)
+	{
+		if(isServer())
+		{
+			FTBLib.printChat(ep, "Network: " + network.size());
+			FTBLib.printChat(ep, "Modules: " + modules.size());
+			FTBLib.printChat(ep, "Signals: " + signalList);
+		}
+		
+		return true;
+	}
+	
 	public void onUpdate()
 	{
+		if(!isServer()) return;
+		
 		if(updateNetwork)
 		{
 			updateNetwork = false;
+			
 			network = CBNetwork.getTilesAround(this);
-			updateModules = 2;
-		}
-		
-		if(updateModules > 0)
-		{
-			if(updateModules >= 2)
+			
+			modules.clear();
+			
+			for(ICBNetTile t : network)
 			{
-				modules.clear();
-				
-				for(ICBNetTile t : network)
+				if(t instanceof IModuleSocketTile)
 				{
-					if(t instanceof IModuleSocketTile)
-					{
-						modules.addAll(((IModuleSocketTile) t).getModules());
-					}
+					modules.addAll(((IModuleSocketTile) t).getModules());
 				}
 			}
+		}
+		
+		if(!modules.isEmpty())
+		{
+			IntList signalList0 = signalList.copy();
+			signalList.clear();
 			
-			signalMap.clear();
-			
-			IntList signalList = new IntList();
+			IntList signalList1 = new IntList();
 			
 			for(ModuleContainer c : modules)
 			{
-				c.module.provideSignals(c, signalList);
+				c.onUpdate();
+				
+				if(c.module.getFlag(Module.FLAG_PROVIDE_SIGNALS))
+				{
+					c.module.provideSignals(c, signalList1);
+					
+					for(int i = 0; i < signalList1.size(); i++)
+					{
+						int id = signalList1.get(i);
+						if(id != 0 && !signalList.contains(id)) signalList.add(id);
+					}
+					
+					signalList1.clear();
+				}
 			}
 			
-			updateModules = 0;
+			if(!signalList0.equalsIgnoreOrder(signalList))
+			{
+				FTBLib.printChat(null, "Signals: " + signalList);
+			}
 		}
+		else signalList.clear();
 	}
 	
 	public void onCBNetworkChanged(BlockPos pos)
@@ -86,15 +117,11 @@ public class TileCBController extends TileCBNetwork implements ICBController, IE
 	public boolean getSignalState(int id)
 	{
 		if(id == 0) return false;
-		Integer signal = signalMap.get(id);
-		return signal != null && signal > 0;
+		return signalList.contains(id);
 	}
 	
 	public List<ICBNetTile> getNetwork()
 	{ return network; }
-	
-	public void updateModules(boolean refreshList)
-	{ updateModules = refreshList ? 2 : 1; }
 	
 	public int receiveEnergy(EnumFacing from, int maxReceive, boolean simulate)
 	{ return energyStorage.receiveEnergy(maxReceive, simulate); }

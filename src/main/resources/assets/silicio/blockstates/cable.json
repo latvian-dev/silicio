@@ -7,6 +7,11 @@
     "model": "silicio:cable"
   },
   "variants": {
+    "inventory": [
+      {
+        "transform": "forge:default-block"
+      }
+    ],
     "up": {
       "true": {
         "submodel": {

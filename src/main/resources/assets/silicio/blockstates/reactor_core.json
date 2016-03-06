@@ -2,11 +2,17 @@
   "forge_marker": 1,
   "defaults": {
     "textures": {
-      "all": "silicio:blocks/reactor_core"
+      "texture": "silicio:blocks/reactor_core",
+      "particle": "silicio:blocks/reactor_core"
     },
-    "model": "minecraft:cube_all"
+    "model": "silicio:silicon_frame"
   },
   "variants": {
+    "inventory": [
+      {
+        "transform": "forge:default-block"
+      }
+    ],
     "normal": [
       {
       }

@@ -1,0 +1,156 @@
+{
+  "forge_marker": 1,
+  "defaults": {
+    "model": "builtin/generated",
+    "transform": "forge:default-item"
+  },
+  "variants": {
+    "variant": {
+      //Random
+      "antimatter": {
+        "textures": {
+          "layer0": "silicio:items/materials/antimatter"
+        }
+      },
+      "blue_goo": {
+        "textures": {
+          "layer0": "silicio:items/materials/blue_goo"
+        }
+      },
+      "iron_rod": {
+        "textures": {
+          "layer0": "silicio:items/materials/iron_rod"
+        }
+      },
+      "laser_lens": {
+        "textures": {
+          "layer0": "silicio:items/materials/laser_lens"
+        }
+      },
+      "silicon": {
+        "textures": {
+          "layer0": "silicio:items/materials/silicon"
+        }
+      },
+      "stone_shard": {
+        "textures": {
+          "layer0": "silicio:items/materials/stone_shard"
+        }
+      },
+      "xsuit_plate": {
+        "textures": {
+          "layer0": "silicio:items/materials/xsuit_plate"
+        }
+      },
+      //Ingots
+      "elemite_dust": {
+        "textures": {
+          "layer0": "silicio:items/materials/elemite_dust"
+        }
+      },
+      "elemite_ingot": {
+        "textures": {
+          "layer0": "silicio:items/materials/elemite_ingot"
+        }
+      },
+      "elemite_nugget": {
+        "textures": {
+          "layer0": "silicio:items/materials/elemite_nugget"
+        }
+      },
+      //Electric components
+      "capacitor": {
+        "textures": {
+          "layer0": "silicio:items/materials/capacitor"
+        }
+      },
+      "chip": {
+        "textures": {
+          "layer0": "silicio:items/materials/chip"
+        }
+      },
+      "circuit": {
+        "textures": {
+          "layer0": "silicio:items/materials/circuit"
+        }
+      },
+      "circuit_wifi": {
+        "textures": {
+          "layer0": "silicio:items/materials/circuit_wifi"
+        }
+      },
+      "diode": {
+        "textures": {
+          "layer0": "silicio:items/materials/diode"
+        }
+      },
+      "processor": {
+        "textures": {
+          "layer0": "silicio:items/materials/processor"
+        }
+      },
+      "resistor": {
+        "textures": {
+          "layer0": "silicio:items/materials/resistor"
+        }
+      },
+      "transistor": {
+        "textures": {
+          "layer0": "silicio:items/materials/transistor"
+        }
+      },
+      "wire": {
+        "textures": {
+          "layer0": "silicio:items/materials/wire"
+        }
+      },
+      //LEDs
+      "led_red": {
+        "textures": {
+          "layer0": "silicio:items/materials/led_red"
+        }
+      },
+      "led_green": {
+        "textures": {
+          "layer0": "silicio:items/materials/led_green"
+        }
+      },
+      "led_blue": {
+        "textures": {
+          "layer0": "silicio:items/materials/led_blue"
+        }
+      },
+      "led_rgb": {
+        "textures": {
+          "layer0": "silicio:items/materials/led_rgb"
+        }
+      },
+      "led_matrix": {
+        "textures": {
+          "layer0": "silicio:items/materials/led_matrix"
+        }
+      },
+      //Modules
+      "module_empty": {
+        "textures": {
+          "layer0": "silicio:items/materials/module_empty"
+        }
+      },
+      "module_input": {
+        "textures": {
+          "layer0": "silicio:items/materials/module_input"
+        }
+      },
+      "module_output": {
+        "textures": {
+          "layer0": "silicio:items/materials/module_output"
+        }
+      },
+      "module_logic": {
+        "textures": {
+          "layer0": "silicio:items/materials/module_logic"
+        }
+      }
+    }
+  }
+}

@@ -17,6 +17,7 @@ public final class ModuleContainer
 	public final ItemStack item;
 	public final Module module;
 	public final IntMap connections;
+	public NBTTagCompound data;
 	public long tick;
 	
 	public ModuleContainer(IModuleSocketTile t, EnumFacing f, ItemStack is, Module m)
@@ -38,6 +39,7 @@ public final class ModuleContainer
 			ItemStack item = ItemStack.loadItemStackFromNBT(tag.getCompoundTag("Item"));
 			ModuleContainer c = new ModuleContainer(tile, facing, item, module);
 			c.tick = tag.getLong("Tick");
+			c.data = tag.hasKey("Data") ? tag.getCompoundTag("Data") : null;
 			return c;
 		}
 		
@@ -53,6 +55,11 @@ public final class ModuleContainer
 		item.writeToNBT(tag2);
 		tag.setTag("Item", tag2);
 		tag.setLong("Tick", tick);
+		
+		if(data != null && !data.hasNoTags())
+		{
+			tag.setTag("Data", data);
+		}
 	}
 	
 	public void onUpdate()

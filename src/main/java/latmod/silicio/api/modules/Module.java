@@ -1,7 +1,9 @@
 package latmod.silicio.api.modules;
 
+import ftb.lib.mod.FTBLibMod;
 import latmod.lib.*;
 import latmod.lib.util.FinalIDObject;
+import latmod.silicio.item.ItemModule;
 import net.minecraft.entity.player.*;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.relauncher.*;
@@ -34,6 +36,12 @@ public abstract class Module extends FinalIDObject
 	
 	public void loadRecipes()
 	{
+	}
+	
+	@SideOnly(Side.CLIENT)
+	public void loadModels(ItemModule item)
+	{
+		FTBLibMod.proxy.addItemModel(item.getMod().getID(), item, 0, "modules", "variant=" + getID());
 	}
 	
 	public void onAdded(ModuleContainer c, EntityPlayerMP player)

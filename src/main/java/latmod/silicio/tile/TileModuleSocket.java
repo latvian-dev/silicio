@@ -65,40 +65,39 @@ public class TileModuleSocket extends TileCBNetwork implements IModuleSocketTile
 	
 	public boolean onRightClick(EntityPlayer ep, ItemStack is, EnumFacing side, float x, float y, float z)
 	{
-		if(is == null && ep.isSneaking())
+		ModuleContainer c = modules.get(side);
+		
+		if(c != null)
 		{
 			if(isServer())
 			{
-				ModuleContainer c = modules.get(side);
-				
-				if(c != null)
+				if(is == null && ep.isSneaking())
 				{
 					c.module.onRemoved(c, (EntityPlayerMP) ep);
 					LMInvUtils.giveItem(ep, c.item.copy(), ep.inventory.currentItem);
 					modules.remove(side);
 					markDirty();
-					if(controller != null) controller.updateModules(true);
+					if(controller != null) controller.onCBNetworkChanged(getPos());
 				}
 			}
 			
 			return true;
 		}
-		
-		if(is != null && is.getItem() instanceof IModuleItem)
+		else if(is != null && is.getItem() instanceof IModuleItem)
 		{
-			if(isServer() && !modules.containsKey(side))
+			if(isServer())
 			{
 				Module m = ModuleRegistry.getFromStack(is);
 				
 				if(m != null)
 				{
-					ModuleContainer c = new ModuleContainer(this, side, LMInvUtils.singleCopy(is), m);
+					c = new ModuleContainer(this, side, LMInvUtils.singleCopy(is), m);
 					modules.put(c.facing, c);
 					is.stackSize--;
 					c.module.init(c);
 					c.module.onAdded(c, (EntityPlayerMP) ep);
 					markDirty();
-					if(controller != null) controller.updateModules(true);
+					if(controller != null) controller.onCBNetworkChanged(getPos());
 				}
 			}
 			

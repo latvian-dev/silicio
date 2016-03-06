@@ -1,6 +1,7 @@
 package latmod.silicio.modules;
 
 import latmod.silicio.api.modules.*;
+import net.minecraft.entity.player.EntityPlayerMP;
 
 /**
  * Created by LatvianModder on 04.03.2016.
@@ -15,6 +16,10 @@ public class ModuleChatOutput extends Module
 	public void init(ModuleContainer c)
 	{
 		c.addConnection(IN);
+	}
+	
+	public void onAdded(ModuleContainer c, EntityPlayerMP player)
+	{
 	}
 	
 	public void loadRecipes()

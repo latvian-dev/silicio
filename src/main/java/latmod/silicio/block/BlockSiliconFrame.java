@@ -1,6 +1,6 @@
 package latmod.silicio.block;
 
-import latmod.silicio.item.ItemSilMaterials;
+import ftb.lib.api.item.ODItems;
 import net.minecraft.block.material.Material;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.*;
@@ -17,7 +17,7 @@ public class BlockSiliconFrame extends BlockSil
 	
 	public void loadRecipes()
 	{
-		getMod().recipes.addRecipe(new ItemStack(this), "SSS", "S S", "SSS", 'S', ItemSilMaterials.SILICON.getStack(1));
+		getMod().recipes.addRecipe(new ItemStack(this), "ISI", "S S", "ISI", 'S', BlockSimpleBlocks.EnumType.dense_silicon.getStack(1), 'I', ODItems.IRON);
 	}
 	
 	@SideOnly(Side.CLIENT)
