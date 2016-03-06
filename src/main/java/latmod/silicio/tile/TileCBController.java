@@ -1,6 +1,8 @@
 package latmod.silicio.tile;
 
 import cofh.api.energy.*;
+import latmod.lib.IntList;
+import latmod.silicio.api.modules.ModuleContainer;
 import latmod.silicio.api.tileentity.*;
 import net.minecraft.util.*;
 
@@ -14,14 +16,18 @@ public class TileCBController extends TileCBNetwork implements ICBController, IE
 	public final EnergyStorage energyStorage;
 	private final Map<Integer, Integer> signalMap;
 	private List<ICBNetTile> network;
+	private List<ModuleContainer> modules;
+	
 	private boolean hasConflict = false;
 	private boolean updateNetwork = false;
+	private int updateModules = 0;
 	
 	public TileCBController()
 	{
 		energyStorage = new EnergyStorage(1000000);
 		signalMap = new HashMap<>();
 		network = new ArrayList<>();
+		modules = new ArrayList<>();
 	}
 	
 	public boolean rerenderBlock()
@@ -37,9 +43,35 @@ public class TileCBController extends TileCBNetwork implements ICBController, IE
 		if(updateNetwork)
 		{
 			updateNetwork = false;
+			network = CBNetwork.getTilesAround(this);
+			updateModules = 2;
+		}
+		
+		if(updateModules > 0)
+		{
+			if(updateModules >= 2)
+			{
+				modules.clear();
+				
+				for(ICBNetTile t : network)
+				{
+					if(t instanceof IModuleSocketTile)
+					{
+						modules.addAll(((IModuleSocketTile) t).getModules());
+					}
+				}
+			}
 			
 			signalMap.clear();
-			network = CBNetwork.getTilesAround(this);
+			
+			IntList signalList = new IntList();
+			
+			for(ModuleContainer c : modules)
+			{
+				c.module.provideSignals(c, signalList);
+			}
+			
+			updateModules = 0;
 		}
 	}
 	
@@ -57,6 +89,12 @@ public class TileCBController extends TileCBNetwork implements ICBController, IE
 		Integer signal = signalMap.get(id);
 		return signal != null && signal > 0;
 	}
+	
+	public List<ICBNetTile> getNetwork()
+	{ return network; }
+	
+	public void updateModules(boolean refreshList)
+	{ updateModules = refreshList ? 2 : 1; }
 	
 	public int receiveEnergy(EnumFacing from, int maxReceive, boolean simulate)
 	{ return energyStorage.receiveEnergy(maxReceive, simulate); }

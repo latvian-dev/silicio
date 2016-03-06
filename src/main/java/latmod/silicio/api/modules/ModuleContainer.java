@@ -1,24 +1,22 @@
 package latmod.silicio.api.modules;
 
-import latmod.lib.LMUtils;
+import latmod.lib.*;
 import latmod.silicio.api.tileentity.*;
 import latmod.silicio.tile.TileModuleSocket;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 
-import java.util.*;
-
 /**
  * Created by LatvianModder on 04.03.2016.
  */
-public class ModuleContainer
+public final class ModuleContainer
 {
 	public final IModuleSocketTile tile;
 	public final EnumFacing facing;
 	public final ItemStack item;
 	public final Module module;
-	public final Map<ModuleIOConnection, Integer> connections;
+	public final IntMap connections;
 	public long tick;
 	
 	public ModuleContainer(IModuleSocketTile t, EnumFacing f, ItemStack is, Module m)
@@ -27,7 +25,7 @@ public class ModuleContainer
 		facing = f;
 		item = LMUtils.nonNull(is);
 		module = LMUtils.nonNull(m);
-		connections = new HashMap<>();
+		connections = new IntMap();
 	}
 	
 	public static ModuleContainer readFromNBT(TileModuleSocket tile, NBTTagCompound tag)
@@ -64,10 +62,10 @@ public class ModuleContainer
 	}
 	
 	public void addConnection(ModuleIOConnection c)
-	{ connections.put(c, 0); }
+	{ connections.put(c.index, 0); }
 	
 	public int getConnectionID(ModuleIOConnection c)
-	{ return connections.get(c); }
+	{ return connections.get(c.index); }
 	
 	public boolean getSignalState(ModuleIOConnection c)
 	{

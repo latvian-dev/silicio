@@ -1,5 +1,6 @@
 package latmod.silicio.modules;
 
+import latmod.lib.IntList;
 import latmod.silicio.api.modules.*;
 
 /**
@@ -12,6 +13,7 @@ public class ModuleTimer extends Module
 	public ModuleTimer(String s)
 	{
 		super(s);
+		setFlag(FLAG_PROVIDE_SIGNALS, true);
 	}
 	
 	public void init(ModuleContainer c)
@@ -23,8 +25,8 @@ public class ModuleTimer extends Module
 	{
 	}
 	
-	public boolean provideSignal(ModuleContainer c)
+	public void provideSignals(ModuleContainer c, IntList list)
 	{
-		return c.tick % 20L == 0L;
+		if(c.tick % 20L == 0L) list.add(c.getConnectionID(OUT));
 	}
 }

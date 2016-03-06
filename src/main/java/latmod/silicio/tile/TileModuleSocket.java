@@ -77,11 +77,7 @@ public class TileModuleSocket extends TileCBNetwork implements IModuleSocketTile
 					LMInvUtils.giveItem(ep, c.item.copy(), ep.inventory.currentItem);
 					modules.remove(side);
 					markDirty();
-					
-					if(controller != null)
-					{
-						controller.onCBNetworkChanged(getPos());
-					}
+					if(controller != null) controller.updateModules(true);
 				}
 			}
 			
@@ -102,11 +98,7 @@ public class TileModuleSocket extends TileCBNetwork implements IModuleSocketTile
 					c.module.init(c);
 					c.module.onAdded(c, (EntityPlayerMP) ep);
 					markDirty();
-					
-					if(controller != null)
-					{
-						controller.onCBNetworkChanged(getPos());
-					}
+					if(controller != null) controller.updateModules(true);
 				}
 			}
 			
@@ -127,22 +119,11 @@ public class TileModuleSocket extends TileCBNetwork implements IModuleSocketTile
 	{ return modules.containsKey(facing); }
 	
 	public void onCBNetworkChanged(BlockPos pos)
-	{
-		controller = CBNetwork.getController(this);
-	}
+	{ controller = CBNetwork.getController(this); }
 	
 	public ICBController getController()
 	{ return controller; }
 	
 	public Collection<ModuleContainer> getModules()
 	{ return modules.values(); }
-	
-	public void updateChannels()
-	{
-	}
-	
-	public int getState(int channel)
-	{
-		return 0;
-	}
 }

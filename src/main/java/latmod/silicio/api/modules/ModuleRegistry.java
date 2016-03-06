@@ -3,6 +3,7 @@ package latmod.silicio.api.modules;
 import latmod.silicio.modules.*;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.fml.common.eventhandler.Event;
 
 import java.util.*;
 
@@ -18,7 +19,7 @@ public class ModuleRegistry
 		register(new ModuleTimer("timer"));
 		register(new ModuleChatOutput("chat_out"));
 		
-		MinecraftForge.EVENT_BUS.post(new RegisterModulesEvent());
+		MinecraftForge.EVENT_BUS.post(new RegistryEvent());
 	}
 	
 	public static void register(Module m)
@@ -42,4 +43,10 @@ public class ModuleRegistry
 		
 		return null;
 	}
+	
+	/**
+	 * Created by LatvianModder on 06.03.2016.
+	 */
+	public static class RegistryEvent extends Event
+	{ }
 }

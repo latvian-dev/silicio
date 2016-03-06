@@ -11,6 +11,4 @@ public interface IModuleSocketTile extends ICBNetTile
 {
 	ICBController getController();
 	Collection<ModuleContainer> getModules();
-	void updateChannels();
-	int getState(int channel);
 }
