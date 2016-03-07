@@ -8,46 +8,39 @@ import java.util.*;
 
 public class SilItems
 {
-	public static BlockSimpleBlocks b_blocks;
-	public static BlockSiliconBlock b_silicon_block;
-	public static BlockSiliconFrame b_silicon_frame;
-	public static BlockSiliconGlass b_glass;
+	public static BlockBlocks1 b_blocks_1;
+	public static BlockBlocks2 b_blocks_2;
+	public static BlockBlocks3 b_blocks_3;
 	public static BlockBlueGoo b_blue_goo;
-	public static BlockReactorCore b_reactor_core;
 	public static BlockCable b_cable;
 	public static BlockModuleSocket b_module_socket;
-	public static BlockCBController b_cb_controller;
+	public static BlockController b_controller;
+	public static BlockLaserMirrorBox b_laser_mirror;
 	
 	public static ItemSilMaterials i_mat;
 	public static Map<String, ItemModule> i_modules;
 	
 	public static void init()
 	{
-		/*b_cbcable = new BlockCBCable("cable").register();
-		b_cbcontroller = new BlockCBController("controller").register();
+		/*
 		b_module_copier = new BlockModuleCopier("module_copier").register();
 		b_rednet_io = new BlockRedNetIO("rednet_io").register();
 		b_computer_io = new BlockComputerIO("computer_io").register();
-		
-		i_mat = new ItemMaterialsSil("materials").register();
-		i_circuit_board = new ItemCircuitBoard("circuit_board").register();
 		
 		Silicio.mod.addItem(i_xsuit_helm = new ItemXSuitHelm("xsuit_helm"));
 		Silicio.mod.addItem(i_xsuit_body = new ItemXSuitBody("xsuit_body"));
 		Silicio.mod.addItem(i_xsuit_legs = new ItemXSuitLegs("xsuit_legs"));
 		Silicio.mod.addItem(i_xsuit_boots = new ItemXSuitBoots("xsuit_boots"));
-		
 		*/
 		
-		Silicio.mod.addItem(b_blocks = new BlockSimpleBlocks("blocks"));
-		Silicio.mod.addItem(b_silicon_block = new BlockSiliconBlock("silicon_block"));
-		Silicio.mod.addItem(b_silicon_frame = new BlockSiliconFrame("silicon_frame"));
-		Silicio.mod.addItem(b_glass = new BlockSiliconGlass("silicon_glass"));
+		Silicio.mod.addItem(b_blocks_1 = new BlockBlocks1("blocks_1"));
+		Silicio.mod.addItem(b_blocks_2 = new BlockBlocks2("blocks_2"));
+		Silicio.mod.addItem(b_blocks_3 = new BlockBlocks3("blocks_3"));
 		Silicio.mod.addItem(b_blue_goo = new BlockBlueGoo("blue_goo"));
-		Silicio.mod.addItem(b_reactor_core = new BlockReactorCore("reactor_core"));
 		Silicio.mod.addItem(b_cable = new BlockCable("cable"));
 		Silicio.mod.addItem(b_module_socket = new BlockModuleSocket("module_socket_block"));
-		Silicio.mod.addItem(b_cb_controller = new BlockCBController("controller"));
+		Silicio.mod.addItem(b_controller = new BlockController("controller"));
+		Silicio.mod.addItem(b_laser_mirror = new BlockLaserMirrorBox("laser_mirror_box"));
 		
 		Silicio.mod.addItem(i_mat = new ItemSilMaterials("mat"));
 		

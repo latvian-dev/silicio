@@ -1,10 +1,7 @@
 package latmod.silicio.block;
 
-import ftb.lib.api.item.ODItems;
-import latmod.silicio.SilItems;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.item.ItemStack;
 import net.minecraft.util.*;
 import net.minecraft.world.IBlockAccess;
 import net.minecraftforge.fml.relauncher.*;
@@ -17,17 +14,7 @@ public class BlockSiliconGlass extends BlockSil
 	public BlockSiliconGlass(String s)
 	{ super(s, Material.glass); }
 	
-	public void onPostLoaded()
-	{
-		super.onPostLoaded();
-		
-		ODItems.add(ODItems.GLASS, new ItemStack(this));
-	}
 	
-	public void loadRecipes()
-	{
-		getMod().recipes.addSmelting(new ItemStack(this), new ItemStack(SilItems.b_silicon_block));
-	}
 	
 	@SideOnly(Side.CLIENT)
 	public EnumWorldBlockLayer getBlockLayer()

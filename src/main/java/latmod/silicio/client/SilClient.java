@@ -9,5 +9,6 @@ public class SilClient extends SilCommon
 	public void preInit()
 	{
 		//RenderCBCable.instance.register(TileCBCable.class);
+		//OBJLoader.instance.addDomain(Silicio.mod.getID());
 	}
 }

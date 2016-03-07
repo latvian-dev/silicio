@@ -61,7 +61,7 @@ public class BlockCable extends BlockSil
 	}
 	
 	public IBlockState getModelState()
-	{ return createBlockState().getBaseState().withProperty(CON_D, false).withProperty(CON_U, false).withProperty(CON_N, true).withProperty(CON_S, true).withProperty(CON_W, false).withProperty(CON_E, false); }
+	{ return createBlockState().getBaseState().withProperty(CON_D, false).withProperty(CON_U, false).withProperty(CON_N, false).withProperty(CON_S, false).withProperty(CON_W, true).withProperty(CON_E, true); }
 	
 	public boolean canHarvestBlock(IBlockAccess world, BlockPos pos, EntityPlayer player)
 	{ return true; }

@@ -24,7 +24,7 @@ public class BlockBlueGoo extends BlockSil
 	}
 	
 	public MapColor getMapColor(IBlockState state)
-	{ return MapColor.grassColor; }
+	{ return MapColor.lightBlueColor; }
 	
 	@SideOnly(Side.CLIENT)
 	public EnumWorldBlockLayer getBlockLayer()

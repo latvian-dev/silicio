@@ -20,7 +20,7 @@
       "true": {
         "submodel": {
           "up": {
-            "model": "silicio:module_socket",
+            "model": "silicio:module_socket_plate",
             "x": 90
           }
         }
@@ -32,7 +32,7 @@
       "true": {
         "submodel": {
           "down": {
-            "model": "silicio:module_socket",
+            "model": "silicio:module_socket_plate",
             "x": 270
           }
         }
@@ -44,7 +44,7 @@
       "true": {
         "submodel": {
           "north": {
-            "model": "silicio:module_socket",
+            "model": "silicio:module_socket_plate",
             "y": 180
           }
         }
@@ -56,7 +56,7 @@
       "true": {
         "submodel": {
           "south": {
-            "model": "silicio:module_socket"
+            "model": "silicio:module_socket_plate"
           }
         }
       },
@@ -67,7 +67,7 @@
       "true": {
         "submodel": {
           "west": {
-            "model": "silicio:module_socket",
+            "model": "silicio:module_socket_plate",
             "y": 90
           }
         }
@@ -79,7 +79,7 @@
       "true": {
         "submodel": {
           "east": {
-            "model": "silicio:module_socket",
+            "model": "silicio:module_socket_plate",
             "y": 270
           }
         }

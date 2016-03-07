@@ -1,7 +1,6 @@
 package latmod.silicio.block;
 
 import ftb.lib.api.item.ODItems;
-import latmod.silicio.SilItems;
 import latmod.silicio.item.ItemSilMaterials;
 import latmod.silicio.tile.TileCBController;
 import net.minecraft.block.material.Material;
@@ -15,11 +14,11 @@ import net.minecraft.world.*;
 /**
  * Created by LatvianModder on 04.03.2016.
  */
-public class BlockCBController extends BlockSil
+public class BlockController extends BlockSil
 {
 	public static final PropertyBool CONFLICT = PropertyBool.create("conflict");
 	
-	public BlockCBController(String s)
+	public BlockController(String s)
 	{
 		super(s, Material.iron);
 	}
@@ -32,7 +31,7 @@ public class BlockCBController extends BlockSil
 	
 	public void loadRecipes()
 	{
-		getMod().recipes.addRecipe(new ItemStack(this), " P ", "DFD", " P ", 'P', ItemSilMaterials.PROCESSOR.getStack(1), 'F', SilItems.b_silicon_frame, 'D', ODItems.DIAMOND);
+		getMod().recipes.addRecipe(new ItemStack(this), " P ", "DFD", " P ", 'P', ItemSilMaterials.PROCESSOR.getStack(1), 'F', VariantBlocks2.SILICON_FRAME.getStack(1), 'D', ODItems.DIAMOND);
 	}
 	
 	public IBlockState getModelState()

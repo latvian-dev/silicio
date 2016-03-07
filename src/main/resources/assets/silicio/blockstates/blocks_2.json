@@ -1,0 +1,26 @@
+{
+  "forge_marker": 1,
+  "defaults": {
+    "textures": {
+      "all": "silicio:blocks/dense_silicon"
+    },
+    "model": "minecraft:cube_all",
+    "transform": "forge:default-block"
+  },
+  "variants": {
+    "variant": {
+      "silicon_frame": {
+        "model": "silicio:silicon_frame",
+        "textures": {
+          "all": "silicio:blocks/silicon_frame"
+        }
+      },
+      "reactor_core": {
+        "model": "silicio:silicon_frame",
+        "textures": {
+          "all": "silicio:blocks/reactor_core"
+        }
+      }
+    }
+  }
+}

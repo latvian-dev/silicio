@@ -1,0 +1,25 @@
+{
+  "forge_marker": 1,
+  "defaults": {
+    "textures": {
+      "all": "silicio:blocks/silicon_block"
+    },
+    "model": "minecraft:cube_all",
+    "transform": "forge:default-block"
+  },
+  "variants": {
+    "variant": {
+      "silicon_block": {
+        "model": "silicio:silicon_block",
+        "textures": {
+          "all": "silicio:blocks/silicon_block"
+        }
+      },
+      "silicon_glass": {
+        "textures": {
+          "all": "silicio:blocks/silicon_glass"
+        }
+      }
+    }
+  }
+}

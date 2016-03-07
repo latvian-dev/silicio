@@ -1,6 +1,5 @@
 package latmod.silicio.block;
 
-import latmod.silicio.SilItems;
 import latmod.silicio.item.ItemSilMaterials;
 import latmod.silicio.tile.TileModuleSocket;
 import net.minecraft.block.material.Material;
@@ -37,7 +36,7 @@ public class BlockModuleSocket extends BlockSil
 	
 	public void loadRecipes()
 	{
-		getMod().recipes.addRecipe(new ItemStack(this), " P ", "PFP", " P ", 'P', ItemSilMaterials.PROCESSOR.getStack(1), 'F', SilItems.b_silicon_frame);
+		getMod().recipes.addRecipe(new ItemStack(this), " P ", "PFP", " P ", 'P', ItemSilMaterials.PROCESSOR.getStack(1), 'F', VariantBlocks2.SILICON_FRAME.getStack(1));
 	}
 	
 	public IBlockState getModelState()
