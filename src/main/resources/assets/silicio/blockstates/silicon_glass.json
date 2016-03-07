@@ -4,14 +4,10 @@
     "textures": {
       "all": "silicio:blocks/silicon_glass"
     },
-    "model": "minecraft:cube_all"
+    "model": "minecraft:cube_all",
+    "transform": "forge:default-block"
   },
   "variants": {
-    "inventory": [
-      {
-        "transform": "forge:default-block"
-      }
-    ],
     "normal": [
       {
       }

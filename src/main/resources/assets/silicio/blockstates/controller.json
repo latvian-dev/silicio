@@ -5,14 +5,10 @@
     "textures": {
       "all": "silicio:blocks/controller",
       "particle": "silicio:blocks/controller"
-    }
+    },
+    "transform": "forge:default-block"
   },
   "variants": {
-    "inventory": [
-      {
-        "transform": "forge:default-block"
-      }
-    ],
     "conflict": {
       "true": {
         "textures": {

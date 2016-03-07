@@ -35,6 +35,9 @@ public class BlockCBController extends BlockSil
 		getMod().recipes.addRecipe(new ItemStack(this), " P ", "DFD", " P ", 'P', ItemSilMaterials.PROCESSOR.getStack(1), 'F', SilItems.b_silicon_frame, 'D', ODItems.DIAMOND);
 	}
 	
+	public IBlockState getModelState()
+	{ return createBlockState().getBaseState().withProperty(CONFLICT, false); }
+	
 	public boolean hasTileEntity(IBlockState state)
 	{ return true; }
 	

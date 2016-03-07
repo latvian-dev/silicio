@@ -4,14 +4,10 @@
     "textures": {
       "all": "silicio:blocks/blue_goo"
     },
-    "model": "silicio:blue_goo"
+    "model": "silicio:blue_goo",
+    "transform": "forge:default-block"
   },
   "variants": {
-    "inventory": [
-      {
-        "transform": "forge:default-block"
-      }
-    ],
     "normal": [
       {
       }

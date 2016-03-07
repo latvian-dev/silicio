@@ -1,14 +1,10 @@
 {
   "forge_marker": 1,
   "defaults": {
-    "model": "silicio:silicon_frame"
+    "model": "silicio:silicon_frame",
+    "transform": "forge:default-block"
   },
   "variants": {
-    "inventory": [
-      {
-        "transform": "forge:default-block"
-      }
-    ],
     "center": {
       "true": {
         "submodel": {

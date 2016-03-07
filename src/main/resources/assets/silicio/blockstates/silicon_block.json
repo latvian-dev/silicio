@@ -4,14 +4,10 @@
     "textures": {
       "all": "silicio:blocks/silicon_block"
     },
-    "model": "silicio:silicon_block"
+    "model": "silicio:silicon_block",
+    "transform": "forge:default-block"
   },
   "variants": {
-    "inventory": [
-      {
-        "transform": "forge:default-block"
-      }
-    ],
     "normal": [
       {
       }

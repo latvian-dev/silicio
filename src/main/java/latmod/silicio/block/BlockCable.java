@@ -1,6 +1,5 @@
 package latmod.silicio.block;
 
-import ftb.lib.mod.FTBLibMod;
 import latmod.silicio.api.tileentity.ICBNetTile;
 import latmod.silicio.item.ItemSilMaterials;
 import latmod.silicio.tile.TileCable;
@@ -61,10 +60,8 @@ public class BlockCable extends BlockSil
 		getMod().recipes.addRecipe(new ItemStack(this, 8), "WWW", "WEW", "WWW", 'W', ItemSilMaterials.WIRE.getStack(1), 'E', ItemSilMaterials.ELEMITE_INGOT.getStack(1));
 	}
 	
-	public void loadModels()
-	{
-		FTBLibMod.proxy.addItemModel(getMod().getID(), getItem(), 0, blockName, "down=false,east=false,north=true,south=true,up=false,west=false");
-	}
+	public IBlockState getModelState()
+	{ return createBlockState().getBaseState().withProperty(CON_D, false).withProperty(CON_U, false).withProperty(CON_N, true).withProperty(CON_S, true).withProperty(CON_W, false).withProperty(CON_E, false); }
 	
 	public boolean canHarvestBlock(IBlockAccess world, BlockPos pos, EntityPlayer player)
 	{ return true; }

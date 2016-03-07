@@ -1,6 +1,5 @@
 package latmod.silicio.block;
 
-import ftb.lib.mod.FTBLibMod;
 import latmod.silicio.SilItems;
 import latmod.silicio.item.ItemSilMaterials;
 import latmod.silicio.tile.TileModuleSocket;
@@ -41,10 +40,8 @@ public class BlockModuleSocket extends BlockSil
 		getMod().recipes.addRecipe(new ItemStack(this), " P ", "PFP", " P ", 'P', ItemSilMaterials.PROCESSOR.getStack(1), 'F', SilItems.b_silicon_frame);
 	}
 	
-	public void loadModels()
-	{
-		FTBLibMod.proxy.addItemModel(getMod().getID(), getItem(), 0, blockName, "center=true,down=false,east=false,north=false,south=false,up=false,west=false");
-	}
+	public IBlockState getModelState()
+	{ return createBlockState().getBaseState().withProperty(MODULE_D, false).withProperty(MODULE_U, false).withProperty(MODULE_N, false).withProperty(MODULE_S, false).withProperty(MODULE_W, false).withProperty(MODULE_E, false).withProperty(CENTER, true); }
 	
 	public boolean hasTileEntity(IBlockState state)
 	{ return true; }

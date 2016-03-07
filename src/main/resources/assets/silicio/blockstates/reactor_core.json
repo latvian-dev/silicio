@@ -5,14 +5,10 @@
       "texture": "silicio:blocks/reactor_core",
       "particle": "silicio:blocks/reactor_core"
     },
-    "model": "silicio:silicon_frame"
+    "model": "silicio:silicon_frame",
+    "transform": "forge:default-block"
   },
   "variants": {
-    "inventory": [
-      {
-        "transform": "forge:default-block"
-      }
-    ],
     "normal": [
       {
       }

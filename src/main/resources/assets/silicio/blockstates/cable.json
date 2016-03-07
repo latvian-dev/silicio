@@ -4,14 +4,10 @@
     "textures": {
       "texture": "silicio:blocks/cable"
     },
-    "model": "silicio:cable"
+    "model": "silicio:cable",
+    "transform": "forge:default-block"
   },
   "variants": {
-    "inventory": [
-      {
-        "transform": "forge:default-block"
-      }
-    ],
     "up": {
       "true": {
         "submodel": {

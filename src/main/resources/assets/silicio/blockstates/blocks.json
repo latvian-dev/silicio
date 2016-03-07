@@ -8,11 +8,6 @@
     "transform": "forge:default-block"
   },
   "variants": {
-    "inventory": [
-      {
-        "transform": "forge:default-block"
-      }
-    ],
     "variant": {
       "dense_silicon": {
         "textures": {
