@@ -16,6 +16,8 @@ public class SilItems
 	public static BlockModuleSocket b_module_socket;
 	public static BlockController b_controller;
 	public static BlockLaserMirrorBox b_laser_mirror;
+	public static BlockLaserIO b_laser_rx;
+	public static BlockLaserIO b_laser_tx;
 	
 	public static ItemSilMaterials i_mat;
 	public static Map<String, ItemModule> i_modules;
@@ -41,6 +43,8 @@ public class SilItems
 		Silicio.mod.addItem(b_module_socket = new BlockModuleSocket("module_socket_block"));
 		Silicio.mod.addItem(b_controller = new BlockController("controller"));
 		Silicio.mod.addItem(b_laser_mirror = new BlockLaserMirrorBox("laser_mirror_box"));
+		Silicio.mod.addItem(b_laser_rx = new BlockLaserIO("laser_rx", true));
+		Silicio.mod.addItem(b_laser_tx = new BlockLaserIO("laser_tx", false));
 		
 		Silicio.mod.addItem(i_mat = new ItemSilMaterials("mat"));
 		

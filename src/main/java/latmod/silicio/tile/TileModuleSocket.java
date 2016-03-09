@@ -1,6 +1,5 @@
 package latmod.silicio.tile;
 
-import ftb.lib.LMNBTUtils;
 import ftb.lib.api.item.LMInvUtils;
 import latmod.silicio.api.modules.*;
 import latmod.silicio.api.tileentity.*;
@@ -8,6 +7,7 @@ import net.minecraft.entity.player.*;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.*;
 import net.minecraft.util.*;
+import net.minecraftforge.common.util.Constants;
 
 import java.util.*;
 
@@ -33,7 +33,7 @@ public class TileModuleSocket extends TileCBNetwork implements IModuleSocketTile
 		
 		modules.clear();
 		
-		NBTTagList list = tag.getTagList("Modules", LMNBTUtils.MAP);
+		NBTTagList list = tag.getTagList("Modules", Constants.NBT.TAG_COMPOUND);
 		
 		for(int i = 0; i < list.tagCount(); i++)
 		{
@@ -118,7 +118,10 @@ public class TileModuleSocket extends TileCBNetwork implements IModuleSocketTile
 	{ return modules.containsKey(facing); }
 	
 	public void onCBNetworkChanged(BlockPos pos)
-	{ controller = CBNetwork.getController(this); }
+	{
+		if(worldObj != null) controller = CBNetwork.getController(this);
+		else controller = null;
+	}
 	
 	public ICBController getController()
 	{ return controller; }

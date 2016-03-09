@@ -21,6 +21,12 @@ public class BlockBlocks1 extends BlockWithVariants<VariantBlocks1>
 	public LMMod getMod()
 	{ return Silicio.mod; }
 	
+	public void onPostLoaded()
+	{
+		super.onPostLoaded();
+		//getMod().addTile(TileLaserRX.class, VariantBlocks1.LASER_RX.getName());
+	}
+	
 	public void loadRecipes()
 	{
 		getMod().recipes.addRecipe(VariantBlocks1.ELEMITE.getStack(1), "III", "III", "III", 'I', ItemSilMaterials.ELEMITE_INGOT.getStack(1));
@@ -30,4 +36,19 @@ public class BlockBlocks1 extends BlockWithVariants<VariantBlocks1>
 		getMod().recipes.addRecipe(VariantBlocks1.DENSE_SILICON.getStack(1), "III", "III", "III", 'I', VariantBlocks3.SILICON_BLOCK.getStack(1));
 		getMod().recipes.addShapelessRecipe(VariantBlocks3.SILICON_BLOCK.getStack(9), VariantBlocks1.DENSE_SILICON.getStack(1));
 	}
+	
+	/*
+	public boolean hasTileEntity(IBlockState state)
+	{
+		VariantBlocks1 v = getVariant(state);
+		return v == VariantBlocks1.LASER_RX;
+	}
+	
+	public TileEntity createTileEntity(World w, IBlockState state)
+	{
+		VariantBlocks1 v = getVariant(state);
+		if(v == VariantBlocks1.LASER_RX) return new TileLaserRX();
+		return null;
+	}
+	*/
 }

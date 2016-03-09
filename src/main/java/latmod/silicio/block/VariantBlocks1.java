@@ -11,8 +11,7 @@ import net.minecraft.item.ItemStack;
 public enum VariantBlocks1 implements BlockWithVariants.IVariantEnum
 {
 	DENSE_SILICON(0, MapColor.blackColor),
-	ELEMITE(1, MapColor.blueColor),
-	SILICON_FRAME(2, MapColor.blackColor);
+	ELEMITE(1, MapColor.blueColor);
 	
 	public final String name;
 	public final int meta;

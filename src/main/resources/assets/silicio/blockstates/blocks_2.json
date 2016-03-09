@@ -12,13 +12,14 @@
       "silicon_frame": {
         "model": "silicio:silicon_frame",
         "textures": {
-          "all": "silicio:blocks/silicon_frame"
+          "texture": "silicio:blocks/silicon_frame"
         }
       },
       "reactor_core": {
         "model": "silicio:silicon_frame",
         "textures": {
-          "all": "silicio:blocks/reactor_core"
+          "particle": "silicio:blocks/reactor_core",
+          "texture": "silicio:blocks/reactor_core"
         }
       }
     }

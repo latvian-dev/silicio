@@ -12,7 +12,9 @@ silicio.tile.reactor_core.name=Antimatter Reactor Core
 silicio.tile.cable.name=Circuit Board Cable
 silicio.tile.module_socket_block.name=Module Socket Block
 silicio.tile.controller.name=Circuit Board Controller
-silicio.tile.laser_mirror.name=Laser Mirror
+silicio.tile.laser_mirror_box.name=Laser Mirror Box
+silicio.tile.laser_rx.name=Laser Receiver
+silicio.tile.laser_tx.name=Laser Emitter
 
 silicio.tile.module_copier.name=Module Copier
 silicio.tile.rednet_io.name=Circuit Board RedNetIO

@@ -1,32 +1,45 @@
 package latmod.silicio.block;
 
 import ftb.lib.MathHelperMC;
-import latmod.silicio.item.ItemSilMaterials;
+import latmod.silicio.tile.*;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.*;
 import net.minecraft.block.state.*;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.item.ItemStack;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.*;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.*;
 
 /**
- * Created by LatvianModder on 04.03.2016.
+ * Created by LatvianModder on 07.03.2016.
  */
-public class BlockLaserMirrorBox extends BlockSil
+public class BlockLaserIO extends BlockSil
 {
 	public static final PropertyEnum<EnumFacing> FACING = PropertyDirection.create("facing", EnumFacing.class);
+	public final boolean isInput;
 	
-	public BlockLaserMirrorBox(String s)
+	public BlockLaserIO(String s, boolean b)
 	{
 		super(s, Material.iron);
+		isInput = b;
+	}
+	
+	public void onPostLoaded()
+	{
+		super.onPostLoaded();
+		getMod().addTile(isInput ? TileLaserRX.class : TileLaserTX.class, blockName);
 	}
 	
 	public void loadRecipes()
 	{
-		getMod().recipes.addRecipe(new ItemStack(this), " G ", "GFL", " G ", 'G', VariantBlocks3.SILICON_GLASS.getStack(1), 'F', VariantBlocks2.SILICON_FRAME.getStack(1), 'L', ItemSilMaterials.LASER_LENS.getStack(1));
 	}
+	
+	public boolean hasTileEntity(IBlockState state)
+	{ return true; }
+	
+	public TileEntity createTileEntity(World w, IBlockState state)
+	{ return isInput ? new TileLaserRX() : new TileLaserTX(); }
 	
 	public IBlockState getModelState()
 	{ return createBlockState().getBaseState().withProperty(FACING, EnumFacing.NORTH); }
