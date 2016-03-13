@@ -13,7 +13,10 @@ import net.minecraft.item.ItemStack;
 public class BlockBlocks1 extends BlockWithVariants<VariantBlocks1>
 {
 	public BlockBlocks1(String s)
-	{ super(s, Material.rock); }
+	{
+		super(s, Material.rock);
+		setCreativeTab(Silicio.tab);
+	}
 	
 	public Class<VariantBlocks1> getVariantType()
 	{ return VariantBlocks1.class; }

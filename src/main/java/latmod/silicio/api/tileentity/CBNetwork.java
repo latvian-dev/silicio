@@ -13,14 +13,14 @@ public class CBNetwork
 	
 	public static void load(ICBNetTile t)
 	{
-		BlockPos pos = t.getPos();
+		BlockPos pos = t.getTile().getPos();
 		network.put(pos, t);
 		notifyNetworkChange(pos);
 	}
 	
 	public static void unload(ICBNetTile t)
 	{
-		BlockPos pos = t.getPos();
+		BlockPos pos = t.getTile().getPos();
 		network.remove(pos);
 		notifyNetworkChange(pos);
 	}
@@ -37,7 +37,7 @@ public class CBNetwork
 	{
 		ArrayList<ICBNetTile> list = new ArrayList<>();
 		if(network.isEmpty()) return list;
-		addTilesTo(tile, list, tile.getPos());
+		addTilesTo(tile, list, tile.getTile().getPos());
 		return list;
 	}
 	
@@ -54,18 +54,5 @@ public class CBNetwork
 				addTilesTo(original, list, pos1);
 			}
 		}
-	}
-	
-	public static ICBController getController(ICBNetTile tile)
-	{
-		for(ICBNetTile t : getTilesAround(tile))
-		{
-			if(t instanceof ICBController && !((ICBController) t).hasConflict())
-			{
-				return ((ICBController) t);
-			}
-		}
-		
-		return null;
 	}
 }

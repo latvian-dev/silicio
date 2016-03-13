@@ -12,12 +12,14 @@ public class SilItems
 	public static BlockBlocks2 b_blocks_2;
 	public static BlockBlocks3 b_blocks_3;
 	public static BlockBlueGoo b_blue_goo;
+	public static BlockAntimatter b_antimatter;
 	public static BlockCable b_cable;
 	public static BlockModuleSocket b_module_socket;
 	public static BlockController b_controller;
 	public static BlockLaserMirrorBox b_laser_mirror;
 	public static BlockLaserIO b_laser_rx;
 	public static BlockLaserIO b_laser_tx;
+	public static BlockTurret b_turret;
 	
 	public static ItemSilMaterials i_mat;
 	public static Map<String, ItemModule> i_modules;
@@ -39,12 +41,14 @@ public class SilItems
 		Silicio.mod.addItem(b_blocks_2 = new BlockBlocks2("blocks_2"));
 		Silicio.mod.addItem(b_blocks_3 = new BlockBlocks3("blocks_3"));
 		Silicio.mod.addItem(b_blue_goo = new BlockBlueGoo("blue_goo"));
+		Silicio.mod.addItem(b_antimatter = new BlockAntimatter("antimatter_carpet"));
 		Silicio.mod.addItem(b_cable = new BlockCable("cable"));
 		Silicio.mod.addItem(b_module_socket = new BlockModuleSocket("module_socket_block"));
 		Silicio.mod.addItem(b_controller = new BlockController("controller"));
 		Silicio.mod.addItem(b_laser_mirror = new BlockLaserMirrorBox("laser_mirror_box"));
 		Silicio.mod.addItem(b_laser_rx = new BlockLaserIO("laser_rx", true));
 		Silicio.mod.addItem(b_laser_tx = new BlockLaserIO("laser_tx", false));
+		Silicio.mod.addItem(b_turret = new BlockTurret("turret"));
 		
 		Silicio.mod.addItem(i_mat = new ItemSilMaterials("mat"));
 		

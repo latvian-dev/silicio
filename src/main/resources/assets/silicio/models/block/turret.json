@@ -1,0 +1,69 @@
+{
+  "textures": {
+    "particle": "silicio:blocks/turret_base",
+    "base": "silicio:blocks/turret_base",
+    "center": "silicio:blocks/turret"
+  },
+  "elements": [
+    {
+      "from": [1, 14, 1],
+      "to": [15, 16, 15],
+      "faces": {
+        "down": {
+          "uv": [1, 1, 15, 15],
+          "texture": "#base"
+        },
+        "up": {
+          "uv": [1, 1, 15, 15],
+          "texture": "#base"
+        },
+        "north": {
+          "uv": [1, 14, 15, 16],
+          "texture": "#center"
+        },
+        "south": {
+          "uv": [1, 14, 15, 16],
+          "texture": "#center"
+        },
+        "west": {
+          "uv": [1, 14, 15, 16],
+          "texture": "#center"
+        },
+        "east": {
+          "uv": [1, 14, 15, 16],
+          "texture": "#center"
+        }
+      }
+    },
+    {
+      "from": [6, 6, 6],
+      "to": [10, 14, 10],
+      "faces": {
+        "down": {
+          "uv": [6, 6, 10, 10],
+          "texture": "#center"
+        },
+        "up": {
+          "uv": [6, 6, 10, 10],
+          "texture": "#center"
+        },
+        "north": {
+          "uv": [6, 14, 10, 6],
+          "texture": "#center"
+        },
+        "south": {
+          "uv": [6, 14, 10, 6],
+          "texture": "#center"
+        },
+        "west": {
+          "uv": [6, 14, 10, 6],
+          "texture": "#center"
+        },
+        "east": {
+          "uv": [6, 14, 10, 6],
+          "texture": "#center"
+        }
+      }
+    }
+  ]
+}

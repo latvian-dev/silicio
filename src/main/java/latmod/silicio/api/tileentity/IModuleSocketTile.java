@@ -9,6 +9,5 @@ import java.util.Collection;
  */
 public interface IModuleSocketTile extends ICBNetTile
 {
-	ICBController getController();
 	Collection<ModuleContainer> getModules();
 }

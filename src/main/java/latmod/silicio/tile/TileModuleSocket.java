@@ -2,11 +2,11 @@ package latmod.silicio.tile;
 
 import ftb.lib.api.item.LMInvUtils;
 import latmod.silicio.api.modules.*;
-import latmod.silicio.api.tileentity.*;
+import latmod.silicio.api.tileentity.IModuleSocketTile;
 import net.minecraft.entity.player.*;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.*;
-import net.minecraft.util.*;
+import net.minecraft.util.EnumFacing;
 import net.minecraftforge.common.util.Constants;
 
 import java.util.*;
@@ -17,15 +17,14 @@ import java.util.*;
 public class TileModuleSocket extends TileCBNetwork implements IModuleSocketTile
 {
 	private final Map<EnumFacing, ModuleContainer> modules;
-	private ICBController controller;
 	
 	public TileModuleSocket()
 	{
 		modules = new EnumMap<>(EnumFacing.class);
 	}
 	
-	public boolean rerenderBlock()
-	{ return true; }
+	public EnumSync getSync()
+	{ return EnumSync.RERENDER; }
 	
 	public void readTileData(NBTTagCompound tag)
 	{
@@ -69,7 +68,7 @@ public class TileModuleSocket extends TileCBNetwork implements IModuleSocketTile
 		
 		if(c != null)
 		{
-			if(isServer())
+			if(getSide().isServer())
 			{
 				if(is == null && ep.isSneaking())
 				{
@@ -77,7 +76,7 @@ public class TileModuleSocket extends TileCBNetwork implements IModuleSocketTile
 					LMInvUtils.giveItem(ep, c.item.copy(), ep.inventory.currentItem);
 					modules.remove(side);
 					markDirty();
-					if(controller != null) controller.onCBNetworkChanged(getPos());
+					if(getController() != null) getController().onCBNetworkChanged(getPos());
 				}
 			}
 			
@@ -85,7 +84,7 @@ public class TileModuleSocket extends TileCBNetwork implements IModuleSocketTile
 		}
 		else if(is != null && is.getItem() instanceof IModuleItem)
 		{
-			if(isServer())
+			if(getSide().isServer())
 			{
 				Module m = ModuleRegistry.getFromStack(is);
 				
@@ -97,7 +96,7 @@ public class TileModuleSocket extends TileCBNetwork implements IModuleSocketTile
 					c.module.init(c);
 					c.module.onAdded(c, (EntityPlayerMP) ep);
 					markDirty();
-					if(controller != null) controller.onCBNetworkChanged(getPos());
+					if(getController() != null) getController().onCBNetworkChanged(getPos());
 				}
 			}
 			
@@ -116,15 +115,6 @@ public class TileModuleSocket extends TileCBNetwork implements IModuleSocketTile
 	
 	public boolean hasModule(EnumFacing facing)
 	{ return modules.containsKey(facing); }
-	
-	public void onCBNetworkChanged(BlockPos pos)
-	{
-		if(worldObj != null) controller = CBNetwork.getController(this);
-		else controller = null;
-	}
-	
-	public ICBController getController()
-	{ return controller; }
 	
 	public Collection<ModuleContainer> getModules()
 	{ return modules.values(); }

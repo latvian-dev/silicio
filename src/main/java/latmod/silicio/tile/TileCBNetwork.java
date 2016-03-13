@@ -9,6 +9,8 @@ import net.minecraft.util.*;
  */
 public class TileCBNetwork extends TileLM implements ICBNetTile
 {
+	private ICBController controller;
+	
 	public void onLoad()
 	{
 		super.onLoad();
@@ -20,6 +22,12 @@ public class TileCBNetwork extends TileLM implements ICBNetTile
 		super.onChunkUnload();
 		CBNetwork.unload(this);
 	}
+	
+	public void setController(ICBController c)
+	{ controller = c; }
+	
+	public ICBController getController()
+	{ return controller; }
 	
 	public void onCBNetworkChanged(BlockPos pos)
 	{

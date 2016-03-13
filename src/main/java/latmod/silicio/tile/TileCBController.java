@@ -5,8 +5,10 @@ import ftb.lib.FTBLib;
 import latmod.lib.IntList;
 import latmod.silicio.api.modules.*;
 import latmod.silicio.api.tileentity.*;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.*;
 
 import java.util.*;
@@ -21,6 +23,7 @@ public class TileCBController extends TileCBNetwork implements ICBController, IE
 	private List<ICBNetTile> network;
 	private List<ModuleContainer> modules;
 	
+	private byte refreshTick = 0;
 	private boolean hasConflict = false;
 	private boolean updateNetwork = false;
 	
@@ -32,17 +35,44 @@ public class TileCBController extends TileCBNetwork implements ICBController, IE
 		modules = new ArrayList<>();
 	}
 	
-	public boolean rerenderBlock()
-	{ return true; }
+	public EnumSync getSync()
+	{ return EnumSync.RERENDER; }
+	
+	public void readTileData(NBTTagCompound tag)
+	{
+		super.readTileData(tag);
+		refreshTick = tag.getByte("Tick");
+		signalList.clear();
+		signalList.addAll(tag.getIntArray("Signals"));
+	}
+	
+	public void writeTileData(NBTTagCompound tag)
+	{
+		super.writeTileData(tag);
+		tag.setByte("Tick", refreshTick);
+		tag.setIntArray("Signals", signalList.toArray());
+	}
+	
+	public void readTileClientData(NBTTagCompound tag)
+	{
+		signalList.clear();
+		signalList.addAll(tag.getIntArray("S"));
+	}
+	
+	public void writeTileClientData(NBTTagCompound tag)
+	{
+		tag.setIntArray("S", signalList.toArray());
+	}
 	
 	public void onLoad()
 	{
 		super.onLoad();
+		updateNetwork = true;
 	}
 	
 	public boolean onRightClick(EntityPlayer ep, ItemStack is, EnumFacing side, float x, float y, float z)
 	{
-		if(isServer())
+		if(getSide().isServer())
 		{
 			FTBLib.printChat(ep, "Network: " + network.size());
 			FTBLib.printChat(ep, "Modules: " + modules.size());
@@ -52,15 +82,46 @@ public class TileCBController extends TileCBNetwork implements ICBController, IE
 		return true;
 	}
 	
+	public void setController(ICBController c)
+	{
+	}
+	
+	public ICBController getController()
+	{ return this; }
+	
 	public void onUpdate()
 	{
-		if(!isServer()) return;
+		if(getSide().isClient()) return;
+		
+		if(refreshTick >= 20)
+		{
+			updateNetwork = true;
+			refreshTick = 0;
+		}
+		else refreshTick++;
 		
 		if(updateNetwork)
 		{
+			boolean hc = hasConflict;
+			hasConflict = false;
+			
 			updateNetwork = false;
 			
+			for(ICBNetTile t : network)
+			{
+				t.setController(null);
+				t.onCBNetworkChanged(getPos());
+			}
+			
+			network.clear();
 			network = CBNetwork.getTilesAround(this);
+			
+			for(ICBNetTile t : network)
+			{
+				t.setController(this);
+				if(t instanceof ICBController) hasConflict = true;
+				t.onCBNetworkChanged(getPos());
+			}
 			
 			modules.clear();
 			
@@ -68,9 +129,16 @@ public class TileCBController extends TileCBNetwork implements ICBController, IE
 			{
 				if(t instanceof IModuleSocketTile)
 				{
-					modules.addAll(((IModuleSocketTile) t).getModules());
+					Collection<ModuleContainer> mc = ((IModuleSocketTile) t).getModules();
+					
+					if(mc != null && !mc.isEmpty())
+					{
+						modules.addAll(mc);
+					}
 				}
 			}
+			
+			if(hc != hasConflict) markDirty();
 		}
 		
 		if(!modules.isEmpty())
@@ -98,9 +166,11 @@ public class TileCBController extends TileCBNetwork implements ICBController, IE
 				}
 			}
 			
-			if(!signalList0.equalsIgnoreOrder(signalList))
+			Map<Integer, Boolean> diffMap = signalList0.getDifferenceMap(signalList);
+			
+			if(!diffMap.isEmpty())
 			{
-				FTBLib.printChat(null, "Signals: " + signalList);
+				FTBLib.printChat(null, "Signals: " + diffMap);
 			}
 		}
 		else signalList.clear();
@@ -109,6 +179,16 @@ public class TileCBController extends TileCBNetwork implements ICBController, IE
 	public void onCBNetworkChanged(BlockPos pos)
 	{
 		updateNetwork = true;
+	}
+	
+	public void onBroken(IBlockState state)
+	{
+		for(ICBNetTile t : network)
+		{
+			t.setController(null);
+		}
+		
+		super.onBroken(state);
 	}
 	
 	public boolean hasConflict()

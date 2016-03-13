@@ -3,6 +3,7 @@ package latmod.silicio.tile;
 import latmod.lib.IntList;
 import latmod.silicio.SilItems;
 import latmod.silicio.block.*;
+import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.*;
@@ -17,14 +18,16 @@ public class TileLaserTX extends TileCBNetwork
 {
 	public byte refreshTick = 0;
 	public final List<BlockPos> laserPath;
+	public BlockPos receiver;
 	
 	public TileLaserTX()
 	{
 		laserPath = new ArrayList<>();
+		receiver = null;
 	}
 	
-	public boolean rerenderBlock()
-	{ return laserPath.size() > 0; }
+	public EnumSync getSync()
+	{ return (laserPath.size() > 0) ? EnumSync.RERENDER : EnumSync.SYNC; }
 	
 	public void readTileData(NBTTagCompound tag)
 	{
@@ -73,11 +76,11 @@ public class TileLaserTX extends TileCBNetwork
 	
 	public void onUpdate()
 	{
-		if(isServer())
+		if(getSide().isServer())
 		{
 			refreshTick++;
 			
-			if(refreshTick > 20)
+			if(refreshTick > 10)
 			{
 				updateLaserPath();
 				refreshTick = 0;
@@ -94,9 +97,10 @@ public class TileLaserTX extends TileCBNetwork
 	{
 		laserPath.clear();
 		
-		if(isServer())
+		if(getSide().isServer())
 		{
-			getLaserPath(getPos(), currentState.getValue(BlockLaserIO.FACING));
+			updateBlockState();
+			getLaserPath(new BlockPos(0, 0, 0), currentState.getValue(BlockLaserIO.FACING));
 			markDirty();
 		}
 	}
@@ -107,21 +111,33 @@ public class TileLaserTX extends TileCBNetwork
 		{
 			BlockPos pos1 = pos.offset(facing, i);
 			
-			IBlockState state = worldObj.getBlockState(pos1);
+			IBlockState state = worldObj.getBlockState(getPos().add(pos1));
+			Block block = state.getBlock();
 			
-			if(state.getBlock() == SilItems.b_laser_mirror)
+			if(block == SilItems.b_laser_mirror)
 			{
-				laserPath.add(pos1);
-				getLaserPath(pos1, state.getValue(BlockLaserMirrorBox.FACING));
+				if(!laserPath.contains(pos1))
+				{
+					laserPath.add(pos1);
+					getLaserPath(pos1, state.getValue(BlockLaserMirrorBox.FACING));
+				}
 			}
-			else if(state.getBlock() == SilItems.b_laser_rx)
+			else if(block == SilItems.b_laser_rx)
 			{
 				laserPath.add(pos1);
+			}
+			else if(block.isOpaqueCube())
+			{
+				return;
 			}
 		}
 	}
 	
 	@SideOnly(Side.CLIENT)
-	public AxisAlignedBB getRenderBoundingBox()
+	public net.minecraft.util.AxisAlignedBB getRenderBoundingBox()
 	{ return INFINITE_EXTENT_AABB; }
+	
+	@SideOnly(Side.CLIENT)
+	public double getMaxRenderDistanceSquared()
+	{ return laserPath.isEmpty() ? 0D : (512D * 512D); }
 }

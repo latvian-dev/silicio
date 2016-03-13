@@ -24,35 +24,39 @@ public class RenderLaserTX extends TileEntitySpecialRenderer<TileLaserTX>
 		GlStateManager.disableLighting();
 		GlStateManager.disableCull();
 		FTBLibClient.pushMaxBrightness();
+		GlStateManager.enableRescaleNormal();
 		
 		GlStateManager.pushMatrix();
 		GlStateManager.translate(x, y, z);
-		BlockPos p0 = te.getPos();
-		GlStateManager.translate(-p0.getX(), -p0.getY(), -p0.getZ());
 		
 		GlStateManager.color(1F, 0F, 0F, 1F);
 		
 		laserBeam.setTessellator(Tessellator.getInstance());
 		double ls = 1D / 16D * 7D;
 		
-		for(BlockPos p : te.laserPath)
+		BlockPos p0 = new BlockPos(0, 0, 0);
+		
+		for(BlockPos p1 : te.laserPath)
 		{
-			EnumFacing dir = MathHelperMC.getDirection(p0, p);
+			EnumFacing dir = MathHelperMC.getDirection(p0, p1);
 			
 			if(dir != null)
 			{
-				Vec3i dirVec = dir.getDirectionVec();
+				double x0 = p0.getX() + ls;
+				double y0 = p0.getY() + ls;
+				double z0 = p0.getZ() + ls;
+				double x1 = p1.getX() + 1D - ls;
+				double y1 = p1.getY() + 1D - ls;
+				double z1 = p1.getZ() + 1D - ls;
 				
-				laserBeam.setSize(p0.getX() + ls, p0.getY() + ls, p0.getZ() + ls, p.getX() + 1D - ls, p.getY() + 1D - ls, p.getZ() + 1D - ls);
-				//laserBeam.setSize(0D, 0D, 0D, 1D, 1D, 1D);
+				laserBeam.setSize(x0, y0, z0, x1, y1, z1);
 				laserBeam.renderAll();
-				
-				laserBeam.setSize(p0.getX() + ls, p0.getY() + ls, p0.getZ() + ls, p.getX() + 1D - ls, p.getY() + 1D - ls, p.getZ() + 1D - ls);
 			}
 			
-			p0 = p;
+			p0 = p1;
 		}
 		
+		GlStateManager.disableRescaleNormal();
 		GlStateManager.enableTexture2D();
 		GlStateManager.enableLighting();
 		GlStateManager.enableCull();

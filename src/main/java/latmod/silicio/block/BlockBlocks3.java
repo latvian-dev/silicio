@@ -16,7 +16,10 @@ import net.minecraftforge.fml.relauncher.*;
 public class BlockBlocks3 extends BlockWithVariants<VariantBlocks3>
 {
 	public BlockBlocks3(String s)
-	{ super(s, Material.rock); }
+	{
+		super(s, Material.rock);
+		setCreativeTab(Silicio.tab);
+	}
 	
 	public Class<VariantBlocks3> getVariantType()
 	{ return VariantBlocks3.class; }
