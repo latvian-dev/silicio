@@ -21,7 +21,11 @@ public class TileTurret extends TileLM
 	public void writeTileData(NBTTagCompound tag)
 	{
 		tag.setByte("Cooldown", cooldown);
-		LMNBTUtils.setUUID(tag, "Target", target.getUniqueID(), true);
+		
+		if(target != null)
+		{
+			LMNBTUtils.setUUID(tag, "Target", target.getUniqueID(), true);
+		}
 	}
 	
 	public void readTileData(NBTTagCompound tag)
@@ -69,12 +73,20 @@ public class TileTurret extends TileLM
 		double x = pos.getX() + 0.5D;
 		double y = pos.getY() + 0.5D;
 		double z = pos.getZ() + 0.5D;
+		double distSq = 0D;
+		double prevDistSq = 0D;
 		
 		for(Entity e : worldObj.getEntitiesWithinAABB(EntityLivingBase.class, scanArea))
 		{
-			if(!e.isDead && !(e instanceof EntityPlayer) && (target == null || (e.getDistanceSq(x, y, z) < target.getDistanceSq(x, y, z))))
+			if(!e.isDead && !(e instanceof EntityPlayer))
 			{
-				target = e;
+				distSq = e.getDistanceSq(x, y, z);
+				
+				if(distSq <= 64D && (target == null || (distSq < prevDistSq)))
+				{
+					target = e;
+					prevDistSq = distSq;
+				}
 			}
 		}
 	}

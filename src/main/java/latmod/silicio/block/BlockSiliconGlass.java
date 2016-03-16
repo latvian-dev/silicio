@@ -15,7 +15,6 @@ public class BlockSiliconGlass extends BlockSil
 	{ super(s, Material.glass); }
 	
 	
-	
 	@SideOnly(Side.CLIENT)
 	public EnumWorldBlockLayer getBlockLayer()
 	{ return EnumWorldBlockLayer.TRANSLUCENT; }
