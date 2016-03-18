@@ -25,9 +25,9 @@ public class RenderTurret extends TileEntitySpecialRenderer<TileTurret>
 		double startX = x + 0.5D;
 		double startY = y + 0.5D;
 		double startZ = z + 0.5D;
-		double endX = x + (te.target.posX - te.getPos().getX() + 0.5D);// + MathHelperLM.randomDouble(MathHelperLM.rand, -s, s);
-		double endY = y + (te.target.posY - te.getPos().getY() + 0.5D) + te.target.getEyeHeight();// + MathHelperLM.randomDouble(MathHelperLM.rand, -s, s);
-		double endZ = z + (te.target.posZ - te.getPos().getZ() + 0.5D);// + MathHelperLM.randomDouble(MathHelperLM.rand, -s, s);
+		double endX = x + (te.target.posX - te.getPos().getX()) + MathHelperLM.randomDouble(MathHelperLM.rand, -s, s);
+		double endY = y + (te.target.posY - te.getPos().getY()) + te.target.getEyeHeight() * MathHelperLM.rand.nextFloat();
+		double endZ = z + (te.target.posZ - te.getPos().getZ()) + MathHelperLM.randomDouble(MathHelperLM.rand, -s, s);
 		
 		GlStateManager.enableTexture2D();
 		GlStateManager.disableLighting();
@@ -36,6 +36,7 @@ public class RenderTurret extends TileEntitySpecialRenderer<TileTurret>
 		GlStateManager.enableBlend();
 		GlStateManager.blendFunc(770, 771);
 		GlStateManager.color(0F, 1F, 1F, 1F);//MathHelperLM.rand.nextFloat() * 0.5F + 0.5F);
+		GlStateManager.depthMask(false);
 		
 		bindTexture(TEXTURE);
 		s = 1D / 8D;
@@ -45,12 +46,25 @@ public class RenderTurret extends TileEntitySpecialRenderer<TileTurret>
 		Tessellator tessellator = Tessellator.getInstance();
 		WorldRenderer worldRenderer = tessellator.getWorldRenderer();
 		worldRenderer.begin(7, DefaultVertexFormats.POSITION_TEX);
+		
 		worldRenderer.pos(startX, startY - s, startZ).tex(textureX0, 0D).endVertex();
 		worldRenderer.pos(endX, endY - s, endZ).tex(textureX1, 0D).endVertex();
 		worldRenderer.pos(endX, endY + s, endZ).tex(textureX1, 1D).endVertex();
 		worldRenderer.pos(startX, startY + s, startZ).tex(textureX0, 1D).endVertex();
+		
+		worldRenderer.pos(startX - s, startY, startZ).tex(textureX0, 0D).endVertex();
+		worldRenderer.pos(endX - s, endY, endZ).tex(textureX1, 0D).endVertex();
+		worldRenderer.pos(endX + s, endY, endZ).tex(textureX1, 1D).endVertex();
+		worldRenderer.pos(startX + s, startY, startZ).tex(textureX0, 1D).endVertex();
+		
+		worldRenderer.pos(startX, startY, startZ - s).tex(textureX0, 0D).endVertex();
+		worldRenderer.pos(endX, endY, endZ - s).tex(textureX1, 0D).endVertex();
+		worldRenderer.pos(endX, endY, endZ + s).tex(textureX1, 1D).endVertex();
+		worldRenderer.pos(startX, startY, startZ + s).tex(textureX0, 1D).endVertex();
+		
 		tessellator.draw();
 		
+		//GlStateManager.depthMask(true);
 		GlStateManager.enableTexture2D();
 		GlStateManager.enableLighting();
 		GlStateManager.enableCull();
