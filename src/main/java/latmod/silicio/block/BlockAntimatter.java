@@ -15,6 +15,7 @@ public class BlockAntimatter extends BlockSil
 		super(s, Material.carpet);
 		setLightLevel(1F);
 		setBlockBounds(0F, 0F, 0F, 1F, 1F / 16F, 1F);
+		setHardness(0.2F);
 	}
 	
 	public void onPostLoaded()
