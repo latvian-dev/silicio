@@ -38,7 +38,7 @@ public class ItemModule extends ItemSil implements IModuleItem
 	@SideOnly(Side.CLIENT)
 	public void addInformation(ItemStack is, EntityPlayer ep, List<String> l, boolean b)
 	{
-		l.add(Silicio.mod.translate("item.cbm_desc"));
+		l.add(Silicio.mod.format("item.cbm_desc"));
 		module.addInformation(is, ep, l);
 	}
 	

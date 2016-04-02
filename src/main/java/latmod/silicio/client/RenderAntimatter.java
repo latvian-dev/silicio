@@ -1,6 +1,7 @@
 package latmod.silicio.client;
 
 import latmod.silicio.tile.TileAntimatter;
+import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.*;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
@@ -25,6 +26,9 @@ public class RenderAntimatter extends TileEntitySpecialRenderer<TileAntimatter>
 	
 	public void renderTileEntityAt(TileAntimatter te, double x, double y, double z, float partialTicks, int destroyStage)
 	{
+		Block b = te.getBlockType();
+		if(b.getRenderType() != 2) return;
+		
 		Tessellator tessellator = Tessellator.getInstance();
 		WorldRenderer worldrenderer = tessellator.getWorldRenderer();
 		double f3 = 1D / 256D;
