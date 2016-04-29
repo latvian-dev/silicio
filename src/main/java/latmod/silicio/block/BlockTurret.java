@@ -48,7 +48,7 @@ public class BlockTurret extends BlockSil
 	
 	@Override
 	public String getModelState()
-	{ return BlockStateSerializer.getString(FACING, EnumFacing.UP); }
+	{ return BlockStateSerializer.getString(FACING, EnumFacing.DOWN); }
 	
 	@Override
 	public boolean isOpaqueCube(IBlockState state)

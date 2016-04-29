@@ -212,7 +212,18 @@ public class BlockSilBlocks extends BlockSil
 	@SideOnly(Side.CLIENT)
 	public boolean shouldSideBeRendered(IBlockState state, IBlockAccess worldIn, BlockPos pos, EnumFacing side)
 	{
-		if(isOpaqueCube(state)) return super.shouldSideBeRendered(state, worldIn, pos, side);
-		return worldIn.getBlockState(pos).getBlock() != this && super.shouldSideBeRendered(state, worldIn, pos, side);
+		if(state.getValue(VARIANT) == EnumVariant.SILICON_GLASS)
+		{
+			return true;
+			//return worldIn.getBlockState(pos).getBlock() != this && super.shouldSideBeRendered(state, worldIn, pos, side);
+		}
+		
+		return super.shouldSideBeRendered(state, worldIn, pos, side);
+	}
+	
+	@Override
+	public int getLightOpacity(IBlockState state)
+	{
+		return super.getLightOpacity(state);
 	}
 }
