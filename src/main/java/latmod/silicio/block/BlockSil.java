@@ -7,12 +7,13 @@ import net.minecraft.block.material.Material;
 
 public abstract class BlockSil extends BlockLM
 {
-	public BlockSil(String s, Material m)
+	public BlockSil(Material m)
 	{
-		super(s, m);
+		super(m);
 		setCreativeTab(Silicio.tab);
 	}
 	
+	@Override
 	public LMMod getMod()
 	{ return Silicio.mod; }
 }

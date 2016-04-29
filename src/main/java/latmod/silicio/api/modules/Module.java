@@ -1,12 +1,17 @@
 package latmod.silicio.api.modules;
 
-import ftb.lib.mod.FTBLibMod;
-import latmod.lib.*;
+import latmod.lib.Bits;
+import latmod.lib.IntList;
 import latmod.lib.util.FinalIDObject;
 import latmod.silicio.item.ItemModule;
-import net.minecraft.entity.player.*;
+import net.minecraft.client.renderer.block.model.ModelResourceLocation;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
-import net.minecraftforge.fml.relauncher.*;
+import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.client.model.ModelLoader;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.util.List;
 
@@ -41,7 +46,7 @@ public abstract class Module extends FinalIDObject
 	@SideOnly(Side.CLIENT)
 	public void loadModels(ItemModule item)
 	{
-		FTBLibMod.proxy.addItemModel(item.getMod().getID(), item, 0, "modules", "variant=" + getID());
+		ModelLoader.setCustomModelResourceLocation(item, 0, new ModelResourceLocation(new ResourceLocation(item.getRegistryName().getResourceDomain(), "modules"), "variant=" + getID()));
 	}
 	
 	public void onAdded(ModuleContainer c, EntityPlayerMP player)

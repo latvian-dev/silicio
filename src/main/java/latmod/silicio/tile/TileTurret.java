@@ -1,13 +1,20 @@
 package latmod.silicio.tile;
 
-import ftb.lib.*;
+import ftb.lib.FTBLib;
+import ftb.lib.LMNBTUtils;
 import ftb.lib.api.tile.TileLM;
+import latmod.silicio.SilSounds;
 import latmod.silicio.block.BlockTurret;
-import net.minecraft.entity.*;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.*;
-import net.minecraftforge.fml.relauncher.*;
+import net.minecraft.util.DamageSource;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.SoundCategory;
+import net.minecraft.util.math.AxisAlignedBB;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 /**
  * Created by LatvianModder on 03.03.2016.
@@ -18,6 +25,7 @@ public class TileTurret extends TileLM
 	public Entity target = null;
 	public AxisAlignedBB scanArea;
 	
+	@Override
 	public void writeTileData(NBTTagCompound tag)
 	{
 		tag.setByte("Cooldown", cooldown);
@@ -28,12 +36,14 @@ public class TileTurret extends TileLM
 		}
 	}
 	
+	@Override
 	public void readTileData(NBTTagCompound tag)
 	{
 		cooldown = tag.getByte("Cooldown");
 		target = FTBLib.getEntityByUUID(worldObj, LMNBTUtils.getUUID(tag, "Target", true));
 	}
 	
+	@Override
 	public void writeTileClientData(NBTTagCompound tag)
 	{
 		if(target != null)
@@ -42,6 +52,7 @@ public class TileTurret extends TileLM
 		}
 	}
 	
+	@Override
 	public void readTileClientData(NBTTagCompound tag)
 	{
 		target = tag.hasKey("EID") ? worldObj.getEntityByID(tag.getInteger("EID")) : null;
@@ -91,6 +102,7 @@ public class TileTurret extends TileLM
 		}
 	}
 	
+	@Override
 	public void onUpdate()
 	{
 		if(getSide().isServer())
@@ -117,7 +129,7 @@ public class TileTurret extends TileLM
 					else
 					{
 						target.attackEntityFrom(DamageSource.lightningBolt, 8F);
-						playSound("silicio:turret_loop", 0.8F, 1F);
+						playSound(SilSounds.turret_loop, SoundCategory.BLOCKS, 0.8F, 1F);
 						cooldown = 20;
 					}
 				}
@@ -131,11 +143,11 @@ public class TileTurret extends TileLM
 				{
 					if(target != null)
 					{
-						playSound("silicio:turret_start", 0.8F, 1F);
+						playSound(SilSounds.turret_start, SoundCategory.BLOCKS, 0.8F, 1F);
 					}
 					else
 					{
-						playSound("silicio:turret_end", 0.8F, 1F);
+						playSound(SilSounds.turret_end, SoundCategory.BLOCKS, 0.8F, 1F);
 					}
 					
 					markDirty();
@@ -144,6 +156,7 @@ public class TileTurret extends TileLM
 		}
 	}
 	
+	@Override
 	@SideOnly(Side.CLIENT)
 	public AxisAlignedBB getRenderBoundingBox()
 	{

@@ -2,14 +2,19 @@ package latmod.silicio.tile;
 
 import latmod.lib.IntList;
 import latmod.silicio.SilItems;
-import latmod.silicio.block.*;
+import latmod.silicio.block.BlockLaserIO;
+import latmod.silicio.block.BlockLaserMirrorBox;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.*;
-import net.minecraftforge.fml.relauncher.*;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.math.AxisAlignedBB;
+import net.minecraft.util.math.BlockPos;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by LatvianModder on 07.03.2016.
@@ -26,21 +31,25 @@ public class TileLaserTX extends TileCBNetwork
 		receiver = null;
 	}
 	
+	@Override
 	public EnumSync getSync()
 	{ return (laserPath.size() > 0) ? EnumSync.RERENDER : EnumSync.SYNC; }
 	
+	@Override
 	public void readTileData(NBTTagCompound tag)
 	{
 		super.readTileData(tag);
 		refreshTick = tag.getByte("Tick");
 	}
 	
+	@Override
 	public void writeTileData(NBTTagCompound tag)
 	{
 		super.writeTileData(tag);
 		tag.setByte("Tick", refreshTick);
 	}
 	
+	@Override
 	public void readTileClientData(NBTTagCompound tag)
 	{
 		laserPath.clear();
@@ -57,6 +66,7 @@ public class TileLaserTX extends TileCBNetwork
 		}
 	}
 	
+	@Override
 	public void writeTileClientData(NBTTagCompound tag)
 	{
 		if(!laserPath.isEmpty())
@@ -74,6 +84,7 @@ public class TileLaserTX extends TileCBNetwork
 		}
 	}
 	
+	@Override
 	public void onUpdate()
 	{
 		if(getSide().isServer())
@@ -88,6 +99,7 @@ public class TileLaserTX extends TileCBNetwork
 		}
 	}
 	
+	@Override
 	public void onNeighborBlockChange(BlockPos pos)
 	{
 		super.onNeighborBlockChange(pos);
@@ -126,17 +138,19 @@ public class TileLaserTX extends TileCBNetwork
 			{
 				laserPath.add(pos1);
 			}
-			else if(block.isOpaqueCube())
+			else if(block.isOpaqueCube(state))
 			{
 				return;
 			}
 		}
 	}
 	
+	@Override
 	@SideOnly(Side.CLIENT)
-	public net.minecraft.util.AxisAlignedBB getRenderBoundingBox()
+	public AxisAlignedBB getRenderBoundingBox()
 	{ return INFINITE_EXTENT_AABB; }
 	
+	@Override
 	@SideOnly(Side.CLIENT)
 	public double getMaxRenderDistanceSquared()
 	{ return laserPath.isEmpty() ? 0D : (512D * 512D); }

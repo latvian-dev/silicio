@@ -1,15 +1,21 @@
 package latmod.silicio.block;
 
+import ftb.lib.BlockStateSerializer;
 import ftb.lib.MathHelperMC;
 import latmod.silicio.item.ItemSilMaterials;
 import net.minecraft.block.material.Material;
-import net.minecraft.block.properties.*;
-import net.minecraft.block.state.*;
+import net.minecraft.block.properties.PropertyDirection;
+import net.minecraft.block.properties.PropertyEnum;
+import net.minecraft.block.state.BlockStateContainer;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.*;
+import net.minecraft.util.BlockRenderLayer;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.relauncher.*;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 /**
  * Created by LatvianModder on 04.03.2016.
@@ -18,38 +24,47 @@ public class BlockLaserMirrorBox extends BlockSil
 {
 	public static final PropertyEnum<EnumFacing> FACING = PropertyDirection.create("facing", EnumFacing.class);
 	
-	public BlockLaserMirrorBox(String s)
+	public BlockLaserMirrorBox()
 	{
-		super(s, Material.iron);
+		super(Material.iron);
 	}
 	
+	@Override
 	public void loadRecipes()
 	{
-		getMod().recipes.addRecipe(new ItemStack(this), " G ", "GFL", " G ", 'G', VariantBlocks3.SILICON_GLASS.getStack(1), 'F', VariantBlocks2.SILICON_FRAME.getStack(1), 'L', ItemSilMaterials.LASER_LENS.getStack(1));
+		getMod().recipes.addRecipe(new ItemStack(this), " G ", "GFL", " G ", 'G', BlockSilBlocks.EnumVariant.SILICON_GLASS.getStack(1), 'F', BlockSilBlocks.EnumVariant.SILICON_FRAME.getStack(1), 'L', ItemSilMaterials.LASER_LENS.getStack(1));
 	}
 	
-	public IBlockState getModelState()
-	{ return createBlockState().getBaseState().withProperty(FACING, EnumFacing.NORTH); }
+	@Override
+	public String getModelState()
+	{ return BlockStateSerializer.getString(FACING, EnumFacing.NORTH); }
 	
+	@Override
 	@SideOnly(Side.CLIENT)
-	public EnumWorldBlockLayer getBlockLayer()
-	{ return EnumWorldBlockLayer.CUTOUT; }
+	public BlockRenderLayer getBlockLayer()
+	{ return BlockRenderLayer.CUTOUT; }
 	
-	public boolean isOpaqueCube()
+	@Override
+	public boolean isOpaqueCube(IBlockState state)
 	{ return false; }
 	
+	@Override
 	public IBlockState getStateFromMeta(int meta)
 	{ return getDefaultState().withProperty(FACING, EnumFacing.VALUES[meta % 6]); }
 	
+	@Override
 	public int getMetaFromState(IBlockState state)
 	{ return state.getValue(FACING).ordinal(); }
 	
-	protected BlockState createBlockState()
-	{ return new BlockState(this, FACING); }
+	@Override
+	protected BlockStateContainer createBlockState()
+	{ return new BlockStateContainer(this, FACING); }
 	
+	@Override
 	public int damageDropped(IBlockState state)
 	{ return 0; }
 	
+	@Override
 	public IBlockState onBlockPlaced(World worldIn, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer)
-	{ return getDefaultState().withProperty(FACING, MathHelperMC.get3DRotation(worldIn, pos, placer)); }
+	{ return getDefaultState().withProperty(FACING, MathHelperMC.get3DRotation(pos, placer)); }
 }

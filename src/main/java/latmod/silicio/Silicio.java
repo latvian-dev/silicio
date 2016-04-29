@@ -1,15 +1,18 @@
 package latmod.silicio;
 
-import ftb.lib.*;
-import latmod.silicio.multiparts.SilicioMultipartRegistry;
+import ftb.lib.CreativeTabLM;
+import ftb.lib.LMMod;
 import net.minecraft.item.ItemStack;
-import net.minecraftforge.fml.common.*;
-import net.minecraftforge.fml.common.event.*;
+import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.common.SidedProxy;
+import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
+import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 
-@Mod(modid = Silicio.MOD_ID, name = "Silicio", version = "@VERSION@", dependencies = "required-after:FTBL;after:ComputerCraft;required-after:mcmultipart")
+@Mod(modid = Silicio.MOD_ID, name = "Silicio", version = "@VERSION@", dependencies = "required-after:ftbl;after:ComputerCraft")
+//;required-after:mcmultipart
 public class Silicio
 {
-	protected static final String MOD_ID = "Silicio";
+	protected static final String MOD_ID = "silicio";
 	
 	@Mod.Instance(MOD_ID)
 	public static Silicio inst;
@@ -32,8 +35,6 @@ public class Silicio
 		
 		mod.onPostLoaded();
 		proxy.preInit();
-		
-		SilicioMultipartRegistry.init();
 	}
 	
 	@Mod.EventHandler

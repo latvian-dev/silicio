@@ -7,10 +7,12 @@ import net.minecraft.nbt.NBTTagCompound;
  */
 public class TileCable extends TileCBNetwork
 {
+	@Override
 	public void readTileData(NBTTagCompound tag)
 	{
 	}
 	
+	@Override
 	public void writeTileData(NBTTagCompound tag)
 	{
 	}

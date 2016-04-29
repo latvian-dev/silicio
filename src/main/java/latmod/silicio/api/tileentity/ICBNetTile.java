@@ -1,7 +1,8 @@
 package latmod.silicio.api.tileentity;
 
 import ftb.lib.api.tile.ITileEntity;
-import net.minecraft.util.*;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.math.BlockPos;
 
 /**
  * Created by LatvianModder on 03.03.2016.

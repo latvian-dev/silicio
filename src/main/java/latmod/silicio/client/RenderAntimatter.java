@@ -1,13 +1,17 @@
 package latmod.silicio.client;
 
 import latmod.silicio.tile.TileAntimatter;
-import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.*;
+import net.minecraft.client.renderer.ActiveRenderInfo;
+import net.minecraft.client.renderer.GLAllocation;
+import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.renderer.Tessellator;
+import net.minecraft.client.renderer.VertexBuffer;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.fml.relauncher.*;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.nio.FloatBuffer;
 import java.util.Random;
@@ -24,13 +28,13 @@ public class RenderAntimatter extends TileEntitySpecialRenderer<TileAntimatter>
 	private static final FloatBuffer floatBuffer = GLAllocation.createDirectFloatBuffer(16);
 	private static boolean[] renderSide = new boolean[6];
 	
+	@Override
 	public void renderTileEntityAt(TileAntimatter te, double x, double y, double z, float partialTicks, int destroyStage)
 	{
-		Block b = te.getBlockType();
-		if(b.getRenderType() != 2) return;
+		//TODO: Check config
 		
 		Tessellator tessellator = Tessellator.getInstance();
-		WorldRenderer worldrenderer = tessellator.getWorldRenderer();
+		VertexBuffer worldrenderer = tessellator.getBuffer();
 		double f3 = 1D / 256D;
 		
 		double entityX = rendererDispatcher.entityX;

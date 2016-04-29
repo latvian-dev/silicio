@@ -1,8 +1,12 @@
 package latmod.silicio.api.tileentity;
 
-import net.minecraft.util.*;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.math.BlockPos;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Created by LatvianModder on 03.03.2016.

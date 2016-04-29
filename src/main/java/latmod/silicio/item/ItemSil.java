@@ -9,11 +9,7 @@ import latmod.silicio.Silicio;
  */
 public class ItemSil extends ItemLM
 {
-	public ItemSil(String s)
-	{
-		super(s);
-	}
-	
+	@Override
 	public LMMod getMod()
 	{ return Silicio.mod; }
 }

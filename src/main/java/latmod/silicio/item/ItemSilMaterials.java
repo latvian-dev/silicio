@@ -1,9 +1,13 @@
 package latmod.silicio.item;
 
-import ftb.lib.*;
-import ftb.lib.api.item.*;
+import ftb.lib.EnumMCColor;
+import ftb.lib.LMMod;
+import ftb.lib.api.item.ItemMaterialsLM;
+import ftb.lib.api.item.MaterialItem;
+import ftb.lib.api.item.ODItems;
 import latmod.silicio.Silicio;
-import net.minecraft.init.*;
+import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 
 /**
@@ -43,54 +47,57 @@ public class ItemSilMaterials extends ItemMaterialsLM
 	public static MaterialItem MODULE_OUTPUT;
 	public static MaterialItem MODULE_LOGIC;
 	
-	public ItemSilMaterials(String s)
+	public ItemSilMaterials()
 	{
-		super(s);
+		super();
 		setCreativeTab(Silicio.tab);
 		setFolder("materials");
 	}
 	
+	@Override
 	public LMMod getMod()
 	{ return Silicio.mod; }
 	
+	@Override
 	public void onPostLoaded()
 	{
-		add(SILICON = new MaterialItem(this, 0, "silicon"));
-		add(STONE_SHARD = new MaterialItem(this, 1, "stone_shard"));
-		add(IRON_ROD = new MaterialItem(this, 2, "iron_rod"));
-		add(BLUE_GOO = new MaterialItem(this, 3, "blue_goo"));
-		add(LASER_LENS = new MaterialItem(this, 4, "laser_lens"));
-		add(XSUIT_PLATE = new MaterialItem(this, 5, "xsuit_plate"));
-		add(ANTIMATTER = new MaterialItem(this, 6, "antimatter"));
+		SILICON = add(new MaterialItem(this, 0, "silicon"));
+		STONE_SHARD = add(new MaterialItem(this, 1, "stone_shard"));
+		IRON_ROD = add(new MaterialItem(this, 2, "iron_rod"));
+		BLUE_GOO = add(new MaterialItem(this, 3, "blue_goo"));
+		LASER_LENS = add(new MaterialItem(this, 4, "laser_lens"));
+		XSUIT_PLATE = add(new MaterialItem(this, 5, "xsuit_plate"));
+		ANTIMATTER = add(new MaterialItem(this, 6, "antimatter"));
 		
-		add(ELEMITE_INGOT = new MaterialItem(this, 10, "elemite_ingot"));
-		add(ELEMITE_NUGGET = new MaterialItem(this, 11, "elemite_nugget"));
-		add(ELEMITE_DUST = new MaterialItem(this, 12, "elemite_dust"));
+		ELEMITE_INGOT = add(new MaterialItem(this, 10, "elemite_ingot"));
+		ELEMITE_NUGGET = add(new MaterialItem(this, 11, "elemite_nugget"));
+		ELEMITE_DUST = add(new MaterialItem(this, 12, "elemite_dust"));
 		
-		add(WIRE = new MaterialItem(this, 20, "wire"));
-		add(RESISTOR = new MaterialItem(this, 21, "resistor"));
-		add(CAPACITOR = new MaterialItem(this, 22, "capacitor"));
-		add(DIODE = new MaterialItem(this, 23, "diode"));
-		add(TRANSISTOR = new MaterialItem(this, 24, "transistor"));
-		add(CHIP = new MaterialItem(this, 25, "chip"));
-		add(PROCESSOR = new MaterialItem(this, 26, "processor"));
-		add(CIRCUIT = new MaterialItem(this, 27, "circuit"));
-		add(CIRCUIT_WIFI = new MaterialItem(this, 28, "circuit_wifi"));
-		add(LED_RED = new MaterialItem(this, 29, "led_red"));
-		add(LED_GREEN = new MaterialItem(this, 30, "led_green"));
-		add(LED_BLUE = new MaterialItem(this, 31, "led_blue"));
-		add(LED_RGB = new MaterialItem(this, 32, "led_rgb"));
-		add(LED_MATRIX = new MaterialItem(this, 33, "led_matrix"));
+		WIRE = add(new MaterialItem(this, 20, "wire"));
+		RESISTOR = add(new MaterialItem(this, 21, "resistor"));
+		CAPACITOR = add(new MaterialItem(this, 22, "capacitor"));
+		DIODE = add(new MaterialItem(this, 23, "diode"));
+		TRANSISTOR = add(new MaterialItem(this, 24, "transistor"));
+		CHIP = add(new MaterialItem(this, 25, "chip"));
+		PROCESSOR = add(new MaterialItem(this, 26, "processor"));
+		CIRCUIT = add(new MaterialItem(this, 27, "circuit"));
+		CIRCUIT_WIFI = add(new MaterialItem(this, 28, "circuit_wifi"));
+		LED_RED = add(new MaterialItem(this, 29, "led_red"));
+		LED_GREEN = add(new MaterialItem(this, 30, "led_green"));
+		LED_BLUE = add(new MaterialItem(this, 31, "led_blue"));
+		LED_RGB = add(new MaterialItem(this, 32, "led_rgb"));
+		LED_MATRIX = add(new MaterialItem(this, 33, "led_matrix"));
 		
-		add(MODULE_EMPTY = new MaterialItem(this, 60, "module_empty"));
-		add(MODULE_INPUT = new MaterialItem(this, 61, "module_input"));
-		add(MODULE_OUTPUT = new MaterialItem(this, 62, "module_output"));
-		add(MODULE_LOGIC = new MaterialItem(this, 63, "module_logic"));
+		MODULE_EMPTY = add(new MaterialItem(this, 60, "module_empty"));
+		MODULE_INPUT = add(new MaterialItem(this, 61, "module_input"));
+		MODULE_OUTPUT = add(new MaterialItem(this, 62, "module_output"));
+		MODULE_LOGIC = add(new MaterialItem(this, 63, "module_logic"));
 		
 		ODItems.add(ODItems.IRON_ROD, IRON_ROD.getStack(1));
 		ODItems.add(ODItems.SILICON, SILICON.getStack(1));
 	}
 	
+	@Override
 	public void loadRecipes()
 	{
 		getMod().recipes.addRecipe(IRON_ROD.getStack(4), "I", "I", 'I', ODItems.IRON);

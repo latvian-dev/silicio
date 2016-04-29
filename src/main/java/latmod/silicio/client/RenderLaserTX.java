@@ -1,12 +1,16 @@
 package latmod.silicio.client;
 
 import ftb.lib.MathHelperMC;
-import ftb.lib.api.client.*;
+import ftb.lib.api.client.CubeRenderer;
+import ftb.lib.api.client.FTBLibClient;
 import latmod.silicio.tile.TileLaserTX;
-import net.minecraft.client.renderer.*;
+import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
-import net.minecraft.util.*;
-import net.minecraftforge.fml.relauncher.*;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.math.BlockPos;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 /**
  * Created by LatvianModder on 08.03.2016.
@@ -16,6 +20,7 @@ public class RenderLaserTX extends TileEntitySpecialRenderer<TileLaserTX>
 {
 	public static final CubeRenderer laserBeam = new CubeRenderer();
 	
+	@Override
 	public void renderTileEntityAt(TileLaserTX te, double x, double y, double z, float partialTicks, int destroyStage)
 	{
 		if(te.laserPath.isEmpty()) return;

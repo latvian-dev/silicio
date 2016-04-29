@@ -1,11 +1,14 @@
 package latmod.silicio.api.modules;
 
-import latmod.silicio.modules.*;
+import latmod.silicio.modules.ModuleChatOutput;
+import latmod.silicio.modules.ModuleTimer;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.eventhandler.Event;
 
-import java.util.*;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by LatvianModder on 04.03.2016.

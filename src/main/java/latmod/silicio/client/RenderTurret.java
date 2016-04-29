@@ -3,11 +3,14 @@ package latmod.silicio.client;
 import ftb.lib.api.client.FTBLibClient;
 import latmod.lib.MathHelperLM;
 import latmod.silicio.tile.TileTurret;
-import net.minecraft.client.renderer.*;
+import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.renderer.Tessellator;
+import net.minecraft.client.renderer.VertexBuffer;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.fml.relauncher.*;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 /**
  * Created by LatvianModder on 08.03.2016.
@@ -17,6 +20,7 @@ public class RenderTurret extends TileEntitySpecialRenderer<TileTurret>
 {
 	public static final ResourceLocation TEXTURE = new ResourceLocation("silicio", "textures/tile/turret_beam.png");
 	
+	@Override
 	public void renderTileEntityAt(TileTurret te, double x, double y, double z, float partialTicks, int destroyStage)
 	{
 		if(te.target == null || te.target.isDead/* || te.getWorld().getTotalWorldTime() % 3 != 0*/) return;
@@ -44,23 +48,23 @@ public class RenderTurret extends TileEntitySpecialRenderer<TileTurret>
 		double textureX1 = textureX0 + MathHelperLM.dist(startX, startY, startZ, endX, endY, endZ);
 		
 		Tessellator tessellator = Tessellator.getInstance();
-		WorldRenderer worldRenderer = tessellator.getWorldRenderer();
-		worldRenderer.begin(7, DefaultVertexFormats.POSITION_TEX);
+		VertexBuffer vertexBuffer = tessellator.getBuffer();
+		vertexBuffer.begin(7, DefaultVertexFormats.POSITION_TEX);
 		
-		worldRenderer.pos(startX, startY - s, startZ).tex(textureX0, 0D).endVertex();
-		worldRenderer.pos(endX, endY - s, endZ).tex(textureX1, 0D).endVertex();
-		worldRenderer.pos(endX, endY + s, endZ).tex(textureX1, 1D).endVertex();
-		worldRenderer.pos(startX, startY + s, startZ).tex(textureX0, 1D).endVertex();
+		vertexBuffer.pos(startX, startY - s, startZ).tex(textureX0, 0D).endVertex();
+		vertexBuffer.pos(endX, endY - s, endZ).tex(textureX1, 0D).endVertex();
+		vertexBuffer.pos(endX, endY + s, endZ).tex(textureX1, 1D).endVertex();
+		vertexBuffer.pos(startX, startY + s, startZ).tex(textureX0, 1D).endVertex();
 		
-		worldRenderer.pos(startX - s, startY, startZ).tex(textureX0, 0D).endVertex();
-		worldRenderer.pos(endX - s, endY, endZ).tex(textureX1, 0D).endVertex();
-		worldRenderer.pos(endX + s, endY, endZ).tex(textureX1, 1D).endVertex();
-		worldRenderer.pos(startX + s, startY, startZ).tex(textureX0, 1D).endVertex();
+		vertexBuffer.pos(startX - s, startY, startZ).tex(textureX0, 0D).endVertex();
+		vertexBuffer.pos(endX - s, endY, endZ).tex(textureX1, 0D).endVertex();
+		vertexBuffer.pos(endX + s, endY, endZ).tex(textureX1, 1D).endVertex();
+		vertexBuffer.pos(startX + s, startY, startZ).tex(textureX0, 1D).endVertex();
 		
-		worldRenderer.pos(startX, startY, startZ - s).tex(textureX0, 0D).endVertex();
-		worldRenderer.pos(endX, endY, endZ - s).tex(textureX1, 0D).endVertex();
-		worldRenderer.pos(endX, endY, endZ + s).tex(textureX1, 1D).endVertex();
-		worldRenderer.pos(startX, startY, startZ + s).tex(textureX0, 1D).endVertex();
+		vertexBuffer.pos(startX, startY, startZ - s).tex(textureX0, 0D).endVertex();
+		vertexBuffer.pos(endX, endY, endZ - s).tex(textureX1, 0D).endVertex();
+		vertexBuffer.pos(endX, endY, endZ + s).tex(textureX1, 1D).endVertex();
+		vertexBuffer.pos(startX, startY, startZ + s).tex(textureX0, 1D).endVertex();
 		
 		tessellator.draw();
 		

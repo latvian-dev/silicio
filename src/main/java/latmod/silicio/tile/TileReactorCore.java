@@ -7,6 +7,7 @@ import ftb.lib.api.tile.TileLM;
  */
 public class TileReactorCore extends TileLM
 {
+	@Override
 	public void onUpdate()
 	{
 	}

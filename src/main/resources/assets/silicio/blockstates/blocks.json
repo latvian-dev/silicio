@@ -1,0 +1,45 @@
+{
+  "forge_marker": 1,
+  "defaults": {
+    "model": "minecraft:cube_all",
+    "transform": "forge:default-block"
+  },
+  "variants": {
+    "variant": {
+      "dense_silicon": {
+        "textures": {
+          "all": "silicio:blocks/dense_silicon"
+        }
+      },
+      "elemite": {
+        "textures": {
+          "all": "silicio:blocks/elemite"
+        }
+      },
+      "silicon_frame": {
+        "model": "silicio:silicon_frame",
+        "textures": {
+          "all": "silicio:blocks/silicon_frame"
+        }
+      },
+      "reactor_core": {
+        "model": "silicio:silicon_frame",
+        "textures": {
+          "particle": "silicio:blocks/reactor_core",
+          "all": "silicio:blocks/reactor_core"
+        }
+      },
+      "silicon_block": {
+        "model": "silicio:silicon_block",
+        "textures": {
+          "all": "silicio:blocks/silicon_block"
+        }
+      },
+      "silicon_glass": {
+        "textures": {
+          "all": "silicio:blocks/silicon_glass"
+        }
+      }
+    }
+  }
+}

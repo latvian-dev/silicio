@@ -22,15 +22,19 @@ public final class ModuleIOConnection implements IIDObject, Comparable<ModuleIOC
 		type = t;
 	}
 	
+	@Override
 	public int hashCode()
 	{ return index; }
 	
+	@Override
 	public boolean equals(Object o)
 	{ return o == this || hashCode() == o.hashCode(); }
 	
+	@Override
 	public String getID()
 	{ return ID; }
 	
+	@Override
 	public int compareTo(ModuleIOConnection o)
 	{ return getID().compareToIgnoreCase(o.getID()); }
 }

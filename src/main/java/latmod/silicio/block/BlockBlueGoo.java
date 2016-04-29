@@ -1,38 +1,46 @@
 package latmod.silicio.block;
 
 import latmod.silicio.item.ItemSilMaterials;
-import net.minecraft.block.material.*;
+import net.minecraft.block.material.MapColor;
+import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.*;
+import net.minecraft.util.BlockRenderLayer;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.relauncher.*;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class BlockBlueGoo extends BlockSil
 {
-	public BlockBlueGoo(String s)
+	public BlockBlueGoo()
 	{
-		super(s, Material.clay);
+		super(Material.clay);
 		this.slipperiness = 0.8F;
 	}
 	
+	@Override
 	public void loadRecipes()
 	{
 		getMod().recipes.addRecipe(new ItemStack(this), "GGG", "GGG", "GGG", 'G', ItemSilMaterials.BLUE_GOO.getStack(1));
 		getMod().recipes.addShapelessRecipe(ItemSilMaterials.BLUE_GOO.getStack(9), this);
 	}
 	
+	@Override
 	public MapColor getMapColor(IBlockState state)
 	{ return MapColor.lightBlueColor; }
 	
+	@Override
 	@SideOnly(Side.CLIENT)
-	public EnumWorldBlockLayer getBlockLayer()
-	{ return EnumWorldBlockLayer.TRANSLUCENT; }
+	public BlockRenderLayer getBlockLayer()
+	{ return BlockRenderLayer.TRANSLUCENT; }
 	
-	public boolean isOpaqueCube()
+	@Override
+	public boolean isOpaqueCube(IBlockState state)
 	{ return false; }
 	
+	@Override
 	public void onFallenUpon(World worldIn, BlockPos pos, Entity entityIn, float fallDistance)
 	{
 		if(entityIn.isSneaking())
@@ -45,6 +53,7 @@ public class BlockBlueGoo extends BlockSil
 		}
 	}
 	
+	@Override
 	public void onLanded(World worldIn, Entity entityIn)
 	{
 		if(entityIn.isSneaking())
@@ -57,6 +66,7 @@ public class BlockBlueGoo extends BlockSil
 		}
 	}
 	
+	@Override
 	public void onEntityCollidedWithBlock(World worldIn, BlockPos pos, Entity entityIn)
 	{
 		if(Math.abs(entityIn.motionY) < 0.1D && !entityIn.isSneaking())

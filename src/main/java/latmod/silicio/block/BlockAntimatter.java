@@ -1,47 +1,63 @@
 package latmod.silicio.block;
 
+import ftb.lib.FTBLib;
 import latmod.silicio.item.ItemSilMaterials;
 import latmod.silicio.tile.TileAntimatter;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.EnumBlockRenderType;
+import net.minecraft.util.math.AxisAlignedBB;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
 public class BlockAntimatter extends BlockSil
 {
-	public BlockAntimatter(String s)
+	public static final AxisAlignedBB AABB = new AxisAlignedBB(0D, 0D, 0D, 1D, 1D / 16D, 1D);
+	
+	public BlockAntimatter()
 	{
-		super(s, Material.carpet);
+		super(Material.carpet);
 		setLightLevel(1F);
-		setBlockBounds(0F, 0F, 0F, 1F, 1F / 16F, 1F);
 		setHardness(0.2F);
 	}
 	
-	public void onPostLoaded()
+	@Override
+	public void loadTiles()
 	{
-		super.onPostLoaded();
-		getMod().addTile(TileAntimatter.class, blockName);
+		FTBLib.addTile(TileAntimatter.class, getRegistryName());
 	}
 	
+	@Override
 	public void loadRecipes()
 	{
 		getMod().recipes.addRecipe(new ItemStack(this, 3), "AA", 'A', ItemSilMaterials.ANTIMATTER.getStack(1));
 		getMod().recipes.addRecipe(ItemSilMaterials.ANTIMATTER.getStack(4), "AAA", "AAA", 'A', this);
 	}
 	
-	public int getRenderType()
-	{ return 2; }
+	@Override
+	public EnumBlockRenderType getRenderType(IBlockState state)
+	{ return EnumBlockRenderType.ENTITYBLOCK_ANIMATED; }
 	
+	@Override
 	public boolean hasTileEntity(IBlockState state)
 	{ return true; }
 	
+	@Override
 	public TileEntity createTileEntity(World w, IBlockState state)
 	{ return new TileAntimatter(); }
 	
-	public boolean isOpaqueCube()
+	@Override
+	public boolean isOpaqueCube(IBlockState state)
 	{ return false; }
 	
-	public boolean isFullCube()
+	@Override
+	public boolean isFullCube(IBlockState state)
 	{ return false; }
+	
+	@Override
+	public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos)
+	{ return AABB; }
 }

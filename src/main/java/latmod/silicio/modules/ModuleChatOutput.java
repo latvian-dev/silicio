@@ -1,6 +1,9 @@
 package latmod.silicio.modules;
 
-import latmod.silicio.api.modules.*;
+import latmod.silicio.api.modules.ConnectionType;
+import latmod.silicio.api.modules.Module;
+import latmod.silicio.api.modules.ModuleContainer;
+import latmod.silicio.api.modules.ModuleIOConnection;
 import net.minecraft.entity.player.EntityPlayerMP;
 
 /**
@@ -13,19 +16,23 @@ public class ModuleChatOutput extends Module
 	public ModuleChatOutput(String s)
 	{ super(s); }
 	
+	@Override
 	public void init(ModuleContainer c)
 	{
 		c.addConnection(IN);
 	}
 	
+	@Override
 	public void onAdded(ModuleContainer c, EntityPlayerMP player)
 	{
 	}
 	
+	@Override
 	public void loadRecipes()
 	{
 	}
 	
+	@Override
 	public void onSignalChanged(ModuleContainer c, int id, boolean on)
 	{
 		if(on && id == c.getConnectionID(IN))

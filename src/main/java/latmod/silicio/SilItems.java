@@ -1,16 +1,25 @@
 package latmod.silicio;
 
-import latmod.silicio.api.modules.*;
-import latmod.silicio.block.*;
-import latmod.silicio.item.*;
+import latmod.silicio.api.modules.Module;
+import latmod.silicio.api.modules.ModuleRegistry;
+import latmod.silicio.block.BlockAntimatter;
+import latmod.silicio.block.BlockBlueGoo;
+import latmod.silicio.block.BlockCable;
+import latmod.silicio.block.BlockController;
+import latmod.silicio.block.BlockLaserIO;
+import latmod.silicio.block.BlockLaserMirrorBox;
+import latmod.silicio.block.BlockModuleSocket;
+import latmod.silicio.block.BlockSilBlocks;
+import latmod.silicio.block.BlockTurret;
+import latmod.silicio.item.ItemModule;
+import latmod.silicio.item.ItemSilMaterials;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
 
 public class SilItems
 {
-	public static BlockBlocks1 b_blocks_1;
-	public static BlockBlocks2 b_blocks_2;
-	public static BlockBlocks3 b_blocks_3;
+	public static BlockSilBlocks b_blocks;
 	public static BlockBlueGoo b_blue_goo;
 	public static BlockAntimatter b_antimatter;
 	public static BlockCable b_cable;
@@ -37,29 +46,25 @@ public class SilItems
 		Silicio.mod.addItem(i_xsuit_boots = new ItemXSuitBoots("xsuit_boots"));
 		*/
 		
-		Silicio.mod.addItem(b_blocks_1 = new BlockBlocks1("blocks_1"));
-		Silicio.mod.addItem(b_blocks_2 = new BlockBlocks2("blocks_2"));
-		Silicio.mod.addItem(b_blocks_3 = new BlockBlocks3("blocks_3"));
-		Silicio.mod.addItem(b_blue_goo = new BlockBlueGoo("blue_goo"));
-		Silicio.mod.addItem(b_antimatter = new BlockAntimatter("antimatter_carpet"));
-		Silicio.mod.addItem(b_cable = new BlockCable("cable"));
-		Silicio.mod.addItem(b_module_socket = new BlockModuleSocket("module_socket_block"));
-		Silicio.mod.addItem(b_controller = new BlockController("controller"));
-		Silicio.mod.addItem(b_laser_mirror = new BlockLaserMirrorBox("laser_mirror_box"));
-		Silicio.mod.addItem(b_laser_rx = new BlockLaserIO("laser_rx", true));
-		Silicio.mod.addItem(b_laser_tx = new BlockLaserIO("laser_tx", false));
-		Silicio.mod.addItem(b_turret = new BlockTurret("turret"));
+		b_blocks = Silicio.mod.register("blocks", new BlockSilBlocks());
+		b_blue_goo = Silicio.mod.register("blue_goo", new BlockBlueGoo());
+		b_antimatter = Silicio.mod.register("antimatter_carpet", new BlockAntimatter());
+		b_cable = Silicio.mod.register("cable", new BlockCable());
+		b_module_socket = Silicio.mod.register("module_socket_block", new BlockModuleSocket());
+		b_controller = Silicio.mod.register("controller", new BlockController());
+		b_laser_mirror = Silicio.mod.register("laser_mirror_box", new BlockLaserMirrorBox());
+		b_laser_rx = Silicio.mod.register("laser_rx", new BlockLaserIO(true));
+		b_laser_tx = Silicio.mod.register("laser_tx", new BlockLaserIO(false));
+		b_turret = Silicio.mod.register("turret", new BlockTurret());
 		
-		Silicio.mod.addItem(i_mat = new ItemSilMaterials("mat"));
+		i_mat = Silicio.mod.register("mat", new ItemSilMaterials());
 		
 		ModuleRegistry.init();
 		
 		i_modules = new HashMap<>();
 		for(Module m : ModuleRegistry.modules())
 		{
-			ItemModule module = new ItemModule(m);
-			Silicio.mod.addItem(module);
-			i_modules.put(m.getID(), module);
+			i_modules.put(m.getID(), Silicio.mod.register("module_" + m.getID(), new ItemModule(m)));
 		}
 		
 		//Modules.init();

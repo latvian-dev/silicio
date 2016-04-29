@@ -1,6 +1,7 @@
 package latmod.silicio.api.tileentity;
 
 import latmod.silicio.api.modules.ModuleContainer;
+import net.minecraft.util.EnumFacing;
 
 import java.util.Collection;
 
@@ -9,5 +10,6 @@ import java.util.Collection;
  */
 public interface IModuleSocketTile extends ICBNetTile
 {
-	Collection<ModuleContainer> getModules();
+	boolean hasModules(EnumFacing facing);
+	Collection<ModuleContainer> getModules(EnumFacing facing);
 }

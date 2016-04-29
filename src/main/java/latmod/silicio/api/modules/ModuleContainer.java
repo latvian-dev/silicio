@@ -1,7 +1,9 @@
 package latmod.silicio.api.modules;
 
-import latmod.lib.*;
-import latmod.silicio.api.tileentity.*;
+import latmod.lib.IntMap;
+import latmod.lib.LMUtils;
+import latmod.silicio.api.tileentity.ICBController;
+import latmod.silicio.api.tileentity.IModuleSocketTile;
 import latmod.silicio.tile.TileModuleSocket;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -80,6 +82,6 @@ public final class ModuleContainer
 		int id = getConnectionID(c);
 		if(id != 0) return false;
 		ICBController controller = tile.getController();
-		return (controller == null) ? false : controller.getSignalState(id);
+		return controller != null && controller.getSignalState(id);
 	}
 }
