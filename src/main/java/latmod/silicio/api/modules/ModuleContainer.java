@@ -2,8 +2,8 @@ package latmod.silicio.api.modules;
 
 import latmod.lib.IntMap;
 import latmod.lib.LMUtils;
-import latmod.silicio.api.tileentity.ICBController;
-import latmod.silicio.api.tileentity.IModuleSocketTile;
+import latmod.silicio.api.tile.ICBController;
+import latmod.silicio.api.tile.IModuleSocketTile;
 import latmod.silicio.tile.TileModuleSocket;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;

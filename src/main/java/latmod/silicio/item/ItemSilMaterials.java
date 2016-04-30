@@ -95,6 +95,10 @@ public class ItemSilMaterials extends ItemMaterialsLM
 		
 		ODItems.add(ODItems.IRON_ROD, IRON_ROD.getStack(1));
 		ODItems.add(ODItems.SILICON, SILICON.getStack(1));
+		
+		ODItems.add("dustElemite", ELEMITE_DUST.getStack(1));
+		ODItems.add("ingotElemite", ELEMITE_INGOT.getStack(1));
+		ODItems.add("nuggetElemite", ELEMITE_NUGGET.getStack(1));
 	}
 	
 	@Override
@@ -117,15 +121,15 @@ public class ItemSilMaterials extends ItemMaterialsLM
 		getMod().recipes.addRecipe(TRANSISTOR.getStack(3), "DDD", "WWW", 'D', DIODE, 'W', WIRE);
 		getMod().recipes.addRecipe(CHIP.getStack(1), "TT", "TT", "TT", 'T', TRANSISTOR);
 		getMod().recipes.addRecipe(PROCESSOR.getStack(1), "CCC", "CSC", "CCC", 'C', CHIP, 'S', ODItems.SILICON);
-		getMod().recipes.addShapelessRecipe(CIRCUIT.getStack(1), PROCESSOR, WIRE, RESISTOR, CAPACITOR, TRANSISTOR, PROCESSOR, WIRE, WIRE);
-		getMod().recipes.addRecipe(CIRCUIT_WIFI.getStack(1), "EEE", "ECE", "EEE", 'C', CIRCUIT, 'E', Items.ender_pearl);
+		getMod().recipes.addShapelessRecipe(CIRCUIT.getStack(1), PROCESSOR, WIRE, RESISTOR, CAPACITOR, TRANSISTOR, PROCESSOR, WIRE, WIRE, ELEMITE_NUGGET);
+		getMod().recipes.addRecipe(CIRCUIT_WIFI.getStack(1), "NEN", "ECE", "NEN", 'C', CIRCUIT, 'E', Items.ender_pearl, 'N', ELEMITE_NUGGET);
 		getMod().recipes.addShapelessRecipe(LED_RED.getStack(3), DIODE, EnumMCColor.RED.dyeName, ODItems.GLOWSTONE);
 		getMod().recipes.addShapelessRecipe(LED_GREEN.getStack(3), DIODE, EnumMCColor.GREEN.dyeName, ODItems.GLOWSTONE);
 		getMod().recipes.addShapelessRecipe(LED_BLUE.getStack(3), DIODE, EnumMCColor.BLUE.dyeName, ODItems.GLOWSTONE);
 		getMod().recipes.addShapelessRecipe(LED_RGB.getStack(3), LED_RED, LED_GREEN, LED_BLUE);
 		getMod().recipes.addRecipe(LED_MATRIX.getStack(1), "LLL", "LLL", "LLL", 'L', LED_RGB);
 		
-		getMod().recipes.addRecipe(MODULE_EMPTY.getStack(1), "III", "ICI", "III", 'I', ODItems.IRON, 'C', PROCESSOR.getStack(1));
+		getMod().recipes.addRecipe(MODULE_EMPTY.getStack(1), "III", "ICI", "III", 'I', ODItems.IRON, 'C', PROCESSOR);
 		getMod().recipes.addShapelessRecipe(MODULE_INPUT.getStack(1), MODULE_EMPTY, EnumMCColor.BLUE.dyeName);
 		getMod().recipes.addShapelessRecipe(MODULE_OUTPUT.getStack(1), MODULE_EMPTY, EnumMCColor.ORANGE.dyeName);
 		getMod().recipes.addShapelessRecipe(MODULE_LOGIC.getStack(1), MODULE_EMPTY, ODItems.REDSTONE);

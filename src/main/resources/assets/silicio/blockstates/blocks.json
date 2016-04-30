@@ -22,13 +22,6 @@
           "all": "silicio:blocks/silicon_frame"
         }
       },
-      "reactor_core": {
-        "model": "silicio:silicon_frame",
-        "textures": {
-          "particle": "silicio:blocks/reactor_core",
-          "all": "silicio:blocks/reactor_core"
-        }
-      },
       "silicon_block": {
         "model": "silicio:silicon_block",
         "textures": {

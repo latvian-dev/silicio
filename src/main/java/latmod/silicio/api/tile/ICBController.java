@@ -1,4 +1,4 @@
-package latmod.silicio.api.tileentity;
+package latmod.silicio.api.tile;
 
 import java.util.List;
 

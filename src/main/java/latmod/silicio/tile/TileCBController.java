@@ -2,21 +2,21 @@ package latmod.silicio.tile;
 
 import cofh.api.energy.EnergyStorage;
 import cofh.api.energy.IEnergyReceiver;
+import ftb.lib.BlockDimPos;
 import ftb.lib.FTBLib;
 import latmod.lib.IntList;
 import latmod.silicio.api.modules.Module;
 import latmod.silicio.api.modules.ModuleContainer;
-import latmod.silicio.api.tileentity.CBNetwork;
-import latmod.silicio.api.tileentity.ICBController;
-import latmod.silicio.api.tileentity.ICBNetTile;
-import latmod.silicio.api.tileentity.IModuleSocketTile;
+import latmod.silicio.api.tile.CBNetwork;
+import latmod.silicio.api.tile.ICBController;
+import latmod.silicio.api.tile.ICBNetTile;
+import latmod.silicio.api.tile.IModuleSocketTile;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
-import net.minecraft.util.math.BlockPos;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -69,6 +69,7 @@ public class TileCBController extends TileCBNetwork implements ICBController, IE
 	@Override
 	public void readTileClientData(NBTTagCompound tag)
 	{
+		super.readTileClientData(tag);
 		signalList.clear();
 		signalList.addAll(tag.getIntArray("S"));
 	}
@@ -76,6 +77,7 @@ public class TileCBController extends TileCBNetwork implements ICBController, IE
 	@Override
 	public void writeTileClientData(NBTTagCompound tag)
 	{
+		super.writeTileClientData(tag);
 		tag.setIntArray("S", signalList.toArray());
 	}
 	
@@ -127,20 +129,22 @@ public class TileCBController extends TileCBNetwork implements ICBController, IE
 			
 			updateNetwork = false;
 			
+			BlockDimPos dimPos = getDimPos();
+			
 			for(ICBNetTile t : network)
 			{
 				t.setController(null);
-				t.onCBNetworkChanged(getPos());
+				t.onCBNetworkChanged(dimPos);
 			}
 			
 			network.clear();
-			network = CBNetwork.getTilesAround(this);
+			network = CBNetwork.getTilesAround(dimPos, 32D);
 			
 			for(ICBNetTile t : network)
 			{
 				t.setController(this);
 				if(t instanceof ICBController) hasConflict = true;
-				t.onCBNetworkChanged(getPos());
+				t.onCBNetworkChanged(dimPos);
 			}
 			
 			modules.clear();
@@ -158,7 +162,10 @@ public class TileCBController extends TileCBNetwork implements ICBController, IE
 				}
 			}
 			
-			if(hc != hasConflict) markDirty();
+			if(hc != hasConflict)
+			{
+				markDirty();
+			}
 		}
 		
 		if(!modules.isEmpty())
@@ -197,7 +204,7 @@ public class TileCBController extends TileCBNetwork implements ICBController, IE
 	}
 	
 	@Override
-	public void onCBNetworkChanged(BlockPos pos)
+	public void onCBNetworkChanged(BlockDimPos pos)
 	{
 		updateNetwork = true;
 	}

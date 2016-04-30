@@ -5,7 +5,7 @@ import latmod.silicio.api.modules.IModuleItem;
 import latmod.silicio.api.modules.Module;
 import latmod.silicio.api.modules.ModuleContainer;
 import latmod.silicio.api.modules.ModuleRegistry;
-import latmod.silicio.api.tileentity.IModuleSocketTile;
+import latmod.silicio.api.tile.IModuleSocketTile;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
@@ -89,7 +89,11 @@ public class TileModuleSocket extends TileCBNetwork implements IModuleSocketTile
 					LMInvUtils.giveItem(ep, c.item.copy(), ep.inventory.currentItem);
 					modules.remove(side);
 					markDirty();
-					if(getController() != null) getController().onCBNetworkChanged(getPos());
+					
+					if(getController() != null)
+					{
+						getController().onCBNetworkChanged(getDimPos());
+					}
 				}
 			}
 			
@@ -109,7 +113,11 @@ public class TileModuleSocket extends TileCBNetwork implements IModuleSocketTile
 					c.module.init(c);
 					c.module.onAdded(c, (EntityPlayerMP) ep);
 					markDirty();
-					if(getController() != null) getController().onCBNetworkChanged(getPos());
+					
+					if(getController() != null)
+					{
+						getController().onCBNetworkChanged(getDimPos());
+					}
 				}
 			}
 			
@@ -123,10 +131,6 @@ public class TileModuleSocket extends TileCBNetwork implements IModuleSocketTile
 	public void onUpdate()
 	{
 	}
-	
-	@Override
-	public boolean canCBConnect(EnumFacing facing)
-	{ return !hasModules(facing); }
 	
 	@Override
 	public boolean hasModules(EnumFacing facing)

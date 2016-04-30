@@ -4,12 +4,11 @@ import latmod.silicio.api.modules.Module;
 import latmod.silicio.api.modules.ModuleRegistry;
 import latmod.silicio.block.BlockAntimatter;
 import latmod.silicio.block.BlockBlueGoo;
-import latmod.silicio.block.BlockCable;
-import latmod.silicio.block.BlockController;
 import latmod.silicio.block.BlockLaserIO;
 import latmod.silicio.block.BlockLaserMirrorBox;
 import latmod.silicio.block.BlockModuleSocket;
 import latmod.silicio.block.BlockSilBlocks;
+import latmod.silicio.block.BlockSilMachines;
 import latmod.silicio.block.BlockTurret;
 import latmod.silicio.item.ItemModule;
 import latmod.silicio.item.ItemSilMaterials;
@@ -20,11 +19,10 @@ import java.util.Map;
 public class SilItems
 {
 	public static BlockSilBlocks b_blocks;
+	public static BlockSilMachines b_machines;
 	public static BlockBlueGoo b_blue_goo;
 	public static BlockAntimatter b_antimatter;
-	public static BlockCable b_cable;
 	public static BlockModuleSocket b_module_socket;
-	public static BlockController b_controller;
 	public static BlockLaserMirrorBox b_laser_mirror;
 	public static BlockLaserIO b_laser_rx;
 	public static BlockLaserIO b_laser_tx;
@@ -47,11 +45,10 @@ public class SilItems
 		*/
 		
 		b_blocks = Silicio.mod.register("blocks", new BlockSilBlocks());
+		b_machines = Silicio.mod.register("machines", new BlockSilMachines());
 		b_blue_goo = Silicio.mod.register("blue_goo", new BlockBlueGoo());
 		b_antimatter = Silicio.mod.register("antimatter_carpet", new BlockAntimatter());
-		b_cable = Silicio.mod.register("cable", new BlockCable());
 		b_module_socket = Silicio.mod.register("module_socket_block", new BlockModuleSocket());
-		b_controller = Silicio.mod.register("controller", new BlockController());
 		b_laser_mirror = Silicio.mod.register("laser_mirror_box", new BlockLaserMirrorBox());
 		b_laser_rx = Silicio.mod.register("laser_rx", new BlockLaserIO(true));
 		b_laser_tx = Silicio.mod.register("laser_tx", new BlockLaserIO(false));

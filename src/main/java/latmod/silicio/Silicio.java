@@ -2,7 +2,7 @@ package latmod.silicio;
 
 import ftb.lib.CreativeTabLM;
 import ftb.lib.LMMod;
-import net.minecraft.item.ItemStack;
+import latmod.silicio.block.BlockSilMachines;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
@@ -31,7 +31,7 @@ public class Silicio
 		//SilConfig.load();
 		SilItems.init();
 		
-		tab.addIcon(new ItemStack(SilItems.b_controller));
+		tab.addIcon(BlockSilMachines.EnumVariant.CONTROLLER.getStack(1));
 		
 		mod.onPostLoaded();
 		proxy.preInit();

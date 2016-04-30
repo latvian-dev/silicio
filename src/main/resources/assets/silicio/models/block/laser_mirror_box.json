@@ -1,5 +1,5 @@
 {
-  "parent": "minecraft:block/cube_all",
+  "parent": "block/cube_all",
   "textures": {
     "particle": "silicio:blocks/laser_mirror_box_glass",
     "all": "silicio:blocks/laser_mirror_box_glass",

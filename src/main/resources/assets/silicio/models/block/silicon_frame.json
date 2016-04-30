@@ -1,4 +1,5 @@
 {
+  "parent": "block/block",
   "textures": {
     "particle": "silicio:blocks/silicon_frame",
     "texture": "silicio:blocks/silicon_frame"
