@@ -1,6 +1,8 @@
 package latmod.silicio.block;
 
 import ftb.lib.BlockStateSerializer;
+import ftb.lib.api.block.IBlockLM;
+import ftb.lib.api.block.ItemBlockLM;
 import ftb.lib.api.item.ODItems;
 import latmod.silicio.SilItems;
 import latmod.silicio.Silicio;
@@ -13,6 +15,7 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.EnumFacing;
@@ -73,6 +76,16 @@ public class BlockSilBlocks extends BlockSil
 		}
 	}
 	
+	public class ItemBlockBlocks extends ItemBlockLM
+	{
+		public ItemBlockBlocks(IBlockLM b)
+		{ super(b); }
+		
+		@Override
+		public String getUnlocalizedName(ItemStack stack)
+		{ return getMod().getBlockName(EnumVariant.getVariantFromMeta(stack.getMetadata()).getName()); }
+	}
+	
 	public static final PropertyEnum<EnumVariant> VARIANT = PropertyEnum.create("variant", EnumVariant.class);
 	
 	public BlockSilBlocks()
@@ -80,6 +93,10 @@ public class BlockSilBlocks extends BlockSil
 		super(Material.rock);
 		setCreativeTab(Silicio.tab);
 	}
+	
+	@Override
+	public ItemBlock createItemBlock()
+	{ return new ItemBlockBlocks(this); }
 	
 	@Override
 	public void onPostLoaded()
@@ -117,10 +134,6 @@ public class BlockSilBlocks extends BlockSil
 			ModelLoader.setCustomModelResourceLocation(item, e.meta, new ModelResourceLocation(getRegistryName(), BlockStateSerializer.getString(VARIANT, e)));
 		}
 	}
-	
-	@Override
-	public String getUnlocalizedName(ItemStack stack)
-	{ return getMod().getBlockName(EnumVariant.getVariantFromMeta(stack.getMetadata()).getName()); }
 	
 	@Override
 	@SideOnly(Side.CLIENT)

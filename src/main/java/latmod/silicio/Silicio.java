@@ -2,6 +2,7 @@ package latmod.silicio;
 
 import ftb.lib.CreativeTabLM;
 import ftb.lib.LMMod;
+import latmod.silicio.api.tile.energy.CapabilitySilEnergyTank;
 import latmod.silicio.block.BlockSilMachines;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.SidedProxy;
@@ -34,6 +35,9 @@ public class Silicio
 		tab.addIcon(BlockSilMachines.EnumVariant.CONTROLLER.getStack(1));
 		
 		mod.onPostLoaded();
+		
+		CapabilitySilEnergyTank.register();
+		
 		proxy.preInit();
 	}
 	

@@ -1,16 +1,14 @@
 package latmod.silicio.tile;
 
-import cofh.api.energy.EnergyStorage;
-import cofh.api.energy.IEnergyReceiver;
 import ftb.lib.BlockDimPos;
 import ftb.lib.FTBLib;
 import latmod.lib.IntList;
 import latmod.silicio.api.modules.Module;
 import latmod.silicio.api.modules.ModuleContainer;
-import latmod.silicio.api.tile.CBNetwork;
-import latmod.silicio.api.tile.ICBController;
-import latmod.silicio.api.tile.ICBNetTile;
-import latmod.silicio.api.tile.IModuleSocketTile;
+import latmod.silicio.api.tile.cb.ICBController;
+import latmod.silicio.api.tile.cb.ICBNetTile;
+import latmod.silicio.api.tile.cb.IModuleSocketTile;
+import latmod.silicio.api.tile.energy.SilEnergyTank;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -26,9 +24,9 @@ import java.util.Map;
 /**
  * Created by LatvianModder on 05.03.2016.
  */
-public class TileCBController extends TileCBNetwork implements ICBController, IEnergyReceiver
+public class TileCBController extends TileCBNetwork implements ICBController
 {
-	public final EnergyStorage energyStorage;
+	public final SilEnergyTank energyTank;
 	private final IntList signalList;
 	private List<ICBNetTile> network;
 	private List<ModuleContainer> modules;
@@ -39,7 +37,7 @@ public class TileCBController extends TileCBNetwork implements ICBController, IE
 	
 	public TileCBController()
 	{
-		energyStorage = new EnergyStorage(1000000);
+		energyTank = new SilEnergyTank(100000D);
 		signalList = new IntList().setDefVal(0);
 		network = new ArrayList<>();
 		modules = new ArrayList<>();
@@ -113,38 +111,34 @@ public class TileCBController extends TileCBNetwork implements ICBController, IE
 	@Override
 	public void onUpdate()
 	{
-		if(getSide().isClient()) return;
+		if(getSide().isClient()) { return; }
 		
 		if(refreshTick >= 20)
 		{
 			updateNetwork = true;
 			refreshTick = 0;
 		}
-		else refreshTick++;
+		else { refreshTick++; }
 		
 		if(updateNetwork)
 		{
 			boolean hc = hasConflict;
 			hasConflict = false;
 			
-			updateNetwork = false;
-			
 			BlockDimPos dimPos = getDimPos();
 			
 			for(ICBNetTile t : network)
 			{
 				t.setController(null);
-				t.onCBNetworkChanged(dimPos);
 			}
 			
 			network.clear();
-			network = CBNetwork.getTilesAround(dimPos, 32D);
+			//FIXME: network = SilNet.CIRCUIT_BOARD.getTilesAround(ICBNetTile.class, dimPos, 32D);
 			
 			for(ICBNetTile t : network)
 			{
 				t.setController(this);
-				if(t instanceof ICBController) hasConflict = true;
-				t.onCBNetworkChanged(dimPos);
+				if(t instanceof ICBController) { hasConflict = true; }
 			}
 			
 			modules.clear();
@@ -166,6 +160,8 @@ public class TileCBController extends TileCBNetwork implements ICBController, IE
 			{
 				markDirty();
 			}
+			
+			updateNetwork = false;
 		}
 		
 		if(!modules.isEmpty())
@@ -186,7 +182,7 @@ public class TileCBController extends TileCBNetwork implements ICBController, IE
 					for(int i = 0; i < signalList1.size(); i++)
 					{
 						int id = signalList1.get(i);
-						if(id != 0 && !signalList.contains(id)) signalList.add(id);
+						if(id != 0 && !signalList.contains(id)) { signalList.add(id); }
 					}
 					
 					signalList1.clear();
@@ -200,13 +196,10 @@ public class TileCBController extends TileCBNetwork implements ICBController, IE
 				FTBLib.printChat(null, "Signals: " + diffMap);
 			}
 		}
-		else signalList.clear();
-	}
-	
-	@Override
-	public void onCBNetworkChanged(BlockDimPos pos)
-	{
-		updateNetwork = true;
+		else
+		{
+			signalList.clear();
+		}
 	}
 	
 	@Override
@@ -221,33 +214,17 @@ public class TileCBController extends TileCBNetwork implements ICBController, IE
 	}
 	
 	@Override
-	public boolean hasConflict()
-	{ return hasConflict; }
-	
-	@Override
 	public boolean getSignalState(int id)
 	{
-		if(id == 0) return false;
+		if(id == 0) { return false; }
 		return signalList.contains(id);
 	}
 	
 	@Override
-	public List<ICBNetTile> getNetwork()
+	public Collection<ICBNetTile> getNetwork()
 	{ return network; }
 	
 	@Override
-	public int receiveEnergy(EnumFacing from, int maxReceive, boolean simulate)
-	{ return energyStorage.receiveEnergy(maxReceive, simulate); }
-	
-	@Override
-	public int getEnergyStored(EnumFacing from)
-	{ return energyStorage.getEnergyStored(); }
-	
-	@Override
-	public int getMaxEnergyStored(EnumFacing from)
-	{ return energyStorage.getMaxEnergyStored(); }
-	
-	@Override
-	public boolean canConnectEnergy(EnumFacing from)
-	{ return true; }
+	public void refreshNetwork()
+	{ updateNetwork = true; }
 }

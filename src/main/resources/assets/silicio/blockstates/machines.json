@@ -6,21 +6,37 @@
   },
   "variants": {
     "variant": {
-      "energy_tank": {
-        "textures": {
-          "all": "silicio:blocks/energy_tank"
-        }
-      },
-      "controller": {
-        "textures": {
-          "all": "silicio:blocks/controller"
-        }
-      },
       "reactor_core": {
         "model": "silicio:silicon_frame",
         "textures": {
           "particle": "silicio:blocks/reactor_core",
           "texture": "silicio:blocks/reactor_core"
+        }
+      },
+      "esu": {
+        "model": "silicio:esu",
+        "textures": {
+          "particle": "silicio:blocks/esu",
+          "texture": "silicio:blocks/esu",
+          "texture_base": "silicio:blocks/dense_silicon"
+        }
+      },
+      "energy_bridge_rf": {
+        "textures": {
+          "particle": "silicio:blocks/energy_bridge_rf",
+          "all": "silicio:blocks/energy_bridge_rf"
+        }
+      },
+      "energy_bridge_eu": {
+        "textures": {
+          "particle": "silicio:blocks/energy_bridge_eu",
+          "all": "silicio:blocks/energy_bridge_eu"
+        }
+      },
+      "controller": {
+        "textures": {
+          "particle": "silicio:blocks/controller",
+          "all": "silicio:blocks/controller"
         }
       }
     }

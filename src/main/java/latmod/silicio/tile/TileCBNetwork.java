@@ -1,11 +1,9 @@
 package latmod.silicio.tile;
 
-import ftb.lib.BlockDimPos;
 import ftb.lib.api.tile.TileLM;
 import latmod.lib.LMUtils;
-import latmod.silicio.api.tile.CBNetwork;
-import latmod.silicio.api.tile.ICBController;
-import latmod.silicio.api.tile.ICBNetTile;
+import latmod.silicio.api.tile.cb.ICBController;
+import latmod.silicio.api.tile.cb.ICBNetTile;
 import net.minecraft.nbt.NBTTagCompound;
 
 import java.util.UUID;
@@ -17,20 +15,6 @@ public class TileCBNetwork extends TileLM implements ICBNetTile
 {
 	private UUID uuid;
 	private ICBController controller;
-	
-	@Override
-	public void onLoad()
-	{
-		super.onLoad();
-		CBNetwork.load(this);
-	}
-	
-	@Override
-	public void onChunkUnload()
-	{
-		super.onChunkUnload();
-		CBNetwork.unload(this);
-	}
 	
 	@Override
 	public void readTileData(NBTTagCompound tag)
@@ -79,7 +63,7 @@ public class TileCBNetwork extends TileLM implements ICBNetTile
 	}
 	
 	@Override
-	public boolean isDeviceAvailable(ICBController c)
+	public boolean isDeviceOnline(ICBController c)
 	{ return true; }
 	
 	@Override
@@ -89,9 +73,4 @@ public class TileCBNetwork extends TileLM implements ICBNetTile
 	@Override
 	public ICBController getController()
 	{ return controller; }
-	
-	@Override
-	public void onCBNetworkChanged(BlockDimPos pos)
-	{
-	}
 }

@@ -1,6 +1,5 @@
-package latmod.silicio.api.tile;
+package latmod.silicio.api.tile.cb;
 
-import ftb.lib.BlockDimPos;
 import ftb.lib.api.tile.ITileEntity;
 
 import java.util.UUID;
@@ -11,8 +10,7 @@ import java.util.UUID;
 public interface ICBNetTile extends ITileEntity
 {
 	UUID getUUID();
-	boolean isDeviceAvailable(ICBController c);
+	boolean isDeviceOnline(ICBController c);
 	void setController(ICBController c);
 	ICBController getController();
-	void onCBNetworkChanged(BlockDimPos pos);
 }

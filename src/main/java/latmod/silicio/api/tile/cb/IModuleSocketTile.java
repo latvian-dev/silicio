@@ -1,4 +1,4 @@
-package latmod.silicio.api.tile;
+package latmod.silicio.api.tile.cb;
 
 import latmod.silicio.api.modules.ModuleContainer;
 import net.minecraft.util.EnumFacing;

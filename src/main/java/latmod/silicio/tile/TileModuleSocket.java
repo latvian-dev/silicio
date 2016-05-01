@@ -5,7 +5,7 @@ import latmod.silicio.api.modules.IModuleItem;
 import latmod.silicio.api.modules.Module;
 import latmod.silicio.api.modules.ModuleContainer;
 import latmod.silicio.api.modules.ModuleRegistry;
-import latmod.silicio.api.tile.IModuleSocketTile;
+import latmod.silicio.api.tile.cb.IModuleSocketTile;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
@@ -92,7 +92,7 @@ public class TileModuleSocket extends TileCBNetwork implements IModuleSocketTile
 					
 					if(getController() != null)
 					{
-						getController().onCBNetworkChanged(getDimPos());
+						getController().refreshNetwork();
 					}
 				}
 			}
@@ -116,7 +116,7 @@ public class TileModuleSocket extends TileCBNetwork implements IModuleSocketTile
 					
 					if(getController() != null)
 					{
-						getController().onCBNetworkChanged(getDimPos());
+						getController().refreshNetwork();
 					}
 				}
 			}
@@ -139,7 +139,7 @@ public class TileModuleSocket extends TileCBNetwork implements IModuleSocketTile
 	@Override
 	public Collection<ModuleContainer> getModules(EnumFacing facing)
 	{
-		if(facing == null) return modules.values();
+		if(facing == null) { return modules.values(); }
 		return hasModules(facing) ? Collections.singleton(modules.get(facing)) : Collections.emptyList();
 	}
 }

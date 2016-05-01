@@ -18,7 +18,7 @@ import net.minecraft.world.World;
 /**
  * Created by LatvianModder on 04.03.2016.
  */
-public class BlockModuleSocket extends BlockSil
+public class BlockCBSocketBlock extends BlockSil
 {
 	public static final PropertyBool MODULE_D = PropertyBool.create("down");
 	public static final PropertyBool MODULE_U = PropertyBool.create("up");
@@ -28,7 +28,7 @@ public class BlockModuleSocket extends BlockSil
 	public static final PropertyBool MODULE_E = PropertyBool.create("east");
 	public static final PropertyBool CENTER = PropertyBool.create("center");
 	
-	public BlockModuleSocket()
+	public BlockCBSocketBlock()
 	{
 		super(Material.iron);
 	}
