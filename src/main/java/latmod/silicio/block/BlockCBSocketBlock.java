@@ -30,7 +30,7 @@ public class BlockCBSocketBlock extends BlockSil
 	
 	public BlockCBSocketBlock()
 	{
-		super(Material.iron);
+		super(Material.IRON);
 	}
 	
 	@Override
@@ -78,12 +78,12 @@ public class BlockCBSocketBlock extends BlockSil
 		
 		if(tile != null)
 		{
-			modD = tile.hasModules(EnumFacing.DOWN);
-			modU = tile.hasModules(EnumFacing.UP);
-			modN = tile.hasModules(EnumFacing.NORTH);
-			modS = tile.hasModules(EnumFacing.SOUTH);
-			modW = tile.hasModules(EnumFacing.WEST);
-			modE = tile.hasModules(EnumFacing.EAST);
+			modD = tile.modules.containsKey(EnumFacing.DOWN);
+			modU = tile.modules.containsKey(EnumFacing.UP);
+			modN = tile.modules.containsKey(EnumFacing.NORTH);
+			modS = tile.modules.containsKey(EnumFacing.SOUTH);
+			modW = tile.modules.containsKey(EnumFacing.WEST);
+			modE = tile.modules.containsKey(EnumFacing.EAST);
 		}
 		
 		return state.withProperty(MODULE_D, modD).withProperty(MODULE_U, modU).withProperty(MODULE_N, modN).withProperty(MODULE_S, modS).withProperty(MODULE_W, modW).withProperty(MODULE_E, modE).withProperty(CENTER, true);

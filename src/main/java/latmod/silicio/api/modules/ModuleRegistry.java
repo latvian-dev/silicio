@@ -33,7 +33,7 @@ public class ModuleRegistry
 	
 	public static Module get(String s)
 	{
-		if(s == null || s.isEmpty()) return null;
+		if(s == null || s.isEmpty()) { return null; }
 		return map.get(s);
 	}
 	

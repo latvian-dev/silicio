@@ -26,7 +26,7 @@ public class BlockLaserMirrorBox extends BlockSil
 	
 	public BlockLaserMirrorBox()
 	{
-		super(Material.iron);
+		super(Material.IRON);
 	}
 	
 	@Override

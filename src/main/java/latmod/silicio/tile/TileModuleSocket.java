@@ -5,7 +5,7 @@ import latmod.silicio.api.modules.IModuleItem;
 import latmod.silicio.api.modules.Module;
 import latmod.silicio.api.modules.ModuleContainer;
 import latmod.silicio.api.modules.ModuleRegistry;
-import latmod.silicio.api.tile.cb.IModuleSocketTile;
+import latmod.silicio.api.tile.cb.ICBModuleProvider;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
@@ -16,16 +16,15 @@ import net.minecraft.util.EnumHand;
 import net.minecraftforge.common.util.Constants;
 
 import java.util.Collection;
-import java.util.Collections;
 import java.util.EnumMap;
 import java.util.Map;
 
 /**
  * Created by LatvianModder on 04.03.2016.
  */
-public class TileModuleSocket extends TileCBNetwork implements IModuleSocketTile
+public class TileModuleSocket extends TileCBNetwork implements ICBModuleProvider
 {
-	private final Map<EnumFacing, ModuleContainer> modules;
+	public final Map<EnumFacing, ModuleContainer> modules;
 	
 	public TileModuleSocket()
 	{
@@ -89,11 +88,6 @@ public class TileModuleSocket extends TileCBNetwork implements IModuleSocketTile
 					LMInvUtils.giveItem(ep, c.item.copy(), ep.inventory.currentItem);
 					modules.remove(side);
 					markDirty();
-					
-					if(getController() != null)
-					{
-						getController().refreshNetwork();
-					}
 				}
 			}
 			
@@ -113,11 +107,6 @@ public class TileModuleSocket extends TileCBNetwork implements IModuleSocketTile
 					c.module.init(c);
 					c.module.onAdded(c, (EntityPlayerMP) ep);
 					markDirty();
-					
-					if(getController() != null)
-					{
-						getController().refreshNetwork();
-					}
 				}
 			}
 			
@@ -133,13 +122,10 @@ public class TileModuleSocket extends TileCBNetwork implements IModuleSocketTile
 	}
 	
 	@Override
-	public boolean hasModules(EnumFacing facing)
-	{ return modules.containsKey(facing); }
+	public boolean hasModules()
+	{ return !modules.isEmpty(); }
 	
 	@Override
-	public Collection<ModuleContainer> getModules(EnumFacing facing)
-	{
-		if(facing == null) { return modules.values(); }
-		return hasModules(facing) ? Collections.singleton(modules.get(facing)) : Collections.emptyList();
-	}
+	public Collection<ModuleContainer> getModules()
+	{ return modules.values(); }
 }

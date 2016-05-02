@@ -9,5 +9,4 @@ public interface ICBController extends ICBNetTile
 {
 	boolean getSignalState(int id);
 	Collection<ICBNetTile> getNetwork();
-	void refreshNetwork();
 }

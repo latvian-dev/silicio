@@ -30,13 +30,16 @@ public class Silicio
 		mod = LMMod.create(Silicio.MOD_ID);
 		tab = new CreativeTabLM("silicio").setMod(mod);
 		//SilConfig.load();
+		
 		SilItems.init();
+		SilBlocks.init();
+		SilSounds.init();
 		
 		tab.addIcon(BlockSilMachines.EnumVariant.CONTROLLER.getStack(1));
 		
 		mod.onPostLoaded();
 		
-		CapabilitySilEnergyTank.register();
+		CapabilitySilEnergyTank.init();
 		
 		proxy.preInit();
 	}

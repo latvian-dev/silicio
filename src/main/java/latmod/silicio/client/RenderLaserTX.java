@@ -23,7 +23,7 @@ public class RenderLaserTX extends TileEntitySpecialRenderer<TileLaserTX>
 	@Override
 	public void renderTileEntityAt(TileLaserTX te, double x, double y, double z, float partialTicks, int destroyStage)
 	{
-		if(te.laserPath.isEmpty()) return;
+		if(te.laserPath.isEmpty()) { return; }
 		
 		GlStateManager.disableTexture2D();
 		GlStateManager.disableLighting();

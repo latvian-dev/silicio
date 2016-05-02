@@ -35,7 +35,11 @@ public class TileCBNetwork extends TileLM implements ICBNetTile
 	public void writeTileData(NBTTagCompound tag)
 	{
 		super.writeTileData(tag);
-		tag.setString("UUID", LMUtils.fromUUID(getUUID()));
+		
+		if(uuid != null)
+		{
+			tag.setString("UUID", LMUtils.fromUUID(uuid));
+		}
 	}
 	
 	@Override
@@ -52,25 +56,14 @@ public class TileCBNetwork extends TileLM implements ICBNetTile
 	}
 	
 	@Override
-	public UUID getUUID()
-	{
-		if(uuid == null)
-		{
-			uuid = UUID.randomUUID();
-		}
-		
-		return uuid;
-	}
+	public final UUID getUUID()
+	{ return uuid; }
+	
+	@Override
+	public final void setUUID(UUID id)
+	{ uuid = id; }
 	
 	@Override
 	public boolean isDeviceOnline(ICBController c)
 	{ return true; }
-	
-	@Override
-	public void setController(ICBController c)
-	{ controller = c; }
-	
-	@Override
-	public ICBController getController()
-	{ return controller; }
 }

@@ -29,7 +29,7 @@ public class BlockLaserIO extends BlockSil
 	
 	public BlockLaserIO(boolean b)
 	{
-		super(Material.iron);
+		super(Material.IRON);
 		isInput = b;
 	}
 	

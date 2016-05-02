@@ -33,6 +33,6 @@ public class ModuleTimer extends Module
 	@Override
 	public void provideSignals(ModuleContainer c, IntList list)
 	{
-		if(c.tick % 20L == 0L) list.add(c.getConnectionID(OUT));
+		if(c.tick % 20L == 0L) { list.add(c.getConnectionID(OUT)); }
 	}
 }

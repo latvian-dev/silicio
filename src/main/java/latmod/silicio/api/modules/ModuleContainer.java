@@ -3,7 +3,7 @@ package latmod.silicio.api.modules;
 import latmod.lib.IntMap;
 import latmod.lib.LMUtils;
 import latmod.silicio.api.tile.cb.ICBController;
-import latmod.silicio.api.tile.cb.IModuleSocketTile;
+import latmod.silicio.api.tile.cb.ICBModuleProvider;
 import latmod.silicio.tile.TileModuleSocket;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -14,7 +14,7 @@ import net.minecraft.util.EnumFacing;
  */
 public final class ModuleContainer
 {
-	public final IModuleSocketTile tile;
+	public final ICBModuleProvider tile;
 	public final EnumFacing facing;
 	public final ItemStack item;
 	public final Module module;
@@ -22,7 +22,7 @@ public final class ModuleContainer
 	public NBTTagCompound data;
 	public long tick;
 	
-	public ModuleContainer(IModuleSocketTile t, EnumFacing f, ItemStack is, Module m)
+	public ModuleContainer(ICBModuleProvider t, EnumFacing f, ItemStack is, Module m)
 	{
 		tile = LMUtils.nonNull(t);
 		facing = f;
@@ -76,12 +76,11 @@ public final class ModuleContainer
 	public int getConnectionID(ModuleIOConnection c)
 	{ return connections.get(c.index); }
 	
-	public boolean getSignalState(ModuleIOConnection c)
+	public boolean getSignalState(ICBController controller, ModuleIOConnection c)
 	{
-		if(c == null) return false;
+		if(c == null) { return false; }
 		int id = getConnectionID(c);
-		if(id != 0) return false;
-		ICBController controller = tile.getController();
-		return controller != null && controller.getSignalState(id);
+		if(id != 0) { return false; }
+		return controller.getSignalState(id);
 	}
 }

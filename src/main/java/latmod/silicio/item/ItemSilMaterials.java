@@ -114,15 +114,15 @@ public class ItemSilMaterials extends ItemMaterialsLM
 		getMod().recipes.addSmelting(ELEMITE_INGOT.getStack(1), ELEMITE_DUST.getStack(1));
 		getMod().recipes.addSmelting(ELEMITE_INGOT.getStack(1), BLUE_GOO.getStack(1));
 		
-		getMod().recipes.addRecipe(WIRE.getStack(8), "WWW", "NNN", "WWW", 'N', ELEMITE_NUGGET, 'W', new ItemStack(Blocks.carpet, 1, ODItems.ANY));
-		getMod().recipes.addRecipe(RESISTOR.getStack(4), "WCW", 'C', Items.brick, 'W', WIRE);
-		getMod().recipes.addRecipe(CAPACITOR.getStack(4), "WCW", 'C', Items.clay_ball, 'W', WIRE);
+		getMod().recipes.addRecipe(WIRE.getStack(8), "WWW", "NNN", "WWW", 'N', ELEMITE_NUGGET, 'W', new ItemStack(Blocks.CARPET, 1, ODItems.ANY));
+		getMod().recipes.addRecipe(RESISTOR.getStack(4), "WCW", 'C', Items.BRICK, 'W', WIRE);
+		getMod().recipes.addRecipe(CAPACITOR.getStack(4), "WCW", 'C', Items.CLAY_BALL, 'W', WIRE);
 		getMod().recipes.addRecipe(DIODE.getStack(4), "WCW", 'C', ODItems.SILICON, 'W', WIRE);
 		getMod().recipes.addRecipe(TRANSISTOR.getStack(3), "DDD", "WWW", 'D', DIODE, 'W', WIRE);
 		getMod().recipes.addRecipe(CHIP.getStack(1), "TT", "TT", "TT", 'T', TRANSISTOR);
 		getMod().recipes.addRecipe(PROCESSOR.getStack(1), "CCC", "CSC", "CCC", 'C', CHIP, 'S', ODItems.SILICON);
 		getMod().recipes.addShapelessRecipe(CIRCUIT.getStack(1), PROCESSOR, WIRE, RESISTOR, CAPACITOR, TRANSISTOR, PROCESSOR, WIRE, WIRE, ELEMITE_NUGGET);
-		getMod().recipes.addRecipe(CIRCUIT_WIFI.getStack(1), "NEN", "ECE", "NEN", 'C', CIRCUIT, 'E', Items.ender_pearl, 'N', ELEMITE_NUGGET);
+		getMod().recipes.addRecipe(CIRCUIT_WIFI.getStack(1), "NEN", "ECE", "NEN", 'C', CIRCUIT, 'E', Items.ENDER_PEARL, 'N', ELEMITE_NUGGET);
 		getMod().recipes.addShapelessRecipe(LED_RED.getStack(3), DIODE, EnumMCColor.RED.dyeName, ODItems.GLOWSTONE);
 		getMod().recipes.addShapelessRecipe(LED_GREEN.getStack(3), DIODE, EnumMCColor.GREEN.dyeName, ODItems.GLOWSTONE);
 		getMod().recipes.addShapelessRecipe(LED_BLUE.getStack(3), DIODE, EnumMCColor.BLUE.dyeName, ODItems.GLOWSTONE);

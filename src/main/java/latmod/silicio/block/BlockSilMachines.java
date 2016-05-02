@@ -5,7 +5,7 @@ import ftb.lib.FTBLib;
 import ftb.lib.api.block.IBlockLM;
 import ftb.lib.api.block.ItemBlockLM;
 import ftb.lib.api.item.ODItems;
-import latmod.silicio.SilItems;
+import latmod.silicio.SilBlocks;
 import latmod.silicio.Silicio;
 import latmod.silicio.item.ItemSilMaterials;
 import latmod.silicio.tile.TileCBController;
@@ -42,11 +42,14 @@ public class BlockSilMachines extends BlockSil
 {
 	public enum EnumVariant implements IStringSerializable
 	{
-		REACTOR_CORE(0, MapColor.grayColor, BlockRenderLayer.CUTOUT, TileReactorCore.class),
-		ESU(1, MapColor.lightBlueColor, BlockRenderLayer.CUTOUT, TileESU.class),
-		ENERGY_BRIDGE_RF(2, MapColor.adobeColor, BlockRenderLayer.SOLID, TileRFBridge.class),
-		ENERGY_BRIDGE_EU(3, MapColor.lightBlueColor, BlockRenderLayer.SOLID, TileRFBridge.class),
-		CONTROLLER(4, MapColor.blueColor, BlockRenderLayer.SOLID, TileCBController.class);
+		REACTOR_CORE(0, MapColor.GRAY, BlockRenderLayer.CUTOUT, TileReactorCore.class),
+		ESU(1, MapColor.LIGHT_BLUE, BlockRenderLayer.CUTOUT, TileESU.class),
+		ENERGY_BRIDGE_RF(2, MapColor.ADOBE, BlockRenderLayer.SOLID, TileRFBridge.class),
+		ENERGY_BRIDGE_EU(3, MapColor.LIGHT_BLUE, BlockRenderLayer.SOLID, TileRFBridge.class),
+		CONTROLLER(4, MapColor.BLUE, BlockRenderLayer.SOLID, TileCBController.class),
+		MODULE_COPIER(5, MapColor.GRAY, BlockRenderLayer.SOLID, null),
+		REDNET_IO(6, MapColor.RED, BlockRenderLayer.SOLID, null),
+		COMPUTER_IO(7, MapColor.YELLOW, BlockRenderLayer.SOLID, null);
 		
 		public final String name;
 		public final int meta;
@@ -68,7 +71,7 @@ public class BlockSilMachines extends BlockSil
 		{ return name; }
 		
 		public ItemStack getStack(int q)
-		{ return new ItemStack(SilItems.b_machines, q, meta); }
+		{ return new ItemStack(SilBlocks.MACHINES, q, meta); }
 		
 		// Static //
 		
@@ -99,7 +102,7 @@ public class BlockSilMachines extends BlockSil
 	
 	public BlockSilMachines()
 	{
-		super(Material.iron);
+		super(Material.IRON);
 		setCreativeTab(Silicio.tab);
 	}
 	
@@ -119,7 +122,7 @@ public class BlockSilMachines extends BlockSil
 	@Override
 	public void loadRecipes()
 	{
-		getMod().recipes.addRecipe(EnumVariant.REACTOR_CORE.getStack(1), " N ", "AFA", " G ", 'F', BlockSilBlocks.EnumVariant.SILICON_FRAME.getStack(1), 'A', ItemSilMaterials.ANTIMATTER.getStack(1), 'N', Items.nether_star, 'G', ODItems.GLOWSTONE);
+		getMod().recipes.addRecipe(EnumVariant.REACTOR_CORE.getStack(1), " N ", "AFA", " G ", 'F', BlockSilBlocks.EnumVariant.SILICON_FRAME.getStack(1), 'A', ItemSilMaterials.ANTIMATTER.getStack(1), 'N', Items.NETHER_STAR, 'G', ODItems.GLOWSTONE);
 		
 		getMod().recipes.addRecipe(EnumVariant.CONTROLLER.getStack(1), " E ", "DFD", " P ", 'N', ItemSilMaterials.ELEMITE_NUGGET, 'E', ItemSilMaterials.CIRCUIT_WIFI, 'P', ItemSilMaterials.PROCESSOR, 'F', BlockSilBlocks.EnumVariant.SILICON_FRAME.getStack(1), 'D', ODItems.DIAMOND);
 	}

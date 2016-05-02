@@ -23,7 +23,7 @@ public class RenderTurret extends TileEntitySpecialRenderer<TileTurret>
 	@Override
 	public void renderTileEntityAt(TileTurret te, double x, double y, double z, float partialTicks, int destroyStage)
 	{
-		if(te.target == null || te.target.isDead/* || te.getWorld().getTotalWorldTime() % 3 != 0*/) return;
+		if(te.target == null || te.target.isDead/* || te.getWorld().getTotalWorldTime() % 3 != 0*/) { return; }
 		
 		double s = 0.08D;
 		double startX = x + 0.5D;

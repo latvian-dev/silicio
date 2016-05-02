@@ -2,14 +2,6 @@ package latmod.silicio;
 
 import latmod.silicio.api.modules.Module;
 import latmod.silicio.api.modules.ModuleRegistry;
-import latmod.silicio.block.BlockAntimatter;
-import latmod.silicio.block.BlockBlueGoo;
-import latmod.silicio.block.BlockCBSocketBlock;
-import latmod.silicio.block.BlockLaserIO;
-import latmod.silicio.block.BlockLaserMirrorBox;
-import latmod.silicio.block.BlockSilBlocks;
-import latmod.silicio.block.BlockSilMachines;
-import latmod.silicio.block.BlockTurret;
 import latmod.silicio.item.ItemModule;
 import latmod.silicio.item.ItemSilMaterials;
 
@@ -18,63 +10,35 @@ import java.util.Map;
 
 public class SilItems
 {
-	public static BlockSilBlocks b_blocks;
-	public static BlockSilMachines b_machines;
-	public static BlockCBSocketBlock b_cb_socket;
-	public static BlockBlueGoo b_blue_goo;
-	public static BlockAntimatter b_antimatter;
-	public static BlockLaserMirrorBox b_laser_mirror;
-	public static BlockLaserIO b_laser_rx;
-	public static BlockLaserIO b_laser_tx;
-	public static BlockTurret b_turret;
+	public static final ItemSilMaterials MAT = Silicio.mod.register("mat", new ItemSilMaterials());
+	public static final Map<String, ItemModule> i_modules;
 	
-	public static ItemSilMaterials i_mat;
-	public static Map<String, ItemModule> i_modules;
+	/*
+	public static final ItemXSuitHelm XSUIT_HELM = Silicio.mod.addItem("xsuit_helm", new ItemXSuitHelm());
+	public static final ItemXSuitBody XSUIT_BODY = Silicio.mod.addItem("xsuit_body", new ItemXSuitBody());
+	public static final ItemXSuitLegs XSUIT_LEGS = Silicio.mod.addItem("xsuit_legs", new ItemXSuitLegs());
+	public static final ItemXSuitBoots XSUIT_BOOTS = Silicio.mod.addItem("xsuit_boots", new ItemXSuitBoots());
+	*/
 	
-	public static void init()
+	static
 	{
-		/*
-		b_module_copier = new BlockModuleCopier("module_copier").register();
-		b_rednet_io = new BlockRedNetIO("rednet_io").register();
-		b_computer_io = new BlockComputerIO("computer_io").register();
-		
-		Silicio.mod.addItem(i_xsuit_helm = new ItemXSuitHelm("xsuit_helm"));
-		Silicio.mod.addItem(i_xsuit_body = new ItemXSuitBody("xsuit_body"));
-		Silicio.mod.addItem(i_xsuit_legs = new ItemXSuitLegs("xsuit_legs"));
-		Silicio.mod.addItem(i_xsuit_boots = new ItemXSuitBoots("xsuit_boots"));
-		*/
-		
-		b_blocks = Silicio.mod.register("blocks", new BlockSilBlocks());
-		b_machines = Silicio.mod.register("machines", new BlockSilMachines());
-		b_cb_socket = Silicio.mod.register("socket_block", new BlockCBSocketBlock());
-		b_blue_goo = Silicio.mod.register("blue_goo", new BlockBlueGoo());
-		b_antimatter = Silicio.mod.register("antimatter_carpet", new BlockAntimatter());
-		b_laser_mirror = Silicio.mod.register("laser_mirror_box", new BlockLaserMirrorBox());
-		b_laser_rx = Silicio.mod.register("laser_rx", new BlockLaserIO(true));
-		b_laser_tx = Silicio.mod.register("laser_tx", new BlockLaserIO(false));
-		b_turret = Silicio.mod.register("turret", new BlockTurret());
-		
-		i_mat = Silicio.mod.register("mat", new ItemSilMaterials());
-		
 		ModuleRegistry.init();
 		
 		i_modules = new HashMap<>();
+		
 		for(Module m : ModuleRegistry.modules())
 		{
 			i_modules.put(m.getID(), Silicio.mod.register("module_" + m.getID(), new ItemModule(m)));
 		}
-		
-		//Modules.init();
+	}
+	
+	public static void init()
+	{
 	}
 	
 	/*
 	public static class Modules
 	{
-		public static MaterialItem EMPTY;
-		public static MaterialItem INPUT;
-		public static MaterialItem OUTPUT;
-		public static MaterialItem LOGIC;
-		
 		public static ItemModule i_command_block;
 		public static ItemModule i_light_sensor;
 		public static ItemModule i_sign_out;

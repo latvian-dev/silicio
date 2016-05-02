@@ -107,9 +107,9 @@ public class TileTurret extends TileLM
 	{
 		if(getSide().isServer())
 		{
-			if(redstonePowered) return;
+			if(redstonePowered) { return; }
 			
-			if(cooldown > 0) cooldown--;
+			if(cooldown > 0) { cooldown--; }
 			
 			if(cooldown == 0)
 			{
@@ -129,25 +129,25 @@ public class TileTurret extends TileLM
 					else
 					{
 						target.attackEntityFrom(DamageSource.lightningBolt, 8F);
-						playSound(SilSounds.turret_loop, SoundCategory.BLOCKS, 0.8F, 1F);
+						playSound(SilSounds.TURRET_LOOP, SoundCategory.BLOCKS, 0.8F, 1F);
 						cooldown = 20;
 					}
 				}
 				else
 				{
 					searchForTarget();
-					if(target == null) cooldown = 40;
+					if(target == null) { cooldown = 40; }
 				}
 				
 				if(hasTarget != (target != null))
 				{
 					if(target != null)
 					{
-						playSound(SilSounds.turret_start, SoundCategory.BLOCKS, 0.8F, 1F);
+						playSound(SilSounds.TURRET_START, SoundCategory.BLOCKS, 0.8F, 1F);
 					}
 					else
 					{
-						playSound(SilSounds.turret_end, SoundCategory.BLOCKS, 0.8F, 1F);
+						playSound(SilSounds.TURRET_END, SoundCategory.BLOCKS, 0.8F, 1F);
 					}
 					
 					markDirty();
@@ -160,8 +160,8 @@ public class TileTurret extends TileLM
 	@SideOnly(Side.CLIENT)
 	public AxisAlignedBB getRenderBoundingBox()
 	{
-		if(target == null) return super.getRenderBoundingBox();
-		else if(scanArea == null) updateScanArea();
+		if(target == null) { return super.getRenderBoundingBox(); }
+		else if(scanArea == null) { updateScanArea(); }
 		return scanArea;
 	}
 }

@@ -1,6 +1,7 @@
 package latmod.silicio.block;
 
 import latmod.silicio.item.ItemSilMaterials;
+import net.minecraft.block.SoundType;
 import net.minecraft.block.material.MapColor;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -16,20 +17,21 @@ public class BlockBlueGoo extends BlockSil
 {
 	public BlockBlueGoo()
 	{
-		super(Material.clay);
-		this.slipperiness = 0.8F;
+		super(Material.CLAY);
+		slipperiness = 0.8F;
+		setSoundType(SoundType.SLIME);
 	}
 	
 	@Override
 	public void loadRecipes()
 	{
-		getMod().recipes.addRecipe(new ItemStack(this), "GGG", "GGG", "GGG", 'G', ItemSilMaterials.BLUE_GOO.getStack(1));
+		getMod().recipes.addRecipe(new ItemStack(this), "GGG", "GGG", "GGG", 'G', ItemSilMaterials.BLUE_GOO);
 		getMod().recipes.addShapelessRecipe(ItemSilMaterials.BLUE_GOO.getStack(9), this);
 	}
 	
 	@Override
 	public MapColor getMapColor(IBlockState state)
-	{ return MapColor.lightBlueColor; }
+	{ return MapColor.LIGHT_BLUE; }
 	
 	@Override
 	@SideOnly(Side.CLIENT)
@@ -67,7 +69,7 @@ public class BlockBlueGoo extends BlockSil
 	}
 	
 	@Override
-	public void onEntityCollidedWithBlock(World worldIn, BlockPos pos, Entity entityIn)
+	public void onEntityWalk(World worldIn, BlockPos pos, Entity entityIn)
 	{
 		if(Math.abs(entityIn.motionY) < 0.1D && !entityIn.isSneaking())
 		{
@@ -76,6 +78,6 @@ public class BlockBlueGoo extends BlockSil
 			entityIn.motionZ *= d0;
 		}
 		
-		super.onEntityCollidedWithBlock(worldIn, pos, entityIn);
+		super.onEntityWalk(worldIn, pos, entityIn);
 	}
 }

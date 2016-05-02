@@ -17,7 +17,7 @@ public class CapabilitySilEnergyTank
 	@CapabilityInject(ISilEnergyTank.class)
 	public static Capability<ISilEnergyTank> ENERGY_TANK_CAPABILITY = null;
 	
-	public static void register()
+	public static void init()
 	{
 		CapabilityManager.INSTANCE.register(ISilEnergyTank.class, new Capability.IStorage<ISilEnergyTank>()
 		{

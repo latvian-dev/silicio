@@ -1,7 +1,7 @@
 package latmod.silicio.tile;
 
 import latmod.lib.IntList;
-import latmod.silicio.SilItems;
+import latmod.silicio.SilBlocks;
 import latmod.silicio.block.BlockLaserIO;
 import latmod.silicio.block.BlockLaserMirrorBox;
 import net.minecraft.block.Block;
@@ -126,7 +126,7 @@ public class TileLaserTX extends TileCBNetwork
 			IBlockState state = worldObj.getBlockState(getPos().add(pos1));
 			Block block = state.getBlock();
 			
-			if(block == SilItems.b_laser_mirror)
+			if(block == SilBlocks.LASER_MIRROR)
 			{
 				if(!laserPath.contains(pos1))
 				{
@@ -134,7 +134,7 @@ public class TileLaserTX extends TileCBNetwork
 					getLaserPath(pos1, state.getValue(BlockLaserMirrorBox.FACING));
 				}
 			}
-			else if(block == SilItems.b_laser_rx)
+			else if(block == SilBlocks.LASER_RX)
 			{
 				laserPath.add(pos1);
 			}

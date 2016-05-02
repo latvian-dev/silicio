@@ -17,6 +17,7 @@ silicio.tile.module_copier.name=Module Copier
 silicio.tile.rednet_io.name=Circuit Board RedNetIO
 silicio.tile.computer_io.name=Circuit Board ComputerIO
 
+silicio.tile.coil.name=Coil Block
 silicio.tile.socket_block.name=Circuit Board Socket Block
 
 silicio.tile.blue_goo.name=Blue Goo Block

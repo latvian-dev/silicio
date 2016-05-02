@@ -4,7 +4,7 @@ import ftb.lib.BlockStateSerializer;
 import ftb.lib.api.block.IBlockLM;
 import ftb.lib.api.block.ItemBlockLM;
 import ftb.lib.api.item.ODItems;
-import latmod.silicio.SilItems;
+import latmod.silicio.SilBlocks;
 import latmod.silicio.Silicio;
 import latmod.silicio.item.ItemSilMaterials;
 import net.minecraft.block.material.MapColor;
@@ -35,23 +35,25 @@ public class BlockSilBlocks extends BlockSil
 {
 	public enum EnumVariant implements IStringSerializable
 	{
-		SILICON_BLOCK(0, MapColor.grayColor, BlockRenderLayer.TRANSLUCENT),
-		SILICON_GLASS(1, MapColor.silverColor, BlockRenderLayer.TRANSLUCENT),
-		DENSE_SILICON(2, MapColor.blackColor, BlockRenderLayer.SOLID),
-		SILICON_FRAME(3, MapColor.silverColor, BlockRenderLayer.CUTOUT),
-		ELEMITE(4, MapColor.blueColor, BlockRenderLayer.SOLID);
+		SILICON_BLOCK(0, MapColor.GRAY, BlockRenderLayer.TRANSLUCENT, Material.ROCK),
+		SILICON_GLASS(1, MapColor.SILVER, BlockRenderLayer.TRANSLUCENT, Material.GLASS),
+		DENSE_SILICON(2, MapColor.BLACK, BlockRenderLayer.SOLID, Material.ROCK),
+		SILICON_FRAME(3, MapColor.SILVER, BlockRenderLayer.CUTOUT, Material.ROCK),
+		ELEMITE(4, MapColor.BLUE, BlockRenderLayer.SOLID, Material.IRON);
 		
 		public final String name;
 		public final int meta;
 		public final MapColor mapColor;
 		public final BlockRenderLayer layer;
+		public final Material material;
 		
-		EnumVariant(int id, MapColor c, BlockRenderLayer l)
+		EnumVariant(int id, MapColor c, BlockRenderLayer l, Material m)
 		{
 			name = name().toLowerCase();
 			meta = id;
 			mapColor = c;
 			layer = l;
+			material = m;
 		}
 		
 		@Override
@@ -59,7 +61,7 @@ public class BlockSilBlocks extends BlockSil
 		{ return name; }
 		
 		public ItemStack getStack(int q)
-		{ return new ItemStack(SilItems.b_blocks, q, meta); }
+		{ return new ItemStack(SilBlocks.BLOCKS, q, meta); }
 		
 		// Static //
 		
@@ -90,7 +92,7 @@ public class BlockSilBlocks extends BlockSil
 	
 	public BlockSilBlocks()
 	{
-		super(Material.rock);
+		super(Material.ROCK);
 		setCreativeTab(Silicio.tab);
 	}
 	
@@ -110,7 +112,7 @@ public class BlockSilBlocks extends BlockSil
 	{
 		getMod().recipes.addRecipe(EnumVariant.ELEMITE.getStack(1), "III", "III", "III", 'I', ItemSilMaterials.ELEMITE_INGOT.getStack(1));
 		getMod().recipes.addShapelessRecipe(ItemSilMaterials.ELEMITE_INGOT.getStack(9), EnumVariant.ELEMITE.getStack(1));
-		getMod().recipes.addSmelting(EnumVariant.ELEMITE.getStack(1), new ItemStack(SilItems.b_blue_goo));
+		getMod().recipes.addSmelting(EnumVariant.ELEMITE.getStack(1), new ItemStack(SilBlocks.BLUE_GOO));
 		
 		getMod().recipes.addRecipe(EnumVariant.DENSE_SILICON.getStack(1), "III", "III", "III", 'I', EnumVariant.SILICON_BLOCK.getStack(1));
 		getMod().recipes.addShapelessRecipe(EnumVariant.SILICON_BLOCK.getStack(9), EnumVariant.DENSE_SILICON.getStack(1));
@@ -172,6 +174,10 @@ public class BlockSilBlocks extends BlockSil
 	@Override
 	public boolean isOpaqueCube(IBlockState state)
 	{ return state.getValue(VARIANT).layer == BlockRenderLayer.SOLID; }
+	
+	@Override
+	public Material getMaterial(IBlockState state)
+	{ return state.getValue(VARIANT).material; }
 	
 	@Override
 	@SideOnly(Side.CLIENT)

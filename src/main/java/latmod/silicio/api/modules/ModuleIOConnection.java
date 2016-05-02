@@ -13,9 +13,9 @@ public final class ModuleIOConnection implements IIDObject, Comparable<ModuleIOC
 	
 	public ModuleIOConnection(int idx, String id, ConnectionType t)
 	{
-		if(idx < 0 || idx >= 256) throw new ArrayIndexOutOfBoundsException("Index can only be >= 0 & < 256");
-		else if(t == null) throw new NullPointerException("Type can't be null!");
-		else if(id == null || id.isEmpty()) throw new NullPointerException("ID can't be null!");
+		if(idx < 0 || idx >= 256) { throw new ArrayIndexOutOfBoundsException("Index can only be >= 0 & < 256"); }
+		else if(t == null) { throw new NullPointerException("Type can't be null!"); }
+		else if(id == null || id.isEmpty()) { throw new NullPointerException("ID can't be null!"); }
 		
 		index = idx;
 		ID = id;

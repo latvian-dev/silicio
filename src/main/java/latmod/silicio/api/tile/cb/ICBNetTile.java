@@ -10,7 +10,6 @@ import java.util.UUID;
 public interface ICBNetTile extends ITileEntity
 {
 	UUID getUUID();
+	void setUUID(UUID id);
 	boolean isDeviceOnline(ICBController c);
-	void setController(ICBController c);
-	ICBController getController();
 }
