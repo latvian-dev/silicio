@@ -1,7 +1,7 @@
 package latmod.silicio.block;
 
 import ftb.lib.FTBLib;
-import latmod.silicio.item.ItemSilMaterials;
+import latmod.silicio.item.SilItems;
 import latmod.silicio.tile.TileAntimatter;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -33,8 +33,8 @@ public class BlockAntimatterCarpet extends BlockSil
 	@Override
 	public void loadRecipes()
 	{
-		getMod().recipes.addRecipe(new ItemStack(this, 3), "AA", 'A', ItemSilMaterials.ANTIMATTER.getStack(1));
-		getMod().recipes.addRecipe(ItemSilMaterials.ANTIMATTER.getStack(4), "AAA", "AAA", 'A', this);
+		getMod().recipes.addRecipe(new ItemStack(this, 3), "AA", 'A', SilItems.ANTIMATTER.getStack(1));
+		getMod().recipes.addRecipe(SilItems.ANTIMATTER.getStack(4), "AAA", "AAA", 'A', this);
 	}
 	
 	@Override

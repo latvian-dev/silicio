@@ -2,6 +2,7 @@ package latmod.silicio.block;
 
 import ftb.lib.BlockStateSerializer;
 import ftb.lib.FTBLib;
+import ftb.lib.MathHelperMC;
 import latmod.silicio.tile.TileTurret;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyDirection;
@@ -11,7 +12,9 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
 /**
@@ -19,6 +22,7 @@ import net.minecraft.world.World;
  */
 public class BlockTurret extends BlockSil
 {
+	public static final AxisAlignedBB[] BOXES = MathHelperMC.getRotatedBoxes(new AxisAlignedBB(1D / 16D, 0D, 1D / 16D, 15D / 16D, 7D / 16D, 15D / 16D), true);
 	public static final PropertyEnum<EnumFacing> FACING = PropertyDirection.create("facing", EnumFacing.class);
 	
 	public BlockTurret()
@@ -73,4 +77,12 @@ public class BlockTurret extends BlockSil
 	@Override
 	public IBlockState onBlockPlaced(World worldIn, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer)
 	{ return getDefaultState().withProperty(FACING, facing); }
+	
+	@Override
+	public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos)
+	{ return BOXES[state.getValue(FACING).ordinal()]; }
+	
+	@Override
+	public boolean isFullCube(IBlockState state)
+	{ return false; }
 }

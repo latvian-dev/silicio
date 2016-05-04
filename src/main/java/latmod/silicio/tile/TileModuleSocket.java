@@ -1,10 +1,9 @@
 package latmod.silicio.tile;
 
 import ftb.lib.api.item.LMInvUtils;
-import latmod.silicio.api.modules.IModuleItem;
+import latmod.silicio.api.modules.CapabilityModule;
 import latmod.silicio.api.modules.Module;
 import latmod.silicio.api.modules.ModuleContainer;
-import latmod.silicio.api.modules.ModuleRegistry;
 import latmod.silicio.api.tile.cb.ICBModuleProvider;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -93,11 +92,11 @@ public class TileModuleSocket extends TileCBNetwork implements ICBModuleProvider
 			
 			return true;
 		}
-		else if(is != null && is.getItem() instanceof IModuleItem)
+		else if(is != null && is.hasCapability(CapabilityModule.MODULE_CAPABILITY, null))
 		{
 			if(getSide().isServer())
 			{
-				Module m = ModuleRegistry.getFromStack(is);
+				Module m = is.getCapability(CapabilityModule.MODULE_CAPABILITY, null);
 				
 				if(m != null)
 				{

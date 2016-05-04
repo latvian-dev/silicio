@@ -2,7 +2,7 @@ package latmod.silicio.block;
 
 import ftb.lib.BlockStateSerializer;
 import ftb.lib.FTBLib;
-import latmod.silicio.item.ItemSilMaterials;
+import latmod.silicio.item.SilItems;
 import latmod.silicio.tile.TileModuleSocket;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyBool;
@@ -42,7 +42,7 @@ public class BlockCBSocketBlock extends BlockSil
 	@Override
 	public void loadRecipes()
 	{
-		getMod().recipes.addRecipe(new ItemStack(this), " P ", "PFP", " P ", 'P', ItemSilMaterials.PROCESSOR.getStack(1), 'F', BlockSilBlocks.EnumVariant.SILICON_FRAME.getStack(1));
+		getMod().recipes.addRecipe(new ItemStack(this), " P ", "PFP", " P ", 'P', SilItems.PROCESSOR, 'F', BlockSilBlocks.EnumVariant.SILICON_FRAME.getStack(1));
 	}
 	
 	@Override

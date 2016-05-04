@@ -13,9 +13,6 @@ public class ModuleChatOutput extends Module
 {
 	public static final ModuleIOConnection IN = new ModuleIOConnection(0, "in", ConnectionType.INPUT);
 	
-	public ModuleChatOutput(String s)
-	{ super(s); }
-	
 	@Override
 	public void init(ModuleContainer c)
 	{
@@ -24,11 +21,6 @@ public class ModuleChatOutput extends Module
 	
 	@Override
 	public void onAdded(ModuleContainer c, EntityPlayerMP player)
-	{
-	}
-	
-	@Override
-	public void loadRecipes()
 	{
 	}
 	

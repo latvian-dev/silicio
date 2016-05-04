@@ -1,11 +1,10 @@
 {
   "forge_marker": 1,
   "defaults": {
-    "model": "silicio:coil",
+    "model": "silicio:connector",
     "textures": {
-      "particle": "silicio:blocks/coil_base",
-      "texture": "silicio:blocks/coil",
-      "texture_base": "silicio:blocks/coil_base"
+      "particle": "silicio:blocks/connector",
+      "texture": "silicio:blocks/connector"
     },
     "transform": "forge:default-block"
   },
@@ -34,6 +33,13 @@
       "east": {
         "x": 90,
         "y": 270
+      }
+    },
+    "active": {
+      "true": {
+        "texture": "silicio:blocks/connector_active"
+      },
+      "false": {
       }
     }
   }

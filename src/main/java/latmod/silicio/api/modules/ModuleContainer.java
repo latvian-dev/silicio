@@ -33,25 +33,31 @@ public final class ModuleContainer
 	
 	public static ModuleContainer readFromNBT(TileModuleSocket tile, NBTTagCompound tag)
 	{
-		EnumFacing facing = EnumFacing.VALUES[tag.getByte("Side")];
-		Module module = ModuleRegistry.get(tag.getString("ID"));
+		ItemStack item = ItemStack.loadItemStackFromNBT(tag.getCompoundTag("Item"));
 		
-		if(module != null)
+		if(item == null || !item.hasCapability(CapabilityModule.MODULE_CAPABILITY, null))
 		{
-			ItemStack item = ItemStack.loadItemStackFromNBT(tag.getCompoundTag("Item"));
-			ModuleContainer c = new ModuleContainer(tile, facing, item, module);
-			c.tick = tag.getLong("Tick");
-			c.data = tag.hasKey("Data") ? tag.getCompoundTag("Data") : null;
-			return c;
+			return null;
 		}
 		
-		return null;
+		Module module = item.getCapability(CapabilityModule.MODULE_CAPABILITY, null);
+		
+		if(module == null)
+		{
+			return null;
+		}
+		
+		EnumFacing facing = EnumFacing.VALUES[tag.getByte("Side")];
+		
+		ModuleContainer c = new ModuleContainer(tile, facing, item, module);
+		c.tick = tag.getLong("Tick");
+		c.data = tag.hasKey("Data") ? tag.getCompoundTag("Data") : null;
+		return c;
 	}
 	
 	public void writeToNBT(NBTTagCompound tag)
 	{
 		tag.setByte("Side", (byte) facing.ordinal());
-		tag.setString("ID", module.getID());
 		
 		NBTTagCompound tag2 = new NBTTagCompound();
 		item.writeToNBT(tag2);

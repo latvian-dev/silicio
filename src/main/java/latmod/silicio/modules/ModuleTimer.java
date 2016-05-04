@@ -13,9 +13,8 @@ public class ModuleTimer extends Module
 {
 	public static final ModuleIOConnection OUT = new ModuleIOConnection(0, "out", ConnectionType.OUTPUT);
 	
-	public ModuleTimer(String s)
+	public ModuleTimer()
 	{
-		super(s);
 		setFlag(FLAG_PROVIDE_SIGNALS, true);
 	}
 	
@@ -26,13 +25,11 @@ public class ModuleTimer extends Module
 	}
 	
 	@Override
-	public void loadRecipes()
-	{
-	}
-	
-	@Override
 	public void provideSignals(ModuleContainer c, IntList list)
 	{
-		if(c.tick % 20L == 0L) { list.add(c.getConnectionID(OUT)); }
+		if(c.tick % 20L == 0L)
+		{
+			list.add(c.getConnectionID(OUT));
+		}
 	}
 }

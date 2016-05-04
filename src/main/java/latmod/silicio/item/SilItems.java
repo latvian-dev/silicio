@@ -1,17 +1,12 @@
-package latmod.silicio;
+package latmod.silicio.item;
 
-import latmod.silicio.api.modules.Module;
-import latmod.silicio.api.modules.ModuleRegistry;
-import latmod.silicio.item.ItemModule;
-import latmod.silicio.item.ItemSilMaterials;
-
-import java.util.HashMap;
-import java.util.Map;
+import ftb.lib.api.item.MaterialItem;
+import latmod.silicio.Silicio;
 
 public class SilItems
 {
 	public static final ItemSilMaterials MAT = Silicio.mod.register("mat", new ItemSilMaterials());
-	public static final Map<String, ItemModule> i_modules;
+	public static final ItemModule MODULE = Silicio.mod.register("module", new ItemModule());
 	
 	/*
 	public static final ItemXSuitHelm XSUIT_HELM = Silicio.mod.addItem("xsuit_helm", new ItemXSuitHelm());
@@ -20,17 +15,41 @@ public class SilItems
 	public static final ItemXSuitBoots XSUIT_BOOTS = Silicio.mod.addItem("xsuit_boots", new ItemXSuitBoots());
 	*/
 	
-	static
-	{
-		ModuleRegistry.init();
-		
-		i_modules = new HashMap<>();
-		
-		for(Module m : ModuleRegistry.modules())
-		{
-			i_modules.put(m.getID(), Silicio.mod.register("module_" + m.getID(), new ItemModule(m)));
-		}
-	}
+	public static final MaterialItem SILICON = new MaterialItem(0, "silicon");
+	public static final MaterialItem STONE_SHARD = new MaterialItem(1, "stone_shard");
+	public static final MaterialItem IRON_ROD = new MaterialItem(2, "iron_rod");
+	public static final MaterialItem BLUE_GOO = new MaterialItem(3, "blue_goo");
+	public static final MaterialItem LASER_LENS = new MaterialItem(4, "laser_lens");
+	public static final MaterialItem XSUIT_PLATE = new MaterialItem(5, "xsuit_plate");
+	public static final MaterialItem ANTIMATTER = new MaterialItem(6, "antimatter");
+	
+	public static final MaterialItem ELEMITE_INGOT = new MaterialItem(10, "elemite_ingot");
+	public static final MaterialItem ELEMITE_NUGGET = new MaterialItem(11, "elemite_nugget");
+	public static final MaterialItem ELEMITE_DUST = new MaterialItem(12, "elemite_dust");
+	
+	public static final String ORE_ELEMITE_INGOT = "ingotElemite";
+	public static final String ORE_ELEMITE_NUGGET = "nuggetElemite";
+	public static final String ORE_ELEMITE_DUST = "dustElemite";
+	
+	public static final MaterialItem WIRE = new MaterialItem(20, "wire");
+	public static final MaterialItem RESISTOR = new MaterialItem(21, "resistor");
+	public static final MaterialItem CAPACITOR = new MaterialItem(22, "capacitor");
+	public static final MaterialItem DIODE = new MaterialItem(23, "diode");
+	public static final MaterialItem TRANSISTOR = new MaterialItem(24, "transistor");
+	public static final MaterialItem CHIP = new MaterialItem(25, "chip");
+	public static final MaterialItem PROCESSOR = new MaterialItem(26, "processor");
+	public static final MaterialItem CIRCUIT = new MaterialItem(27, "circuit");
+	public static final MaterialItem CIRCUIT_WIFI = new MaterialItem(28, "circuit_wifi");
+	public static final MaterialItem LED_RED = new MaterialItem(29, "led_red");
+	public static final MaterialItem LED_GREEN = new MaterialItem(30, "led_green");
+	public static final MaterialItem LED_BLUE = new MaterialItem(31, "led_blue");
+	public static final MaterialItem LED_RGB = new MaterialItem(32, "led_rgb");
+	public static final MaterialItem LED_MATRIX = new MaterialItem(33, "led_matrix");
+	
+	public static final MaterialItem MODULE_EMPTY = new MaterialItem(60, "module_empty");
+	public static final MaterialItem MODULE_INPUT = new MaterialItem(61, "module_input");
+	public static final MaterialItem MODULE_OUTPUT = new MaterialItem(62, "module_output");
+	public static final MaterialItem MODULE_LOGIC = new MaterialItem(63, "module_logic");
 	
 	public static void init()
 	{

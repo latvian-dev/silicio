@@ -4,6 +4,8 @@ import ftb.lib.CreativeTabLM;
 import ftb.lib.LMMod;
 import latmod.silicio.api.tile.energy.CapabilitySilEnergyTank;
 import latmod.silicio.block.BlockSilMachines;
+import latmod.silicio.block.SilBlocks;
+import latmod.silicio.item.SilItems;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;

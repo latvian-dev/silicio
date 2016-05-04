@@ -1,9 +1,5 @@
 {
   "parent": "block/block",
-  "textures": {
-    "particle": "silicio:blocks/module_socket",
-    "texture": "silicio:blocks/module_socket"
-  },
   "elements": [
     {
       "from": [3, 3, 14],
@@ -11,27 +7,27 @@
       "faces": {
         "down": {
           "uv": [3, 3, 13, 13],
-          "texture": "#texture"
+          "texture": "#texture_plate"
         },
         "up": {
           "uv": [3, 3, 13, 13],
-          "texture": "#texture"
+          "texture": "#texture_plate"
         },
         "north": {
           "uv": [3, 3, 13, 13],
-          "texture": "#texture"
+          "texture": "#texture_plate"
         },
         "south": {
           "uv": [3, 3, 13, 13],
-          "texture": "#texture"
+          "texture": "#texture_plate"
         },
         "west": {
           "uv": [3, 3, 13, 13],
-          "texture": "#texture"
+          "texture": "#texture_plate"
         },
         "east": {
           "uv": [3, 3, 13, 13],
-          "texture": "#texture"
+          "texture": "#texture_plate"
         }
       }
     }

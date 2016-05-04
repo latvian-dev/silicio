@@ -1,8 +1,0 @@
-{
-  "parent": "block/cube_all",
-  "textures": {
-    "particle": "silicio:blocks/laser_mirror_box_glass",
-    "all": "silicio:blocks/laser_mirror_box_glass",
-    "south": "silicio:blocks/laser_mirror_box_focus"
-  }
-}

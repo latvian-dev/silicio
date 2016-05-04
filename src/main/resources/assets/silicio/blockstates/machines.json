@@ -10,7 +10,7 @@
         "model": "silicio:silicon_frame",
         "textures": {
           "particle": "silicio:blocks/reactor_core",
-          "texture": "silicio:blocks/reactor_core"
+          "frame": "silicio:blocks/reactor_core"
         }
       },
       "esu": {
@@ -37,6 +37,24 @@
         "textures": {
           "particle": "silicio:blocks/controller",
           "all": "silicio:blocks/controller"
+        }
+      },
+      "module_copier": {
+        "textures": {
+          "particle": "silicio:blocks/module_copier",
+          "all": "silicio:blocks/module_copier"
+        }
+      },
+      "rednet_io": {
+        "textures": {
+          "particle": "silicio:blocks/rednet_io",
+          "all": "silicio:blocks/rednet_io"
+        }
+      },
+      "computer_io": {
+        "textures": {
+          "particle": "silicio:blocks/computer_io",
+          "all": "silicio:blocks/computer_io"
         }
       }
     }

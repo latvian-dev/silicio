@@ -1,6 +1,6 @@
 package latmod.silicio.block;
 
-import latmod.silicio.item.ItemSilMaterials;
+import latmod.silicio.item.SilItems;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.MapColor;
 import net.minecraft.block.material.Material;
@@ -25,8 +25,8 @@ public class BlockBlueGoo extends BlockSil
 	@Override
 	public void loadRecipes()
 	{
-		getMod().recipes.addRecipe(new ItemStack(this), "GGG", "GGG", "GGG", 'G', ItemSilMaterials.BLUE_GOO);
-		getMod().recipes.addShapelessRecipe(ItemSilMaterials.BLUE_GOO.getStack(9), this);
+		getMod().recipes.addRecipe(new ItemStack(this), "GGG", "GGG", "GGG", 'G', SilItems.BLUE_GOO);
+		getMod().recipes.addShapelessRecipe(SilItems.BLUE_GOO.getStack(9), this);
 	}
 	
 	@Override

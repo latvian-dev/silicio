@@ -5,9 +5,8 @@ import ftb.lib.FTBLib;
 import ftb.lib.api.block.IBlockLM;
 import ftb.lib.api.block.ItemBlockLM;
 import ftb.lib.api.item.ODItems;
-import latmod.silicio.SilBlocks;
 import latmod.silicio.Silicio;
-import latmod.silicio.item.ItemSilMaterials;
+import latmod.silicio.item.SilItems;
 import latmod.silicio.tile.TileCBController;
 import latmod.silicio.tile.TileESU;
 import latmod.silicio.tile.TileEUBridge;
@@ -122,9 +121,8 @@ public class BlockSilMachines extends BlockSil
 	@Override
 	public void loadRecipes()
 	{
-		getMod().recipes.addRecipe(EnumVariant.REACTOR_CORE.getStack(1), " N ", "AFA", " G ", 'F', BlockSilBlocks.EnumVariant.SILICON_FRAME.getStack(1), 'A', ItemSilMaterials.ANTIMATTER.getStack(1), 'N', Items.NETHER_STAR, 'G', ODItems.GLOWSTONE);
-		
-		getMod().recipes.addRecipe(EnumVariant.CONTROLLER.getStack(1), " E ", "DFD", " P ", 'N', ItemSilMaterials.ELEMITE_NUGGET, 'E', ItemSilMaterials.CIRCUIT_WIFI, 'P', ItemSilMaterials.PROCESSOR, 'F', BlockSilBlocks.EnumVariant.SILICON_FRAME.getStack(1), 'D', ODItems.DIAMOND);
+		getMod().recipes.addRecipe(EnumVariant.REACTOR_CORE.getStack(1), " N ", "AFA", " G ", 'F', BlockSilBlocks.EnumVariant.SILICON_FRAME.getStack(1), 'A', SilItems.ANTIMATTER, 'N', Items.NETHER_STAR, 'G', ODItems.GLOWSTONE);
+		getMod().recipes.addRecipe(EnumVariant.CONTROLLER.getStack(1), " E ", "DFD", " P ", 'N', SilItems.ORE_ELEMITE_NUGGET, 'E', SilItems.CIRCUIT_WIFI, 'P', SilItems.PROCESSOR, 'F', BlockSilBlocks.EnumVariant.SILICON_FRAME.getStack(1), 'D', ODItems.DIAMOND);
 	}
 	
 	@Override
@@ -135,7 +133,7 @@ public class BlockSilMachines extends BlockSil
 		
 		for(EnumVariant e : EnumVariant.values())
 		{
-			ModelLoader.setCustomModelResourceLocation(item, e.meta, new ModelResourceLocation(getRegistryName(), BlockStateSerializer.getString(VARIANT, e)));
+			ModelLoader.setCustomModelResourceLocation(item, e.meta, new ModelResourceLocation(getModelName(), BlockStateSerializer.getString(VARIANT, e)));
 		}
 	}
 	

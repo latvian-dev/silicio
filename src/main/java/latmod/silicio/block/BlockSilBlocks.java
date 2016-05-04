@@ -4,9 +4,8 @@ import ftb.lib.BlockStateSerializer;
 import ftb.lib.api.block.IBlockLM;
 import ftb.lib.api.block.ItemBlockLM;
 import ftb.lib.api.item.ODItems;
-import latmod.silicio.SilBlocks;
 import latmod.silicio.Silicio;
-import latmod.silicio.item.ItemSilMaterials;
+import latmod.silicio.item.SilItems;
 import net.minecraft.block.material.MapColor;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyEnum;
@@ -110,8 +109,8 @@ public class BlockSilBlocks extends BlockSil
 	@Override
 	public void loadRecipes()
 	{
-		getMod().recipes.addRecipe(EnumVariant.ELEMITE.getStack(1), "III", "III", "III", 'I', ItemSilMaterials.ELEMITE_INGOT.getStack(1));
-		getMod().recipes.addShapelessRecipe(ItemSilMaterials.ELEMITE_INGOT.getStack(9), EnumVariant.ELEMITE.getStack(1));
+		getMod().recipes.addRecipe(EnumVariant.ELEMITE.getStack(1), "III", "III", "III", 'I', SilItems.ORE_ELEMITE_INGOT);
+		getMod().recipes.addShapelessRecipe(SilItems.ELEMITE_INGOT.getStack(9), EnumVariant.ELEMITE.getStack(1));
 		getMod().recipes.addSmelting(EnumVariant.ELEMITE.getStack(1), new ItemStack(SilBlocks.BLUE_GOO));
 		
 		getMod().recipes.addRecipe(EnumVariant.DENSE_SILICON.getStack(1), "III", "III", "III", 'I', EnumVariant.SILICON_BLOCK.getStack(1));
@@ -119,8 +118,8 @@ public class BlockSilBlocks extends BlockSil
 		
 		getMod().recipes.addRecipe(EnumVariant.SILICON_FRAME.getStack(1), "ISI", "S S", "ISI", 'S', EnumVariant.DENSE_SILICON.getStack(1), 'I', ODItems.IRON);
 		
-		getMod().recipes.addRecipe(EnumVariant.SILICON_BLOCK.getStack(1), "SS", "SS", 'S', ItemSilMaterials.SILICON.getStack(1));
-		getMod().recipes.addShapelessRecipe(ItemSilMaterials.SILICON.getStack(4), EnumVariant.SILICON_BLOCK.getStack(1));
+		getMod().recipes.addRecipe(EnumVariant.SILICON_BLOCK.getStack(1), "SS", "SS", 'S', SilItems.SILICON.getStack(1));
+		getMod().recipes.addShapelessRecipe(SilItems.SILICON.getStack(4), EnumVariant.SILICON_BLOCK.getStack(1));
 		
 		getMod().recipes.addSmelting(EnumVariant.SILICON_GLASS.getStack(1), EnumVariant.SILICON_BLOCK.getStack(1));
 	}
@@ -133,7 +132,7 @@ public class BlockSilBlocks extends BlockSil
 		
 		for(EnumVariant e : EnumVariant.values())
 		{
-			ModelLoader.setCustomModelResourceLocation(item, e.meta, new ModelResourceLocation(getRegistryName(), BlockStateSerializer.getString(VARIANT, e)));
+			ModelLoader.setCustomModelResourceLocation(item, e.meta, new ModelResourceLocation(getModelName(), BlockStateSerializer.getString(VARIANT, e)));
 		}
 	}
 	

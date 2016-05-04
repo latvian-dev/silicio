@@ -45,14 +45,17 @@ public class TileCBNetwork extends TileLM implements ICBNetTile
 	@Override
 	public void readTileClientData(NBTTagCompound tag)
 	{
-		uuid = new UUID(tag.getLong("IDM"), tag.getLong("IDL"));
+		uuid = tag.hasKey("IDM") ? new UUID(tag.getLong("IDM"), tag.getLong("IDL")) : null;
 	}
 	
 	@Override
 	public void writeTileClientData(NBTTagCompound tag)
 	{
-		tag.setLong("IDM", getUUID().getMostSignificantBits());
-		tag.setLong("IDL", getUUID().getLeastSignificantBits());
+		if(uuid != null)
+		{
+			tag.setLong("IDM", uuid.getMostSignificantBits());
+			tag.setLong("IDL", uuid.getLeastSignificantBits());
+		}
 	}
 	
 	@Override

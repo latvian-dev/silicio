@@ -19,7 +19,8 @@
       "silicon_frame": {
         "model": "silicio:silicon_frame",
         "textures": {
-          "all": "silicio:blocks/silicon_frame"
+          "particle": "silicio:blocks/silicon_frame",
+          "frame": "silicio:blocks/silicon_frame"
         }
       },
       "silicon_block": {

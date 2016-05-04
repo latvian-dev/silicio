@@ -2,6 +2,12 @@
   "forge_marker": 1,
   "defaults": {
     "model": "silicio:silicon_frame",
+    "textures": {
+      "particle": "silicio:blocks/module_socket_center",
+      "texture": "silicio:blocks/module_socket_center",
+      "texture_plate": "silicio:blocks/module_socket",
+      "frame": "silicio:blocks/silicon_frame"
+    },
     "transform": "forge:default-block"
   },
   "variants": {
