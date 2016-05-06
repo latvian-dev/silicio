@@ -10,35 +10,25 @@ import net.minecraftforge.common.capabilities.Capability;
 /**
  * Created by LatvianModder on 01.05.2016.
  */
-public class TileESU extends TileLM
+public class TileCCBridge extends TileLM
 {
 	public SilEnergyTank energyTank;
 	
-	public TileESU()
+	public TileCCBridge()
 	{
-		energyTank = new SilEnergyTank(1000000D);
+		energyTank = new SilEnergyTank(1000D);
 	}
 	
 	@Override
 	public void writeTileData(NBTTagCompound tag)
 	{
-		tag.setDouble("Energy", energyTank.getEnergy());
+		tag.setDouble("SilEnergy", energyTank.getEnergy());
 	}
 	
 	@Override
 	public void readTileData(NBTTagCompound tag)
 	{
-		energyTank.setEnergy(tag.getDouble("Energy"));
-	}
-	
-	@Override
-	public void onUpdate()
-	{
-		if(getSide().isServer() && worldObj.getTotalWorldTime() % 20L == 7L && energyTank.energyChanged)
-		{
-			energyTank.energyChanged = false;
-			markDirty();
-		}
+		energyTank.setEnergy(tag.getDouble("SilEnergy"));
 	}
 	
 	@Override
@@ -61,5 +51,10 @@ public class TileESU extends TileLM
 		}
 		
 		return super.getCapability(capability, facing);
+	}
+	
+	@Override
+	public void onUpdate()
+	{
 	}
 }

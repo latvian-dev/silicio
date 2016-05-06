@@ -16,9 +16,17 @@ public class CapabilitySilEnergyTank
 {
 	@CapabilityInject(ISilEnergyTank.class)
 	public static Capability<ISilEnergyTank> ENERGY_TANK_CAPABILITY = null;
+	private static boolean enabled = false;
 	
-	public static void init()
+	public static void enable()
 	{
+		if(enabled)
+		{
+			return;
+		}
+		
+		enabled = true;
+		
 		CapabilityManager.INSTANCE.register(ISilEnergyTank.class, new Capability.IStorage<ISilEnergyTank>()
 		{
 			@Override

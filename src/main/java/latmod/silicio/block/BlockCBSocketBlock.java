@@ -2,16 +2,22 @@ package latmod.silicio.block;
 
 import ftb.lib.BlockStateSerializer;
 import ftb.lib.FTBLib;
+import ftb.lib.api.notification.Notification;
+import latmod.silicio.api.tile.cb.CBHelper;
+import latmod.silicio.api.tile.cb.ICBController;
 import latmod.silicio.item.SilItems;
 import latmod.silicio.tile.TileModuleSocket;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyBool;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.text.TextComponentString;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
@@ -87,5 +93,24 @@ public class BlockCBSocketBlock extends BlockSil
 		}
 		
 		return state.withProperty(MODULE_D, modD).withProperty(MODULE_U, modU).withProperty(MODULE_N, modN).withProperty(MODULE_S, modS).withProperty(MODULE_W, modW).withProperty(MODULE_E, modE).withProperty(CENTER, true);
+	}
+	
+	@Override
+	public void onBlockPlacedBy(World w, BlockPos pos, IBlockState state, EntityLivingBase el, ItemStack is)
+	{
+		super.onBlockPlacedBy(w, pos, state, el, is);
+		
+		if(!w.isRemote)
+		{
+			ICBController link = CBHelper.linkWithClosestController(w, pos);
+			
+			if(link != null && el instanceof EntityPlayerMP)
+			{
+				Notification n = new Notification("silicio:linked_with_cb");
+				n.title = new TextComponentString("Linked with controller");
+				n.desc = new TextComponentString(link.getTile().getPos().toString());
+				FTBLib.notifyPlayer((EntityPlayerMP) el, n);
+			}
+		}
 	}
 }

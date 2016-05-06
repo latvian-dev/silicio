@@ -1,21 +1,26 @@
 package latmod.silicio.block;
 
 import ftb.lib.BlockStateSerializer;
+import ftb.lib.FTBLib;
 import ftb.lib.MathHelperMC;
 import ftb.lib.api.item.ODItems;
+import ftb.lib.api.notification.Notification;
+import latmod.silicio.api.tile.cb.CBHelper;
+import latmod.silicio.api.tile.cb.ICBController;
 import latmod.silicio.item.SilItems;
 import net.minecraft.block.material.Material;
-import net.minecraft.block.properties.PropertyBool;
 import net.minecraft.block.properties.PropertyDirection;
 import net.minecraft.block.properties.PropertyEnum;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.text.TextComponentString;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
@@ -28,7 +33,6 @@ public class BlockConnector extends BlockSil
 {
 	public static final AxisAlignedBB[] BOXES = MathHelperMC.getRotatedBoxes(new AxisAlignedBB(2D / 16D, 0D, 2D / 16D, 14D / 16D, 2D / 16D, 14D / 16D), false);
 	public static final PropertyEnum<EnumFacing> FACING = PropertyDirection.create("facing", EnumFacing.class);
-	public static final PropertyBool ACTIVE = PropertyBool.create("active");
 	
 	public BlockConnector()
 	{
@@ -43,7 +47,7 @@ public class BlockConnector extends BlockSil
 	
 	@Override
 	public String getModelState()
-	{ return BlockStateSerializer.getString(FACING, EnumFacing.NORTH, ACTIVE, false); }
+	{ return BlockStateSerializer.getString(FACING, EnumFacing.NORTH); }
 	
 	@Override
 	@SideOnly(Side.CLIENT)
@@ -64,7 +68,7 @@ public class BlockConnector extends BlockSil
 	
 	@Override
 	protected BlockStateContainer createBlockState()
-	{ return new BlockStateContainer(this, FACING, ACTIVE); }
+	{ return new BlockStateContainer(this, FACING); }
 	
 	@Override
 	public int damageDropped(IBlockState state)
@@ -83,11 +87,20 @@ public class BlockConnector extends BlockSil
 	{ return false; }
 	
 	@Override
-	public IBlockState getActualState(IBlockState state, IBlockAccess worldIn, BlockPos pos)
+	public void onBlockPlacedBy(World w, BlockPos pos, IBlockState state, EntityLivingBase el, ItemStack is)
 	{
-		//boolean active = false;
-		//return state.withProperty(ACTIVE, active);
+		super.onBlockPlacedBy(w, pos, state, el, is);
 		
-		return state;
+		if(!w.isRemote)
+		{
+			ICBController link = CBHelper.linkWithClosestController(w, pos);
+			
+			if(link != null && el instanceof EntityPlayerMP)
+			{
+				Notification n = new Notification("silicio:linked_with_cb", new TextComponentString("Linked with controller"), 3000);
+				n.desc = new TextComponentString(link.getTile().getPos().toString());
+				FTBLib.notifyPlayer((EntityPlayerMP) el, n);
+			}
+		}
 	}
 }

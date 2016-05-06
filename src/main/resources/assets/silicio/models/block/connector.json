@@ -14,19 +14,19 @@
           "texture": "#texture"
         },
         "north": {
-          "uv": [2, 14, 14, 16],
+          "uv": [2, 0, 14, 2],
           "texture": "#texture"
         },
         "south": {
-          "uv": [2, 14, 14, 16],
+          "uv": [2, 0, 14, 2],
           "texture": "#texture"
         },
         "west": {
-          "uv": [2, 14, 14, 16],
+          "uv": [2, 0, 14, 2],
           "texture": "#texture"
         },
         "east": {
-          "uv": [2, 14, 14, 16],
+          "uv": [2, 0, 14, 2],
           "texture": "#texture"
         }
       }

@@ -34,13 +34,6 @@
         "x": 90,
         "y": 270
       }
-    },
-    "active": {
-      "true": {
-        "texture": "silicio:blocks/connector_active"
-      },
-      "false": {
-      }
     }
   }
 }

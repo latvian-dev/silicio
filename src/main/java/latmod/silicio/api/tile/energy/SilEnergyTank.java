@@ -7,7 +7,11 @@ import net.minecraft.util.math.MathHelper;
  */
 public class SilEnergyTank implements ISilEnergyTank
 {
-	private double energy, maxEnergy;
+	private double energy;
+	private final double maxEnergy;
+	public boolean allowToExtractEnergy = true;
+	public boolean allowToInjectEnergy = true;
+	public boolean energyChanged = false;
 	
 	public SilEnergyTank(double max)
 	{
@@ -19,41 +23,61 @@ public class SilEnergyTank implements ISilEnergyTank
 	{ return energy; }
 	
 	@Override
+	public void setEnergy(double e)
+	{
+		double e0 = energy;
+		energy = MathHelper.clamp_double(e, 0D, getMaxEnergy());
+		
+		if(e0 != energy)
+		{
+			energyChanged = true;
+		}
+	}
+	
+	@Override
 	public double getMaxEnergy()
 	{ return maxEnergy; }
 	
+	//FIXME
 	@Override
-	public void setEnergy(double e)
-	{ energy = MathHelper.clamp_double(e, 0D, getMaxEnergy()); }
-	
-	@Override
-	public void setMaxEnergy(double e)
-	{ maxEnergy = Math.max(0D, e); }
-	
-	@Override
-	public double canReceiveEnergy(ISilEnergyTank tank, double e)
-	{ return e; }
-	
-	@Override
-	public double transferTo(ISilEnergyTank tank, double e, boolean simulate)
+	public double injectEnergy(ISilEnergyTank tank, double max, boolean simulate)
 	{
+		if(!allowToInjectEnergy || tank == this || max <= 0D)
+		{ return 0D; }
+		
 		double e0 = getEnergy();
-		if(e0 == 0D) { return 0D; }
+		double emax = getMaxEnergy();
 		
-		double e1 = tank.getEnergy();
+		double d = Math.min(emax - e0, max);
 		
-		double d = Math.min(e0, tank.getMaxEnergy() - e1);
-		
-		d = tank.canReceiveEnergy(this, d);
-		
-		if(d == 0D) { return 0D; }
+		if(d == 0D)
+		{ return 0D; }
 		
 		if(!simulate)
 		{
-			setEnergy(e0 - d);
-			tank.setEnergy(e1 + d);
+			setEnergy(e0 + d);
+			tank.setEnergy(tank.getEnergy() + d);
 		}
 		
-		return d;
+		return 0D;
+	}
+	
+	//FIXME
+	@Override
+	public double extractEnergy(ISilEnergyTank tank, double max, boolean simulate)
+	{
+		if(!allowToExtractEnergy || tank == this)
+		{
+			return 0D;
+		}
+		
+		double e0 = getEnergy();
+		
+		if(e0 == 0D)
+		{
+			return 0D;
+		}
+		
+		return 0D;
 	}
 }

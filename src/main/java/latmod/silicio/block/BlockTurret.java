@@ -22,7 +22,7 @@ import net.minecraft.world.World;
  */
 public class BlockTurret extends BlockSil
 {
-	public static final AxisAlignedBB[] BOXES = MathHelperMC.getRotatedBoxes(new AxisAlignedBB(1D / 16D, 0D, 1D / 16D, 15D / 16D, 7D / 16D, 15D / 16D), true);
+	public static final AxisAlignedBB[] BOXES = MathHelperMC.getRotatedBoxes(new AxisAlignedBB(1D / 16D, 0D, 1D / 16D, 15D / 16D, 10D / 16D, 15D / 16D), true);
 	public static final PropertyEnum<EnumFacing> FACING = PropertyDirection.create("facing", EnumFacing.class);
 	
 	public BlockTurret()

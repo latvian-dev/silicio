@@ -41,7 +41,7 @@ public class Silicio
 		
 		mod.onPostLoaded();
 		
-		CapabilitySilEnergyTank.init();
+		CapabilitySilEnergyTank.enable();
 		
 		proxy.preInit();
 	}

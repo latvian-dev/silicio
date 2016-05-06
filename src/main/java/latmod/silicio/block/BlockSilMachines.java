@@ -8,9 +8,9 @@ import ftb.lib.api.item.ODItems;
 import latmod.silicio.Silicio;
 import latmod.silicio.item.SilItems;
 import latmod.silicio.tile.TileCBController;
+import latmod.silicio.tile.TileCCBridge;
 import latmod.silicio.tile.TileESU;
 import latmod.silicio.tile.TileEUBridge;
-import latmod.silicio.tile.TileRFBridge;
 import latmod.silicio.tile.TileReactorCore;
 import net.minecraft.block.material.MapColor;
 import net.minecraft.block.material.Material;
@@ -43,8 +43,8 @@ public class BlockSilMachines extends BlockSil
 	{
 		REACTOR_CORE(0, MapColor.GRAY, BlockRenderLayer.CUTOUT, TileReactorCore.class),
 		ESU(1, MapColor.LIGHT_BLUE, BlockRenderLayer.CUTOUT, TileESU.class),
-		ENERGY_BRIDGE_RF(2, MapColor.ADOBE, BlockRenderLayer.SOLID, TileRFBridge.class),
-		ENERGY_BRIDGE_EU(3, MapColor.LIGHT_BLUE, BlockRenderLayer.SOLID, TileRFBridge.class),
+		ENERGY_BRIDGE_RF(2, MapColor.ADOBE, BlockRenderLayer.SOLID, TileCCBridge.class),
+		ENERGY_BRIDGE_EU(3, MapColor.LIGHT_BLUE, BlockRenderLayer.SOLID, TileCCBridge.class),
 		CONTROLLER(4, MapColor.BLUE, BlockRenderLayer.SOLID, TileCBController.class),
 		MODULE_COPIER(5, MapColor.GRAY, BlockRenderLayer.SOLID, null),
 		REDNET_IO(6, MapColor.RED, BlockRenderLayer.SOLID, null),
@@ -151,7 +151,7 @@ public class BlockSilMachines extends BlockSil
 			case ESU:
 				return new TileESU();
 			case ENERGY_BRIDGE_RF:
-				return new TileRFBridge();
+				return new TileCCBridge();
 			case ENERGY_BRIDGE_EU:
 				return new TileEUBridge();
 			case CONTROLLER:
