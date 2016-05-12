@@ -103,6 +103,6 @@ public class ItemModule extends ItemSil
 	@SideOnly(Side.CLIENT)
 	public void addInformation(ItemStack is, EntityPlayer ep, List<String> l, boolean b)
 	{
-		l.add(cbm_desc.format());
+		l.add(cbm_desc.translate());
 	}
 }

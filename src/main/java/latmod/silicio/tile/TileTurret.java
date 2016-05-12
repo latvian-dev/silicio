@@ -61,8 +61,7 @@ public class TileTurret extends TileLM
 	
 	public void updateScanArea()
 	{
-		updateBlockState();
-		EnumFacing facing = currentState == null ? EnumFacing.UP : currentState.getValue(BlockTurret.FACING);
+		EnumFacing facing = getBlockState().getValue(BlockTurret.FACING);
 		
 		int radius = 8;
 		int maxX = pos.getX() + radius;

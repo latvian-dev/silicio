@@ -1,12 +1,13 @@
 package latmod.silicio.item;
 
-import ftb.lib.EnumMCColor;
+import ftb.lib.EnumDyeColorHelper;
 import ftb.lib.LMMod;
 import ftb.lib.api.item.ItemMaterialsLM;
 import ftb.lib.api.item.ODItems;
 import latmod.silicio.Silicio;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
+import net.minecraft.item.EnumDyeColor;
 import net.minecraft.item.ItemStack;
 
 /**
@@ -63,15 +64,15 @@ public class ItemSilMaterials extends ItemMaterialsLM
 		getMod().recipes.addRecipe(SilItems.PROCESSOR.getStack(1), "CCC", "CSC", "CCC", 'C', SilItems.CHIP, 'S', ODItems.SILICON);
 		getMod().recipes.addShapelessRecipe(SilItems.CIRCUIT.getStack(1), SilItems.PROCESSOR, SilItems.WIRE, SilItems.RESISTOR, SilItems.CAPACITOR, SilItems.TRANSISTOR, SilItems.PROCESSOR, SilItems.WIRE, SilItems.WIRE, SilItems.ORE_ELEMITE_NUGGET);
 		getMod().recipes.addRecipe(SilItems.CIRCUIT_WIFI.getStack(1), "NEN", "ECE", "NEN", 'C', SilItems.CIRCUIT, 'E', Items.ENDER_PEARL, 'N', SilItems.ORE_ELEMITE_NUGGET);
-		getMod().recipes.addShapelessRecipe(SilItems.LED_RED.getStack(3), SilItems.DIODE, EnumMCColor.RED.dyeName, ODItems.GLOWSTONE);
-		getMod().recipes.addShapelessRecipe(SilItems.LED_GREEN.getStack(3), SilItems.DIODE, EnumMCColor.GREEN.dyeName, ODItems.GLOWSTONE);
-		getMod().recipes.addShapelessRecipe(SilItems.LED_BLUE.getStack(3), SilItems.DIODE, EnumMCColor.BLUE.dyeName, ODItems.GLOWSTONE);
+		getMod().recipes.addShapelessRecipe(SilItems.LED_RED.getStack(3), SilItems.DIODE, EnumDyeColorHelper.get(EnumDyeColor.RED).dyeName, ODItems.GLOWSTONE);
+		getMod().recipes.addShapelessRecipe(SilItems.LED_GREEN.getStack(3), SilItems.DIODE, EnumDyeColorHelper.get(EnumDyeColor.GREEN).dyeName, ODItems.GLOWSTONE);
+		getMod().recipes.addShapelessRecipe(SilItems.LED_BLUE.getStack(3), SilItems.DIODE, EnumDyeColorHelper.get(EnumDyeColor.BLUE).dyeName, ODItems.GLOWSTONE);
 		getMod().recipes.addShapelessRecipe(SilItems.LED_RGB.getStack(3), SilItems.LED_RED, SilItems.LED_GREEN, SilItems.LED_BLUE);
 		getMod().recipes.addRecipe(SilItems.LED_MATRIX.getStack(1), "LLL", "LLL", "LLL", 'L', SilItems.LED_RGB);
 		
 		getMod().recipes.addRecipe(SilItems.MODULE_EMPTY.getStack(1), "III", "ICI", "III", 'I', ODItems.IRON, 'C', SilItems.PROCESSOR);
-		getMod().recipes.addShapelessRecipe(SilItems.MODULE_INPUT.getStack(1), SilItems.MODULE_EMPTY, EnumMCColor.BLUE.dyeName);
-		getMod().recipes.addShapelessRecipe(SilItems.MODULE_OUTPUT.getStack(1), SilItems.MODULE_EMPTY, EnumMCColor.ORANGE.dyeName);
+		getMod().recipes.addShapelessRecipe(SilItems.MODULE_INPUT.getStack(1), SilItems.MODULE_EMPTY, EnumDyeColorHelper.get(EnumDyeColor.LIGHT_BLUE).dyeName);
+		getMod().recipes.addShapelessRecipe(SilItems.MODULE_OUTPUT.getStack(1), SilItems.MODULE_EMPTY, EnumDyeColorHelper.get(EnumDyeColor.ORANGE).dyeName);
 		getMod().recipes.addShapelessRecipe(SilItems.MODULE_LOGIC.getStack(1), SilItems.MODULE_EMPTY, ODItems.REDSTONE);
 	}
 }
