@@ -1,9 +1,9 @@
 package latmod.silicio.item;
 
-import ftb.lib.EnumDyeColorHelper;
-import ftb.lib.LMMod;
-import ftb.lib.api.item.ItemMaterialsLM;
-import ftb.lib.api.item.ODItems;
+import com.feed_the_beast.ftbl.api.item.ItemMaterialsLM;
+import com.feed_the_beast.ftbl.api.item.ODItems;
+import com.feed_the_beast.ftbl.util.EnumDyeColorHelper;
+import com.feed_the_beast.ftbl.util.LMMod;
 import latmod.silicio.Silicio;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;

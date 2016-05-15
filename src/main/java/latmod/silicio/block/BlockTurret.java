@@ -1,8 +1,8 @@
 package latmod.silicio.block;
 
-import ftb.lib.BlockStateSerializer;
-import ftb.lib.FTBLib;
-import ftb.lib.MathHelperMC;
+import com.feed_the_beast.ftbl.util.BlockStateSerializer;
+import com.feed_the_beast.ftbl.util.FTBLib;
+import com.feed_the_beast.ftbl.util.MathHelperMC;
 import latmod.silicio.tile.TileTurret;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyDirection;

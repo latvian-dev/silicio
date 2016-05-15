@@ -1,8 +1,8 @@
 package latmod.silicio.block;
 
-import ftb.lib.BlockStateSerializer;
-import ftb.lib.FTBLib;
-import ftb.lib.api.notification.Notification;
+import com.feed_the_beast.ftbl.api.notification.Notification;
+import com.feed_the_beast.ftbl.util.BlockStateSerializer;
+import com.feed_the_beast.ftbl.util.FTBLib;
 import latmod.silicio.api.tile.cb.CBHelper;
 import latmod.silicio.api.tile.cb.ICBController;
 import latmod.silicio.item.SilItems;

@@ -1,6 +1,6 @@
 package latmod.silicio.block;
 
-import ftb.lib.FTBLib;
+import com.feed_the_beast.ftbl.util.FTBLib;
 import latmod.silicio.item.SilItems;
 import latmod.silicio.tile.TileAntimatter;
 import net.minecraft.block.material.Material;

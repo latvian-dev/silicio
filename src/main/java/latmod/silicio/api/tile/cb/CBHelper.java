@@ -1,6 +1,6 @@
 package latmod.silicio.api.tile.cb;
 
-import ftb.lib.MathHelperMC;
+import com.feed_the_beast.ftbl.util.MathHelperMC;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;

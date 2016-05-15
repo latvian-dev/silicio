@@ -1,10 +1,10 @@
 package latmod.silicio.block;
 
-import ftb.lib.BlockStateSerializer;
-import ftb.lib.FTBLib;
-import ftb.lib.api.block.IBlockLM;
-import ftb.lib.api.block.ItemBlockLM;
-import ftb.lib.api.item.ODItems;
+import com.feed_the_beast.ftbl.api.block.IBlockLM;
+import com.feed_the_beast.ftbl.api.block.ItemBlockLM;
+import com.feed_the_beast.ftbl.api.item.ODItems;
+import com.feed_the_beast.ftbl.util.BlockStateSerializer;
+import com.feed_the_beast.ftbl.util.FTBLib;
 import latmod.silicio.Silicio;
 import latmod.silicio.item.SilItems;
 import latmod.silicio.tile.TileCBController;

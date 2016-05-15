@@ -1,6 +1,6 @@
 package latmod.silicio.tile;
 
-import ftb.lib.api.tile.TileLM;
+import com.feed_the_beast.ftbl.api.tile.TileLM;
 import latmod.lib.LMUtils;
 import latmod.silicio.api.tile.cb.ICBController;
 import latmod.silicio.api.tile.cb.ICBNetTile;

@@ -1,6 +1,6 @@
 package latmod.silicio.client;
 
-import ftb.lib.api.client.FTBLibClient;
+import com.feed_the_beast.ftbl.api.client.FTBLibClient;
 import latmod.silicio.SilCommon;
 import latmod.silicio.tile.TileAntimatter;
 import latmod.silicio.tile.TileTurret;

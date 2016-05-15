@@ -1,7 +1,7 @@
 package latmod.silicio.tile;
 
-import ftb.lib.api.tile.TileLM;
-import latmod.silicio.api.tile.energy.CapabilitySilEnergyTank;
+import com.feed_the_beast.ftbl.api.tile.TileLM;
+import latmod.silicio.SilicioCapabilities;
 import latmod.silicio.api.tile.energy.SilEnergyTank;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
@@ -44,7 +44,7 @@ public class TileESU extends TileLM
 	@Override
 	public boolean hasCapability(Capability<?> capability, EnumFacing facing)
 	{
-		if(capability == CapabilitySilEnergyTank.ENERGY_TANK_CAPABILITY)
+		if(capability == SilicioCapabilities.ENERGY_TANK_CAPABILITY)
 		{
 			return true;
 		}
@@ -55,7 +55,7 @@ public class TileESU extends TileLM
 	@Override
 	public <T> T getCapability(Capability<T> capability, EnumFacing facing)
 	{
-		if(capability == CapabilitySilEnergyTank.ENERGY_TANK_CAPABILITY)
+		if(capability == SilicioCapabilities.ENERGY_TANK_CAPABILITY)
 		{
 			return (T) energyTank;
 		}

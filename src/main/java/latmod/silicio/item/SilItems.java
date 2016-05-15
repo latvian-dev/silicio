@@ -1,6 +1,6 @@
 package latmod.silicio.item;
 
-import ftb.lib.api.item.MaterialItem;
+import com.feed_the_beast.ftbl.api.item.MaterialItem;
 import latmod.silicio.Silicio;
 
 public class SilItems

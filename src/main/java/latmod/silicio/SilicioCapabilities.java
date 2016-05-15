@@ -1,5 +1,7 @@
-package latmod.silicio.api.tile.energy;
+package latmod.silicio;
 
+import latmod.silicio.api.tile.energy.ISilEnergyTank;
+import latmod.silicio.api.tile.energy.SilEnergyTank;
 import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagDouble;
 import net.minecraft.util.EnumFacing;
@@ -10,13 +12,14 @@ import net.minecraftforge.common.capabilities.CapabilityManager;
 import java.util.concurrent.Callable;
 
 /**
- * Created by LatvianModder on 01.05.2016.
+ * Created by LatvianModder on 15.05.2016.
  */
-public class CapabilitySilEnergyTank
+public class SilicioCapabilities
 {
+	private static boolean enabled = false;
+	
 	@CapabilityInject(ISilEnergyTank.class)
 	public static Capability<ISilEnergyTank> ENERGY_TANK_CAPABILITY = null;
-	private static boolean enabled = false;
 	
 	public static void enable()
 	{

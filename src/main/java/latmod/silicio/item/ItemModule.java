@@ -1,6 +1,6 @@
 package latmod.silicio.item;
 
-import ftb.lib.api.LangKey;
+import com.feed_the_beast.ftbl.api.LangKey;
 import latmod.silicio.api.modules.CapabilityModule;
 import latmod.silicio.api.modules.Module;
 import latmod.silicio.modules.ModuleChatOutput;

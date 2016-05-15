@@ -1,8 +1,8 @@
 package latmod.silicio.tile;
 
-import ftb.lib.FTBLib;
-import ftb.lib.LMNBTUtils;
-import ftb.lib.api.tile.TileLM;
+import com.feed_the_beast.ftbl.api.tile.TileLM;
+import com.feed_the_beast.ftbl.util.FTBLib;
+import com.feed_the_beast.ftbl.util.LMNBTUtils;
 import latmod.silicio.SilSounds;
 import latmod.silicio.block.BlockTurret;
 import net.minecraft.entity.Entity;

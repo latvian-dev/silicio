@@ -1,6 +1,6 @@
 package latmod.silicio.tile;
 
-import ftb.lib.api.item.LMInvUtils;
+import com.feed_the_beast.ftbl.api.item.LMInvUtils;
 import latmod.silicio.api.modules.CapabilityModule;
 import latmod.silicio.api.modules.Module;
 import latmod.silicio.api.modules.ModuleContainer;

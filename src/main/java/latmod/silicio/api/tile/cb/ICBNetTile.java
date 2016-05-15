@@ -1,6 +1,6 @@
 package latmod.silicio.api.tile.cb;
 
-import ftb.lib.api.tile.ITileEntity;
+import com.feed_the_beast.ftbl.api.tile.ITileEntity;
 
 import java.util.UUID;
 

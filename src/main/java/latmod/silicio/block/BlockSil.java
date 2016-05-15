@@ -1,7 +1,7 @@
 package latmod.silicio.block;
 
-import ftb.lib.LMMod;
-import ftb.lib.api.block.BlockLM;
+import com.feed_the_beast.ftbl.api.block.BlockLM;
+import com.feed_the_beast.ftbl.util.LMMod;
 import latmod.silicio.Silicio;
 import net.minecraft.block.material.Material;
 

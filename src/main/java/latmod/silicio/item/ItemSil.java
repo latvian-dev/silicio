@@ -1,7 +1,7 @@
 package latmod.silicio.item;
 
-import ftb.lib.LMMod;
-import ftb.lib.api.item.ItemLM;
+import com.feed_the_beast.ftbl.api.item.ItemLM;
+import com.feed_the_beast.ftbl.util.LMMod;
 import latmod.silicio.Silicio;
 
 /**

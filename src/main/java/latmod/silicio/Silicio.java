@@ -1,8 +1,7 @@
 package latmod.silicio;
 
-import ftb.lib.CreativeTabLM;
-import ftb.lib.LMMod;
-import latmod.silicio.api.tile.energy.CapabilitySilEnergyTank;
+import com.feed_the_beast.ftbl.util.CreativeTabLM;
+import com.feed_the_beast.ftbl.util.LMMod;
 import latmod.silicio.block.BlockSilMachines;
 import latmod.silicio.block.SilBlocks;
 import latmod.silicio.item.SilItems;
@@ -41,7 +40,7 @@ public class Silicio
 		
 		mod.onPostLoaded();
 		
-		CapabilitySilEnergyTank.enable();
+		SilicioCapabilities.enable();
 		
 		proxy.preInit();
 	}
