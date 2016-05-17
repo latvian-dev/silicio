@@ -3,14 +3,14 @@ package latmod.silicio.tile;
 import com.feed_the_beast.ftbl.api.tile.TileLM;
 import com.feed_the_beast.ftbl.util.FTBLib;
 import com.feed_the_beast.ftbl.util.LMNBTUtils;
+import com.feed_the_beast.ftbl.util.MathHelperMC;
 import latmod.silicio.SilSounds;
-import latmod.silicio.block.BlockTurret;
+import net.minecraft.block.BlockDirectional;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.DamageSource;
-import net.minecraft.util.EnumFacing;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraftforge.fml.relauncher.Side;
@@ -24,6 +24,8 @@ public class TileTurret extends TileLM
 	public byte cooldown = 0;
 	public Entity target = null;
 	public AxisAlignedBB scanArea;
+	
+	public static final AxisAlignedBB[] SCAN_AREAS = MathHelperMC.getRotatedBoxes(new AxisAlignedBB(-5D, 0D, -5D, 6D, 10D, 6D));
 	
 	@Override
 	public void writeTileData(NBTTagCompound tag)
@@ -61,17 +63,7 @@ public class TileTurret extends TileLM
 	
 	public void updateScanArea()
 	{
-		EnumFacing facing = getBlockState().getValue(BlockTurret.FACING);
-		
-		int radius = 8;
-		int maxX = pos.getX() + radius;
-		int maxY = pos.getY() + radius;
-		int maxZ = pos.getZ() + radius;
-		int minX = pos.getX() - radius + 1;
-		int minY = pos.getY() - radius + 1;
-		int minZ = pos.getZ() - radius + 1;
-		
-		scanArea = new AxisAlignedBB(minX, minY, minZ, maxX, maxY, maxZ);
+		scanArea = SCAN_AREAS[getBlockState().getValue(BlockDirectional.FACING).ordinal()].addCoord(pos.getX(), pos.getY(), pos.getZ());
 	}
 	
 	private void searchForTarget()
