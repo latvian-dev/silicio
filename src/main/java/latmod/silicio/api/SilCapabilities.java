@@ -17,54 +17,54 @@ import net.minecraftforge.common.capabilities.CapabilityManager;
  */
 public class SilCapabilities
 {
-	private static boolean enabled = false;
-	
-	@CapabilityInject(Module.class)
-	public static Capability<Module> MODULE = null;
-	
-	@CapabilityInject(ISilEnergyTank.class)
-	public static Capability<ISilNetTile> SILNET_TILE = null;
-	
-	@CapabilityInject(ISilEnergyTank.class)
-	public static Capability<ISilNetController> SILNET_CONTROLLER = null;
-	
-	@CapabilityInject(ISilEnergyTank.class)
-	public static Capability<ISilEnergyTank> ENERGY_TANK = null;
-	
-	/**
-	 * Call this if you use the API
-	 */
-	public static void enable()
-	{
-		if(enabled)
-		{
-			return;
-		}
-		
-		enabled = true;
-		
-		CapabilityManager.INSTANCE.register(Module.class, new Capability.IStorage<Module>()
-		{
-			@Override
-			public NBTBase writeNBT(Capability<Module> capability, Module instance, EnumFacing side)
-			{ return null; }
-			
-			@Override
-			public void readNBT(Capability<Module> capability, Module instance, EnumFacing side, NBTBase base)
-			{ }
-		}, () -> new Module() { });
-		
-		CapabilityManager.INSTANCE.register(ISilEnergyTank.class, new Capability.IStorage<ISilEnergyTank>()
-		{
-			@Override
-			public NBTBase writeNBT(Capability<ISilEnergyTank> capability, ISilEnergyTank instance, EnumFacing side)
-			{ return new NBTTagDouble(instance.getEnergy()); }
-			
-			@Override
-			public void readNBT(Capability<ISilEnergyTank> capability, ISilEnergyTank instance, EnumFacing side, NBTBase base)
-			{ instance.setEnergy(((NBTTagDouble) base).getDouble()); }
-		}, () -> {
-			return new SilEnergyTank(10000D);
-		});
-	}
+    private static boolean enabled = false;
+    
+    @CapabilityInject(Module.class)
+    public static Capability<Module> MODULE = null;
+    
+    @CapabilityInject(ISilEnergyTank.class)
+    public static Capability<ISilNetTile> SILNET_TILE = null;
+    
+    @CapabilityInject(ISilEnergyTank.class)
+    public static Capability<ISilNetController> SILNET_CONTROLLER = null;
+    
+    @CapabilityInject(ISilEnergyTank.class)
+    public static Capability<ISilEnergyTank> ENERGY_TANK = null;
+    
+    /**
+     * Call this if you use the API
+     */
+    public static void enable()
+    {
+        if(enabled)
+        {
+            return;
+        }
+        
+        enabled = true;
+        
+        CapabilityManager.INSTANCE.register(Module.class, new Capability.IStorage<Module>()
+        {
+            @Override
+            public NBTBase writeNBT(Capability<Module> capability, Module instance, EnumFacing side)
+            { return null; }
+            
+            @Override
+            public void readNBT(Capability<Module> capability, Module instance, EnumFacing side, NBTBase base)
+            { }
+        }, () -> new Module() { });
+        
+        CapabilityManager.INSTANCE.register(ISilEnergyTank.class, new Capability.IStorage<ISilEnergyTank>()
+        {
+            @Override
+            public NBTBase writeNBT(Capability<ISilEnergyTank> capability, ISilEnergyTank instance, EnumFacing side)
+            { return new NBTTagDouble(instance.getEnergy()); }
+            
+            @Override
+            public void readNBT(Capability<ISilEnergyTank> capability, ISilEnergyTank instance, EnumFacing side, NBTBase base)
+            { instance.setEnergy(((NBTTagDouble) base).getDouble()); }
+        }, () -> {
+            return new SilEnergyTank(10000D);
+        });
+    }
 }

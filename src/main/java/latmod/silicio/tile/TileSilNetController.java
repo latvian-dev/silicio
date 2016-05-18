@@ -24,122 +24,122 @@ import java.util.HashSet;
  */
 public class TileSilNetController extends TileCBNetwork implements ISilNetController
 {
-	public final SilEnergyTank energyTank;
-	private final Collection<SignalChannel> signalList;
-	private Collection<BlockPos> network;
-	private Collection<TileEntity> connectedTileEntities;
-	private boolean updateNetwork = true;
-	
-	public TileSilNetController()
-	{
-		energyTank = new SilEnergyTank(100000D);
-		signalList = new HashSet<>();
-		network = new HashSet<>();
-		connectedTileEntities = new HashSet<>();
-	}
-	
-	@Override
-	public EnumSync getSync()
-	{ return EnumSync.RERENDER; }
-	
-	@Override
-	public void readTileData(NBTTagCompound tag)
-	{
-		super.readTileData(tag);
-		signalList.clear();
-		
-		for(int i : tag.getIntArray("Signals"))
-		{
-			signalList.add(new SignalChannel(i));
-		}
-	}
-	
-	@Override
-	public void writeTileData(NBTTagCompound tag)
-	{
-		super.writeTileData(tag);
-		tag.setIntArray("Signals", LMListUtils.toHashCodeArray(signalList));
-	}
-	
-	@Override
-	public void readTileClientData(NBTTagCompound tag)
-	{
-		super.readTileClientData(tag);
-		
-		signalList.clear();
-		
-		for(int i : tag.getIntArray("S"))
-		{
-			signalList.add(new SignalChannel(i));
-		}
-	}
-	
-	@Override
-	public void writeTileClientData(NBTTagCompound tag)
-	{
-		super.writeTileClientData(tag);
-		tag.setIntArray("S", LMListUtils.toHashCodeArray(signalList));
-	}
-	
-	@Override
-	public void onLoad()
-	{
-		super.onLoad();
-		
-		System.out.println(getWorld());
-	}
-	
-	@Override
-	public boolean onRightClick(EntityPlayer ep, ItemStack is, EnumFacing side, EnumHand hand, float x, float y, float z)
-	{
-		if(getSide().isServer())
-		{
-			FTBLib.printChat(ep, "Network: " + network.size());
-			FTBLib.printChat(ep, "Connected TEs: " + connectedTileEntities.size());
-			FTBLib.printChat(ep, "Signals: " + signalList);
-		}
-		
-		return true;
-	}
-	
-	@Override
-	public void onUpdate()
-	{
-		if(getSide().isClient())
-		{
-			return;
-		}
-		
-		if(updateNetwork)
-		{
-			connectedTileEntities.clear();
-			signalList.clear();
-			
-			if(!network.isEmpty())
-			{
-				for(BlockPos bpos : network)
-				{
-					IBlockState state = worldObj.getBlockState(bpos);
-					
-					if(state.getBlock() == SilBlocks.CONNECTOR)
-					{
-						TileEntity te = worldObj.getTileEntity(bpos.offset(state.getValue(BlockConnector.FACING)));
-						
-						if(te != null)
-						{
-							connectedTileEntities.add(te);
-						}
-					}
-				}
-			}
-			else
-			{
-				
-			}
-			
-			updateNetwork = false;
-		}
-		
+    public final SilEnergyTank energyTank;
+    private final Collection<SignalChannel> signalList;
+    private Collection<BlockPos> network;
+    private Collection<TileEntity> connectedTileEntities;
+    private boolean updateNetwork = true;
+    
+    public TileSilNetController()
+    {
+        energyTank = new SilEnergyTank(100000D);
+        signalList = new HashSet<>();
+        network = new HashSet<>();
+        connectedTileEntities = new HashSet<>();
+    }
+    
+    @Override
+    public EnumSync getSync()
+    { return EnumSync.RERENDER; }
+    
+    @Override
+    public void readTileData(NBTTagCompound tag)
+    {
+        super.readTileData(tag);
+        signalList.clear();
+        
+        for(int i : tag.getIntArray("Signals"))
+        {
+            signalList.add(new SignalChannel(i));
+        }
+    }
+    
+    @Override
+    public void writeTileData(NBTTagCompound tag)
+    {
+        super.writeTileData(tag);
+        tag.setIntArray("Signals", LMListUtils.toHashCodeArray(signalList));
+    }
+    
+    @Override
+    public void readTileClientData(NBTTagCompound tag)
+    {
+        super.readTileClientData(tag);
+        
+        signalList.clear();
+        
+        for(int i : tag.getIntArray("S"))
+        {
+            signalList.add(new SignalChannel(i));
+        }
+    }
+    
+    @Override
+    public void writeTileClientData(NBTTagCompound tag)
+    {
+        super.writeTileClientData(tag);
+        tag.setIntArray("S", LMListUtils.toHashCodeArray(signalList));
+    }
+    
+    @Override
+    public void onLoad()
+    {
+        super.onLoad();
+        
+        System.out.println(getWorld());
+    }
+    
+    @Override
+    public boolean onRightClick(EntityPlayer ep, ItemStack is, EnumFacing side, EnumHand hand, float x, float y, float z)
+    {
+        if(getSide().isServer())
+        {
+            FTBLib.printChat(ep, "Network: " + network.size());
+            FTBLib.printChat(ep, "Connected TEs: " + connectedTileEntities.size());
+            FTBLib.printChat(ep, "Signals: " + signalList);
+        }
+        
+        return true;
+    }
+    
+    @Override
+    public void onUpdate()
+    {
+        if(getSide().isClient())
+        {
+            return;
+        }
+        
+        if(updateNetwork)
+        {
+            connectedTileEntities.clear();
+            signalList.clear();
+            
+            if(!network.isEmpty())
+            {
+                for(BlockPos bpos : network)
+                {
+                    IBlockState state = worldObj.getBlockState(bpos);
+                    
+                    if(state.getBlock() == SilBlocks.CONNECTOR)
+                    {
+                        TileEntity te = worldObj.getTileEntity(bpos.offset(state.getValue(BlockConnector.FACING)));
+                        
+                        if(te != null)
+                        {
+                            connectedTileEntities.add(te);
+                        }
+                    }
+                }
+            }
+            else
+            {
+                
+            }
+            
+            updateNetwork = false;
+        }
+        
 		/*
 		Map<Integer, Boolean> diffMap = new HashMap<>();
 		Collection<SignalChannel> signalList0 = new HashSet<>(signalList.size());
@@ -185,23 +185,23 @@ public class TileSilNetController extends TileCBNetwork implements ISilNetContro
 			}
 		}
 		*/
-	}
-	
-	@Override
-	public boolean getSignalState(SignalChannel c)
-	{
-		return c != null && !c.isInvalid() && signalList.contains(c);
-	}
-	
-	@Override
-	public void addToNetwork(BlockPos pos)
-	{
-		network.add(pos);
-	}
-	
-	@Override
-	public Collection<BlockPos> getNetwork()
-	{
-		return network;
-	}
+    }
+    
+    @Override
+    public boolean getSignalState(SignalChannel c)
+    {
+        return c != null && !c.isInvalid() && signalList.contains(c);
+    }
+    
+    @Override
+    public void addToNetwork(BlockPos pos)
+    {
+        network.add(pos);
+    }
+    
+    @Override
+    public Collection<BlockPos> getNetwork()
+    {
+        return network;
+    }
 }

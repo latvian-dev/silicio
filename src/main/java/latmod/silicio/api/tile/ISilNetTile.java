@@ -10,6 +10,6 @@ import java.util.Collection;
  */
 public interface ISilNetTile extends ITileEntity
 {
-	void provideSignals(ISilNetController c, Collection<SignalChannel> channels);
-	void onSignalChanged(ISilNetController c, SignalChannel channel, boolean on);
+    void provideSignals(ISilNetController c, Collection<SignalChannel> channels);
+    void onSignalChanged(ISilNetController c, SignalChannel channel, boolean on);
 }

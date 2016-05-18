@@ -10,7 +10,7 @@ import java.util.Collection;
  */
 public interface ISilNetController extends ISilNetTile
 {
-	boolean getSignalState(SignalChannel channel);
-	void addToNetwork(BlockPos pos);
-	Collection<BlockPos> getNetwork();
+    boolean getSignalState(SignalChannel channel);
+    void addToNetwork(BlockPos pos);
+    Collection<BlockPos> getNetwork();
 }

@@ -10,35 +10,35 @@ import net.minecraft.world.World;
  */
 public class SilNetHelper
 {
-	public static ISilNetController linkWithClosestController(World w, BlockPos pos)
-	{
-		if(w.isRemote)
-		{
-			return null;
-		}
-		
-		ISilNetController controller = null;
-		double lastDistSq = Double.POSITIVE_INFINITY;
-		
-		for(TileEntity te : w.loadedTileEntityList)
-		{
-			if(te instanceof ISilNetController)
-			{
-				double distSq = MathHelperMC.getDistanceSq(pos, te.getPos());
-				
-				if(distSq <= 400D && lastDistSq > distSq)
-				{
-					lastDistSq = distSq;
-					controller = (ISilNetController) te;
-				}
-			}
-		}
-		
-		if(controller != null)
-		{
-			controller.addToNetwork(pos);
-		}
-		
-		return controller;
-	}
+    public static ISilNetController linkWithClosestController(World w, BlockPos pos)
+    {
+        if(w.isRemote)
+        {
+            return null;
+        }
+        
+        ISilNetController controller = null;
+        double lastDistSq = Double.POSITIVE_INFINITY;
+        
+        for(TileEntity te : w.loadedTileEntityList)
+        {
+            if(te instanceof ISilNetController)
+            {
+                double distSq = MathHelperMC.getDistanceSq(pos, te.getPos());
+                
+                if(distSq <= 400D && lastDistSq > distSq)
+                {
+                    lastDistSq = distSq;
+                    controller = (ISilNetController) te;
+                }
+            }
+        }
+        
+        if(controller != null)
+        {
+            controller.addToNetwork(pos);
+        }
+        
+        return controller;
+    }
 }

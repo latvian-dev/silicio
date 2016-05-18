@@ -12,23 +12,23 @@ import java.util.Collection;
  */
 public class ModuleTimer extends Module
 {
-	public ModuleTimer()
-	{
-		setFlag(FLAG_PROVIDE_SIGNALS, true);
-	}
-	
-	@Override
-	public void init(ModuleContainer c)
-	{
-		c.addConnection(EnumModuleIO.OUT_1);
-	}
-	
-	@Override
-	public void provideSignals(ModuleContainer c, Collection<SignalChannel> list)
-	{
-		if(c.tick % 20L == 0L)
-		{
-			list.add(c.getChannel(EnumModuleIO.OUT_1));
-		}
-	}
+    public ModuleTimer()
+    {
+        setFlag(FLAG_PROVIDE_SIGNALS, true);
+    }
+    
+    @Override
+    public void init(ModuleContainer c)
+    {
+        c.addConnection(EnumModuleIO.OUT_1);
+    }
+    
+    @Override
+    public void provideSignals(ModuleContainer c, Collection<SignalChannel> list)
+    {
+        if(c.tick % 20L == 0L)
+        {
+            list.add(c.getChannel(EnumModuleIO.OUT_1));
+        }
+    }
 }

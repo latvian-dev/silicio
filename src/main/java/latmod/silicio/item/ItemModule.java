@@ -27,82 +27,82 @@ import java.util.Map;
  */
 public class ItemModule extends ItemSil
 {
-	public static final LangKey cbm_desc = new LangKey("silicio.item.cbm_desc");
-	
-	private Map<Integer, Module> moduleMap = new HashMap<>();
-	private Map<Integer, String> moduleIDMap = new HashMap<>();
-	
-	private void register(int i, String id, Module m)
-	{
-		moduleMap.put(i, m);
-		moduleIDMap.put(i, id);
-	}
-	
-	public ItemModule()
-	{
-		setMaxStackSize(1);
-		setMaxDamage(0);
-		setHasSubtypes(true);
-		
-		register(0, "timer", new ModuleTimer());
-		register(50, "chat_out", new ModuleChatOutput());
-	}
-	
-	@Override
-	public ICapabilityProvider initCapabilities(final ItemStack stack, final NBTTagCompound nbt)
-	{
-		return new ICapabilityProvider()
-		{
-			@Override
-			public boolean hasCapability(Capability<?> capability, EnumFacing facing)
-			{ return capability == SilCapabilities.MODULE && moduleMap.containsKey(stack.getMetadata()); }
-			
-			@Override
-			public <T> T getCapability(Capability<T> capability, EnumFacing facing)
-			{
-				if(capability == SilCapabilities.MODULE)
-				{
-					return (T) moduleMap.get(stack.getMetadata());
-				}
-				
-				return null;
-			}
-		};
-	}
-	
-	@Override
-	@SideOnly(Side.CLIENT)
-	public void loadModels()
-	{
-		for(Map.Entry<Integer, String> e : moduleIDMap.entrySet())
-		{
-			ModelLoader.setCustomModelResourceLocation(this, e.getKey(), new ModelResourceLocation(getRegistryName(), "variant=" + e.getValue()));
-		}
-	}
-	
-	@Override
-	@SideOnly(Side.CLIENT)
-	public void getSubItems(Item itemIn, CreativeTabs tab, List<ItemStack> subItems)
-	{
-		for(Integer i : moduleMap.keySet())
-		{
-			subItems.add(new ItemStack(itemIn, 1, i));
-		}
-	}
-	
-	@Override
-	public void loadRecipes()
-	{
-	}
-	
-	@Override
-	public String getUnlocalizedName(ItemStack is)
-	{ return getMod().getItemName("cbm_" + moduleIDMap.get(is.getMetadata())); }
-	
-	@Override
-	@SideOnly(Side.CLIENT)
-	public void addInformation(ItemStack is, EntityPlayer ep, List<String> l, boolean b)
-	{
-		l.add(cbm_desc.translate());
-	}
+    public static final LangKey cbm_desc = new LangKey("silicio.item.cbm_desc");
+    
+    private Map<Integer, Module> moduleMap = new HashMap<>();
+    private Map<Integer, String> moduleIDMap = new HashMap<>();
+    
+    private void register(int i, String id, Module m)
+    {
+        moduleMap.put(i, m);
+        moduleIDMap.put(i, id);
+    }
+    
+    public ItemModule()
+    {
+        setMaxStackSize(1);
+        setMaxDamage(0);
+        setHasSubtypes(true);
+        
+        register(0, "timer", new ModuleTimer());
+        register(50, "chat_out", new ModuleChatOutput());
+    }
+    
+    @Override
+    public ICapabilityProvider initCapabilities(final ItemStack stack, final NBTTagCompound nbt)
+    {
+        return new ICapabilityProvider()
+        {
+            @Override
+            public boolean hasCapability(Capability<?> capability, EnumFacing facing)
+            { return capability == SilCapabilities.MODULE && moduleMap.containsKey(stack.getMetadata()); }
+            
+            @Override
+            public <T> T getCapability(Capability<T> capability, EnumFacing facing)
+            {
+                if(capability == SilCapabilities.MODULE)
+                {
+                    return (T) moduleMap.get(stack.getMetadata());
+                }
+                
+                return null;
+            }
+        };
+    }
+    
+    @Override
+    @SideOnly(Side.CLIENT)
+    public void loadModels()
+    {
+        for(Map.Entry<Integer, String> e : moduleIDMap.entrySet())
+        {
+            ModelLoader.setCustomModelResourceLocation(this, e.getKey(), new ModelResourceLocation(getRegistryName(), "variant=" + e.getValue()));
+        }
+    }
+    
+    @Override
+    @SideOnly(Side.CLIENT)
+    public void getSubItems(Item itemIn, CreativeTabs tab, List<ItemStack> subItems)
+    {
+        for(Integer i : moduleMap.keySet())
+        {
+            subItems.add(new ItemStack(itemIn, 1, i));
+        }
+    }
+    
+    @Override
+    public void loadRecipes()
+    {
+    }
+    
+    @Override
+    public String getUnlocalizedName(ItemStack is)
+    { return getMod().getItemName("cbm_" + moduleIDMap.get(is.getMetadata())); }
+    
+    @Override
+    @SideOnly(Side.CLIENT)
+    public void addInformation(ItemStack is, EntityPlayer ep, List<String> l, boolean b)
+    {
+        l.add(cbm_desc.translate());
+    }
 }

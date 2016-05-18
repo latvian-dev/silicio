@@ -12,49 +12,49 @@ import net.minecraftforge.common.capabilities.Capability;
  */
 public class TileCCBridge extends TileLM
 {
-	public SilEnergyTank energyTank;
-	
-	public TileCCBridge()
-	{
-		energyTank = new SilEnergyTank(1000D);
-	}
-	
-	@Override
-	public void writeTileData(NBTTagCompound tag)
-	{
-		tag.setDouble("SilEnergy", energyTank.getEnergy());
-	}
-	
-	@Override
-	public void readTileData(NBTTagCompound tag)
-	{
-		energyTank.setEnergy(tag.getDouble("SilEnergy"));
-	}
-	
-	@Override
-	public boolean hasCapability(Capability<?> capability, EnumFacing facing)
-	{
-		if(capability == SilCapabilities.ENERGY_TANK)
-		{
-			return true;
-		}
-		
-		return super.hasCapability(capability, facing);
-	}
-	
-	@Override
-	public <T> T getCapability(Capability<T> capability, EnumFacing facing)
-	{
-		if(capability == SilCapabilities.ENERGY_TANK)
-		{
-			return (T) energyTank;
-		}
-		
-		return super.getCapability(capability, facing);
-	}
-	
-	@Override
-	public void onUpdate()
-	{
-	}
+    public SilEnergyTank energyTank;
+    
+    public TileCCBridge()
+    {
+        energyTank = new SilEnergyTank(1000D);
+    }
+    
+    @Override
+    public void writeTileData(NBTTagCompound tag)
+    {
+        tag.setDouble("SilEnergy", energyTank.getEnergy());
+    }
+    
+    @Override
+    public void readTileData(NBTTagCompound tag)
+    {
+        energyTank.setEnergy(tag.getDouble("SilEnergy"));
+    }
+    
+    @Override
+    public boolean hasCapability(Capability<?> capability, EnumFacing facing)
+    {
+        if(capability == SilCapabilities.ENERGY_TANK)
+        {
+            return true;
+        }
+        
+        return super.hasCapability(capability, facing);
+    }
+    
+    @Override
+    public <T> T getCapability(Capability<T> capability, EnumFacing facing)
+    {
+        if(capability == SilCapabilities.ENERGY_TANK)
+        {
+            return (T) energyTank;
+        }
+        
+        return super.getCapability(capability, facing);
+    }
+    
+    @Override
+    public void onUpdate()
+    {
+    }
 }

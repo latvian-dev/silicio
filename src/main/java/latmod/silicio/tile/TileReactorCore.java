@@ -7,8 +7,8 @@ import com.feed_the_beast.ftbl.api.tile.TileLM;
  */
 public class TileReactorCore extends TileLM
 {
-	@Override
-	public void onUpdate()
-	{
-	}
+    @Override
+    public void onUpdate()
+    {
+    }
 }

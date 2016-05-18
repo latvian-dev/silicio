@@ -15,35 +15,35 @@ import java.util.Collection;
  */
 public class TileCBNetwork extends TileLM implements ISilNetTile
 {
-	@Override
-	public boolean hasCapability(Capability<?> capability, EnumFacing facing)
-	{
-		if(capability == SilCapabilities.SILNET_TILE)
-		{
-			return true;
-		}
-		
-		return super.hasCapability(capability, facing);
-	}
-	
-	@Override
-	public <T> T getCapability(Capability<T> capability, EnumFacing facing)
-	{
-		if(capability == SilCapabilities.SILNET_TILE)
-		{
-			return (T) this;
-		}
-		
-		return super.getCapability(capability, facing);
-	}
-	
-	@Override
-	public void provideSignals(ISilNetController c, Collection<SignalChannel> channels)
-	{
-	}
-	
-	@Override
-	public void onSignalChanged(ISilNetController c, SignalChannel channel, boolean on)
-	{
-	}
+    @Override
+    public boolean hasCapability(Capability<?> capability, EnumFacing facing)
+    {
+        if(capability == SilCapabilities.SILNET_TILE)
+        {
+            return true;
+        }
+        
+        return super.hasCapability(capability, facing);
+    }
+    
+    @Override
+    public <T> T getCapability(Capability<T> capability, EnumFacing facing)
+    {
+        if(capability == SilCapabilities.SILNET_TILE)
+        {
+            return (T) this;
+        }
+        
+        return super.getCapability(capability, facing);
+    }
+    
+    @Override
+    public void provideSignals(ISilNetController c, Collection<SignalChannel> channels)
+    {
+    }
+    
+    @Override
+    public void onSignalChanged(ISilNetController c, SignalChannel channel, boolean on)
+    {
+    }
 }
