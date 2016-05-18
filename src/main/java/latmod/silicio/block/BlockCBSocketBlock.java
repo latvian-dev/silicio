@@ -3,8 +3,8 @@ package latmod.silicio.block;
 import com.feed_the_beast.ftbl.api.notification.Notification;
 import com.feed_the_beast.ftbl.util.BlockStateSerializer;
 import com.feed_the_beast.ftbl.util.FTBLib;
-import latmod.silicio.api.tile.cb.CBHelper;
-import latmod.silicio.api.tile.cb.ICBController;
+import latmod.silicio.api.tile.ISilNetController;
+import latmod.silicio.api.tile.SilNetHelper;
 import latmod.silicio.item.SilItems;
 import latmod.silicio.tile.TileModuleSocket;
 import net.minecraft.block.material.Material;
@@ -102,7 +102,7 @@ public class BlockCBSocketBlock extends BlockSil
 		
 		if(!w.isRemote)
 		{
-			ICBController link = CBHelper.linkWithClosestController(w, pos);
+			ISilNetController link = SilNetHelper.linkWithClosestController(w, pos);
 			
 			if(link != null && el instanceof EntityPlayerMP)
 			{

@@ -1,9 +1,9 @@
 package latmod.silicio.modules;
 
-import latmod.silicio.api.modules.ConnectionType;
+import latmod.silicio.api.SignalChannel;
+import latmod.silicio.api.modules.EnumModuleIO;
 import latmod.silicio.api.modules.Module;
 import latmod.silicio.api.modules.ModuleContainer;
-import latmod.silicio.api.modules.ModuleIOConnection;
 import net.minecraft.entity.player.EntityPlayerMP;
 
 /**
@@ -11,12 +11,10 @@ import net.minecraft.entity.player.EntityPlayerMP;
  */
 public class ModuleChatOutput extends Module
 {
-	public static final ModuleIOConnection IN = new ModuleIOConnection(0, "in", ConnectionType.INPUT);
-	
 	@Override
 	public void init(ModuleContainer c)
 	{
-		c.addConnection(IN);
+		c.addConnection(EnumModuleIO.IN_1);
 	}
 	
 	@Override
@@ -25,9 +23,9 @@ public class ModuleChatOutput extends Module
 	}
 	
 	@Override
-	public void onSignalChanged(ModuleContainer c, int id, boolean on)
+	public void onSignalChanged(ModuleContainer c, SignalChannel id, boolean on)
 	{
-		if(on && id == c.getConnectionID(IN))
+		if(on && id.equals(c.getChannel(EnumModuleIO.IN_1)))
 		{
 		}
 	}

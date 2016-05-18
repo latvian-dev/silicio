@@ -1,8 +1,10 @@
 package latmod.silicio.api.modules;
 
 import latmod.lib.Bits;
-import latmod.lib.IntList;
+import latmod.silicio.api.SignalChannel;
 import net.minecraft.entity.player.EntityPlayerMP;
+
+import java.util.Collection;
 
 /**
  * Created by LatvianModder on 05.03.2016.
@@ -35,11 +37,11 @@ public abstract class Module
 	{
 	}
 	
-	public void provideSignals(ModuleContainer c, IntList list)
+	public void provideSignals(ModuleContainer c, Collection<SignalChannel> list)
 	{
 	}
 	
-	public void onSignalChanged(ModuleContainer c, int id, boolean on)
+	public void onSignalChanged(ModuleContainer c, SignalChannel id, boolean on)
 	{
 	}
 }

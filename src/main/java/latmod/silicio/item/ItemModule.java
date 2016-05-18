@@ -1,7 +1,7 @@
 package latmod.silicio.item;
 
 import com.feed_the_beast.ftbl.api.LangKey;
-import latmod.silicio.api.modules.CapabilityModule;
+import latmod.silicio.api.SilCapabilities;
 import latmod.silicio.api.modules.Module;
 import latmod.silicio.modules.ModuleChatOutput;
 import latmod.silicio.modules.ModuleTimer;
@@ -55,12 +55,12 @@ public class ItemModule extends ItemSil
 		{
 			@Override
 			public boolean hasCapability(Capability<?> capability, EnumFacing facing)
-			{ return capability == CapabilityModule.MODULE_CAPABILITY && moduleMap.containsKey(stack.getMetadata()); }
+			{ return capability == SilCapabilities.MODULE && moduleMap.containsKey(stack.getMetadata()); }
 			
 			@Override
 			public <T> T getCapability(Capability<T> capability, EnumFacing facing)
 			{
-				if(capability == CapabilityModule.MODULE_CAPABILITY)
+				if(capability == SilCapabilities.MODULE)
 				{
 					return (T) moduleMap.get(stack.getMetadata());
 				}

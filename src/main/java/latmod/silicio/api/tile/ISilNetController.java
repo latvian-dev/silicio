@@ -1,5 +1,6 @@
-package latmod.silicio.api.tile.cb;
+package latmod.silicio.api.tile;
 
+import latmod.silicio.api.SignalChannel;
 import net.minecraft.util.math.BlockPos;
 
 import java.util.Collection;
@@ -7,9 +8,9 @@ import java.util.Collection;
 /**
  * Created by LatvianModder on 05.03.2016.
  */
-public interface ICBController extends ICBNetTile
+public interface ISilNetController extends ISilNetTile
 {
-	boolean getSignalState(int id);
+	boolean getSignalState(SignalChannel channel);
 	void addToNetwork(BlockPos pos);
 	Collection<BlockPos> getNetwork();
 }

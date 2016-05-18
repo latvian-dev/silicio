@@ -1,11 +1,9 @@
 package latmod.silicio.tile;
 
 import com.feed_the_beast.ftbl.util.FTBLib;
-import latmod.lib.IntList;
-import latmod.silicio.api.modules.Module;
-import latmod.silicio.api.modules.ModuleContainer;
-import latmod.silicio.api.tile.cb.ICBController;
-import latmod.silicio.api.tile.cb.ICBModuleProvider;
+import latmod.lib.LMListUtils;
+import latmod.silicio.api.SignalChannel;
+import latmod.silicio.api.tile.ISilNetController;
 import latmod.silicio.api.tile.energy.SilEnergyTank;
 import latmod.silicio.block.BlockConnector;
 import latmod.silicio.block.SilBlocks;
@@ -18,31 +16,26 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
 
 /**
  * Created by LatvianModder on 05.03.2016.
  */
-public class TileCBController extends TileCBNetwork implements ICBController
+public class TileSilNetController extends TileCBNetwork implements ISilNetController
 {
 	public final SilEnergyTank energyTank;
-	private final IntList signalList;
+	private final Collection<SignalChannel> signalList;
 	private Collection<BlockPos> network;
 	private Collection<TileEntity> connectedTileEntities;
-	private List<ModuleContainer> modules;
 	private boolean updateNetwork = true;
 	
-	public TileCBController()
+	public TileSilNetController()
 	{
 		energyTank = new SilEnergyTank(100000D);
-		signalList = new IntList().setDefVal(0);
+		signalList = new HashSet<>();
 		network = new HashSet<>();
-		connectedTileEntities = new ArrayList<>();
-		modules = new ArrayList<>();
+		connectedTileEntities = new HashSet<>();
 	}
 	
 	@Override
@@ -54,29 +47,38 @@ public class TileCBController extends TileCBNetwork implements ICBController
 	{
 		super.readTileData(tag);
 		signalList.clear();
-		signalList.addAll(tag.getIntArray("Signals"));
+		
+		for(int i : tag.getIntArray("Signals"))
+		{
+			signalList.add(new SignalChannel(i));
+		}
 	}
 	
 	@Override
 	public void writeTileData(NBTTagCompound tag)
 	{
 		super.writeTileData(tag);
-		tag.setIntArray("Signals", signalList.toArray());
+		tag.setIntArray("Signals", LMListUtils.toHashCodeArray(signalList));
 	}
 	
 	@Override
 	public void readTileClientData(NBTTagCompound tag)
 	{
 		super.readTileClientData(tag);
+		
 		signalList.clear();
-		signalList.addAll(tag.getIntArray("S"));
+		
+		for(int i : tag.getIntArray("S"))
+		{
+			signalList.add(new SignalChannel(i));
+		}
 	}
 	
 	@Override
 	public void writeTileClientData(NBTTagCompound tag)
 	{
 		super.writeTileClientData(tag);
-		tag.setIntArray("S", signalList.toArray());
+		tag.setIntArray("S", LMListUtils.toHashCodeArray(signalList));
 	}
 	
 	@Override
@@ -93,7 +95,6 @@ public class TileCBController extends TileCBNetwork implements ICBController
 		if(getSide().isServer())
 		{
 			FTBLib.printChat(ep, "Network: " + network.size());
-			FTBLib.printChat(ep, "Modules: " + modules.size());
 			FTBLib.printChat(ep, "Connected TEs: " + connectedTileEntities.size());
 			FTBLib.printChat(ep, "Signals: " + signalList);
 		}
@@ -111,8 +112,8 @@ public class TileCBController extends TileCBNetwork implements ICBController
 		
 		if(updateNetwork)
 		{
-			modules.clear();
 			connectedTileEntities.clear();
+			signalList.clear();
 			
 			if(!network.isEmpty())
 			{
@@ -129,36 +130,26 @@ public class TileCBController extends TileCBNetwork implements ICBController
 							connectedTileEntities.add(te);
 						}
 					}
-					else
-					{
-						TileEntity te = worldObj.getTileEntity(bpos);
-						
-						if(te instanceof ICBModuleProvider)
-						{
-							ICBModuleProvider cbm = (ICBModuleProvider) te;
-							
-							if(cbm.hasModules())
-							{
-								modules.addAll(cbm.getModules());
-							}
-						}
-					}
 				}
 			}
 			else
 			{
-				signalList.clear();
+				
 			}
 			
 			updateNetwork = false;
 		}
 		
-		IntList signalList0 = signalList.copy();
+		/*
+		Map<Integer, Boolean> diffMap = new HashMap<>();
+		Collection<SignalChannel> signalList0 = new HashSet<>(signalList.size());
+		signalList0.addAll(signalList);
 		signalList.clear();
+		
 		
 		if(!modules.isEmpty())
 		{
-			IntList signalList1 = new IntList();
+			Collection<SignalChannel> signalList1 = new HashSet<>();
 			
 			for(ModuleContainer c : modules)
 			{
@@ -171,7 +162,10 @@ public class TileCBController extends TileCBNetwork implements ICBController
 					for(int i = 0; i < signalList1.size(); i++)
 					{
 						int id = signalList1.get(i);
-						if(id != 0 && !signalList.contains(id)) { signalList.add(id); }
+						if(id != 0 && !signalList.contains(id))
+						{
+							signalList.add(id);
+						}
 					}
 					
 					signalList1.clear();
@@ -179,23 +173,35 @@ public class TileCBController extends TileCBNetwork implements ICBController
 			}
 		}
 		
-		Map<Integer, Boolean> diffMap = signalList0.getDifferenceMap(signalList);
-		
 		if(!diffMap.isEmpty())
 		{
 			FTBLib.printChat(null, "Signals: " + diffMap);
+			
+			if(!modules.isEmpty())
+			{
+				for(Map.Entry<Integer, Boolean> e : diffMap.entrySet())
+				{
+				}
+			}
 		}
+		*/
 	}
 	
 	@Override
-	public boolean getSignalState(int id)
-	{ return id != 0 && signalList.contains(id); }
+	public boolean getSignalState(SignalChannel c)
+	{
+		return c != null && !c.isInvalid() && signalList.contains(c);
+	}
 	
 	@Override
 	public void addToNetwork(BlockPos pos)
-	{ network.add(pos); }
+	{
+		network.add(pos);
+	}
 	
 	@Override
 	public Collection<BlockPos> getNetwork()
-	{ return network; }
+	{
+		return network;
+	}
 }

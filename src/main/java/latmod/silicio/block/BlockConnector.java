@@ -5,9 +5,10 @@ import com.feed_the_beast.ftbl.api.notification.Notification;
 import com.feed_the_beast.ftbl.util.BlockStateSerializer;
 import com.feed_the_beast.ftbl.util.FTBLib;
 import com.feed_the_beast.ftbl.util.MathHelperMC;
-import latmod.silicio.api.tile.cb.CBHelper;
-import latmod.silicio.api.tile.cb.ICBController;
+import latmod.silicio.api.tile.ISilNetController;
+import latmod.silicio.api.tile.SilNetHelper;
 import latmod.silicio.item.SilItems;
+import latmod.silicio.tile.TileConnector;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyDirection;
 import net.minecraft.block.properties.PropertyEnum;
@@ -16,6 +17,7 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.AxisAlignedBB;
@@ -44,6 +46,20 @@ public class BlockConnector extends BlockSil
 	{
 		getMod().recipes.addRecipe(new ItemStack(this), " C ", "WSW", 'W', SilItems.WIRE, 'C', SilItems.CIRCUIT_WIFI, 'S', ODItems.STONE);
 	}
+	
+	@Override
+	public void loadTiles()
+	{
+		FTBLib.addTile(TileConnector.class, getRegistryName());
+	}
+	
+	@Override
+	public boolean hasTileEntity(IBlockState state)
+	{ return true; }
+	
+	@Override
+	public TileEntity createTileEntity(World w, IBlockState state)
+	{ return new TileConnector(); }
 	
 	@Override
 	public String getModelState()
@@ -93,7 +109,7 @@ public class BlockConnector extends BlockSil
 		
 		if(!w.isRemote)
 		{
-			ICBController link = CBHelper.linkWithClosestController(w, pos);
+			ISilNetController link = SilNetHelper.linkWithClosestController(w, pos);
 			
 			if(link != null && el instanceof EntityPlayerMP)
 			{

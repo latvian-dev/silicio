@@ -2,6 +2,7 @@ package latmod.silicio;
 
 import com.feed_the_beast.ftbl.util.CreativeTabLM;
 import com.feed_the_beast.ftbl.util.LMMod;
+import latmod.silicio.api.SilCapabilities;
 import latmod.silicio.block.BlockSilMachines;
 import latmod.silicio.block.SilBlocks;
 import latmod.silicio.item.SilItems;
@@ -40,7 +41,7 @@ public class Silicio
 		
 		mod.onPostLoaded();
 		
-		SilicioCapabilities.enable();
+		SilCapabilities.enable();
 		
 		proxy.preInit();
 	}

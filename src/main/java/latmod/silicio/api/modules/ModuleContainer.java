@@ -1,46 +1,49 @@
 package latmod.silicio.api.modules;
 
-import latmod.lib.IntMap;
 import latmod.lib.LMUtils;
-import latmod.silicio.api.tile.cb.ICBController;
-import latmod.silicio.api.tile.cb.ICBModuleProvider;
+import latmod.silicio.api.SignalChannel;
+import latmod.silicio.api.SilCapabilities;
 import latmod.silicio.tile.TileModuleSocket;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by LatvianModder on 04.03.2016.
  */
 public final class ModuleContainer
 {
-	public final ICBModuleProvider tile;
+	public final TileEntity tile;
 	public final EnumFacing facing;
 	public final ItemStack item;
 	public final Module module;
-	public final IntMap connections;
+	public final Map<EnumModuleIO, ModuleConnection> connections;
 	public NBTTagCompound data;
 	public long tick;
 	
-	public ModuleContainer(ICBModuleProvider t, EnumFacing f, ItemStack is, Module m)
+	public ModuleContainer(TileEntity t, EnumFacing f, ItemStack is, Module m)
 	{
 		tile = LMUtils.nonNull(t);
 		facing = f;
 		item = LMUtils.nonNull(is);
 		module = LMUtils.nonNull(m);
-		connections = new IntMap();
+		connections = new HashMap<>();
 	}
 	
 	public static ModuleContainer readFromNBT(TileModuleSocket tile, NBTTagCompound tag)
 	{
 		ItemStack item = ItemStack.loadItemStackFromNBT(tag.getCompoundTag("Item"));
 		
-		if(item == null || !item.hasCapability(CapabilityModule.MODULE_CAPABILITY, null))
+		if(item == null || !item.hasCapability(SilCapabilities.MODULE, null))
 		{
 			return null;
 		}
 		
-		Module module = item.getCapability(CapabilityModule.MODULE_CAPABILITY, null);
+		Module module = item.getCapability(SilCapabilities.MODULE, null);
 		
 		if(module == null)
 		{
@@ -76,17 +79,13 @@ public final class ModuleContainer
 		tick++;
 	}
 	
-	public void addConnection(ModuleIOConnection c)
-	{ connections.put(c.index, 0); }
-	
-	public int getConnectionID(ModuleIOConnection c)
-	{ return connections.get(c.index); }
-	
-	public boolean getSignalState(ICBController controller, ModuleIOConnection c)
+	public void addConnection(EnumModuleIO e)
 	{
-		if(c == null) { return false; }
-		int id = getConnectionID(c);
-		if(id != 0) { return false; }
-		return controller.getSignalState(id);
+		connections.put(e, new ModuleConnection(e));
+	}
+	
+	public SignalChannel getChannel(EnumModuleIO e)
+	{
+		return connections.containsKey(e) ? connections.get(e).getChannel() : SignalChannel.NULL;
 	}
 }

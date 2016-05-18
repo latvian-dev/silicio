@@ -1,5 +1,8 @@
-package latmod.silicio;
+package latmod.silicio.api;
 
+import latmod.silicio.api.modules.Module;
+import latmod.silicio.api.tile.ISilNetController;
+import latmod.silicio.api.tile.ISilNetTile;
 import latmod.silicio.api.tile.energy.ISilEnergyTank;
 import latmod.silicio.api.tile.energy.SilEnergyTank;
 import net.minecraft.nbt.NBTBase;
@@ -9,18 +12,28 @@ import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.CapabilityInject;
 import net.minecraftforge.common.capabilities.CapabilityManager;
 
-import java.util.concurrent.Callable;
-
 /**
  * Created by LatvianModder on 15.05.2016.
  */
-public class SilicioCapabilities
+public class SilCapabilities
 {
 	private static boolean enabled = false;
 	
-	@CapabilityInject(ISilEnergyTank.class)
-	public static Capability<ISilEnergyTank> ENERGY_TANK_CAPABILITY = null;
+	@CapabilityInject(Module.class)
+	public static Capability<Module> MODULE = null;
 	
+	@CapabilityInject(ISilEnergyTank.class)
+	public static Capability<ISilNetTile> SILNET_TILE = null;
+	
+	@CapabilityInject(ISilEnergyTank.class)
+	public static Capability<ISilNetController> SILNET_CONTROLLER = null;
+	
+	@CapabilityInject(ISilEnergyTank.class)
+	public static Capability<ISilEnergyTank> ENERGY_TANK = null;
+	
+	/**
+	 * Call this if you use the API
+	 */
 	public static void enable()
 	{
 		if(enabled)
@@ -29,6 +42,17 @@ public class SilicioCapabilities
 		}
 		
 		enabled = true;
+		
+		CapabilityManager.INSTANCE.register(Module.class, new Capability.IStorage<Module>()
+		{
+			@Override
+			public NBTBase writeNBT(Capability<Module> capability, Module instance, EnumFacing side)
+			{ return null; }
+			
+			@Override
+			public void readNBT(Capability<Module> capability, Module instance, EnumFacing side, NBTBase base)
+			{ }
+		}, () -> new Module() { });
 		
 		CapabilityManager.INSTANCE.register(ISilEnergyTank.class, new Capability.IStorage<ISilEnergyTank>()
 		{
@@ -39,11 +63,8 @@ public class SilicioCapabilities
 			@Override
 			public void readNBT(Capability<ISilEnergyTank> capability, ISilEnergyTank instance, EnumFacing side, NBTBase base)
 			{ instance.setEnergy(((NBTTagDouble) base).getDouble()); }
-		}, new Callable<ISilEnergyTank>()
-		{
-			@Override
-			public ISilEnergyTank call() throws Exception
-			{ return new SilEnergyTank(10000D); }
+		}, () -> {
+			return new SilEnergyTank(10000D);
 		});
 	}
 }
