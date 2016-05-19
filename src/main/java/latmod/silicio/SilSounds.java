@@ -9,6 +9,10 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
  */
 public class SilSounds
 {
+    public static final SoundEvent TURRET_START = register("turret_start");
+    public static final SoundEvent TURRET_LOOP = register("turret_loop");
+    public static final SoundEvent TURRET_END = register("turret_end");
+
     private static SoundEvent register(String name)
     {
         ResourceLocation rl = new ResourceLocation("silicio", name);
@@ -16,11 +20,7 @@ public class SilSounds
         event.setRegistryName(rl);
         return GameRegistry.register(event);
     }
-    
-    public static final SoundEvent TURRET_START = register("turret_start");
-    public static final SoundEvent TURRET_LOOP = register("turret_loop");
-    public static final SoundEvent TURRET_END = register("turret_end");
-    
+
     public static void init()
     {
     }

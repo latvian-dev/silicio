@@ -13,24 +13,24 @@ import net.minecraftforge.common.capabilities.Capability;
 public class TileESU extends TileLM
 {
     public SilEnergyTank energyTank;
-    
+
     public TileESU()
     {
         energyTank = new SilEnergyTank(1000000D);
     }
-    
+
     @Override
     public void writeTileData(NBTTagCompound tag)
     {
         tag.setDouble("Energy", energyTank.getEnergy());
     }
-    
+
     @Override
     public void readTileData(NBTTagCompound tag)
     {
         energyTank.setEnergy(tag.getDouble("Energy"));
     }
-    
+
     @Override
     public void onUpdate()
     {
@@ -40,7 +40,7 @@ public class TileESU extends TileLM
             markDirty();
         }
     }
-    
+
     @Override
     public boolean hasCapability(Capability<?> capability, EnumFacing facing)
     {
@@ -48,10 +48,10 @@ public class TileESU extends TileLM
         {
             return true;
         }
-        
+
         return super.hasCapability(capability, facing);
     }
-    
+
     @Override
     public <T> T getCapability(Capability<T> capability, EnumFacing facing)
     {
@@ -59,7 +59,7 @@ public class TileESU extends TileLM
         {
             return (T) energyTank;
         }
-        
+
         return super.getCapability(capability, facing);
     }
 }

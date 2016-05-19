@@ -13,12 +13,12 @@ public class TileConnector extends TileCBNetwork
     @Override
     public void provideSignals(ISilNetController c, Collection<SignalChannel> channels)
     {
-        
+
     }
-    
+
     @Override
     public void onSignalChanged(ISilNetController c, SignalChannel channel, boolean on)
     {
-        
+
     }
 }

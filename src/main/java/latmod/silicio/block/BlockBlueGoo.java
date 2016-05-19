@@ -21,27 +21,27 @@ public class BlockBlueGoo extends BlockSil
         slipperiness = 0.8F;
         setSoundType(SoundType.SLIME);
     }
-    
+
     @Override
     public void loadRecipes()
     {
         getMod().recipes.addRecipe(new ItemStack(this), "GGG", "GGG", "GGG", 'G', SilItems.BLUE_GOO);
         getMod().recipes.addShapelessRecipe(SilItems.BLUE_GOO.getStack(9), this);
     }
-    
+
     @Override
     public MapColor getMapColor(IBlockState state)
     { return MapColor.LIGHT_BLUE; }
-    
+
     @Override
     @SideOnly(Side.CLIENT)
     public BlockRenderLayer getBlockLayer()
     { return BlockRenderLayer.TRANSLUCENT; }
-    
+
     @Override
     public boolean isOpaqueCube(IBlockState state)
     { return false; }
-    
+
     @Override
     public void onFallenUpon(World worldIn, BlockPos pos, Entity entityIn, float fallDistance)
     {
@@ -54,7 +54,7 @@ public class BlockBlueGoo extends BlockSil
             entityIn.fall(fallDistance, 0F);
         }
     }
-    
+
     @Override
     public void onLanded(World worldIn, Entity entityIn)
     {
@@ -67,7 +67,7 @@ public class BlockBlueGoo extends BlockSil
             entityIn.motionY = -entityIn.motionY;
         }
     }
-    
+
     @Override
     public void onEntityWalk(World worldIn, BlockPos pos, Entity entityIn)
     {
@@ -77,7 +77,7 @@ public class BlockBlueGoo extends BlockSil
             entityIn.motionX *= d0;
             entityIn.motionZ *= d0;
         }
-        
+
         super.onEntityWalk(worldIn, pos, entityIn);
     }
 }

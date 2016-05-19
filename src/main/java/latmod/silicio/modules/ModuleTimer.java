@@ -16,13 +16,13 @@ public class ModuleTimer extends Module
     {
         setFlag(FLAG_PROVIDE_SIGNALS, true);
     }
-    
+
     @Override
     public void init(ModuleContainer c)
     {
         c.addConnection(EnumModuleIO.OUT_1);
     }
-    
+
     @Override
     public void provideSignals(ModuleContainer c, Collection<SignalChannel> list)
     {

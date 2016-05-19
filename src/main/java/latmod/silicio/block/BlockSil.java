@@ -12,7 +12,7 @@ public abstract class BlockSil extends BlockLM
         super(m);
         setCreativeTab(Silicio.tab);
     }
-    
+
     @Override
     public LMMod getMod()
     { return Silicio.mod; }

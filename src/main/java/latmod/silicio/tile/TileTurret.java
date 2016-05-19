@@ -21,30 +21,29 @@ import net.minecraftforge.fml.relauncher.SideOnly;
  */
 public class TileTurret extends TileLM
 {
+    public static final AxisAlignedBB[] SCAN_AREAS = MathHelperMC.getRotatedBoxes(new AxisAlignedBB(-5D, 0D, -5D, 6D, 10D, 6D));
     public byte cooldown = 0;
     public Entity target = null;
     public AxisAlignedBB scanArea;
-    
-    public static final AxisAlignedBB[] SCAN_AREAS = MathHelperMC.getRotatedBoxes(new AxisAlignedBB(-5D, 0D, -5D, 6D, 10D, 6D));
-    
+
     @Override
     public void writeTileData(NBTTagCompound tag)
     {
         tag.setByte("Cooldown", cooldown);
-        
+
         if(target != null)
         {
             LMNBTUtils.setUUID(tag, "Target", target.getUniqueID(), true);
         }
     }
-    
+
     @Override
     public void readTileData(NBTTagCompound tag)
     {
         cooldown = tag.getByte("Cooldown");
         target = FTBLib.getEntityByUUID(worldObj, LMNBTUtils.getUUID(tag, "Target", true));
     }
-    
+
     @Override
     public void writeTileClientData(NBTTagCompound tag)
     {
@@ -53,37 +52,37 @@ public class TileTurret extends TileLM
             tag.setInteger("EID", target.getEntityId());
         }
     }
-    
+
     @Override
     public void readTileClientData(NBTTagCompound tag)
     {
         target = tag.hasKey("EID") ? worldObj.getEntityByID(tag.getInteger("EID")) : null;
         updateScanArea();
     }
-    
+
     public void updateScanArea()
     {
         scanArea = SCAN_AREAS[getBlockState().getValue(BlockDirectional.FACING).ordinal()].addCoord(pos.getX(), pos.getY(), pos.getZ());
     }
-    
+
     private void searchForTarget()
     {
         updateScanArea();
-        
+
         target = null;
-        
+
         double x = pos.getX() + 0.5D;
         double y = pos.getY() + 0.5D;
         double z = pos.getZ() + 0.5D;
         double distSq = 0D;
         double prevDistSq = 0D;
-        
+
         for(Entity e : worldObj.getEntitiesWithinAABB(EntityLivingBase.class, scanArea))
         {
             if(!e.isDead && !(e instanceof EntityPlayer))
             {
                 distSq = e.getDistanceSq(x, y, z);
-                
+
                 if(distSq <= 64D && (target == null || (distSq < prevDistSq)))
                 {
                     target = e;
@@ -92,26 +91,26 @@ public class TileTurret extends TileLM
             }
         }
     }
-    
+
     @Override
     public void onUpdate()
     {
         if(getSide().isServer())
         {
             if(redstonePowered) { return; }
-            
+
             if(cooldown > 0) { cooldown--; }
-            
+
             if(cooldown == 0)
             {
                 boolean hasTarget = target != null;
-                
+
                 if(target != null)
                 {
                     if(target.isDead)
                     {
                         searchForTarget();
-                        
+
                         if(target != null)
                         {
                             markDirty();
@@ -129,7 +128,7 @@ public class TileTurret extends TileLM
                     searchForTarget();
                     if(target == null) { cooldown = 40; }
                 }
-                
+
                 if(hasTarget != (target != null))
                 {
                     if(target != null)
@@ -140,13 +139,13 @@ public class TileTurret extends TileLM
                     {
                         playSound(SilSounds.TURRET_END, SoundCategory.BLOCKS, 0.8F, 1F);
                     }
-                    
+
                     markDirty();
                 }
             }
         }
     }
-    
+
     @Override
     @SideOnly(Side.CLIENT)
     public AxisAlignedBB getRenderBoundingBox()

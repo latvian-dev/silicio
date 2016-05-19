@@ -16,16 +16,16 @@ public class SilNetHelper
         {
             return null;
         }
-        
+
         ISilNetController controller = null;
         double lastDistSq = Double.POSITIVE_INFINITY;
-        
+
         for(TileEntity te : w.loadedTileEntityList)
         {
             if(te instanceof ISilNetController)
             {
                 double distSq = MathHelperMC.getDistanceSq(pos, te.getPos());
-                
+
                 if(distSq <= 400D && lastDistSq > distSq)
                 {
                     lastDistSq = distSq;
@@ -33,12 +33,12 @@ public class SilNetHelper
                 }
             }
         }
-        
+
         if(controller != null)
         {
             controller.addToNetwork(pos);
         }
-        
+
         return controller;
     }
 }

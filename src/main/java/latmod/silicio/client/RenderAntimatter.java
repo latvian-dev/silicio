@@ -27,35 +27,43 @@ public class RenderAntimatter extends TileEntitySpecialRenderer<TileAntimatter>
     private static final Random random = new Random(31100L);
     private static final FloatBuffer floatBuffer = GLAllocation.createDirectFloatBuffer(16);
     private static boolean[] renderSide = new boolean[6];
-    
+
+    private static FloatBuffer func_147525_a(float a, float b, float c, float d)
+    {
+        floatBuffer.clear();
+        floatBuffer.put(a).put(b).put(c).put(d);
+        floatBuffer.flip();
+        return floatBuffer;
+    }
+
     @Override
     public void renderTileEntityAt(TileAntimatter te, double x, double y, double z, float partialTicks, int destroyStage)
     {
         //TODO: Check config
-        
+
         Tessellator tessellator = Tessellator.getInstance();
         VertexBuffer worldrenderer = tessellator.getBuffer();
         double f3 = 1D / 256D;
-        
+
         double entityX = rendererDispatcher.entityX;
         double entityY = rendererDispatcher.entityY;
         double entityZ = rendererDispatcher.entityZ;
         GlStateManager.disableLighting();
-        
+
         double posX = ActiveRenderInfo.getPosition().xCoord;
         double posY = ActiveRenderInfo.getPosition().yCoord;
         double posZ = ActiveRenderInfo.getPosition().zCoord;
         float time = (float) (Minecraft.getSystemTime() % 200000L) / 200000F;
-        
+
         random.setSeed(31100L);
-        
+
         for(int i = 0; i < 16; ++i)
         {
             GlStateManager.pushMatrix();
             float f4 = 16F - i;
             float f5 = 0.0625F;
             float f6 = 1F / (f4 + 1F);
-            
+
             if(i == 0)
             {
                 bindTexture(END_SKY_TEXTURE);
@@ -68,7 +76,7 @@ public class RenderAntimatter extends TileEntitySpecialRenderer<TileAntimatter>
             else
             {
                 bindTexture(END_PORTAL_TEXTURE);
-                
+
                 if(i == 1)
                 {
                     GlStateManager.enableBlend();
@@ -76,13 +84,13 @@ public class RenderAntimatter extends TileEntitySpecialRenderer<TileAntimatter>
                     f5 = 0.5F;
                 }
             }
-            
+
             double f7 = -(y + f3);
             double f8 = f7 + posY;
             double f9 = f7 + f4 + posY;
             double f10 = f8 / f9;
             f10 = y + f3 + f10;
-            
+
             GlStateManager.translate(entityX, f10, entityZ);
             GlStateManager.texGen(GlStateManager.TexGen.S, 9217);
             GlStateManager.texGen(GlStateManager.TexGen.T, 9217);
@@ -106,31 +114,31 @@ public class RenderAntimatter extends TileEntitySpecialRenderer<TileAntimatter>
             GlStateManager.rotate((i * i * 4321F + i * 9F) * 2F, 0F, 0F, 1F);
             GlStateManager.translate(-0.5F, -0.5F, 0F);
             GlStateManager.translate(-entityX, -entityZ, -entityY);
-            
+
             f8 = f7 + posY;
             GlStateManager.translate(posX * f4 / f8, posY * f4 / f8, -entityY);
-            
+
             float redCol = (random.nextFloat() * 0.5F + 0.1F) * f6;
             float greenCol = (random.nextFloat() * 0.5F + 0.4F) * f6;
             float blueCol = (random.nextFloat() * 0.5F + 0.5F) * f6;
-            
+
             if(i == 0)
             {
                 redCol = greenCol = blueCol = 1F * f6;
             }
-            
+
             worldrenderer.begin(7, DefaultVertexFormats.POSITION_COLOR);
             worldrenderer.pos(x, y + f3, z).color(redCol, greenCol, blueCol, 1F).endVertex();
             worldrenderer.pos(x, y + f3, z + 1D).color(redCol, greenCol, blueCol, 1F).endVertex();
             worldrenderer.pos(x + 1D, y + f3, z + 1D).color(redCol, greenCol, blueCol, 1F).endVertex();
             worldrenderer.pos(x + 1D, y + f3, z).color(redCol, greenCol, blueCol, 1F).endVertex();
             tessellator.draw();
-            
+
             GlStateManager.popMatrix();
             GlStateManager.matrixMode(5888);
             bindTexture(END_SKY_TEXTURE);
         }
-        
+
         GlStateManager.disableBlend();
         GlStateManager.disableTexGenCoord(GlStateManager.TexGen.S);
         GlStateManager.disableTexGenCoord(GlStateManager.TexGen.T);
@@ -138,13 +146,5 @@ public class RenderAntimatter extends TileEntitySpecialRenderer<TileAntimatter>
         GlStateManager.disableTexGenCoord(GlStateManager.TexGen.Q);
         GlStateManager.enableLighting();
         GlStateManager.color(1F, 1F, 1F, 1F);
-    }
-    
-    private static FloatBuffer func_147525_a(float a, float b, float c, float d)
-    {
-        floatBuffer.clear();
-        floatBuffer.put(a).put(b).put(c).put(d);
-        floatBuffer.flip();
-        return floatBuffer;
     }
 }

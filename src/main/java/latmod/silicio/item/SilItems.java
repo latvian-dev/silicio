@@ -9,12 +9,12 @@ public class SilItems
     public static final ItemModule MODULE = Silicio.mod.register("module", new ItemModule());
     
 	/*
-	public static final ItemXSuitHelm XSUIT_HELM = Silicio.mod.addItem("xsuit_helm", new ItemXSuitHelm());
+    public static final ItemXSuitHelm XSUIT_HELM = Silicio.mod.addItem("xsuit_helm", new ItemXSuitHelm());
 	public static final ItemXSuitBody XSUIT_BODY = Silicio.mod.addItem("xsuit_body", new ItemXSuitBody());
 	public static final ItemXSuitLegs XSUIT_LEGS = Silicio.mod.addItem("xsuit_legs", new ItemXSuitLegs());
 	public static final ItemXSuitBoots XSUIT_BOOTS = Silicio.mod.addItem("xsuit_boots", new ItemXSuitBoots());
 	*/
-    
+
     public static final MaterialItem SILICON = new MaterialItem(0, "silicon");
     public static final MaterialItem STONE_SHARD = new MaterialItem(1, "stone_shard");
     public static final MaterialItem IRON_ROD = new MaterialItem(2, "iron_rod");
@@ -22,15 +22,15 @@ public class SilItems
     public static final MaterialItem LASER_LENS = new MaterialItem(4, "laser_lens");
     public static final MaterialItem XSUIT_PLATE = new MaterialItem(5, "xsuit_plate");
     public static final MaterialItem ANTIMATTER = new MaterialItem(6, "antimatter");
-    
+
     public static final MaterialItem ELEMITE_INGOT = new MaterialItem(10, "elemite_ingot");
     public static final MaterialItem ELEMITE_NUGGET = new MaterialItem(11, "elemite_nugget");
     public static final MaterialItem ELEMITE_DUST = new MaterialItem(12, "elemite_dust");
-    
+
     public static final String ORE_ELEMITE_INGOT = "ingotElemite";
     public static final String ORE_ELEMITE_NUGGET = "nuggetElemite";
     public static final String ORE_ELEMITE_DUST = "dustElemite";
-    
+
     public static final MaterialItem WIRE = new MaterialItem(20, "wire");
     public static final MaterialItem RESISTOR = new MaterialItem(21, "resistor");
     public static final MaterialItem CAPACITOR = new MaterialItem(22, "capacitor");
@@ -45,18 +45,18 @@ public class SilItems
     public static final MaterialItem LED_BLUE = new MaterialItem(31, "led_blue");
     public static final MaterialItem LED_RGB = new MaterialItem(32, "led_rgb");
     public static final MaterialItem LED_MATRIX = new MaterialItem(33, "led_matrix");
-    
+
     public static final MaterialItem MODULE_EMPTY = new MaterialItem(60, "module_empty");
     public static final MaterialItem MODULE_INPUT = new MaterialItem(61, "module_input");
     public static final MaterialItem MODULE_OUTPUT = new MaterialItem(62, "module_output");
     public static final MaterialItem MODULE_LOGIC = new MaterialItem(63, "module_logic");
-    
+
     public static void init()
     {
     }
-	
+    
 	/*
-	public static class Modules
+    public static class Modules
 	{
 		public static ItemModule i_command_block;
 		public static ItemModule i_light_sensor;

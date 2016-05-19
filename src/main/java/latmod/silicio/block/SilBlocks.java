@@ -14,7 +14,7 @@ public class SilBlocks
     public static final BlockBlueGoo BLUE_GOO = Silicio.mod.register("blue_goo", new BlockBlueGoo());
     public static final BlockAntimatterCarpet ANTIMATTER_CARPET = Silicio.mod.register("antimatter_carpet", new BlockAntimatterCarpet());
     public static final BlockTurret TURRET = Silicio.mod.register("turret", new BlockTurret());
-    
+
     public static void init()
     {
     }

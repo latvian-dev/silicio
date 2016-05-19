@@ -16,12 +16,12 @@ public class ModuleChatOutput extends Module
     {
         c.addConnection(EnumModuleIO.IN_1);
     }
-    
+
     @Override
     public void onAdded(ModuleContainer c, EntityPlayerMP player)
     {
     }
-    
+
     @Override
     public void onSignalChanged(ModuleContainer c, SignalChannel id, boolean on)
     {

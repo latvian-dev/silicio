@@ -20,41 +20,41 @@ public class ItemSilMaterials extends ItemMaterialsLM
         super();
         setCreativeTab(Silicio.tab);
     }
-    
+
     @Override
     public LMMod getMod()
     { return Silicio.mod; }
-    
+
     @Override
     public String getFolder()
     { return "materials"; }
-    
+
     @Override
     public void onPostLoaded()
     {
         addAll(SilItems.class);
-        
+
         ODItems.add(ODItems.IRON_ROD, SilItems.IRON_ROD.getStack(1));
         ODItems.add(ODItems.SILICON, SilItems.SILICON.getStack(1));
-        
+
         ODItems.add(SilItems.ORE_ELEMITE_DUST, SilItems.ELEMITE_DUST.getStack(1));
         ODItems.add(SilItems.ORE_ELEMITE_INGOT, SilItems.ELEMITE_INGOT.getStack(1));
         ODItems.add(SilItems.ORE_ELEMITE_NUGGET, SilItems.ELEMITE_NUGGET.getStack(1));
     }
-    
+
     @Override
     public void loadRecipes()
     {
         getMod().recipes.addRecipe(SilItems.IRON_ROD.getStack(4), "I", "I", 'I', ODItems.IRON);
         getMod().recipes.addShapelessRecipe(SilItems.BLUE_GOO.getStack(1), ODItems.SLIMEBALL, ODItems.LAPIS, ODItems.IRON);
         getMod().recipes.addRecipe(SilItems.XSUIT_PLATE.getStack(1), "EEE", "ESE", "EEE", 'E', SilItems.ORE_ELEMITE_INGOT, 'S', ODItems.SILICON);
-        
+
         getMod().recipes.addRecipe(SilItems.ELEMITE_INGOT.getStack(1), "EEE", "EEE", "EEE", 'E', SilItems.ORE_ELEMITE_NUGGET);
         getMod().recipes.addShapelessRecipe(SilItems.ELEMITE_NUGGET.getStack(9), SilItems.ORE_ELEMITE_INGOT);
-        
+
         getMod().recipes.addSmelting(SilItems.ELEMITE_INGOT.getStack(1), SilItems.ELEMITE_DUST.getStack(1));
         getMod().recipes.addSmelting(SilItems.ELEMITE_INGOT.getStack(1), SilItems.BLUE_GOO.getStack(1));
-        
+
         getMod().recipes.addRecipe(SilItems.WIRE.getStack(8), "WWW", "NNN", "WWW", 'N', SilItems.ORE_ELEMITE_NUGGET, 'W', new ItemStack(Blocks.CARPET, 1, ODItems.ANY));
         getMod().recipes.addRecipe(SilItems.RESISTOR.getStack(4), "WCW", 'C', Items.BRICK, 'W', SilItems.WIRE);
         getMod().recipes.addRecipe(SilItems.CAPACITOR.getStack(4), "WCW", 'C', Items.CLAY_BALL, 'W', SilItems.WIRE);
@@ -69,7 +69,7 @@ public class ItemSilMaterials extends ItemMaterialsLM
         getMod().recipes.addShapelessRecipe(SilItems.LED_BLUE.getStack(3), SilItems.DIODE, EnumDyeColorHelper.get(EnumDyeColor.BLUE).dyeName, ODItems.GLOWSTONE);
         getMod().recipes.addShapelessRecipe(SilItems.LED_RGB.getStack(3), SilItems.LED_RED, SilItems.LED_GREEN, SilItems.LED_BLUE);
         getMod().recipes.addRecipe(SilItems.LED_MATRIX.getStack(1), "LLL", "LLL", "LLL", 'L', SilItems.LED_RGB);
-        
+
         getMod().recipes.addRecipe(SilItems.MODULE_EMPTY.getStack(1), "III", "ICI", "III", 'I', ODItems.IRON, 'C', SilItems.PROCESSOR);
         getMod().recipes.addShapelessRecipe(SilItems.MODULE_INPUT.getStack(1), SilItems.MODULE_EMPTY, EnumDyeColorHelper.get(EnumDyeColor.LIGHT_BLUE).dyeName);
         getMod().recipes.addShapelessRecipe(SilItems.MODULE_OUTPUT.getStack(1), SilItems.MODULE_EMPTY, EnumDyeColorHelper.get(EnumDyeColor.ORANGE).dyeName);

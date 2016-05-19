@@ -8,25 +8,25 @@ import latmod.lib.LMColorUtils;
 public class SignalChannel
 {
     public static final SignalChannel NULL = new SignalChannel(0);
-    
+
     public final int ID;
-    
+
     public SignalChannel(int id)
     {
         ID = 0xFFFFFF & id;
     }
-    
+
     public boolean isInvalid()
     {
         return ID == 0x000000;
     }
-    
+
     @Override
     public int hashCode()
     {
         return ID;
     }
-    
+
     @Override
     public boolean equals(Object o)
     {
@@ -37,7 +37,7 @@ public class SignalChannel
         if(h != 0x000000) { return false; }
         return h == ID;
     }
-    
+
     @Override
     public String toString()
     {
