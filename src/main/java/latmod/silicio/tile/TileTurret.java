@@ -5,6 +5,7 @@ import com.feed_the_beast.ftbl.util.FTBLib;
 import com.feed_the_beast.ftbl.util.LMNBTUtils;
 import com.feed_the_beast.ftbl.util.MathHelperMC;
 import latmod.silicio.SilSounds;
+import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.block.BlockDirectional;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
@@ -16,9 +17,13 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
+import javax.annotation.ParametersAreNonnullByDefault;
+
 /**
  * Created by LatvianModder on 03.03.2016.
  */
+@ParametersAreNonnullByDefault
+@MethodsReturnNonnullByDefault
 public class TileTurret extends TileLM
 {
     public static final AxisAlignedBB[] SCAN_AREAS = MathHelperMC.getRotatedBoxes(new AxisAlignedBB(-5D, 0D, -5D, 6D, 10D, 6D));
@@ -97,9 +102,15 @@ public class TileTurret extends TileLM
     {
         if(getSide().isServer())
         {
-            if(redstonePowered) { return; }
+            if(redstonePowered)
+            {
+                return;
+            }
 
-            if(cooldown > 0) { cooldown--; }
+            if(cooldown > 0)
+            {
+                cooldown--;
+            }
 
             if(cooldown == 0)
             {
@@ -126,7 +137,10 @@ public class TileTurret extends TileLM
                 else
                 {
                     searchForTarget();
-                    if(target == null) { cooldown = 40; }
+                    if(target == null)
+                    {
+                        cooldown = 40;
+                    }
                 }
 
                 if(hasTarget != (target != null))
@@ -150,8 +164,14 @@ public class TileTurret extends TileLM
     @SideOnly(Side.CLIENT)
     public AxisAlignedBB getRenderBoundingBox()
     {
-        if(target == null) { return super.getRenderBoundingBox(); }
-        else if(scanArea == null) { updateScanArea(); }
+        if(target == null)
+        {
+            return super.getRenderBoundingBox();
+        }
+        else if(scanArea == null)
+        {
+            updateScanArea();
+        }
         return scanArea;
     }
 }

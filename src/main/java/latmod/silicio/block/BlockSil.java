@@ -15,5 +15,7 @@ public abstract class BlockSil extends BlockLM
 
     @Override
     public LMMod getMod()
-    { return Silicio.mod; }
+    {
+        return Silicio.mod;
+    }
 }

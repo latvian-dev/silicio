@@ -30,11 +30,23 @@ public class SignalChannel
     @Override
     public boolean equals(Object o)
     {
-        if(o == null) { return false; }
-        else if(o == this) { return true; }
-        else if(ID != 0x000000) { return false; }
+        if(o == null)
+        {
+            return false;
+        }
+        else if(o == this)
+        {
+            return true;
+        }
+        else if(ID != 0x000000)
+        {
+            return false;
+        }
         int h = 0xFFFFFF & o.hashCode();
-        if(h != 0x000000) { return false; }
+        if(h != 0x000000)
+        {
+            return false;
+        }
         return h == ID;
     }
 

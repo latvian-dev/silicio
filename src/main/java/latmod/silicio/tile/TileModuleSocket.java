@@ -30,7 +30,9 @@ public class TileModuleSocket extends TileCBNetwork
 
     @Override
     public EnumSync getSync()
-    { return EnumSync.RERENDER; }
+    {
+        return EnumSync.RERENDER;
+    }
 
     @Override
     public void readTileData(NBTTagCompound tag)

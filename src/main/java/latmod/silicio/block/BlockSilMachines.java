@@ -32,6 +32,7 @@ import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
+import javax.annotation.Nonnull;
 import java.util.List;
 
 /**
@@ -82,20 +83,28 @@ public class BlockSilMachines extends BlockSil
 
         @Override
         public String getName()
-        { return name; }
+        {
+            return name;
+        }
 
         public ItemStack getStack(int q)
-        { return new ItemStack(SilBlocks.MACHINES, q, meta); }
+        {
+            return new ItemStack(SilBlocks.MACHINES, q, meta);
+        }
     }
 
     public class ItemBlockMachines extends ItemBlockLM
     {
         public ItemBlockMachines(IBlockLM b)
-        { super(b); }
+        {
+            super(b);
+        }
 
         @Override
         public String getUnlocalizedName(ItemStack stack)
-        { return getMod().getBlockName(EnumVariant.getVariantFromMeta(stack.getMetadata()).getName()); }
+        {
+            return getMod().getBlockName(EnumVariant.getVariantFromMeta(stack.getMetadata()).getName());
+        }
     }
 
     public BlockSilMachines()
@@ -106,7 +115,9 @@ public class BlockSilMachines extends BlockSil
 
     @Override
     public ItemBlock createItemBlock()
-    { return new ItemBlockMachines(this); }
+    {
+        return new ItemBlockMachines(this);
+    }
 
     @Override
     public void loadTiles()
@@ -132,13 +143,15 @@ public class BlockSilMachines extends BlockSil
 
         for(EnumVariant e : EnumVariant.values())
         {
-            ModelLoader.setCustomModelResourceLocation(item, e.meta, new ModelResourceLocation(getModelName(), BlockStateSerializer.getString(VARIANT, e)));
+            ModelLoader.setCustomModelResourceLocation(item, e.meta, new ModelResourceLocation(getRegistryName(), BlockStateSerializer.getString(blockState.getBaseState().withProperty(VARIANT, e))));
         }
     }
 
     @Override
     public boolean hasTileEntity(IBlockState state)
-    { return true; }
+    {
+        return true;
+    }
 
     @Override
     public TileEntity createTileEntity(World w, IBlockState state)
@@ -162,7 +175,7 @@ public class BlockSilMachines extends BlockSil
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void getSubBlocks(Item itemIn, CreativeTabs tab, List<ItemStack> list)
+    public void getSubBlocks(@Nonnull Item itemIn, CreativeTabs tab, List<ItemStack> list)
     {
         for(EnumVariant e : EnumVariant.values())
         {
@@ -172,29 +185,43 @@ public class BlockSilMachines extends BlockSil
 
     @Override
     public int damageDropped(IBlockState state)
-    { return state.getValue(VARIANT).meta; }
+    {
+        return state.getValue(VARIANT).meta;
+    }
 
     @Override
     public IBlockState getStateFromMeta(int meta)
-    { return getDefaultState().withProperty(VARIANT, EnumVariant.getVariantFromMeta(meta)); }
+    {
+        return getDefaultState().withProperty(VARIANT, EnumVariant.getVariantFromMeta(meta));
+    }
 
     @Override
     public MapColor getMapColor(IBlockState state)
-    { return state.getValue(VARIANT).mapColor; }
+    {
+        return state.getValue(VARIANT).mapColor;
+    }
 
     @Override
     public int getMetaFromState(IBlockState state)
-    { return state.getValue(VARIANT).meta; }
+    {
+        return state.getValue(VARIANT).meta;
+    }
 
     @Override
     protected BlockStateContainer createBlockState()
-    { return new BlockStateContainer(this, VARIANT); }
+    {
+        return new BlockStateContainer(this, VARIANT);
+    }
 
     @Override
     public boolean canRenderInLayer(IBlockState state, BlockRenderLayer layer)
-    { return layer == state.getValue(VARIANT).layer; }
+    {
+        return layer == state.getValue(VARIANT).layer;
+    }
 
     @Override
     public boolean isOpaqueCube(IBlockState state)
-    { return state.getValue(VARIANT).layer == BlockRenderLayer.SOLID; }
+    {
+        return state.getValue(VARIANT).layer == BlockRenderLayer.SOLID;
+    }
 }

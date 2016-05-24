@@ -43,22 +43,29 @@ public class SilCapabilities
         {
             @Override
             public NBTBase writeNBT(Capability<Module> capability, Module instance, EnumFacing side)
-            { return null; }
+            {
+                return null;
+            }
 
             @Override
             public void readNBT(Capability<Module> capability, Module instance, EnumFacing side, NBTBase base)
-            { }
+            {
+            }
         }, () -> new Module() { });
 
         CapabilityManager.INSTANCE.register(ISilEnergyTank.class, new Capability.IStorage<ISilEnergyTank>()
         {
             @Override
             public NBTBase writeNBT(Capability<ISilEnergyTank> capability, ISilEnergyTank instance, EnumFacing side)
-            { return new NBTTagDouble(instance.getEnergy()); }
+            {
+                return new NBTTagDouble(instance.getEnergy());
+            }
 
             @Override
             public void readNBT(Capability<ISilEnergyTank> capability, ISilEnergyTank instance, EnumFacing side, NBTBase base)
-            { instance.setEnergy(((NBTTagDouble) base).getDouble()); }
+            {
+                instance.setEnergy(((NBTTagDouble) base).getDouble());
+            }
         }, () -> {
             return new SilEnergyTank(10000D);
         });

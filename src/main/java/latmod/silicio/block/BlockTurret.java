@@ -1,6 +1,5 @@
 package latmod.silicio.block;
 
-import com.feed_the_beast.ftbl.util.BlockStateSerializer;
 import com.feed_the_beast.ftbl.util.FTBLib;
 import com.feed_the_beast.ftbl.util.MathHelperMC;
 import latmod.silicio.tile.TileTurret;
@@ -18,6 +17,8 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
+import javax.annotation.Nonnull;
+
 /**
  * Created by LatvianModder on 04.03.2016.
  */
@@ -28,6 +29,7 @@ public class BlockTurret extends BlockSil
     public BlockTurret()
     {
         super(Material.IRON);
+        setDefaultState(blockState.getBaseState().withProperty(BlockDirectional.FACING, EnumFacing.DOWN));
     }
 
     @Override
@@ -38,11 +40,15 @@ public class BlockTurret extends BlockSil
 
     @Override
     public boolean hasTileEntity(IBlockState state)
-    { return true; }
+    {
+        return true;
+    }
 
     @Override
     public TileEntity createTileEntity(World w, IBlockState state)
-    { return new TileTurret(); }
+    {
+        return new TileTurret();
+    }
 
     @Override
     public void loadRecipes()
@@ -51,45 +57,63 @@ public class BlockTurret extends BlockSil
 
     @Override
     public int damageDropped(IBlockState state)
-    { return 0; }
+    {
+        return 0;
+    }
 
     @Override
     public boolean isOpaqueCube(IBlockState state)
-    { return false; }
+    {
+        return false;
+    }
 
     @Override
     public boolean isFullCube(IBlockState state)
-    { return false; }
+    {
+        return false;
+    }
 
     @Override
     protected BlockStateContainer createBlockState()
-    { return new BlockStateContainer(this, BlockDirectional.FACING); }
+    {
+        return new BlockStateContainer(this, BlockDirectional.FACING);
+    }
 
     @Override
     public IBlockState getStateFromMeta(int meta)
-    { return getDefaultState().withProperty(BlockDirectional.FACING, EnumFacing.VALUES[meta]); }
+    {
+        return getDefaultState().withProperty(BlockDirectional.FACING, EnumFacing.VALUES[meta]);
+    }
 
     @Override
     public int getMetaFromState(IBlockState state)
-    { return state.getValue(BlockDirectional.FACING).ordinal(); }
+    {
+        return state.getValue(BlockDirectional.FACING).ordinal();
+    }
 
-    @Override
-    public String getModelState()
-    { return BlockStateSerializer.getString(BlockDirectional.FACING, EnumFacing.DOWN); }
-
+    @Nonnull
     @Override
     public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos)
-    { return BOXES[state.getValue(BlockDirectional.FACING).ordinal()]; }
+    {
+        return BOXES[state.getValue(BlockDirectional.FACING).ordinal()];
+    }
 
+    @Nonnull
     @Override
     public IBlockState onBlockPlaced(World worldIn, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer)
-    { return getDefaultState().withProperty(BlockDirectional.FACING, facing.getOpposite()); }
+    {
+        return getDefaultState().withProperty(BlockDirectional.FACING, facing.getOpposite());
+    }
 
     @Override
     public IBlockState withRotation(IBlockState state, Rotation rot)
-    { return state.withProperty(BlockDirectional.FACING, rot.rotate(state.getValue(BlockDirectional.FACING))); }
+    {
+        return state.withProperty(BlockDirectional.FACING, rot.rotate(state.getValue(BlockDirectional.FACING)));
+    }
 
     @Override
     public IBlockState withMirror(IBlockState state, Mirror mirrorIn)
-    { return state.withRotation(mirrorIn.toRotation(state.getValue(BlockDirectional.FACING))); }
+    {
+        return state.withRotation(mirrorIn.toRotation(state.getValue(BlockDirectional.FACING)));
+    }
 }

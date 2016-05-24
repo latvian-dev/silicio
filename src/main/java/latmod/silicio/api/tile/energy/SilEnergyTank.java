@@ -20,7 +20,9 @@ public class SilEnergyTank implements ISilEnergyTank
 
     @Override
     public double getEnergy()
-    { return energy; }
+    {
+        return energy;
+    }
 
     @Override
     public void setEnergy(double e)
@@ -36,14 +38,18 @@ public class SilEnergyTank implements ISilEnergyTank
 
     @Override
     public double getMaxEnergy()
-    { return maxEnergy; }
+    {
+        return maxEnergy;
+    }
 
     //FIXME
     @Override
     public double injectEnergy(ISilEnergyTank tank, double max, boolean simulate)
     {
         if(!allowToInjectEnergy || tank == this || max <= 0D)
-        { return 0D; }
+        {
+            return 0D;
+        }
 
         double e0 = getEnergy();
         double emax = getMaxEnergy();
@@ -51,7 +57,9 @@ public class SilEnergyTank implements ISilEnergyTank
         double d = Math.min(emax - e0, max);
 
         if(d == 0D)
-        { return 0D; }
+        {
+            return 0D;
+        }
 
         if(!simulate)
         {

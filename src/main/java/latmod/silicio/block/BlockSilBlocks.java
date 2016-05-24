@@ -25,6 +25,7 @@ import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
+import javax.annotation.Nonnull;
 import java.util.List;
 
 /**
@@ -72,20 +73,28 @@ public class BlockSilBlocks extends BlockSil
 
         @Override
         public String getName()
-        { return name; }
+        {
+            return name;
+        }
 
         public ItemStack getStack(int q)
-        { return new ItemStack(SilBlocks.BLOCKS, q, meta); }
+        {
+            return new ItemStack(SilBlocks.BLOCKS, q, meta);
+        }
     }
 
     public class ItemBlockBlocks extends ItemBlockLM
     {
         public ItemBlockBlocks(IBlockLM b)
-        { super(b); }
+        {
+            super(b);
+        }
 
         @Override
         public String getUnlocalizedName(ItemStack stack)
-        { return getMod().getBlockName(EnumVariant.getVariantFromMeta(stack.getMetadata()).getName()); }
+        {
+            return getMod().getBlockName(EnumVariant.getVariantFromMeta(stack.getMetadata()).getName());
+        }
     }
 
     public BlockSilBlocks()
@@ -96,7 +105,9 @@ public class BlockSilBlocks extends BlockSil
 
     @Override
     public ItemBlock createItemBlock()
-    { return new ItemBlockBlocks(this); }
+    {
+        return new ItemBlockBlocks(this);
+    }
 
     @Override
     public void onPostLoaded()
@@ -131,13 +142,13 @@ public class BlockSilBlocks extends BlockSil
 
         for(EnumVariant e : EnumVariant.values())
         {
-            ModelLoader.setCustomModelResourceLocation(item, e.meta, new ModelResourceLocation(getModelName(), BlockStateSerializer.getString(VARIANT, e)));
+            ModelLoader.setCustomModelResourceLocation(item, e.meta, new ModelResourceLocation(getRegistryName(), BlockStateSerializer.getString(blockState.getBaseState().withProperty(VARIANT, e))));
         }
     }
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void getSubBlocks(Item itemIn, CreativeTabs tab, List<ItemStack> list)
+    public void getSubBlocks(@Nonnull Item itemIn, CreativeTabs tab, List<ItemStack> list)
     {
         for(EnumVariant e : EnumVariant.values())
         {
@@ -147,35 +158,51 @@ public class BlockSilBlocks extends BlockSil
 
     @Override
     public int damageDropped(IBlockState state)
-    { return state.getValue(VARIANT).meta; }
+    {
+        return state.getValue(VARIANT).meta;
+    }
 
     @Override
     public IBlockState getStateFromMeta(int meta)
-    { return getDefaultState().withProperty(VARIANT, EnumVariant.getVariantFromMeta(meta)); }
+    {
+        return getDefaultState().withProperty(VARIANT, EnumVariant.getVariantFromMeta(meta));
+    }
 
     @Override
     public MapColor getMapColor(IBlockState state)
-    { return state.getValue(VARIANT).mapColor; }
+    {
+        return state.getValue(VARIANT).mapColor;
+    }
 
     @Override
     public int getMetaFromState(IBlockState state)
-    { return state.getValue(VARIANT).meta; }
+    {
+        return state.getValue(VARIANT).meta;
+    }
 
     @Override
     protected BlockStateContainer createBlockState()
-    { return new BlockStateContainer(this, VARIANT); }
+    {
+        return new BlockStateContainer(this, VARIANT);
+    }
 
     @Override
     public boolean canRenderInLayer(IBlockState state, BlockRenderLayer layer)
-    { return layer == state.getValue(VARIANT).layer; }
+    {
+        return layer == state.getValue(VARIANT).layer;
+    }
 
     @Override
     public boolean isOpaqueCube(IBlockState state)
-    { return state.getValue(VARIANT).layer == BlockRenderLayer.SOLID; }
+    {
+        return state.getValue(VARIANT).layer == BlockRenderLayer.SOLID;
+    }
 
     @Override
     public Material getMaterial(IBlockState state)
-    { return state.getValue(VARIANT).material; }
+    {
+        return state.getValue(VARIANT).material;
+    }
 
     @Override
     @SideOnly(Side.CLIENT)

@@ -38,26 +38,42 @@ public class BlockAntimatterCarpet extends BlockSil
     }
 
     @Override
+    @Deprecated
     public EnumBlockRenderType getRenderType(IBlockState state)
-    { return EnumBlockRenderType.ENTITYBLOCK_ANIMATED; }
+    {
+        return EnumBlockRenderType.ENTITYBLOCK_ANIMATED;
+    }
 
     @Override
     public boolean hasTileEntity(IBlockState state)
-    { return true; }
+    {
+        return true;
+    }
 
     @Override
     public TileEntity createTileEntity(World w, IBlockState state)
-    { return new TileAntimatter(); }
+    {
+        return new TileAntimatter();
+    }
 
     @Override
+    @Deprecated
     public boolean isOpaqueCube(IBlockState state)
-    { return false; }
+    {
+        return false;
+    }
 
     @Override
+    @Deprecated
     public boolean isFullCube(IBlockState state)
-    { return false; }
+    {
+        return false;
+    }
 
     @Override
+    @Deprecated
     public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos)
-    { return AABB; }
+    {
+        return AABB;
+    }
 }

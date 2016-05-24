@@ -1,7 +1,6 @@
 package latmod.silicio.block;
 
 import com.feed_the_beast.ftbl.api.notification.Notification;
-import com.feed_the_beast.ftbl.util.BlockStateSerializer;
 import com.feed_the_beast.ftbl.util.FTBLib;
 import latmod.silicio.api.tile.ISilNetController;
 import latmod.silicio.api.tile.SilNetHelper;
@@ -37,6 +36,7 @@ public class BlockCBSocketBlock extends BlockSil
     public BlockCBSocketBlock()
     {
         super(Material.IRON);
+        setDefaultState(blockState.getBaseState().withProperty(MODULE_D, false).withProperty(MODULE_U, false).withProperty(MODULE_N, false).withProperty(MODULE_S, false).withProperty(MODULE_W, false).withProperty(MODULE_E, false).withProperty(CENTER, true));
     }
 
     @Override
@@ -52,28 +52,34 @@ public class BlockCBSocketBlock extends BlockSil
     }
 
     @Override
-    public String getModelState()
-    { return BlockStateSerializer.getString(MODULE_D, false, MODULE_U, false, MODULE_N, false, MODULE_S, false, MODULE_W, false, MODULE_E, false, CENTER, true); }
-
-    @Override
     public boolean hasTileEntity(IBlockState state)
-    { return true; }
+    {
+        return true;
+    }
 
     @Override
     public TileEntity createTileEntity(World w, IBlockState state)
-    { return new TileModuleSocket(); }
+    {
+        return new TileModuleSocket();
+    }
 
     @Override
     public IBlockState getStateFromMeta(int meta)
-    { return getDefaultState(); }
+    {
+        return getDefaultState();
+    }
 
     @Override
     public int getMetaFromState(IBlockState state)
-    { return 0; }
+    {
+        return 0;
+    }
 
     @Override
     protected BlockStateContainer createBlockState()
-    { return new BlockStateContainer(this, MODULE_D, MODULE_U, MODULE_N, MODULE_S, MODULE_W, MODULE_E, CENTER); }
+    {
+        return new BlockStateContainer(this, MODULE_D, MODULE_U, MODULE_N, MODULE_S, MODULE_W, MODULE_E, CENTER);
+    }
 
     @Override
     public IBlockState getActualState(IBlockState state, IBlockAccess w, BlockPos pos)

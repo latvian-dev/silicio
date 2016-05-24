@@ -55,7 +55,9 @@ public class ItemModule extends ItemSil
         {
             @Override
             public boolean hasCapability(Capability<?> capability, EnumFacing facing)
-            { return capability == SilCapabilities.MODULE && moduleMap.containsKey(stack.getMetadata()); }
+            {
+                return capability == SilCapabilities.MODULE && moduleMap.containsKey(stack.getMetadata());
+            }
 
             @Override
             public <T> T getCapability(Capability<T> capability, EnumFacing facing)
@@ -97,7 +99,9 @@ public class ItemModule extends ItemSil
 
     @Override
     public String getUnlocalizedName(ItemStack is)
-    { return getMod().getItemName("cbm_" + moduleIDMap.get(is.getMetadata())); }
+    {
+        return getMod().getItemName("cbm_" + moduleIDMap.get(is.getMetadata()));
+    }
 
     @Override
     @SideOnly(Side.CLIENT)

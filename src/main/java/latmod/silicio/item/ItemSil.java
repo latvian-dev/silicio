@@ -11,5 +11,7 @@ public class ItemSil extends ItemLM
 {
     @Override
     public LMMod getMod()
-    { return Silicio.mod; }
+    {
+        return Silicio.mod;
+    }
 }

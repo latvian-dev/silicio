@@ -17,17 +17,20 @@ public class ItemSilMaterials extends ItemMaterialsLM
 {
     public ItemSilMaterials()
     {
-        super();
         setCreativeTab(Silicio.tab);
     }
 
     @Override
     public LMMod getMod()
-    { return Silicio.mod; }
+    {
+        return Silicio.mod;
+    }
 
     @Override
     public String getFolder()
-    { return "materials"; }
+    {
+        return "materials";
+    }
 
     @Override
     public void onPostLoaded()

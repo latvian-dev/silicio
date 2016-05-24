@@ -13,6 +13,8 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
+import javax.annotation.Nonnull;
+
 public class BlockBlueGoo extends BlockSil
 {
     public BlockBlueGoo()
@@ -31,16 +33,23 @@ public class BlockBlueGoo extends BlockSil
 
     @Override
     public MapColor getMapColor(IBlockState state)
-    { return MapColor.LIGHT_BLUE; }
+    {
+        return MapColor.LIGHT_BLUE;
+    }
 
+    @Nonnull
     @Override
     @SideOnly(Side.CLIENT)
     public BlockRenderLayer getBlockLayer()
-    { return BlockRenderLayer.TRANSLUCENT; }
+    {
+        return BlockRenderLayer.TRANSLUCENT;
+    }
 
     @Override
     public boolean isOpaqueCube(IBlockState state)
-    { return false; }
+    {
+        return false;
+    }
 
     @Override
     public void onFallenUpon(World worldIn, BlockPos pos, Entity entityIn, float fallDistance)

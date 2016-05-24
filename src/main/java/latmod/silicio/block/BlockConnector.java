@@ -2,13 +2,13 @@ package latmod.silicio.block;
 
 import com.feed_the_beast.ftbl.api.item.ODItems;
 import com.feed_the_beast.ftbl.api.notification.Notification;
-import com.feed_the_beast.ftbl.util.BlockStateSerializer;
 import com.feed_the_beast.ftbl.util.FTBLib;
 import com.feed_the_beast.ftbl.util.MathHelperMC;
 import latmod.silicio.api.tile.ISilNetController;
 import latmod.silicio.api.tile.SilNetHelper;
 import latmod.silicio.item.SilItems;
 import latmod.silicio.tile.TileConnector;
+import net.minecraft.block.BlockDirectional;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyDirection;
 import net.minecraft.block.properties.PropertyEnum;
@@ -28,6 +28,8 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
+import javax.annotation.Nonnull;
+
 /**
  * Created by LatvianModder on 02.05.2016.
  */
@@ -39,6 +41,7 @@ public class BlockConnector extends BlockSil
     public BlockConnector()
     {
         super(Material.ROCK);
+        setDefaultState(blockState.getBaseState().withProperty(BlockDirectional.FACING, EnumFacing.NORTH));
     }
 
     @Override
@@ -55,52 +58,73 @@ public class BlockConnector extends BlockSil
 
     @Override
     public boolean hasTileEntity(IBlockState state)
-    { return true; }
+    {
+        return true;
+    }
 
     @Override
     public TileEntity createTileEntity(World w, IBlockState state)
-    { return new TileConnector(); }
+    {
+        return new TileConnector();
+    }
 
-    @Override
-    public String getModelState()
-    { return BlockStateSerializer.getString(FACING, EnumFacing.NORTH); }
-
+    @Nonnull
     @Override
     @SideOnly(Side.CLIENT)
     public BlockRenderLayer getBlockLayer()
-    { return BlockRenderLayer.SOLID; }
+    {
+        return BlockRenderLayer.SOLID;
+    }
 
     @Override
     public boolean isOpaqueCube(IBlockState state)
-    { return false; }
+    {
+        return false;
+    }
 
     @Override
     public IBlockState getStateFromMeta(int meta)
-    { return getDefaultState().withProperty(FACING, EnumFacing.VALUES[meta % 6]); }
+    {
+        return getDefaultState().withProperty(FACING, EnumFacing.VALUES[meta % 6]);
+    }
 
     @Override
     public int getMetaFromState(IBlockState state)
-    { return state.getValue(FACING).ordinal(); }
+    {
+        return state.getValue(FACING).ordinal();
+    }
 
     @Override
     protected BlockStateContainer createBlockState()
-    { return new BlockStateContainer(this, FACING); }
+    {
+        return new BlockStateContainer(this, FACING);
+    }
 
     @Override
     public int damageDropped(IBlockState state)
-    { return 0; }
+    {
+        return 0;
+    }
 
+    @Nonnull
     @Override
     public IBlockState onBlockPlaced(World worldIn, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer)
-    { return getDefaultState().withProperty(FACING, facing.getOpposite()); }
+    {
+        return getDefaultState().withProperty(FACING, facing.getOpposite());
+    }
 
+    @Nonnull
     @Override
     public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos)
-    { return BOXES[state.getValue(FACING).ordinal()]; }
+    {
+        return BOXES[state.getValue(FACING).ordinal()];
+    }
 
     @Override
     public boolean isFullCube(IBlockState state)
-    { return false; }
+    {
+        return false;
+    }
 
     @Override
     public void onBlockPlacedBy(World w, BlockPos pos, IBlockState state, EntityLivingBase el, ItemStack is)

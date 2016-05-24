@@ -16,10 +16,14 @@ public abstract class Module
     private byte flags = 0;
 
     protected void setFlag(byte flag, boolean b)
-    { flags = Bits.setBit(flags, flag, b); }
+    {
+        flags = Bits.setBit(flags, flag, b);
+    }
 
     public boolean getFlag(byte flag)
-    { return Bits.getBit(flags, flag); }
+    {
+        return Bits.getBit(flags, flag);
+    }
 
     public void init(ModuleContainer c)
     {

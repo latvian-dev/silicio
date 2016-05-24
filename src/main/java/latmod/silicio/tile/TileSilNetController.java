@@ -16,6 +16,7 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 
+import javax.annotation.Nonnull;
 import java.util.Collection;
 import java.util.HashSet;
 
@@ -40,7 +41,9 @@ public class TileSilNetController extends TileCBNetwork implements ISilNetContro
 
     @Override
     public EnumSync getSync()
-    { return EnumSync.RERENDER; }
+    {
+        return EnumSync.RERENDER;
+    }
 
     @Override
     public void readTileData(NBTTagCompound tag)
@@ -75,7 +78,7 @@ public class TileSilNetController extends TileCBNetwork implements ISilNetContro
     }
 
     @Override
-    public void writeTileClientData(NBTTagCompound tag)
+    public void writeTileClientData(@Nonnull NBTTagCompound tag)
     {
         super.writeTileClientData(tag);
         tag.setIntArray("S", LMListUtils.toHashCodeArray(signalList));
