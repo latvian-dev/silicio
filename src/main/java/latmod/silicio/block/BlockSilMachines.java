@@ -190,12 +190,14 @@ public class BlockSilMachines extends BlockSil
     }
 
     @Override
+    @Deprecated
     public IBlockState getStateFromMeta(int meta)
     {
         return getDefaultState().withProperty(VARIANT, EnumVariant.getVariantFromMeta(meta));
     }
 
     @Override
+    @Deprecated
     public MapColor getMapColor(IBlockState state)
     {
         return state.getValue(VARIANT).mapColor;
@@ -220,6 +222,7 @@ public class BlockSilMachines extends BlockSil
     }
 
     @Override
+    @Deprecated
     public boolean isOpaqueCube(IBlockState state)
     {
         return state.getValue(VARIANT).layer == BlockRenderLayer.SOLID;

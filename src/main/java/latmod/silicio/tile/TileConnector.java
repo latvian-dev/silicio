@@ -8,7 +8,7 @@ import java.util.Collection;
 /**
  * Created by LatvianModder on 18.05.2016.
  */
-public class TileConnector extends TileCBNetwork
+public class TileConnector extends TileSilNet
 {
     @Override
     public void provideSignals(ISilNetController c, Collection<SignalChannel> channels)

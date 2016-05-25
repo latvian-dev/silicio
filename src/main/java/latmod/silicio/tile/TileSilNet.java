@@ -13,7 +13,7 @@ import java.util.Collection;
 /**
  * Created by LatvianModder on 03.03.2016.
  */
-public class TileCBNetwork extends TileLM implements ISilNetTile
+public class TileSilNet extends TileLM implements ISilNetTile
 {
     @Override
     public boolean hasCapability(Capability<?> capability, EnumFacing facing)

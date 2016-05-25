@@ -19,7 +19,7 @@ import java.util.Map;
 /**
  * Created by LatvianModder on 04.03.2016.
  */
-public class TileModuleSocket extends TileCBNetwork
+public class TileModuleSocket extends TileSilNet
 {
     public final Map<EnumFacing, ModuleContainer> modules;
 

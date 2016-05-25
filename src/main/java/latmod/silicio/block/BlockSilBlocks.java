@@ -163,12 +163,14 @@ public class BlockSilBlocks extends BlockSil
     }
 
     @Override
+    @Deprecated
     public IBlockState getStateFromMeta(int meta)
     {
         return getDefaultState().withProperty(VARIANT, EnumVariant.getVariantFromMeta(meta));
     }
 
     @Override
+    @Deprecated
     public MapColor getMapColor(IBlockState state)
     {
         return state.getValue(VARIANT).mapColor;
@@ -193,12 +195,14 @@ public class BlockSilBlocks extends BlockSil
     }
 
     @Override
+    @Deprecated
     public boolean isOpaqueCube(IBlockState state)
     {
         return state.getValue(VARIANT).layer == BlockRenderLayer.SOLID;
     }
 
     @Override
+    @Deprecated
     public Material getMaterial(IBlockState state)
     {
         return state.getValue(VARIANT).material;
@@ -206,6 +210,7 @@ public class BlockSilBlocks extends BlockSil
 
     @Override
     @SideOnly(Side.CLIENT)
+    @Deprecated
     public boolean shouldSideBeRendered(IBlockState state, IBlockAccess worldIn, BlockPos pos, EnumFacing side)
     {
         if(state.getValue(VARIANT) == EnumVariant.SILICON_GLASS)

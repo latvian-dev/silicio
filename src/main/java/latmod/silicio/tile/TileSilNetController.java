@@ -23,7 +23,7 @@ import java.util.HashSet;
 /**
  * Created by LatvianModder on 05.03.2016.
  */
-public class TileSilNetController extends TileCBNetwork implements ISilNetController
+public class TileSilNetController extends TileSilNet implements ISilNetController
 {
     public final SilEnergyTank energyTank;
     private final Collection<SignalChannel> signalList;

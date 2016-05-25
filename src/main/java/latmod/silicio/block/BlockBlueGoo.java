@@ -32,6 +32,7 @@ public class BlockBlueGoo extends BlockSil
     }
 
     @Override
+    @Deprecated
     public MapColor getMapColor(IBlockState state)
     {
         return MapColor.LIGHT_BLUE;
@@ -46,6 +47,7 @@ public class BlockBlueGoo extends BlockSil
     }
 
     @Override
+    @Deprecated
     public boolean isOpaqueCube(IBlockState state)
     {
         return false;

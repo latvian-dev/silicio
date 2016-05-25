@@ -77,12 +77,14 @@ public class BlockConnector extends BlockSil
     }
 
     @Override
+    @Deprecated
     public boolean isOpaqueCube(IBlockState state)
     {
         return false;
     }
 
     @Override
+    @Deprecated
     public IBlockState getStateFromMeta(int meta)
     {
         return getDefaultState().withProperty(FACING, EnumFacing.VALUES[meta % 6]);
@@ -108,6 +110,7 @@ public class BlockConnector extends BlockSil
 
     @Nonnull
     @Override
+    @Deprecated
     public IBlockState onBlockPlaced(World worldIn, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer)
     {
         return getDefaultState().withProperty(FACING, facing.getOpposite());
@@ -115,12 +118,14 @@ public class BlockConnector extends BlockSil
 
     @Nonnull
     @Override
+    @Deprecated
     public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos)
     {
         return BOXES[state.getValue(FACING).ordinal()];
     }
 
     @Override
+    @Deprecated
     public boolean isFullCube(IBlockState state)
     {
         return false;

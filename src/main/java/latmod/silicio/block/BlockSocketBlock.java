@@ -23,7 +23,7 @@ import net.minecraft.world.World;
 /**
  * Created by LatvianModder on 04.03.2016.
  */
-public class BlockCBSocketBlock extends BlockSil
+public class BlockSocketBlock extends BlockSil
 {
     public static final PropertyBool MODULE_D = PropertyBool.create("down");
     public static final PropertyBool MODULE_U = PropertyBool.create("up");
@@ -33,7 +33,7 @@ public class BlockCBSocketBlock extends BlockSil
     public static final PropertyBool MODULE_E = PropertyBool.create("east");
     public static final PropertyBool CENTER = PropertyBool.create("center");
 
-    public BlockCBSocketBlock()
+    public BlockSocketBlock()
     {
         super(Material.IRON);
         setDefaultState(blockState.getBaseState().withProperty(MODULE_D, false).withProperty(MODULE_U, false).withProperty(MODULE_N, false).withProperty(MODULE_S, false).withProperty(MODULE_W, false).withProperty(MODULE_E, false).withProperty(CENTER, true));
@@ -64,6 +64,7 @@ public class BlockCBSocketBlock extends BlockSil
     }
 
     @Override
+    @Deprecated
     public IBlockState getStateFromMeta(int meta)
     {
         return getDefaultState();
@@ -82,6 +83,7 @@ public class BlockCBSocketBlock extends BlockSil
     }
 
     @Override
+    @Deprecated
     public IBlockState getActualState(IBlockState state, IBlockAccess w, BlockPos pos)
     {
         boolean modD = false, modU = false, modN = false, modS = false, modW = false, modE = false;

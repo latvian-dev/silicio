@@ -62,12 +62,14 @@ public class BlockTurret extends BlockSil
     }
 
     @Override
+    @Deprecated
     public boolean isOpaqueCube(IBlockState state)
     {
         return false;
     }
 
     @Override
+    @Deprecated
     public boolean isFullCube(IBlockState state)
     {
         return false;
@@ -80,6 +82,7 @@ public class BlockTurret extends BlockSil
     }
 
     @Override
+    @Deprecated
     public IBlockState getStateFromMeta(int meta)
     {
         return getDefaultState().withProperty(BlockDirectional.FACING, EnumFacing.VALUES[meta]);
@@ -93,6 +96,7 @@ public class BlockTurret extends BlockSil
 
     @Nonnull
     @Override
+    @Deprecated
     public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos)
     {
         return BOXES[state.getValue(BlockDirectional.FACING).ordinal()];
@@ -100,18 +104,21 @@ public class BlockTurret extends BlockSil
 
     @Nonnull
     @Override
+    @Deprecated
     public IBlockState onBlockPlaced(World worldIn, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer)
     {
         return getDefaultState().withProperty(BlockDirectional.FACING, facing.getOpposite());
     }
 
     @Override
+    @Deprecated
     public IBlockState withRotation(IBlockState state, Rotation rot)
     {
         return state.withProperty(BlockDirectional.FACING, rot.rotate(state.getValue(BlockDirectional.FACING)));
     }
 
     @Override
+    @Deprecated
     public IBlockState withMirror(IBlockState state, Mirror mirrorIn)
     {
         return state.withRotation(mirrorIn.toRotation(state.getValue(BlockDirectional.FACING)));
