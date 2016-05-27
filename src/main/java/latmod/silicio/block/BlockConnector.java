@@ -143,7 +143,7 @@ public class BlockConnector extends BlockSil
             if(link != null && el instanceof EntityPlayerMP)
             {
                 Notification n = new Notification("silicio:linked_with_cb", new TextComponentString("Linked with controller"), 3000);
-                n.desc = new TextComponentString(link.getTile().getPos().toString());
+                n.desc = new TextComponentString(((TileEntity) link).getPos().toString());
                 FTBLib.notifyPlayer((EntityPlayerMP) el, n);
             }
         }

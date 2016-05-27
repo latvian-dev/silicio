@@ -116,7 +116,7 @@ public class BlockSocketBlock extends BlockSil
             {
                 Notification n = new Notification("silicio:linked_with_cb");
                 n.title = new TextComponentString("Linked with controller");
-                n.desc = new TextComponentString(link.getTile().getPos().toString());
+                n.desc = new TextComponentString(((TileEntity) link).getPos().toString());
                 FTBLib.notifyPlayer((EntityPlayerMP) el, n);
             }
         }
