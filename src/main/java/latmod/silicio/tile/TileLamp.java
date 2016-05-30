@@ -35,7 +35,7 @@ public class TileLamp extends TileSilNet
     @Override
     public void onUpdate()
     {
-        if(worldObj.getTotalWorldTime() % 20L == 0L)
+        if((worldObj.getTotalWorldTime() + pos.hashCode()) % 20L == 0L)
         {
             enabled = !enabled;
             markDirty();
