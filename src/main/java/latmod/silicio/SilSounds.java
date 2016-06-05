@@ -15,7 +15,7 @@ public class SilSounds
 
     private static SoundEvent register(String name)
     {
-        ResourceLocation rl = new ResourceLocation("silicio", name);
+        ResourceLocation rl = new ResourceLocation(Silicio.MOD_ID, name);
         SoundEvent event = new SoundEvent(rl);
         event.setRegistryName(rl);
         return GameRegistry.register(event);

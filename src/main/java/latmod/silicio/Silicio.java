@@ -15,7 +15,7 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 //;required-after:mcmultipart
 public class Silicio
 {
-    protected static final String MOD_ID = "silicio";
+    public static final String MOD_ID = "silicio";
 
     @Mod.Instance(MOD_ID)
     public static Silicio inst;

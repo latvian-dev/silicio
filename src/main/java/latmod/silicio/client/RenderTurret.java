@@ -2,6 +2,7 @@ package latmod.silicio.client;
 
 import com.feed_the_beast.ftbl.api.client.FTBLibClient;
 import latmod.lib.MathHelperLM;
+import latmod.silicio.Silicio;
 import latmod.silicio.tile.TileTurret;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
@@ -18,7 +19,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 @SideOnly(Side.CLIENT)
 public class RenderTurret extends TileEntitySpecialRenderer<TileTurret>
 {
-    public static final ResourceLocation TEXTURE = new ResourceLocation("silicio", "textures/tile/turret_beam.png");
+    public static final ResourceLocation TEXTURE = new ResourceLocation(Silicio.MOD_ID, "textures/tile/turret_beam.png");
 
     @Override
     public void renderTileEntityAt(TileTurret te, double x, double y, double z, float partialTicks, int destroyStage)
