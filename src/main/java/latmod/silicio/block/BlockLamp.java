@@ -22,6 +22,7 @@ import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
+import javax.annotation.Nonnull;
 import java.util.List;
 
 /**
@@ -59,8 +60,9 @@ public class BlockLamp extends BlockSil
         return true;
     }
 
+    @Nonnull
     @Override
-    public TileEntity createTileEntity(World w, IBlockState state)
+    public TileEntity createTileEntity(@Nonnull World w, @Nonnull IBlockState state)
     {
         return new TileLamp();
     }
@@ -72,7 +74,7 @@ public class BlockLamp extends BlockSil
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void getSubBlocks(Item itemIn, CreativeTabs tab, List<ItemStack> list)
+    public void getSubBlocks(@Nonnull Item itemIn, CreativeTabs tab, List<ItemStack> list)
     {
         for(EnumDyeColor color : COLOR.getAllowedValues())
         {
@@ -86,12 +88,14 @@ public class BlockLamp extends BlockSil
     {
     }
 
+    @Nonnull
     @Override
     protected BlockStateContainer createBlockState()
     {
         return new BlockStateContainer(this, COLOR, ON);
     }
 
+    @Nonnull
     @Override
     @Deprecated
     public IBlockState getStateFromMeta(int meta)
@@ -105,9 +109,10 @@ public class BlockLamp extends BlockSil
         return state.getValue(COLOR).getMetadata();
     }
 
+    @Nonnull
     @Override
     @Deprecated
-    public IBlockState getActualState(IBlockState state, IBlockAccess worldIn, BlockPos pos)
+    public IBlockState getActualState(@Nonnull IBlockState state, IBlockAccess worldIn, BlockPos pos)
     {
         TileEntity te = worldIn.getTileEntity(pos);
         boolean enabled = false;

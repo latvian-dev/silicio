@@ -1,6 +1,5 @@
 package latmod.silicio.api.modules;
 
-import latmod.lib.LMUtils;
 import latmod.silicio.api.SignalChannel;
 import latmod.silicio.api.SilCapabilities;
 import latmod.silicio.tile.TileModuleSocket;
@@ -9,12 +8,14 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 
+import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.HashMap;
 import java.util.Map;
 
 /**
  * Created by LatvianModder on 04.03.2016.
  */
+@ParametersAreNonnullByDefault
 public final class ModuleContainer
 {
     public final TileEntity tile;
@@ -27,10 +28,10 @@ public final class ModuleContainer
 
     public ModuleContainer(TileEntity t, EnumFacing f, ItemStack is, Module m)
     {
-        tile = LMUtils.nonNull(t);
+        tile = t;
         facing = f;
-        item = LMUtils.nonNull(is);
-        module = LMUtils.nonNull(m);
+        item = is;
+        module = m;
         connections = new HashMap<>();
     }
 
@@ -38,24 +39,18 @@ public final class ModuleContainer
     {
         ItemStack item = ItemStack.loadItemStackFromNBT(tag.getCompoundTag("Item"));
 
-        if(item == null || !item.hasCapability(SilCapabilities.MODULE, null))
+        if(item.hasCapability(SilCapabilities.MODULE, null))
         {
-            return null;
+            Module module = item.getCapability(SilCapabilities.MODULE, null);
+            EnumFacing facing = EnumFacing.VALUES[tag.getByte("Side")];
+
+            ModuleContainer c = new ModuleContainer(tile, facing, item, module);
+            c.tick = tag.getLong("Tick");
+            c.data = tag.hasKey("Data") ? tag.getCompoundTag("Data") : null;
+            return c;
         }
 
-        Module module = item.getCapability(SilCapabilities.MODULE, null);
-
-        if(module == null)
-        {
-            return null;
-        }
-
-        EnumFacing facing = EnumFacing.VALUES[tag.getByte("Side")];
-
-        ModuleContainer c = new ModuleContainer(tile, facing, item, module);
-        c.tick = tag.getLong("Tick");
-        c.data = tag.hasKey("Data") ? tag.getCompoundTag("Data") : null;
-        return c;
+        return null;
     }
 
     public void writeToNBT(NBTTagCompound tag)

@@ -1,7 +1,7 @@
 package latmod.silicio.tile;
 
 import com.feed_the_beast.ftbl.util.FTBLib;
-import latmod.lib.LMListUtils;
+import latmod.lib.util.LMListUtils;
 import latmod.silicio.api.SignalChannel;
 import latmod.silicio.api.tile.ISilNetController;
 import latmod.silicio.api.tile.energy.SilEnergyTank;
@@ -46,7 +46,7 @@ public class TileSilNetController extends TileSilNet implements ISilNetControlle
     }
 
     @Override
-    public void readTileData(NBTTagCompound tag)
+    public void readTileData(@Nonnull NBTTagCompound tag)
     {
         super.readTileData(tag);
         signalList.clear();
@@ -58,14 +58,14 @@ public class TileSilNetController extends TileSilNet implements ISilNetControlle
     }
 
     @Override
-    public void writeTileData(NBTTagCompound tag)
+    public void writeTileData(@Nonnull NBTTagCompound tag)
     {
         super.writeTileData(tag);
         tag.setIntArray("Signals", LMListUtils.toHashCodeArray(signalList));
     }
 
     @Override
-    public void readTileClientData(NBTTagCompound tag)
+    public void readTileClientData(@Nonnull NBTTagCompound tag)
     {
         super.readTileClientData(tag);
 
@@ -93,7 +93,7 @@ public class TileSilNetController extends TileSilNet implements ISilNetControlle
     }
 
     @Override
-    public boolean onRightClick(EntityPlayer ep, ItemStack is, EnumFacing side, EnumHand hand, float x, float y, float z)
+    public boolean onRightClick(@Nonnull EntityPlayer ep, @Nonnull ItemStack is, @Nonnull EnumFacing side, @Nonnull EnumHand hand, float x, float y, float z)
     {
         if(getSide().isServer())
         {

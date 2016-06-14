@@ -13,6 +13,7 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraftforge.common.util.Constants;
 
+import javax.annotation.Nonnull;
 import java.util.EnumMap;
 import java.util.Map;
 
@@ -35,7 +36,7 @@ public class TileModuleSocket extends TileSilNet
     }
 
     @Override
-    public void readTileData(NBTTagCompound tag)
+    public void readTileData(@Nonnull NBTTagCompound tag)
     {
         super.readTileData(tag);
 
@@ -56,7 +57,7 @@ public class TileModuleSocket extends TileSilNet
     }
 
     @Override
-    public void writeTileData(NBTTagCompound tag)
+    public void writeTileData(@Nonnull NBTTagCompound tag)
     {
         super.writeTileData(tag);
 
@@ -73,7 +74,7 @@ public class TileModuleSocket extends TileSilNet
     }
 
     @Override
-    public boolean onRightClick(EntityPlayer ep, ItemStack is, EnumFacing side, EnumHand hand, float x, float y, float z)
+    public boolean onRightClick(@Nonnull EntityPlayer ep, @Nonnull ItemStack is, @Nonnull EnumFacing side, @Nonnull EnumHand hand, float x, float y, float z)
     {
         ModuleContainer c = modules.get(side);
 

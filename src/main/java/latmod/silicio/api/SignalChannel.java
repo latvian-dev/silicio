@@ -1,6 +1,6 @@
 package latmod.silicio.api;
 
-import latmod.lib.LMColorUtils;
+import latmod.lib.util.LMColorUtils;
 
 /**
  * Created by LatvianModder on 18.05.2016.
@@ -43,11 +43,7 @@ public class SignalChannel
             return false;
         }
         int h = 0xFFFFFF & o.hashCode();
-        if(h != 0x000000)
-        {
-            return false;
-        }
-        return h == ID;
+        return h == 0x000000 && h == ID;
     }
 
     @Override

@@ -13,6 +13,8 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
+import javax.annotation.Nonnull;
+
 public class BlockAntimatterCarpet extends BlockSil
 {
     public static final AxisAlignedBB AABB = new AxisAlignedBB(0D, 0D, 0D, 1D, 1D / 16D, 1D);
@@ -37,6 +39,7 @@ public class BlockAntimatterCarpet extends BlockSil
         getMod().recipes.addRecipe(SilItems.ANTIMATTER.getStack(4), "AAA", "AAA", 'A', this);
     }
 
+    @Nonnull
     @Override
     @Deprecated
     public EnumBlockRenderType getRenderType(IBlockState state)
@@ -50,8 +53,9 @@ public class BlockAntimatterCarpet extends BlockSil
         return true;
     }
 
+    @Nonnull
     @Override
-    public TileEntity createTileEntity(World w, IBlockState state)
+    public TileEntity createTileEntity(@Nonnull World w, @Nonnull IBlockState state)
     {
         return new TileAntimatter();
     }
@@ -70,6 +74,7 @@ public class BlockAntimatterCarpet extends BlockSil
         return false;
     }
 
+    @Nonnull
     @Override
     @Deprecated
     public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos)

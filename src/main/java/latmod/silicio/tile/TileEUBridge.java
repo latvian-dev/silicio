@@ -7,6 +7,8 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 import net.minecraftforge.common.capabilities.Capability;
 
+import javax.annotation.Nonnull;
+
 /**
  * Created by LatvianModder on 01.05.2016.
  */
@@ -20,19 +22,19 @@ public class TileEUBridge extends TileLM
     }
 
     @Override
-    public void writeTileData(NBTTagCompound tag)
+    public void writeTileData(@Nonnull NBTTagCompound tag)
     {
         tag.setDouble("SilEnergy", energyTank.getEnergy());
     }
 
     @Override
-    public void readTileData(NBTTagCompound tag)
+    public void readTileData(@Nonnull NBTTagCompound tag)
     {
         energyTank.setEnergy(tag.getDouble("SilEnergy"));
     }
 
     @Override
-    public boolean hasCapability(Capability<?> capability, EnumFacing facing)
+    public boolean hasCapability(@Nonnull Capability<?> capability, @Nonnull EnumFacing facing)
     {
         if(capability == SilCapabilities.ENERGY_TANK)
         {
@@ -42,8 +44,9 @@ public class TileEUBridge extends TileLM
         return super.hasCapability(capability, facing);
     }
 
+    @Nonnull
     @Override
-    public <T> T getCapability(Capability<T> capability, EnumFacing facing)
+    public <T> T getCapability(@Nonnull Capability<T> capability, @Nonnull EnumFacing facing)
     {
         if(capability == SilCapabilities.ENERGY_TANK)
         {

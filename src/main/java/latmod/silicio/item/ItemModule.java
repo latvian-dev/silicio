@@ -18,6 +18,7 @@ import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
+import javax.annotation.Nonnull;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -48,6 +49,7 @@ public class ItemModule extends ItemSil
         moduleIDMap.put(i, id);
     }
 
+    @Nonnull
     @Override
     public ICapabilityProvider initCapabilities(final ItemStack stack, final NBTTagCompound nbt)
     {
@@ -84,7 +86,7 @@ public class ItemModule extends ItemSil
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void getSubItems(Item itemIn, CreativeTabs tab, List<ItemStack> subItems)
+    public void getSubItems(@Nonnull Item itemIn, CreativeTabs tab, List<ItemStack> subItems)
     {
         for(Integer i : moduleMap.keySet())
         {
@@ -97,6 +99,7 @@ public class ItemModule extends ItemSil
     {
     }
 
+    @Nonnull
     @Override
     public String getUnlocalizedName(ItemStack is)
     {

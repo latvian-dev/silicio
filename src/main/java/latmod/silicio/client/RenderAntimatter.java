@@ -13,6 +13,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
+import javax.annotation.Nonnull;
 import java.nio.FloatBuffer;
 import java.util.Random;
 
@@ -37,7 +38,7 @@ public class RenderAntimatter extends TileEntitySpecialRenderer<TileAntimatter>
     }
 
     @Override
-    public void renderTileEntityAt(TileAntimatter te, double x, double y, double z, float partialTicks, int destroyStage)
+    public void renderTileEntityAt(@Nonnull TileAntimatter te, double x, double y, double z, float partialTicks, int destroyStage)
     {
         //TODO: Check config
 
@@ -52,7 +53,6 @@ public class RenderAntimatter extends TileEntitySpecialRenderer<TileAntimatter>
 
         double posX = ActiveRenderInfo.getPosition().xCoord;
         double posY = ActiveRenderInfo.getPosition().yCoord;
-        double posZ = ActiveRenderInfo.getPosition().zCoord;
         float time = (float) (Minecraft.getSystemTime() % 200000L) / 200000F;
 
         random.setSeed(31100L);

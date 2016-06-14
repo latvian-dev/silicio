@@ -8,6 +8,7 @@ import latmod.silicio.api.tile.ISilNetTile;
 import net.minecraft.util.EnumFacing;
 import net.minecraftforge.common.capabilities.Capability;
 
+import javax.annotation.Nonnull;
 import java.util.Collection;
 
 /**
@@ -16,7 +17,7 @@ import java.util.Collection;
 public class TileSilNet extends TileLM implements ISilNetTile
 {
     @Override
-    public boolean hasCapability(Capability<?> capability, EnumFacing facing)
+    public boolean hasCapability(@Nonnull Capability<?> capability, @Nonnull EnumFacing facing)
     {
         if(capability == SilCapabilities.SILNET_TILE)
         {
@@ -26,8 +27,9 @@ public class TileSilNet extends TileLM implements ISilNetTile
         return super.hasCapability(capability, facing);
     }
 
+    @Nonnull
     @Override
-    public <T> T getCapability(Capability<T> capability, EnumFacing facing)
+    public <T> T getCapability(@Nonnull Capability<T> capability, @Nonnull EnumFacing facing)
     {
         if(capability == SilCapabilities.SILNET_TILE)
         {

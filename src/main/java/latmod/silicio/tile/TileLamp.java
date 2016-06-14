@@ -4,6 +4,8 @@ import latmod.silicio.api.SignalChannel;
 import latmod.silicio.api.tile.ISilNetController;
 import net.minecraft.nbt.NBTTagCompound;
 
+import javax.annotation.Nonnull;
+
 /**
  * Created by LatvianModder on 03.03.2016.
  */
@@ -12,7 +14,7 @@ public class TileLamp extends TileSilNet
     public boolean enabled;
 
     @Override
-    public void writeTileClientData(NBTTagCompound tag)
+    public void writeTileClientData(@Nonnull NBTTagCompound tag)
     {
         if(enabled)
         {
@@ -21,7 +23,7 @@ public class TileLamp extends TileSilNet
     }
 
     @Override
-    public void readTileClientData(NBTTagCompound tag)
+    public void readTileClientData(@Nonnull NBTTagCompound tag)
     {
         enabled = tag.hasKey("E");
     }

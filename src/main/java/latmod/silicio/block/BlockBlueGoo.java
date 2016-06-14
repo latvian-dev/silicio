@@ -31,6 +31,7 @@ public class BlockBlueGoo extends BlockSil
         getMod().recipes.addShapelessRecipe(SilItems.BLUE_GOO.getStack(9), this);
     }
 
+    @Nonnull
     @Override
     @Deprecated
     public MapColor getMapColor(IBlockState state)

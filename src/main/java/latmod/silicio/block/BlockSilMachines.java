@@ -81,6 +81,7 @@ public class BlockSilMachines extends BlockSil
 
         // Static //
 
+        @Nonnull
         @Override
         public String getName()
         {
@@ -100,6 +101,7 @@ public class BlockSilMachines extends BlockSil
             super(b);
         }
 
+        @Nonnull
         @Override
         public String getUnlocalizedName(ItemStack stack)
         {
@@ -153,8 +155,9 @@ public class BlockSilMachines extends BlockSil
         return true;
     }
 
+    @Nonnull
     @Override
-    public TileEntity createTileEntity(World w, IBlockState state)
+    public TileEntity createTileEntity(@Nonnull World w, @Nonnull IBlockState state)
     {
         switch(state.getValue(VARIANT))
         {
@@ -189,6 +192,7 @@ public class BlockSilMachines extends BlockSil
         return state.getValue(VARIANT).meta;
     }
 
+    @Nonnull
     @Override
     @Deprecated
     public IBlockState getStateFromMeta(int meta)
@@ -196,6 +200,7 @@ public class BlockSilMachines extends BlockSil
         return getDefaultState().withProperty(VARIANT, EnumVariant.getVariantFromMeta(meta));
     }
 
+    @Nonnull
     @Override
     @Deprecated
     public MapColor getMapColor(IBlockState state)
@@ -209,6 +214,7 @@ public class BlockSilMachines extends BlockSil
         return state.getValue(VARIANT).meta;
     }
 
+    @Nonnull
     @Override
     protected BlockStateContainer createBlockState()
     {
@@ -216,7 +222,7 @@ public class BlockSilMachines extends BlockSil
     }
 
     @Override
-    public boolean canRenderInLayer(IBlockState state, BlockRenderLayer layer)
+    public boolean canRenderInLayer(IBlockState state, @Nonnull BlockRenderLayer layer)
     {
         return layer == state.getValue(VARIANT).layer;
     }

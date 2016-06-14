@@ -79,7 +79,7 @@ public class TileTurret extends TileLM
         double x = pos.getX() + 0.5D;
         double y = pos.getY() + 0.5D;
         double z = pos.getZ() + 0.5D;
-        double distSq = 0D;
+        double distSq;
         double prevDistSq = 0D;
 
         for(Entity e : worldObj.getEntitiesWithinAABB(EntityLivingBase.class, scanArea))

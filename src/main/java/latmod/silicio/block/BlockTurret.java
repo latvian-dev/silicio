@@ -44,8 +44,9 @@ public class BlockTurret extends BlockSil
         return true;
     }
 
+    @Nonnull
     @Override
-    public TileEntity createTileEntity(World w, IBlockState state)
+    public TileEntity createTileEntity(@Nonnull World w, @Nonnull IBlockState state)
     {
         return new TileTurret();
     }
@@ -75,12 +76,14 @@ public class BlockTurret extends BlockSil
         return false;
     }
 
+    @Nonnull
     @Override
     protected BlockStateContainer createBlockState()
     {
         return new BlockStateContainer(this, BlockDirectional.FACING);
     }
 
+    @Nonnull
     @Override
     @Deprecated
     public IBlockState getStateFromMeta(int meta)
@@ -110,16 +113,18 @@ public class BlockTurret extends BlockSil
         return getDefaultState().withProperty(BlockDirectional.FACING, facing.getOpposite());
     }
 
+    @Nonnull
     @Override
     @Deprecated
-    public IBlockState withRotation(IBlockState state, Rotation rot)
+    public IBlockState withRotation(@Nonnull IBlockState state, Rotation rot)
     {
         return state.withProperty(BlockDirectional.FACING, rot.rotate(state.getValue(BlockDirectional.FACING)));
     }
 
+    @Nonnull
     @Override
     @Deprecated
-    public IBlockState withMirror(IBlockState state, Mirror mirrorIn)
+    public IBlockState withMirror(@Nonnull IBlockState state, Mirror mirrorIn)
     {
         return state.withRotation(mirrorIn.toRotation(state.getValue(BlockDirectional.FACING)));
     }

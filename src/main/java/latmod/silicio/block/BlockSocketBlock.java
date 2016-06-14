@@ -20,6 +20,8 @@ import net.minecraft.util.text.TextComponentString;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
+import javax.annotation.Nonnull;
+
 /**
  * Created by LatvianModder on 04.03.2016.
  */
@@ -57,12 +59,14 @@ public class BlockSocketBlock extends BlockSil
         return true;
     }
 
+    @Nonnull
     @Override
-    public TileEntity createTileEntity(World w, IBlockState state)
+    public TileEntity createTileEntity(@Nonnull World w, @Nonnull IBlockState state)
     {
         return new TileModuleSocket();
     }
 
+    @Nonnull
     @Override
     @Deprecated
     public IBlockState getStateFromMeta(int meta)
@@ -76,15 +80,17 @@ public class BlockSocketBlock extends BlockSil
         return 0;
     }
 
+    @Nonnull
     @Override
     protected BlockStateContainer createBlockState()
     {
         return new BlockStateContainer(this, MODULE_D, MODULE_U, MODULE_N, MODULE_S, MODULE_W, MODULE_E, CENTER);
     }
 
+    @Nonnull
     @Override
     @Deprecated
-    public IBlockState getActualState(IBlockState state, IBlockAccess w, BlockPos pos)
+    public IBlockState getActualState(@Nonnull IBlockState state, IBlockAccess w, BlockPos pos)
     {
         boolean modD = false, modU = false, modN = false, modS = false, modW = false, modE = false;
 
@@ -115,9 +121,9 @@ public class BlockSocketBlock extends BlockSil
             if(link != null && el instanceof EntityPlayerMP)
             {
                 Notification n = new Notification("silicio:linked_with_cb");
-                n.title = new TextComponentString("Linked with controller");
-                n.desc = new TextComponentString(((TileEntity) link).getPos().toString());
-                FTBLib.notifyPlayer((EntityPlayerMP) el, n);
+                n.addText(new TextComponentString("Linked with controller"));
+                n.addText(new TextComponentString(((TileEntity) link).getPos().toString()));
+                n.sendTo((EntityPlayerMP) el);
             }
         }
     }

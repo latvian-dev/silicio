@@ -1,7 +1,7 @@
 package latmod.silicio.client;
 
 import com.feed_the_beast.ftbl.api.client.FTBLibClient;
-import latmod.lib.MathHelperLM;
+import latmod.lib.math.MathHelperLM;
 import latmod.silicio.Silicio;
 import latmod.silicio.tile.TileTurret;
 import net.minecraft.client.renderer.GlStateManager;
@@ -13,6 +13,8 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
+import javax.annotation.Nonnull;
+
 /**
  * Created by LatvianModder on 08.03.2016.
  */
@@ -22,7 +24,7 @@ public class RenderTurret extends TileEntitySpecialRenderer<TileTurret>
     public static final ResourceLocation TEXTURE = new ResourceLocation(Silicio.MOD_ID, "textures/tile/turret_beam.png");
 
     @Override
-    public void renderTileEntityAt(TileTurret te, double x, double y, double z, float partialTicks, int destroyStage)
+    public void renderTileEntityAt(@Nonnull TileTurret te, double x, double y, double z, float partialTicks, int destroyStage)
     {
         if(te.target == null || te.target.isDead/* || te.getWorld().getTotalWorldTime() % 3 != 0*/)
         {
@@ -33,9 +35,9 @@ public class RenderTurret extends TileEntitySpecialRenderer<TileTurret>
         double startX = x + 0.5D;
         double startY = y + 0.5D;
         double startZ = z + 0.5D;
-        double endX = x + (te.target.posX - te.getPos().getX()) + MathHelperLM.randomDouble(MathHelperLM.rand, -s, s);
-        double endY = y + (te.target.posY - te.getPos().getY()) + te.target.getEyeHeight() * MathHelperLM.rand.nextFloat();
-        double endZ = z + (te.target.posZ - te.getPos().getZ()) + MathHelperLM.randomDouble(MathHelperLM.rand, -s, s);
+        double endX = x + (te.target.posX - te.getPos().getX()) + MathHelperLM.randomDouble(MathHelperLM.RAND, -s, s);
+        double endY = y + (te.target.posY - te.getPos().getY()) + te.target.getEyeHeight() * MathHelperLM.RAND.nextFloat();
+        double endZ = z + (te.target.posZ - te.getPos().getZ()) + MathHelperLM.randomDouble(MathHelperLM.RAND, -s, s);
 
         GlStateManager.enableTexture2D();
         GlStateManager.disableLighting();

@@ -62,8 +62,9 @@ public class BlockConnector extends BlockSil
         return true;
     }
 
+    @Nonnull
     @Override
-    public TileEntity createTileEntity(World w, IBlockState state)
+    public TileEntity createTileEntity(@Nonnull World w, @Nonnull IBlockState state)
     {
         return new TileConnector();
     }
@@ -83,6 +84,7 @@ public class BlockConnector extends BlockSil
         return false;
     }
 
+    @Nonnull
     @Override
     @Deprecated
     public IBlockState getStateFromMeta(int meta)
@@ -96,6 +98,7 @@ public class BlockConnector extends BlockSil
         return state.getValue(FACING).ordinal();
     }
 
+    @Nonnull
     @Override
     protected BlockStateContainer createBlockState()
     {
@@ -142,9 +145,11 @@ public class BlockConnector extends BlockSil
 
             if(link != null && el instanceof EntityPlayerMP)
             {
-                Notification n = new Notification("silicio:linked_with_cb", new TextComponentString("Linked with controller"), 3000);
-                n.desc = new TextComponentString(((TileEntity) link).getPos().toString());
-                FTBLib.notifyPlayer((EntityPlayerMP) el, n);
+                Notification n = new Notification("silicio:linked_with_cb");
+                n.addText(new TextComponentString("Linked with controller"));
+                n.addText(new TextComponentString(((TileEntity) link).getPos().toString()));
+                n.setTimer(3000);
+                n.sendTo((EntityPlayerMP) el);
             }
         }
     }
