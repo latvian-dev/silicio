@@ -1,6 +1,6 @@
 package latmod.silicio.api.modules;
 
-import latmod.lib.io.Bits;
+import com.latmod.lib.io.Bits;
 import latmod.silicio.api.SignalChannel;
 import net.minecraft.entity.player.EntityPlayerMP;
 

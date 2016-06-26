@@ -1,7 +1,7 @@
 package latmod.silicio.client;
 
 import com.feed_the_beast.ftbl.api.client.FTBLibClient;
-import latmod.lib.math.MathHelperLM;
+import com.latmod.lib.math.MathHelperLM;
 import latmod.silicio.Silicio;
 import latmod.silicio.tile.TileTurret;
 import net.minecraft.client.renderer.GlStateManager;

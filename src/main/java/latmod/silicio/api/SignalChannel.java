@@ -1,6 +1,6 @@
 package latmod.silicio.api;
 
-import latmod.lib.util.LMColorUtils;
+import com.latmod.lib.util.LMColorUtils;
 
 /**
  * Created by LatvianModder on 18.05.2016.

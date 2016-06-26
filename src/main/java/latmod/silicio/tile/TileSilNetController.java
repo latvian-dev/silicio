@@ -1,7 +1,7 @@
 package latmod.silicio.tile;
 
 import com.feed_the_beast.ftbl.util.FTBLib;
-import latmod.lib.util.LMListUtils;
+import com.latmod.lib.util.LMListUtils;
 import latmod.silicio.api.SignalChannel;
 import latmod.silicio.api.tile.ISilNetController;
 import latmod.silicio.api.tile.energy.SilEnergyTank;
