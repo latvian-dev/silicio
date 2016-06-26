@@ -20,7 +20,7 @@ public class Silicio
     @Mod.Instance(MOD_ID)
     public static Silicio inst;
 
-    @SidedProxy(clientSide = "latmod.silicio.client.SilClient", serverSide = "latmod.silicio.SilCommon")
+    @SidedProxy(clientSide = "com.latmod.silicio.client.SilClient", serverSide = "com.latmod.silicio.SilCommon")
     public static SilCommon proxy;
 
     public static LMMod mod;
