@@ -6,16 +6,8 @@
   },
   "variants": {
     "variant": {
-      "dense_silicon": {
-        "textures": {
-          "all": "silicio:blocks/dense_silicon"
-        }
-      },
-      "elemite": {
-        "textures": {
-          "all": "silicio:blocks/elemite"
-        }
-      },
+      "dense_silicon": {"textures": {"all": "silicio:blocks/dense_silicon"}},
+      "elemite": {"textures": {"all": "silicio:blocks/elemite"}},
       "silicon_frame": {
         "model": "silicio:silicon_frame",
         "textures": {
@@ -25,15 +17,9 @@
       },
       "silicon_block": {
         "model": "silicio:silicon_block",
-        "textures": {
-          "all": "silicio:blocks/silicon_block"
-        }
+        "textures": {"all": "silicio:blocks/silicon_block"}
       },
-      "silicon_glass": {
-        "textures": {
-          "all": "silicio:blocks/silicon_glass"
-        }
-      }
+      "silicon_glass": {"textures": {"all": "silicio:blocks/silicon_glass"}}
     }
   }
 }

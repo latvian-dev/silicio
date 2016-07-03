@@ -11,5 +11,16 @@
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module" module-name="FTBLib" />
     <orderEntry type="module" module-name="ProjMC_9" />
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../../ProjMC_9/run/mods/dev/Tesla-1.9.4-1.1.0.24-deobf.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES>
+          <root url="jar://$MODULE_DIR$/../../../ProjMC_9/run/mods/dev/Tesla-1.9.4-1.1.0.24-sources.jar!/" />
+        </SOURCES>
+      </library>
+    </orderEntry>
   </component>
 </module>

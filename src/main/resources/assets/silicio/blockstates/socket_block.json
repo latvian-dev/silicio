@@ -13,82 +13,49 @@
   "variants": {
     "center": {
       "true": {
-        "submodel": {
-          "center": {
-            "model": "silicio:socket_center"
-          }
-        }
+        "submodel": {"center": {"model": "silicio:socket_center"}}
       },
       "false": {
       }
     },
     "up": {
       "true": {
-        "submodel": {
-          "up": {
-            "model": "silicio:socket_plate",
-            "x": 90
-          }
-        }
+        "submodel": {"up": {"model": "silicio:socket_plate", "x": 90}}
       },
       "false": {
       }
     },
     "down": {
       "true": {
-        "submodel": {
-          "down": {
-            "model": "silicio:socket_plate",
-            "x": 270
-          }
-        }
+        "submodel": {"down": {"model": "silicio:socket_plate", "x": 270}}
       },
       "false": {
       }
     },
     "north": {
       "true": {
-        "submodel": {
-          "north": {
-            "model": "silicio:socket_plate",
-            "y": 180
-          }
-        }
+        "submodel": {"north": {"model": "silicio:socket_plate", "y": 180}}
       },
       "false": {
       }
     },
     "south": {
       "true": {
-        "submodel": {
-          "south": {
-            "model": "silicio:socket_plate"
-          }
-        }
+        "submodel": {"south": {"model": "silicio:socket_plate"}}
       },
       "false": {
       }
     },
     "west": {
       "true": {
-        "submodel": {
-          "west": {
-            "model": "silicio:socket_plate",
-            "y": 90
-          }
-        }
+        "submodel": {"west": {"model": "silicio:socket_plate", "y": 90}}
       },
       "false": {
       }
     },
     "east": {
       "true": {
-        "submodel": {
-          "east": {
-            "model": "silicio:socket_plate",
-            "y": 270
-          }
-        }
+        "submodel": {"east": {"model": "silicio:socket_plate", "y": 270}}
       },
       "false": {
       }

@@ -1,8 +1,11 @@
 package com.latmod.silicio.block;
 
+import com.feed_the_beast.ftbl.api.item.ODItems;
 import com.feed_the_beast.ftbl.util.BlockStateSerializer;
 import com.feed_the_beast.ftbl.util.FTBLib;
+import com.latmod.silicio.item.SilItems;
 import com.latmod.silicio.tile.TileLamp;
+import net.minecraft.block.material.MapColor;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyBool;
 import net.minecraft.block.properties.PropertyEnum;
@@ -11,12 +14,10 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.EnumDyeColor;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.IBlockAccess;
+import net.minecraft.util.IStringSerializable;
 import net.minecraft.world.World;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.fml.relauncher.Side;
@@ -31,27 +32,49 @@ import java.util.List;
 public class BlockLamp extends BlockSil
 {
     public static final PropertyBool ON = PropertyBool.create("on");
-    public static final PropertyEnum<EnumDyeColor> COLOR = PropertyEnum.create("color", EnumDyeColor.class, EnumDyeColor.BLUE, EnumDyeColor.CYAN, EnumDyeColor.GREEN, EnumDyeColor.MAGENTA, EnumDyeColor.ORANGE, EnumDyeColor.PINK, EnumDyeColor.PURPLE, EnumDyeColor.RED, EnumDyeColor.YELLOW);
+    public static final PropertyEnum<EnumLampColor> COLOR = PropertyEnum.create("color", EnumLampColor.class);
+
+    public enum EnumLampColor implements IStringSerializable
+    {
+        BLUE("dyeBlue", MapColor.BLUE),
+        CYAN("dyeCyan", MapColor.CYAN),
+        GREEN("dyeGreen", MapColor.GREEN),
+        YELLOW("dyeYellow", MapColor.YELLOW),
+        ORANGE("dyeOrange", MapColor.ADOBE),
+        RED("dyeRed", MapColor.RED),
+        PINK("dyePink", MapColor.PINK),
+        PURPLE("dyePurple", MapColor.PURPLE);
+
+        public static final EnumLampColor[] VALUES = values();
+
+        public final String name;
+        public final String dyeName;
+        public final MapColor mapColor;
+
+        EnumLampColor(String dye, MapColor m)
+        {
+            name = name().toLowerCase();
+            dyeName = dye;
+            mapColor = m;
+        }
+
+        @Override
+        public String getName()
+        {
+            return name;
+        }
+    }
 
     public BlockLamp()
     {
         super(Material.IRON);
-        setDefaultState(blockState.getBaseState().withProperty(COLOR, EnumDyeColor.BLUE));
+        setDefaultState(blockState.getBaseState().withProperty(COLOR, EnumLampColor.BLUE).withProperty(ON, false));
     }
 
     @Override
     public void loadTiles()
     {
         FTBLib.addTile(TileLamp.class, getRegistryName());
-    }
-
-    @Override
-    public void loadModels()
-    {
-        for(EnumDyeColor color : COLOR.getAllowedValues())
-        {
-            ModelLoader.setCustomModelResourceLocation(getItem(), color.getMetadata(), new ModelResourceLocation(getRegistryName(), BlockStateSerializer.getString(blockState.getBaseState().withProperty(ON, true).withProperty(COLOR, color))));
-        }
     }
 
     @Override
@@ -70,15 +93,35 @@ public class BlockLamp extends BlockSil
     @Override
     public void loadRecipes()
     {
+        for(EnumLampColor color : EnumLampColor.VALUES)
+        {
+            getMod().recipes.addRecipe(new ItemStack(this, 1, color.ordinal()), "SBS", "RDR", "SBS", 'D', color.dyeName, 'S', ODItems.STONE, 'R', ODItems.REDSTONE, 'B', SilItems.ELEMITE_DUST.getStack(1));
+        }
+    }
+
+    @Override
+    @SideOnly(Side.CLIENT)
+    public void loadModels()
+    {
+        for(EnumLampColor color : EnumLampColor.VALUES)
+        {
+            ModelLoader.setCustomModelResourceLocation(getItem(), color.ordinal(), new ModelResourceLocation(getRegistryName(), BlockStateSerializer.getString(blockState.getBaseState().withProperty(ON, true).withProperty(COLOR, color))));
+        }
+    }
+
+    @Override
+    public int damageDropped(IBlockState state)
+    {
+        return getMetaFromState(state) % 8;
     }
 
     @Override
     @SideOnly(Side.CLIENT)
     public void getSubBlocks(@Nonnull Item itemIn, CreativeTabs tab, List<ItemStack> list)
     {
-        for(EnumDyeColor color : COLOR.getAllowedValues())
+        for(int i = 0; i < 8; i++)
         {
-            list.add(new ItemStack(itemIn, 1, color.getMetadata()));
+            list.add(new ItemStack(itemIn, 1, i));
         }
     }
 
@@ -100,28 +143,19 @@ public class BlockLamp extends BlockSil
     @Deprecated
     public IBlockState getStateFromMeta(int meta)
     {
-        return getDefaultState().withProperty(COLOR, EnumDyeColor.byMetadata(meta));
+        return getDefaultState().withProperty(COLOR, EnumLampColor.VALUES[meta % 8]).withProperty(ON, meta >= 8);
     }
 
     @Override
     public int getMetaFromState(IBlockState state)
     {
-        return state.getValue(COLOR).getMetadata();
+        return state.getValue(COLOR).ordinal() + (state.getValue(ON) ? 8 : 0);
     }
 
-    @Nonnull
     @Override
     @Deprecated
-    public IBlockState getActualState(@Nonnull IBlockState state, IBlockAccess worldIn, BlockPos pos)
+    public MapColor getMapColor(IBlockState state)
     {
-        TileEntity te = worldIn.getTileEntity(pos);
-        boolean enabled = false;
-
-        if(te instanceof TileLamp)
-        {
-            enabled = ((TileLamp) te).enabled;
-        }
-
-        return state.withProperty(ON, enabled);
+        return state.getValue(COLOR).mapColor;
     }
 }

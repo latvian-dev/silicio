@@ -2,6 +2,8 @@ package com.latmod.silicio.tile;
 
 import com.latmod.silicio.api.SignalChannel;
 import com.latmod.silicio.api.tile.ISilNetController;
+import com.latmod.silicio.block.BlockLamp;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.nbt.NBTTagCompound;
 
 import javax.annotation.Nonnull;
@@ -11,36 +13,29 @@ import javax.annotation.Nonnull;
  */
 public class TileLamp extends TileSilNet
 {
-    public boolean enabled;
-
     @Override
     public void writeTileClientData(@Nonnull NBTTagCompound tag)
     {
-        if(enabled)
-        {
-            tag.setBoolean("E", true);
-        }
     }
 
     @Override
     public void readTileClientData(@Nonnull NBTTagCompound tag)
     {
-        enabled = tag.hasKey("E");
     }
 
     @Override
     public EnumSync getSync()
     {
-        return EnumSync.RERENDER;
+        return EnumSync.SYNC;
     }
 
     @Override
     public void onUpdate()
     {
-        if((worldObj.getTotalWorldTime() + pos.hashCode()) % 20L == 0L)
+        if(!worldObj.isRemote && (worldObj.getTotalWorldTime() + pos.hashCode()) % 20L == 0L)
         {
-            enabled = !enabled;
-            markDirty();
+            IBlockState state = getBlockState();
+            worldObj.setBlockState(pos, state.withProperty(BlockLamp.ON, !state.getValue(BlockLamp.ON)));
         }
     }
 
