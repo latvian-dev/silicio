@@ -1,58 +1,18 @@
 {
-  "portal_charging": {
-    "category": "master",
-    "sounds": [
-      "portal_charging"
-    ]
-  },
-  "portal_open": {
-    "category": "master",
-    "sounds": [
-      "portal_open"
-    ]
-  },
-  "spark": {
-    "category": "master",
-    "sounds": [
-      "spark"
-    ]
-  },
+  "portal_charging": {"category": "master", "sounds": ["silicio:portal_charging"]},
+  "portal_open": {"category": "master", "sounds": ["silicio:portal_open"]},
+  "spark": {"category": "master", "sounds": ["silicio:spark"]},
+  "turret_start": {"category": "master", "sounds": ["silicio:turret/start"]},
+  "turret_loop": {"category": "master", "sounds": ["silicio:turret/loop"]},
+  "turret_end": {"category": "master", "sounds": ["silicio:turret/end"]},
+  "pistol_fire": {"category": "master", "sounds": ["silicio:pistol/fire"]},
+  "pistol_empty": {"category": "master", "sounds": ["silicio:pistol/empty"]},
   "machine_gun": {
     "category": "master",
     "sounds": [
-      "machine_gun/shoot1",
-      "machine_gun/shoot2",
-      "machine_gun/shoot3"
-    ]
-  },
-  "turret_start": {
-    "category": "master",
-    "sounds": [
-      "turret/start"
-    ]
-  },
-  "turret_loop": {
-    "category": "master",
-    "sounds": [
-      "turret/loop"
-    ]
-  },
-  "turret_end": {
-    "category": "master",
-    "sounds": [
-      "turret/end"
-    ]
-  },
-  "pistol_fire": {
-    "category": "master",
-    "sounds": [
-      "pistol/fire"
-    ]
-  },
-  "pistol_empty": {
-    "category": "master",
-    "sounds": [
-      "pistol/empty"
+      "silicio:machine_gun/shoot1",
+      "silicio:machine_gun/shoot2",
+      "silicio:machine_gun/shoot3"
     ]
   }
 }

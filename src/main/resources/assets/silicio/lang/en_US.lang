@@ -30,8 +30,6 @@ silicio.tile.lamp.name=SilNet Lamp
 
 # Materials #
 silicio.item.materials.silicon.name=Silicon
-silicio.item.materials.stone_shard.name=Stone Shard
-silicio.item.materials.iron_rod.name=Iron Rod
 silicio.item.materials.blue_goo.name=Blue Goo
 silicio.item.materials.laser_lens.name=Laser Lens
 silicio.item.materials.xsuit_plate.name=XSuit Plate

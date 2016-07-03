@@ -8,10 +8,8 @@
     "variant": {
       "antimatter": {"textures": {"layer0": "silicio:items/materials/antimatter"}},
       "blue_goo": {"textures": {"layer0": "silicio:items/materials/blue_goo"}},
-      "iron_rod": {"textures": {"layer0": "silicio:items/materials/iron_rod"}},
       "laser_lens": {"textures": {"layer0": "silicio:items/materials/laser_lens"}},
       "silicon": {"textures": {"layer0": "silicio:items/materials/silicon"}},
-      "stone_shard": {"textures": {"layer0": "silicio:items/materials/stone_shard"}},
       "xsuit_plate": {"textures": {"layer0": "silicio:items/materials/xsuit_plate"}},
       "elemite_dust": {"textures": {"layer0": "silicio:items/materials/elemite_dust"}},
       "elemite_ingot": {"textures": {"layer0": "silicio:items/materials/elemite_ingot"}},

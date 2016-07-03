@@ -37,7 +37,6 @@ public class ItemSilMaterials extends ItemMaterialsLM
     {
         addAll(SilItems.class);
 
-        ODItems.add(ODItems.IRON_ROD, SilItems.IRON_ROD.getStack(1));
         ODItems.add(ODItems.SILICON, SilItems.SILICON.getStack(1));
 
         ODItems.add(SilItems.ORE_ELEMITE_DUST, SilItems.ELEMITE_DUST.getStack(1));
@@ -48,7 +47,6 @@ public class ItemSilMaterials extends ItemMaterialsLM
     @Override
     public void loadRecipes()
     {
-        getMod().recipes.addRecipe(SilItems.IRON_ROD.getStack(4), "I", "I", 'I', ODItems.IRON);
         getMod().recipes.addShapelessRecipe(SilItems.BLUE_GOO.getStack(1), ODItems.SLIMEBALL, ODItems.LAPIS, ODItems.IRON);
         getMod().recipes.addRecipe(SilItems.XSUIT_PLATE.getStack(1), "EEE", "ESE", "EEE", 'E', SilItems.ORE_ELEMITE_INGOT, 'S', ODItems.SILICON);
 

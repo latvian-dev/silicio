@@ -16,8 +16,6 @@ public class SilItems
 	*/
 
     public static final MaterialItem SILICON = new MaterialItem(0, "silicon");
-    public static final MaterialItem STONE_SHARD = new MaterialItem(1, "stone_shard");
-    public static final MaterialItem IRON_ROD = new MaterialItem(2, "iron_rod");
     public static final MaterialItem BLUE_GOO = new MaterialItem(3, "blue_goo");
     public static final MaterialItem LASER_LENS = new MaterialItem(4, "laser_lens");
     public static final MaterialItem XSUIT_PLATE = new MaterialItem(5, "xsuit_plate");
