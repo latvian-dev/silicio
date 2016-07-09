@@ -1,6 +1,6 @@
 package com.latmod.silicio.api.modules;
 
-import com.latmod.lib.io.Bits;
+import com.latmod.lib.annotations.IFlagContainer;
 import com.latmod.silicio.api.SignalChannel;
 import net.minecraft.entity.player.EntityPlayerMP;
 
@@ -9,20 +9,20 @@ import java.util.Collection;
 /**
  * Created by LatvianModder on 05.03.2016.
  */
-public abstract class Module
+public abstract class Module implements IFlagContainer
 {
-    public static final byte FLAG_PROVIDE_SIGNALS = 0;
+    public static final byte FLAG_PROVIDE_SIGNALS = 1;
 
-    private byte flags = 0;
+    private int flags = 0;
 
-    protected void setFlag(byte flag, boolean b)
+    public int getFlags()
     {
-        flags = Bits.setBit(flags, flag, b);
+        return flags;
     }
 
-    public boolean getFlag(byte flag)
+    public void setFlags(int f)
     {
-        return Bits.getBit(flags, flag);
+        flags = f;
     }
 
     public void init(ModuleContainer c)

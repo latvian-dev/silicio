@@ -14,7 +14,7 @@ public class ModuleTimer extends Module
 {
     public ModuleTimer()
     {
-        setFlag(FLAG_PROVIDE_SIGNALS, true);
+        setFlags(getFlags() | FLAG_PROVIDE_SIGNALS);
     }
 
     @Override
