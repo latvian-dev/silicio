@@ -14,6 +14,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.ITickable;
 import net.minecraft.util.math.BlockPos;
 
 import javax.annotation.Nonnull;
@@ -23,7 +24,7 @@ import java.util.HashSet;
 /**
  * Created by LatvianModder on 05.03.2016.
  */
-public class TileSilNetController extends TileSilNet implements ISilNetController
+public class TileSilNetController extends TileSilNet implements ITickable, ISilNetController
 {
     public final SilEnergyTank energyTank;
     private final Collection<SignalChannel> signalList;
@@ -106,7 +107,7 @@ public class TileSilNetController extends TileSilNet implements ISilNetControlle
     }
 
     @Override
-    public void onUpdate()
+    public void update()
     {
         if(getSide().isClient())
         {
@@ -188,6 +189,8 @@ public class TileSilNetController extends TileSilNet implements ISilNetControlle
 			}
 		}
 		*/
+
+        checkIfDirty();
     }
 
     @Override

@@ -55,9 +55,4 @@ public class TileEUBridge extends TileLM
 
         return super.getCapability(capability, facing);
     }
-
-    @Override
-    public void onUpdate()
-    {
-    }
 }

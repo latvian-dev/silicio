@@ -55,9 +55,4 @@ public class TileCCBridge extends TileLM
 
         return super.getCapability(capability, facing);
     }
-
-    @Override
-    public void onUpdate()
-    {
-    }
 }

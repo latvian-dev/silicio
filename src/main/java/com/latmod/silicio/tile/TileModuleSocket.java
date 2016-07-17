@@ -115,9 +115,4 @@ public class TileModuleSocket extends TileSilNet
 
         return false;
     }
-
-    @Override
-    public void onUpdate()
-    {
-    }
 }

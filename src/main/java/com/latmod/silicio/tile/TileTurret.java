@@ -12,6 +12,7 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.ITickable;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraftforge.fml.relauncher.Side;
@@ -24,7 +25,7 @@ import javax.annotation.ParametersAreNonnullByDefault;
  */
 @ParametersAreNonnullByDefault
 @MethodsReturnNonnullByDefault
-public class TileTurret extends TileLM
+public class TileTurret extends TileLM implements ITickable
 {
     public static final AxisAlignedBB[] SCAN_AREAS = MathHelperMC.getRotatedBoxes(new AxisAlignedBB(-5D, 0D, -5D, 6D, 10D, 6D));
     public byte cooldown = 0;
@@ -98,7 +99,7 @@ public class TileTurret extends TileLM
     }
 
     @Override
-    public void onUpdate()
+    public void update()
     {
         if(getSide().isServer())
         {
@@ -158,6 +159,8 @@ public class TileTurret extends TileLM
                 }
             }
         }
+
+        checkIfDirty();
     }
 
     @Override

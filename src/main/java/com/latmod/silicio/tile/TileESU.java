@@ -5,6 +5,7 @@ import com.latmod.silicio.api.SilCapabilities;
 import com.latmod.silicio.api.tile.energy.SilEnergyTank;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.ITickable;
 import net.minecraftforge.common.capabilities.Capability;
 
 import javax.annotation.Nonnull;
@@ -12,7 +13,7 @@ import javax.annotation.Nonnull;
 /**
  * Created by LatvianModder on 01.05.2016.
  */
-public class TileESU extends TileLM
+public class TileESU extends TileLM implements ITickable
 {
     public SilEnergyTank energyTank;
 
@@ -34,13 +35,15 @@ public class TileESU extends TileLM
     }
 
     @Override
-    public void onUpdate()
+    public void update()
     {
         if(getSide().isServer() && worldObj.getTotalWorldTime() % 20L == 7L && energyTank.energyChanged)
         {
             energyTank.energyChanged = false;
             markDirty();
         }
+
+        checkIfDirty();
     }
 
     @Override
