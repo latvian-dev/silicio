@@ -1,6 +1,7 @@
 package com.latmod.silicio.tile;
 
 import com.feed_the_beast.ftbl.api.item.LMInvUtils;
+import com.feed_the_beast.ftbl.api.tile.EnumSync;
 import com.latmod.silicio.api.SilCapabilities;
 import com.latmod.silicio.api.modules.Module;
 import com.latmod.silicio.api.modules.ModuleContainer;

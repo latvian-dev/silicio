@@ -1,5 +1,6 @@
 package com.latmod.silicio.tile;
 
+import com.feed_the_beast.ftbl.api.tile.EnumSync;
 import com.feed_the_beast.ftbl.util.FTBLib;
 import com.latmod.lib.util.LMListUtils;
 import com.latmod.silicio.api.SignalChannel;

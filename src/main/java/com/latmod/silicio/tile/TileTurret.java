@@ -103,11 +103,6 @@ public class TileTurret extends TileLM implements ITickable
     {
         if(getSide().isServer())
         {
-            if(redstonePowered)
-            {
-                return;
-            }
-
             if(cooldown > 0)
             {
                 cooldown--;
