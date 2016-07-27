@@ -1,7 +1,6 @@
 package com.latmod.silicio.tile;
 
 import com.feed_the_beast.ftbl.api.tile.EnumSync;
-import com.feed_the_beast.ftbl.util.FTBLib;
 import com.latmod.lib.util.LMListUtils;
 import com.latmod.silicio.api.SignalChannel;
 import com.latmod.silicio.api.tile.ISilNetController;
@@ -9,12 +8,8 @@ import com.latmod.silicio.api.tile.energy.SilEnergyTank;
 import com.latmod.silicio.block.BlockConnector;
 import com.latmod.silicio.block.SilBlocks;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumHand;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.math.BlockPos;
 
@@ -92,19 +87,6 @@ public class TileSilNetController extends TileSilNet implements ITickable, ISilN
         super.onLoad();
 
         System.out.println(getWorld());
-    }
-
-    @Override
-    public boolean onRightClick(@Nonnull EntityPlayer ep, @Nonnull ItemStack is, @Nonnull EnumFacing side, @Nonnull EnumHand hand, float x, float y, float z)
-    {
-        if(getSide().isServer())
-        {
-            FTBLib.printChat(ep, "Network: " + network.size());
-            FTBLib.printChat(ep, "Connected TEs: " + connectedTileEntities.size());
-            FTBLib.printChat(ep, "Signals: " + signalList);
-        }
-
-        return true;
     }
 
     @Override

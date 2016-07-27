@@ -2,7 +2,7 @@ package com.latmod.silicio.api.modules;
 
 import com.latmod.silicio.api.SignalChannel;
 import com.latmod.silicio.api.SilCapabilities;
-import com.latmod.silicio.tile.TileModuleSocket;
+import com.latmod.silicio.tile.TileSocketBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
@@ -35,7 +35,7 @@ public final class ModuleContainer
         connections = new HashMap<>();
     }
 
-    public static ModuleContainer readFromNBT(TileModuleSocket tile, NBTTagCompound tag)
+    public static ModuleContainer readFromNBT(TileSocketBlock tile, NBTTagCompound tag)
     {
         ItemStack item = ItemStack.loadItemStackFromNBT(tag.getCompoundTag("Item"));
 

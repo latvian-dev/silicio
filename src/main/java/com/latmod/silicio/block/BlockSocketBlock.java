@@ -1,26 +1,33 @@
 package com.latmod.silicio.block;
 
+import com.feed_the_beast.ftbl.api.item.LMInvUtils;
 import com.feed_the_beast.ftbl.api.notification.Notification;
 import com.feed_the_beast.ftbl.util.FTBLib;
+import com.latmod.silicio.api.SilCapabilities;
+import com.latmod.silicio.api.modules.Module;
+import com.latmod.silicio.api.modules.ModuleContainer;
 import com.latmod.silicio.api.tile.ISilNetController;
 import com.latmod.silicio.api.tile.SilNetHelper;
 import com.latmod.silicio.item.SilItems;
-import com.latmod.silicio.tile.TileModuleSocket;
+import com.latmod.silicio.tile.TileSocketBlock;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyBool;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 /**
  * Created by LatvianModder on 04.03.2016.
@@ -44,7 +51,7 @@ public class BlockSocketBlock extends BlockSil
     @Override
     public void loadTiles()
     {
-        FTBLib.addTile(TileModuleSocket.class, getRegistryName());
+        FTBLib.addTile(TileSocketBlock.class, getRegistryName());
     }
 
     @Override
@@ -63,7 +70,7 @@ public class BlockSocketBlock extends BlockSil
     @Override
     public TileEntity createTileEntity(@Nonnull World w, @Nonnull IBlockState state)
     {
-        return new TileModuleSocket();
+        return new TileSocketBlock();
     }
 
     @Nonnull
@@ -94,7 +101,7 @@ public class BlockSocketBlock extends BlockSil
     {
         boolean modD = false, modU = false, modN = false, modS = false, modW = false, modE = false;
 
-        TileModuleSocket tile = (TileModuleSocket) w.getTileEntity(pos);
+        TileSocketBlock tile = (TileSocketBlock) w.getTileEntity(pos);
 
         if(tile != null)
         {
@@ -126,5 +133,55 @@ public class BlockSocketBlock extends BlockSil
                 n.sendTo((EntityPlayerMP) el);
             }
         }
+    }
+
+    @Override
+    public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, @Nullable ItemStack heldItem, EnumFacing side, float hitX, float hitY, float hitZ)
+    {
+        TileEntity te = worldIn.getTileEntity(pos);
+
+        if(te instanceof TileSocketBlock)
+        {
+            TileSocketBlock socketBlock = (TileSocketBlock) te;
+
+            ModuleContainer c = socketBlock.modules.get(side);
+
+            if(c != null)
+            {
+                if(!worldIn.isRemote)
+                {
+                    if(heldItem == null && playerIn.isSneaking())
+                    {
+                        c.module.onRemoved(c, (EntityPlayerMP) playerIn);
+                        LMInvUtils.giveItem(playerIn, c.item.copy(), playerIn.inventory.currentItem);
+                        socketBlock.modules.remove(side);
+                        socketBlock.markDirty();
+                    }
+                }
+
+                return true;
+            }
+            else if(heldItem != null && heldItem.hasCapability(SilCapabilities.MODULE, null))
+            {
+                if(!worldIn.isRemote)
+                {
+                    Module m = heldItem.getCapability(SilCapabilities.MODULE, null);
+
+                    if(m != null)
+                    {
+                        c = new ModuleContainer(socketBlock, side, LMInvUtils.singleCopy(heldItem), m);
+                        socketBlock.modules.put(c.facing, c);
+                        heldItem.stackSize--;
+                        c.module.init(c);
+                        c.module.onAdded(c, (EntityPlayerMP) playerIn);
+                        socketBlock.markDirty();
+                    }
+                }
+
+                return true;
+            }
+        }
+
+        return false;
     }
 }
