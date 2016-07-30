@@ -37,8 +37,6 @@ public class ItemSilMaterials extends ItemMaterialsLM
     {
         addAll(SilItems.class);
 
-        ODItems.add(ODItems.SILICON, SilItems.SILICON.getStack(1));
-
         ODItems.add(SilItems.ORE_ELEMITE_DUST, SilItems.ELEMITE_DUST.getStack(1));
         ODItems.add(SilItems.ORE_ELEMITE_INGOT, SilItems.ELEMITE_INGOT.getStack(1));
         ODItems.add(SilItems.ORE_ELEMITE_NUGGET, SilItems.ELEMITE_NUGGET.getStack(1));

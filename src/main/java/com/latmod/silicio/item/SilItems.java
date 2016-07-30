@@ -15,7 +15,6 @@ public class SilItems
 	public static final ItemXSuitBoots XSUIT_BOOTS = Silicio.mod.addItem("xsuit_boots", new ItemXSuitBoots());
 	*/
 
-    public static final MaterialItem SILICON = new MaterialItem(0, "silicon");
     public static final MaterialItem BLUE_GOO = new MaterialItem(3, "blue_goo");
     public static final MaterialItem LASER_LENS = new MaterialItem(4, "laser_lens");
     public static final MaterialItem XSUIT_PLATE = new MaterialItem(5, "xsuit_plate");
