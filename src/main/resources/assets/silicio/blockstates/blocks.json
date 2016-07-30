@@ -19,7 +19,15 @@
         "model": "silicio:silicon_block",
         "textures": {"all": "silicio:blocks/silicon_block"}
       },
-      "silicon_glass": {"textures": {"all": "silicio:blocks/silicon_glass"}}
+      "silicon_glass": {"textures": {"all": "silicio:blocks/silicon_glass"}},
+      "hex": {"textures": {"all": "silicio:blocks/hex"}},
+      "hex_color": {
+        "textures": {
+          "all": "silicio:blocks/hex_color",
+          "up": "silicio:blocks/hex_color_up",
+          "down": "silicio:blocks/hex_color_up"
+        }
+      }
     }
   }
 }

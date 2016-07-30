@@ -41,7 +41,9 @@ public class BlockSilBlocks extends BlockSil
         SILICON_GLASS(1, MapColor.SILVER, BlockRenderLayer.TRANSLUCENT, Material.GLASS),
         DENSE_SILICON(2, MapColor.BLACK, BlockRenderLayer.SOLID, Material.ROCK),
         SILICON_FRAME(3, MapColor.SILVER, BlockRenderLayer.CUTOUT, Material.ROCK),
-        ELEMITE(4, MapColor.BLUE, BlockRenderLayer.SOLID, Material.IRON);
+        ELEMITE(4, MapColor.BLUE, BlockRenderLayer.SOLID, Material.IRON),
+        HEX(5, MapColor.BLACK, BlockRenderLayer.SOLID, Material.ROCK),
+        HEX_COLOR(6, MapColor.BLACK, BlockRenderLayer.SOLID, Material.ROCK);
 
         private static final EnumVariant[] map = values();
         public final String name;
