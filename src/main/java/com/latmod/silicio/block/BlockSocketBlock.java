@@ -3,6 +3,7 @@ package com.latmod.silicio.block;
 import com.feed_the_beast.ftbl.api.item.LMInvUtils;
 import com.feed_the_beast.ftbl.api.notification.Notification;
 import com.feed_the_beast.ftbl.util.FTBLib;
+import com.latmod.silicio.SilNotifications;
 import com.latmod.silicio.api.SilCapabilities;
 import com.latmod.silicio.api.modules.Module;
 import com.latmod.silicio.api.modules.ModuleContainer;
@@ -127,7 +128,7 @@ public class BlockSocketBlock extends BlockSil
 
             if(link != null && el instanceof EntityPlayerMP)
             {
-                Notification n = new Notification("silicio:linked_with_cb");
+                Notification n = new Notification(SilNotifications.LINKED_WITH_CB);
                 n.addText(new TextComponentString("Linked with controller"));
                 n.addText(new TextComponentString(((TileEntity) link).getPos().toString()));
                 n.sendTo((EntityPlayerMP) el);

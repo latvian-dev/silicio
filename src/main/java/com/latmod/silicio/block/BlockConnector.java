@@ -4,6 +4,7 @@ import com.feed_the_beast.ftbl.api.item.ODItems;
 import com.feed_the_beast.ftbl.api.notification.Notification;
 import com.feed_the_beast.ftbl.util.FTBLib;
 import com.feed_the_beast.ftbl.util.MathHelperMC;
+import com.latmod.silicio.SilNotifications;
 import com.latmod.silicio.api.tile.ISilNetController;
 import com.latmod.silicio.api.tile.SilNetHelper;
 import com.latmod.silicio.item.SilItems;
@@ -145,7 +146,7 @@ public class BlockConnector extends BlockSil
 
             if(link != null && el instanceof EntityPlayerMP)
             {
-                Notification n = new Notification("silicio:linked_with_cb");
+                Notification n = new Notification(SilNotifications.LINKED_WITH_CB);
                 n.addText(new TextComponentString("Linked with controller"));
                 n.addText(new TextComponentString(((TileEntity) link).getPos().toString()));
                 n.setTimer(3000);
