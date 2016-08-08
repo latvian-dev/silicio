@@ -1,39 +1,34 @@
 package com.latmod.silicio.tile;
 
 import com.feed_the_beast.ftbl.api.tile.EnumSync;
-import com.latmod.lib.util.LMListUtils;
-import com.latmod.silicio.api.SignalChannel;
-import com.latmod.silicio.api.tile.ISilNetController;
-import com.latmod.silicio.api.tile.energy.SilEnergyTank;
-import com.latmod.silicio.block.BlockConnector;
-import com.latmod.silicio.block.SilBlocks;
-import net.minecraft.block.state.IBlockState;
+import com.latmod.silicio.api.ISignalBus;
+import com.latmod.silicio.api.ISilNetController;
+import com.latmod.silicio.api.SilNet;
+import com.latmod.silicio.api.impl.SignalBus;
+import net.darkhax.tesla.api.implementation.BaseTeslaContainer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ITickable;
-import net.minecraft.util.math.BlockPos;
 
 import javax.annotation.Nonnull;
+import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashSet;
 
 /**
  * Created by LatvianModder on 05.03.2016.
  */
 public class TileSilNetController extends TileSilNet implements ITickable, ISilNetController
 {
-    public final SilEnergyTank energyTank;
-    private final Collection<SignalChannel> signalList;
-    private Collection<BlockPos> network;
-    private Collection<TileEntity> connectedTileEntities;
+    public final BaseTeslaContainer energyTank;
+    private final SignalBus signalBus;
+    private Collection<TileEntity> network;
     private boolean updateNetwork = true;
 
     public TileSilNetController()
     {
-        energyTank = new SilEnergyTank(100000D);
-        signalList = new HashSet<>();
-        network = new HashSet<>();
-        connectedTileEntities = new HashSet<>();
+        energyTank = new BaseTeslaContainer(0, 500000, 200, 0);
+        signalBus = new SignalBus();
+        network = new ArrayList<>();
     }
 
     @Override
@@ -46,47 +41,28 @@ public class TileSilNetController extends TileSilNet implements ITickable, ISilN
     public void readTileData(@Nonnull NBTTagCompound tag)
     {
         super.readTileData(tag);
-        signalList.clear();
-
-        for(int i : tag.getIntArray("Signals"))
-        {
-            signalList.add(new SignalChannel(i));
-        }
+        signalBus.read(tag, "Signals");
     }
 
     @Override
     public void writeTileData(@Nonnull NBTTagCompound tag)
     {
         super.writeTileData(tag);
-        tag.setIntArray("Signals", LMListUtils.toHashCodeArray(signalList));
+        signalBus.write(tag, "Signals");
     }
 
     @Override
     public void readTileClientData(@Nonnull NBTTagCompound tag)
     {
         super.readTileClientData(tag);
-
-        signalList.clear();
-
-        for(int i : tag.getIntArray("S"))
-        {
-            signalList.add(new SignalChannel(i));
-        }
+        signalBus.read(tag, "S");
     }
 
     @Override
     public void writeTileClientData(@Nonnull NBTTagCompound tag)
     {
         super.writeTileClientData(tag);
-        tag.setIntArray("S", LMListUtils.toHashCodeArray(signalList));
-    }
-
-    @Override
-    public void onLoad()
-    {
-        super.onLoad();
-
-        System.out.println(getWorld());
+        signalBus.write(tag, "S");
     }
 
     @Override
@@ -99,30 +75,18 @@ public class TileSilNetController extends TileSilNet implements ITickable, ISilN
 
         if(updateNetwork)
         {
-            connectedTileEntities.clear();
-            signalList.clear();
+            network.clear();
+            signalBus.clear();
 
+            SilNet.findNetwork(this, network);
+
+            /*
             if(!network.isEmpty())
             {
-                for(BlockPos bpos : network)
+                for(TileEntity tile : network)
                 {
-                    IBlockState state = worldObj.getBlockState(bpos);
-
-                    if(state.getBlock() == SilBlocks.CONNECTOR)
-                    {
-                        TileEntity te = worldObj.getTileEntity(bpos.offset(state.getValue(BlockConnector.FACING)));
-
-                        if(te != null)
-                        {
-                            connectedTileEntities.add(te);
-                        }
-                    }
                 }
-            }
-            else
-            {
-
-            }
+            }*/
 
             updateNetwork = false;
         }
@@ -177,19 +141,13 @@ public class TileSilNetController extends TileSilNet implements ITickable, ISilN
     }
 
     @Override
-    public boolean getSignalState(SignalChannel c)
+    public ISignalBus getSignalBus()
     {
-        return c != null && !c.isInvalid() && signalList.contains(c);
+        return signalBus;
     }
 
     @Override
-    public void addToNetwork(BlockPos pos)
-    {
-        network.add(pos);
-    }
-
-    @Override
-    public Collection<BlockPos> getNetwork()
+    public Collection<TileEntity> getNetwork()
     {
         return network;
     }

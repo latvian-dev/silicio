@@ -9,6 +9,7 @@ import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.EnumDyeColor;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.oredict.OreDictionary;
 
 /**
  * Created by LatvianModder on 06.02.2016.
@@ -54,7 +55,7 @@ public class ItemSilMaterials extends ItemMaterialsLM
         getMod().recipes.addSmelting(SilItems.ELEMITE_INGOT.getStack(1), SilItems.ELEMITE_DUST.getStack(1));
         getMod().recipes.addSmelting(SilItems.ELEMITE_INGOT.getStack(1), SilItems.BLUE_GOO.getStack(1));
 
-        getMod().recipes.addRecipe(SilItems.WIRE.getStack(8), "WWW", "NNN", "WWW", 'N', SilItems.ORE_ELEMITE_NUGGET, 'W', new ItemStack(Blocks.CARPET, 1, ODItems.ANY));
+        getMod().recipes.addRecipe(SilItems.WIRE.getStack(8), "WWW", "NNN", "WWW", 'N', SilItems.ORE_ELEMITE_NUGGET, 'W', new ItemStack(Blocks.CARPET, 1, OreDictionary.WILDCARD_VALUE));
         getMod().recipes.addRecipe(SilItems.RESISTOR.getStack(4), "WCW", 'C', Items.BRICK, 'W', SilItems.WIRE);
         getMod().recipes.addRecipe(SilItems.CAPACITOR.getStack(4), "WCW", 'C', Items.CLAY_BALL, 'W', SilItems.WIRE);
         getMod().recipes.addRecipe(SilItems.DIODE.getStack(4), "WCW", 'C', ODItems.SILICON, 'W', SilItems.WIRE);

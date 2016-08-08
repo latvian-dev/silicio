@@ -7,9 +7,7 @@ import com.feed_the_beast.ftbl.util.BlockStateSerializer;
 import com.feed_the_beast.ftbl.util.FTBLib;
 import com.latmod.silicio.Silicio;
 import com.latmod.silicio.item.SilItems;
-import com.latmod.silicio.tile.TileCCBridge;
 import com.latmod.silicio.tile.TileESU;
-import com.latmod.silicio.tile.TileEUBridge;
 import com.latmod.silicio.tile.TileReactorCore;
 import com.latmod.silicio.tile.TileSilNetController;
 import net.minecraft.block.material.MapColor;
@@ -44,16 +42,23 @@ public class BlockSilMachines extends BlockSil
 
     public enum EnumVariant implements IStringSerializable
     {
-        REACTOR_CORE(0, MapColor.GRAY, BlockRenderLayer.CUTOUT, TileReactorCore.class),
-        ESU(1, MapColor.LIGHT_BLUE, BlockRenderLayer.CUTOUT, TileESU.class),
-        ENERGY_BRIDGE_RF(2, MapColor.ADOBE, BlockRenderLayer.SOLID, TileCCBridge.class),
-        ENERGY_BRIDGE_EU(3, MapColor.LIGHT_BLUE, BlockRenderLayer.SOLID, TileCCBridge.class),
-        CONTROLLER(4, MapColor.BLUE, BlockRenderLayer.SOLID, TileSilNetController.class),
-        MODULE_COPIER(5, MapColor.GRAY, BlockRenderLayer.SOLID, null),
-        REDNET_IO(6, MapColor.RED, BlockRenderLayer.SOLID, null),
-        COMPUTER_IO(7, MapColor.YELLOW, BlockRenderLayer.SOLID, null);
+        CONTROLLER(0, MapColor.BLUE, BlockRenderLayer.SOLID, TileSilNetController.class),
+        MODULE_COPIER(1, MapColor.GRAY, BlockRenderLayer.SOLID, null),
+        REDNET_IO(2, MapColor.RED, BlockRenderLayer.SOLID, null),
+        COMPUTER_IO(3, MapColor.YELLOW, BlockRenderLayer.SOLID, null),
+        ESU(4, MapColor.LIGHT_BLUE, BlockRenderLayer.CUTOUT, TileESU.class),
+        REACTOR_CORE(5, MapColor.GRAY, BlockRenderLayer.CUTOUT, TileReactorCore.class);
 
-        private static final EnumVariant[] map = values();
+        private static final EnumVariant[] META_MAP = new EnumVariant[16];
+
+        static
+        {
+            for(EnumVariant v : values())
+            {
+                META_MAP[v.meta] = v;
+            }
+        }
+
         public final String name;
         public final int meta;
         public final MapColor mapColor;
@@ -71,12 +76,12 @@ public class BlockSilMachines extends BlockSil
 
         public static EnumVariant getVariantFromMeta(int meta)
         {
-            if(meta >= 0 && meta < map.length)
+            if(meta >= 0 && meta < META_MAP.length)
             {
-                return map[meta];
+                return META_MAP[meta] == null ? EnumVariant.CONTROLLER : META_MAP[meta];
             }
 
-            return EnumVariant.REACTOR_CORE;
+            return EnumVariant.CONTROLLER;
         }
 
         // Static //
@@ -161,16 +166,12 @@ public class BlockSilMachines extends BlockSil
     {
         switch(state.getValue(VARIANT))
         {
-            case REACTOR_CORE:
-                return new TileReactorCore();
-            case ESU:
-                return new TileESU();
-            case ENERGY_BRIDGE_RF:
-                return new TileCCBridge();
-            case ENERGY_BRIDGE_EU:
-                return new TileEUBridge();
             case CONTROLLER:
                 return new TileSilNetController();
+            case ESU:
+                return new TileESU();
+            case REACTOR_CORE:
+                return new TileReactorCore();
             default:
                 return null;
         }

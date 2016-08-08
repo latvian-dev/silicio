@@ -1,9 +1,7 @@
 package com.latmod.silicio.tile;
 
-import com.latmod.silicio.api.SignalChannel;
-import com.latmod.silicio.api.tile.ISilNetController;
-
-import java.util.Collection;
+import com.latmod.silicio.api.ISignalBus;
+import com.latmod.silicio.api.ISilNetController;
 
 /**
  * Created by LatvianModder on 18.05.2016.
@@ -11,14 +9,12 @@ import java.util.Collection;
 public class TileConnector extends TileSilNet
 {
     @Override
-    public void provideSignals(ISilNetController c, Collection<SignalChannel> channels)
+    public void provideSignals(ISilNetController c, ISignalBus channels)
     {
-
     }
 
     @Override
-    public void onSignalChanged(ISilNetController c, SignalChannel channel, boolean on)
+    public void onSignalChanged(ISilNetController c, int channel, boolean on)
     {
-
     }
 }

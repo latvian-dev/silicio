@@ -1,11 +1,13 @@
 package com.latmod.silicio.tile;
 
 import com.feed_the_beast.ftbl.api.tile.EnumSync;
-import com.latmod.silicio.api.modules.ModuleContainer;
+import com.latmod.silicio.api.IModuleContainer;
+import com.latmod.silicio.api.impl.ModuleContainer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.EnumFacing;
 import net.minecraftforge.common.util.Constants;
+import net.minecraftforge.common.util.INBTSerializable;
 
 import javax.annotation.Nonnull;
 import java.util.EnumMap;
@@ -16,7 +18,7 @@ import java.util.Map;
  */
 public class TileSocketBlock extends TileSilNet
 {
-    public final Map<EnumFacing, ModuleContainer> modules;
+    public final Map<EnumFacing, IModuleContainer> modules;
 
     public TileSocketBlock()
     {
@@ -40,12 +42,13 @@ public class TileSocketBlock extends TileSilNet
 
         for(int i = 0; i < list.tagCount(); i++)
         {
-            NBTTagCompound tag1 = list.getCompoundTagAt(i);
-            ModuleContainer c = ModuleContainer.readFromNBT(this, tag1);
-            if(c != null)
+            ModuleContainer c = new ModuleContainer(this);
+            c.deserializeNBT(list.getCompoundTagAt(i));
+
+            if(c.getModule() != null)
             {
-                modules.put(c.facing, c);
-                c.module.init(c);
+                modules.put(c.getFacing(), c);
+                c.getModule().init(c);
             }
         }
     }
@@ -57,11 +60,12 @@ public class TileSocketBlock extends TileSilNet
 
         NBTTagList list = new NBTTagList();
 
-        for(ModuleContainer m : modules.values())
+        for(IModuleContainer m : modules.values())
         {
-            NBTTagCompound tag1 = new NBTTagCompound();
-            m.writeToNBT(tag1);
-            list.appendTag(tag1);
+            if(m instanceof INBTSerializable<?>)
+            {
+                list.appendTag(((INBTSerializable<?>) m).serializeNBT());
+            }
         }
 
         tag.setTag("Modules", list);

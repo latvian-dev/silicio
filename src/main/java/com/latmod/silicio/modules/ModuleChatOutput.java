@@ -1,31 +1,30 @@
 package com.latmod.silicio.modules;
 
-import com.latmod.silicio.api.SignalChannel;
-import com.latmod.silicio.api.modules.EnumModuleIO;
-import com.latmod.silicio.api.modules.Module;
-import com.latmod.silicio.api.modules.ModuleContainer;
-import net.minecraft.entity.player.EntityPlayerMP;
+import com.latmod.silicio.api.EnumSignalSlot;
+import com.latmod.silicio.api.IModule;
+import com.latmod.silicio.api.IModuleContainer;
+import net.minecraft.item.ItemStack;
 
 /**
  * Created by LatvianModder on 04.03.2016.
  */
-public class ModuleChatOutput extends Module
+public class ModuleChatOutput implements IModule
 {
     @Override
-    public void init(ModuleContainer c)
+    public void init(IModuleContainer container)
     {
-        c.addConnection(EnumModuleIO.IN_1);
+        container.addConnection(EnumSignalSlot.IN_1);
     }
 
     @Override
-    public void onAdded(ModuleContainer c, EntityPlayerMP player)
+    public void addRecipes(ItemStack stack)
     {
     }
 
     @Override
-    public void onSignalChanged(ModuleContainer c, SignalChannel id, boolean on)
+    public void onSignalChanged(IModuleContainer container, int channel, boolean on)
     {
-        if(on && id.equals(c.getChannel(EnumModuleIO.IN_1)))
+        if(on && channel == container.getChannel(EnumSignalSlot.IN_1))
         {
         }
     }

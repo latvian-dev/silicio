@@ -1,34 +1,33 @@
 package com.latmod.silicio.modules;
 
-import com.latmod.silicio.api.SignalChannel;
-import com.latmod.silicio.api.modules.EnumModuleIO;
-import com.latmod.silicio.api.modules.Module;
-import com.latmod.silicio.api.modules.ModuleContainer;
-
-import java.util.Collection;
+import com.latmod.silicio.api.EnumSignalSlot;
+import com.latmod.silicio.api.IModule;
+import com.latmod.silicio.api.IModuleContainer;
+import com.latmod.silicio.api.ISignalBus;
+import net.minecraft.item.ItemStack;
 
 /**
  * Created by LatvianModder on 05.03.2016.
  */
-public class ModuleTimer extends Module
+public class ModuleTimer implements IModule
 {
-    public ModuleTimer()
+    @Override
+    public void init(IModuleContainer container)
     {
-        setFlags(getFlags() | FLAG_PROVIDE_SIGNALS);
+        container.addConnection(EnumSignalSlot.OUT_1);
     }
 
     @Override
-    public void init(ModuleContainer c)
+    public void addRecipes(ItemStack stack)
     {
-        c.addConnection(EnumModuleIO.OUT_1);
     }
 
     @Override
-    public void provideSignals(ModuleContainer c, Collection<SignalChannel> list)
+    public void provideSignals(IModuleContainer container, ISignalBus list)
     {
-        if(c.tick % 20L == 0L)
+        if(container.getTick() % 20L == 0L)
         {
-            list.add(c.getChannel(EnumModuleIO.OUT_1));
+            list.setSignal(container.getChannel(EnumSignalSlot.OUT_1), true);
         }
     }
 }

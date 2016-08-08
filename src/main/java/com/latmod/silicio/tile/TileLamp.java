@@ -1,8 +1,7 @@
 package com.latmod.silicio.tile;
 
 import com.feed_the_beast.ftbl.api.tile.EnumSync;
-import com.latmod.silicio.api.SignalChannel;
-import com.latmod.silicio.api.tile.ISilNetController;
+import com.latmod.silicio.api.ISilNetController;
 import com.latmod.silicio.block.BlockLamp;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.nbt.NBTTagCompound;
@@ -42,7 +41,7 @@ public class TileLamp extends TileSilNet implements ITickable
     }
 
     @Override
-    public void onSignalChanged(ISilNetController c, SignalChannel channel, boolean on)
+    public void onSignalChanged(ISilNetController c, int channel, boolean on)
     {
     }
 }

@@ -1,12 +1,8 @@
 package com.latmod.silicio.block;
 
 import com.feed_the_beast.ftbl.api.item.ODItems;
-import com.feed_the_beast.ftbl.api.notification.Notification;
 import com.feed_the_beast.ftbl.util.FTBLib;
 import com.feed_the_beast.ftbl.util.MathHelperMC;
-import com.latmod.silicio.SilNotifications;
-import com.latmod.silicio.api.tile.ISilNetController;
-import com.latmod.silicio.api.tile.SilNetHelper;
 import com.latmod.silicio.item.SilItems;
 import com.latmod.silicio.tile.TileConnector;
 import net.minecraft.block.BlockDirectional;
@@ -16,14 +12,12 @@ import net.minecraft.block.properties.PropertyEnum;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.text.TextComponentString;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
@@ -133,25 +127,5 @@ public class BlockConnector extends BlockSil
     public boolean isFullCube(IBlockState state)
     {
         return false;
-    }
-
-    @Override
-    public void onBlockPlacedBy(World w, BlockPos pos, IBlockState state, EntityLivingBase el, ItemStack is)
-    {
-        super.onBlockPlacedBy(w, pos, state, el, is);
-
-        if(!w.isRemote)
-        {
-            ISilNetController link = SilNetHelper.linkWithClosestController(w, pos);
-
-            if(link != null && el instanceof EntityPlayerMP)
-            {
-                Notification n = new Notification(SilNotifications.LINKED_WITH_CB);
-                n.addText(new TextComponentString("Linked with controller"));
-                n.addText(new TextComponentString(((TileEntity) link).getPos().toString()));
-                n.setTimer(3000);
-                n.sendTo((EntityPlayerMP) el);
-            }
-        }
     }
 }

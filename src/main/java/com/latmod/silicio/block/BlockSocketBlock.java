@@ -1,21 +1,17 @@
 package com.latmod.silicio.block;
 
 import com.feed_the_beast.ftbl.api.item.LMInvUtils;
-import com.feed_the_beast.ftbl.api.notification.Notification;
 import com.feed_the_beast.ftbl.util.FTBLib;
-import com.latmod.silicio.SilNotifications;
+import com.latmod.silicio.api.IModule;
+import com.latmod.silicio.api.IModuleContainer;
 import com.latmod.silicio.api.SilCapabilities;
-import com.latmod.silicio.api.modules.Module;
-import com.latmod.silicio.api.modules.ModuleContainer;
-import com.latmod.silicio.api.tile.ISilNetController;
-import com.latmod.silicio.api.tile.SilNetHelper;
+import com.latmod.silicio.api.impl.ModuleContainer;
 import com.latmod.silicio.item.SilItems;
 import com.latmod.silicio.tile.TileSocketBlock;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyBool;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
@@ -23,7 +19,6 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.text.TextComponentString;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
@@ -118,25 +113,6 @@ public class BlockSocketBlock extends BlockSil
     }
 
     @Override
-    public void onBlockPlacedBy(World w, BlockPos pos, IBlockState state, EntityLivingBase el, ItemStack is)
-    {
-        super.onBlockPlacedBy(w, pos, state, el, is);
-
-        if(!w.isRemote)
-        {
-            ISilNetController link = SilNetHelper.linkWithClosestController(w, pos);
-
-            if(link != null && el instanceof EntityPlayerMP)
-            {
-                Notification n = new Notification(SilNotifications.LINKED_WITH_CB);
-                n.addText(new TextComponentString("Linked with controller"));
-                n.addText(new TextComponentString(((TileEntity) link).getPos().toString()));
-                n.sendTo((EntityPlayerMP) el);
-            }
-        }
-    }
-
-    @Override
     public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, @Nullable ItemStack heldItem, EnumFacing side, float hitX, float hitY, float hitZ)
     {
         TileEntity te = worldIn.getTileEntity(pos);
@@ -145,16 +121,24 @@ public class BlockSocketBlock extends BlockSil
         {
             TileSocketBlock socketBlock = (TileSocketBlock) te;
 
-            ModuleContainer c = socketBlock.modules.get(side);
-
-            if(c != null)
+            if(socketBlock.modules.containsKey(side))
             {
                 if(!worldIn.isRemote)
                 {
                     if(heldItem == null && playerIn.isSneaking())
                     {
-                        c.module.onRemoved(c, (EntityPlayerMP) playerIn);
-                        LMInvUtils.giveItem(playerIn, c.item.copy(), playerIn.inventory.currentItem);
+                        IModuleContainer c = socketBlock.modules.get(side);
+
+                        if(c.getModule() != null)
+                        {
+                            c.getModule().onRemoved(c, (EntityPlayerMP) playerIn);
+                        }
+
+                        if(c.getItem() != null)
+                        {
+                            LMInvUtils.giveItem(playerIn, c.getItem(), playerIn.inventory.currentItem);
+                        }
+
                         socketBlock.modules.remove(side);
                         socketBlock.markDirty();
                     }
@@ -162,19 +146,22 @@ public class BlockSocketBlock extends BlockSil
 
                 return true;
             }
-            else if(heldItem != null && heldItem.hasCapability(SilCapabilities.MODULE, null))
+            else if(heldItem != null && heldItem.hasCapability(SilCapabilities.MODULE_PROVIDER, null))
             {
                 if(!worldIn.isRemote)
                 {
-                    Module m = heldItem.getCapability(SilCapabilities.MODULE, null);
+                    IModule module = heldItem.getCapability(SilCapabilities.MODULE_PROVIDER, null).getModule();
 
-                    if(m != null)
+                    if(module != null)
                     {
-                        c = new ModuleContainer(socketBlock, side, LMInvUtils.singleCopy(heldItem), m);
-                        socketBlock.modules.put(c.facing, c);
+                        ModuleContainer c = new ModuleContainer(socketBlock);
+                        c.setFacing(side);
+                        c.setItem(LMInvUtils.singleCopy(heldItem));
+                        c.setModule(module);
+
+                        socketBlock.modules.put(c.getFacing(), c);
                         heldItem.stackSize--;
-                        c.module.init(c);
-                        c.module.onAdded(c, (EntityPlayerMP) playerIn);
+                        c.getModule().onAdded(c, (EntityPlayerMP) playerIn);
                         socketBlock.markDirty();
                     }
                 }

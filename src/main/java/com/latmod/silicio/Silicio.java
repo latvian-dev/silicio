@@ -3,6 +3,7 @@ package com.latmod.silicio;
 import com.feed_the_beast.ftbl.util.CreativeTabLM;
 import com.feed_the_beast.ftbl.util.LMMod;
 import com.latmod.silicio.api.SilCapabilities;
+import com.latmod.silicio.api.SilNet;
 import com.latmod.silicio.block.BlockSilMachines;
 import com.latmod.silicio.block.SilBlocks;
 import com.latmod.silicio.item.SilItems;
@@ -10,8 +11,9 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+import net.minecraftforge.fml.common.event.FMLServerStoppedEvent;
 
-@Mod(modid = Silicio.MOD_ID, name = "Silicio", version = "@VERSION@", dependencies = "required-after:ftbl;after:Tesla")
+@Mod(modid = Silicio.MOD_ID, name = "Silicio", version = "@VERSION@", dependencies = "required-after:ftbl;required-after:tesla;required-after:mcmultipart")
 //;required-after:mcmultipart
 public class Silicio
 {
@@ -27,7 +29,7 @@ public class Silicio
     public static CreativeTabLM tab;
 
     @Mod.EventHandler
-    public void preInit(FMLPreInitializationEvent e)
+    public void onPreInit(FMLPreInitializationEvent event)
     {
         mod = LMMod.create(Silicio.MOD_ID);
         tab = new CreativeTabLM("silicio").setMod(mod);
@@ -47,8 +49,14 @@ public class Silicio
     }
 
     @Mod.EventHandler
-    public void postInit(FMLPostInitializationEvent e)
+    public void onPostInit(FMLPostInitializationEvent event)
     {
         mod.loadRecipes();
+    }
+
+    @Mod.EventHandler
+    public void onServerStopped(FMLServerStoppedEvent event)
+    {
+        SilNet.clear();
     }
 }
