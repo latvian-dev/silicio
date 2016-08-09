@@ -1,5 +1,9 @@
 {
   "parent": "block/block",
+  "textures": {
+    "particle": "silicio:blocks/connector",
+    "texture": "silicio:blocks/connector"
+  },
   "elements": [
     {
       "from": [2, 0, 2],

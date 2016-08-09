@@ -1,12 +1,10 @@
 package com.latmod.silicio.block;
 
 import com.feed_the_beast.ftbl.api.item.LMInvUtils;
-import com.feed_the_beast.ftbl.util.FTBLib;
 import com.latmod.silicio.api.IModule;
 import com.latmod.silicio.api.IModuleContainer;
 import com.latmod.silicio.api.SilCapabilities;
 import com.latmod.silicio.api.impl.ModuleContainer;
-import com.latmod.silicio.item.SilItems;
 import com.latmod.silicio.tile.TileSocketBlock;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyBool;
@@ -42,18 +40,6 @@ public class BlockSocketBlock extends BlockSil
     {
         super(Material.IRON);
         setDefaultState(blockState.getBaseState().withProperty(MODULE_D, false).withProperty(MODULE_U, false).withProperty(MODULE_N, false).withProperty(MODULE_S, false).withProperty(MODULE_W, false).withProperty(MODULE_E, false).withProperty(CENTER, true));
-    }
-
-    @Override
-    public void loadTiles()
-    {
-        FTBLib.addTile(TileSocketBlock.class, getRegistryName());
-    }
-
-    @Override
-    public void loadRecipes()
-    {
-        getMod().recipes.addRecipe(new ItemStack(this), " P ", "PFP", " P ", 'P', SilItems.PROCESSOR, 'F', BlockSilBlocks.EnumVariant.SILICON_FRAME.getStack(1));
     }
 
     @Override

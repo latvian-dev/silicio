@@ -1,62 +1,15 @@
 {
   "forge_marker": 1,
   "defaults": {
-    "model": "minecraft:cube_all",
     "transform": "forge:default-block"
   },
   "variants": {
     "variant": {
-      "reactor_core": {
-        "model": "silicio:silicon_frame",
-        "textures": {
-          "particle": "silicio:blocks/reactor_core",
-          "frame": "silicio:blocks/reactor_core"
-        }
-      },
-      "esu": {
-        "model": "silicio:esu",
-        "textures": {
-          "particle": "silicio:blocks/esu",
-          "texture": "silicio:blocks/esu",
-          "texture_base": "silicio:blocks/dense_silicon"
-        }
-      },
-      "energy_bridge_rf": {
-        "textures": {
-          "particle": "silicio:blocks/energy_bridge_rf",
-          "all": "silicio:blocks/energy_bridge_rf"
-        }
-      },
-      "energy_bridge_eu": {
-        "textures": {
-          "particle": "silicio:blocks/energy_bridge_eu",
-          "all": "silicio:blocks/energy_bridge_eu"
-        }
-      },
-      "controller": {
-        "textures": {
-          "particle": "silicio:blocks/controller",
-          "all": "silicio:blocks/controller"
-        }
-      },
-      "module_copier": {
-        "textures": {
-          "particle": "silicio:blocks/module_copier",
-          "all": "silicio:blocks/module_copier"
-        }
-      },
-      "rednet_io": {
-        "textures": {
-          "particle": "silicio:blocks/rednet_io",
-          "all": "silicio:blocks/rednet_io"
-        }
-      },
-      "computer_io": {
-        "textures": {
-          "particle": "silicio:blocks/computer_io",
-          "all": "silicio:blocks/computer_io"
-        }
-      }
+      "controller": {"model": "silicio:machines/controller"},
+      "module_copier": {"model": "silicio:machines/module_copier"},
+      "esu": {"model": "silicio:machines/esu"},
+      "computer_io": {"model": "silicio:machines/computer_io"},
+      "reactor_core": {"model": "silicio:machines/reactor_core"}
     }
   }
 }

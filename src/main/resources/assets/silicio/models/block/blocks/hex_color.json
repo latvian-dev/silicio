@@ -1,0 +1,8 @@
+{
+  "parent": "block/cube_all",
+  "textures": {
+    "all": "silicio:blocks/hex_color",
+    "up": "silicio:blocks/hex_color_up",
+    "down": "silicio:blocks/hex_color_up"
+  }
+}

@@ -1,0 +1,7 @@
+{
+  "parent": "block/carpet",
+  "textures": {
+    "particle": "silicio:blocks/antimatter_carpet",
+    "wool": "silicio:blocks/antimatter_carpet"
+  }
+}

@@ -1,6 +1,5 @@
 package com.latmod.silicio.block;
 
-import com.feed_the_beast.ftbl.util.FTBLib;
 import com.feed_the_beast.ftbl.util.MathHelperMC;
 import com.latmod.silicio.tile.TileTurret;
 import net.minecraft.block.BlockDirectional;
@@ -33,12 +32,6 @@ public class BlockTurret extends BlockSil
     }
 
     @Override
-    public void loadTiles()
-    {
-        FTBLib.addTile(TileTurret.class, getRegistryName());
-    }
-
-    @Override
     public boolean hasTileEntity(IBlockState state)
     {
         return true;
@@ -49,11 +42,6 @@ public class BlockTurret extends BlockSil
     public TileEntity createTileEntity(@Nonnull World w, @Nonnull IBlockState state)
     {
         return new TileTurret();
-    }
-
-    @Override
-    public void loadRecipes()
-    {
     }
 
     @Override

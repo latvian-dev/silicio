@@ -1,9 +1,6 @@
 package com.latmod.silicio.block;
 
-import com.feed_the_beast.ftbl.api.item.ODItems;
-import com.feed_the_beast.ftbl.util.FTBLib;
 import com.feed_the_beast.ftbl.util.MathHelperMC;
-import com.latmod.silicio.item.SilItems;
 import com.latmod.silicio.tile.TileConnector;
 import net.minecraft.block.BlockDirectional;
 import net.minecraft.block.material.Material;
@@ -12,7 +9,6 @@ import net.minecraft.block.properties.PropertyEnum;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.EnumFacing;
@@ -37,18 +33,6 @@ public class BlockConnector extends BlockSil
     {
         super(Material.ROCK);
         setDefaultState(blockState.getBaseState().withProperty(BlockDirectional.FACING, EnumFacing.NORTH));
-    }
-
-    @Override
-    public void loadRecipes()
-    {
-        getMod().recipes.addRecipe(new ItemStack(this), " C ", "WSW", 'W', SilItems.WIRE, 'C', SilItems.CIRCUIT_WIFI, 'S', ODItems.STONE);
-    }
-
-    @Override
-    public void loadTiles()
-    {
-        FTBLib.addTile(TileConnector.class, getRegistryName());
     }
 
     @Override

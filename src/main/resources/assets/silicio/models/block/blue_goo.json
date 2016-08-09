@@ -1,5 +1,9 @@
 {
   "parent": "block/block",
+  "textures": {
+    "particle": "silicio:blocks/blue_goo",
+    "texture": "silicio:blocks/blue_goo"
+  },
   "elements": [
     {
       "from": [3, 3, 3],

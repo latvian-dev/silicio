@@ -1,33 +1,17 @@
 {
   "forge_marker": 1,
   "defaults": {
-    "model": "minecraft:cube_all",
     "transform": "forge:default-block"
   },
   "variants": {
     "variant": {
-      "dense_silicon": {"textures": {"all": "silicio:blocks/dense_silicon"}},
-      "elemite": {"textures": {"all": "silicio:blocks/elemite"}},
-      "silicon_frame": {
-        "model": "silicio:silicon_frame",
-        "textures": {
-          "particle": "silicio:blocks/silicon_frame",
-          "frame": "silicio:blocks/silicon_frame"
-        }
-      },
-      "silicon_block": {
-        "model": "silicio:silicon_block",
-        "textures": {"all": "silicio:blocks/silicon_block"}
-      },
-      "silicon_glass": {"textures": {"all": "silicio:blocks/silicon_glass"}},
-      "hex": {"textures": {"all": "silicio:blocks/hex"}},
-      "hex_color": {
-        "textures": {
-          "all": "silicio:blocks/hex_color",
-          "up": "silicio:blocks/hex_color_up",
-          "down": "silicio:blocks/hex_color_up"
-        }
-      }
+      "dense_silicon": {"model": "silicio:blocks/dense_silicon"},
+      "elemite": {"model": "silicio:blocks/elemite"},
+      "silicon_frame": {"model": "silicio:blocks/silicon_frame"},
+      "silicon_block": {"model": "silicio:blocks/silicon_block"},
+      "silicon_glass": {"model": "silicio:blocks/silicon_glass"},
+      "hex": {"model": "silicio:blocks/hex"},
+      "hex_color": {"model": "silicio:blocks/hex_color"}
     }
   }
 }

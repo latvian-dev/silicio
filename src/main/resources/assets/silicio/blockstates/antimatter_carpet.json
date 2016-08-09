@@ -1,14 +1,9 @@
 {
   "forge_marker": 1,
   "defaults": {
-    "model": "minecraft:carpet",
-    "textures": {
-      "particle": "silicio:blocks/antimatter_carpet",
-      "wool": "silicio:blocks/antimatter_carpet"
-    },
     "transform": "forge:default-block"
   },
   "variants": {
-    "normal": [{}]
+    "normal": {"model": "silicio:antimatter_carpet"}
   }
 }

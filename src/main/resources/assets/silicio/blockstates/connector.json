@@ -2,10 +2,6 @@
   "forge_marker": 1,
   "defaults": {
     "model": "silicio:connector",
-    "textures": {
-      "particle": "silicio:blocks/connector",
-      "texture": "silicio:blocks/connector"
-    },
     "transform": "forge:default-block"
   },
   "variants": {

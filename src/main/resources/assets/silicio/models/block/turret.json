@@ -1,5 +1,10 @@
 {
   "parent": "block/block",
+  "textures": {
+    "particle": "silicio:blocks/turret_base",
+    "base": "silicio:blocks/turret_base",
+    "center": "silicio:blocks/turret"
+  },
   "elements": [
     {
       "from": [1, 0, 1],

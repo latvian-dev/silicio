@@ -1,12 +1,10 @@
 package com.latmod.silicio.block;
 
-import com.latmod.silicio.item.SilItems;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.MapColor;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
-import net.minecraft.item.ItemStack;
 import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -22,13 +20,6 @@ public class BlockBlueGoo extends BlockSil
         super(Material.CLAY);
         slipperiness = 0.8F;
         setSoundType(SoundType.SLIME);
-    }
-
-    @Override
-    public void loadRecipes()
-    {
-        getMod().recipes.addRecipe(new ItemStack(this), "GGG", "GGG", "GGG", 'G', SilItems.BLUE_GOO);
-        getMod().recipes.addShapelessRecipe(SilItems.BLUE_GOO.getStack(9), this);
     }
 
     @Nonnull

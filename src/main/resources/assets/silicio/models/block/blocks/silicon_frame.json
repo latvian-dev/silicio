@@ -1,5 +1,9 @@
 {
   "parent": "block/block",
+  "textures": {
+    "particle": "silicio:blocks/silicon_frame",
+    "frame": "silicio:blocks/silicon_frame"
+  },
   "elements": [
     {
       "from": [0, 0, 0],

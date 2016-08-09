@@ -1,9 +1,5 @@
 package com.latmod.silicio.block;
 
-import com.feed_the_beast.ftbl.api.item.ODItems;
-import com.feed_the_beast.ftbl.util.BlockStateSerializer;
-import com.feed_the_beast.ftbl.util.FTBLib;
-import com.latmod.silicio.item.SilItems;
 import com.latmod.silicio.tile.TileLamp;
 import net.minecraft.block.material.MapColor;
 import net.minecraft.block.material.Material;
@@ -11,7 +7,6 @@ import net.minecraft.block.properties.PropertyBool;
 import net.minecraft.block.properties.PropertyEnum;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
@@ -19,7 +14,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.IStringSerializable;
 import net.minecraft.world.World;
-import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -72,12 +66,6 @@ public class BlockLamp extends BlockSil
     }
 
     @Override
-    public void loadTiles()
-    {
-        FTBLib.addTile(TileLamp.class, getRegistryName());
-    }
-
-    @Override
     public boolean hasTileEntity(IBlockState state)
     {
         return true;
@@ -88,25 +76,6 @@ public class BlockLamp extends BlockSil
     public TileEntity createTileEntity(@Nonnull World w, @Nonnull IBlockState state)
     {
         return new TileLamp();
-    }
-
-    @Override
-    public void loadRecipes()
-    {
-        for(EnumLampColor color : EnumLampColor.VALUES)
-        {
-            getMod().recipes.addRecipe(new ItemStack(this, 1, color.ordinal()), "SBS", "RDR", "SBS", 'D', color.dyeName, 'S', ODItems.STONE, 'R', ODItems.REDSTONE, 'B', SilItems.ELEMITE_DUST.getStack(1));
-        }
-    }
-
-    @Override
-    @SideOnly(Side.CLIENT)
-    public void loadModels()
-    {
-        for(EnumLampColor color : EnumLampColor.VALUES)
-        {
-            ModelLoader.setCustomModelResourceLocation(getItem(), color.ordinal(), new ModelResourceLocation(getRegistryName(), BlockStateSerializer.getString(blockState.getBaseState().withProperty(ON, true).withProperty(COLOR, color))));
-        }
     }
 
     @Override

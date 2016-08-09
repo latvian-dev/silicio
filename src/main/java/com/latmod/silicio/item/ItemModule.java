@@ -3,14 +3,12 @@ package com.latmod.silicio.item;
 import com.latmod.silicio.api.IModule;
 import com.latmod.silicio.api.IModuleProvider;
 import com.latmod.silicio.api.SilCapabilities;
-import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
-import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.fml.relauncher.Side;
@@ -65,19 +63,6 @@ public class ItemModule extends ItemSil
     public ICapabilityProvider initCapabilities(final ItemStack stack, final NBTTagCompound nbt)
     {
         return new ModuleCapProvider();
-    }
-
-    @Override
-    public void loadRecipes()
-    {
-        module.addRecipes(new ItemStack(this));
-    }
-
-    @Override
-    @SideOnly(Side.CLIENT)
-    public void loadModels()
-    {
-        ModelLoader.setCustomModelResourceLocation(this, 0, new ModelResourceLocation(getRegistryName(), "inventory"));
     }
 
     @Override

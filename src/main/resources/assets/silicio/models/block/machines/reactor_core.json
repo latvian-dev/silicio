@@ -1,0 +1,7 @@
+{
+  "parent": "silicio:block/blocks/silicon_frame",
+  "textures": {
+    "particle": "silicio:blocks/reactor_core",
+    "frame": "silicio:blocks/reactor_core"
+  }
+}
