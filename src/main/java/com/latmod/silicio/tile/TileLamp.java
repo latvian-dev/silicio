@@ -6,6 +6,8 @@ import com.latmod.silicio.block.BlockLamp;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ITickable;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
 
 import javax.annotation.Nonnull;
 
@@ -43,5 +45,11 @@ public class TileLamp extends TileSilNet implements ITickable
     @Override
     public void onSignalChanged(ISilNetController c, int channel, boolean on)
     {
+    }
+
+    @Override
+    public boolean shouldRefresh(World world, BlockPos pos, @Nonnull IBlockState oldState, @Nonnull IBlockState newSate)
+    {
+        return oldState.getBlock() != newSate.getBlock();
     }
 }

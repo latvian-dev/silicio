@@ -1,25 +1,24 @@
 {
   "forge_marker": 1,
   "defaults": {
-    "model": "minecraft:cube_all",
     "transform": "forge:default-block"
   },
   "variants": {
-    "color=blue,on=false": [{"textures": {"all": "silicio:blocks/lamp/blue_off"}}],
-    "color=blue,on=true": [{"textures": {"all": "silicio:blocks/lamp/blue_on"}}],
-    "color=cyan,on=false": [{"textures": {"all": "silicio:blocks/lamp/cyan_off"}}],
-    "color=cyan,on=true": [{"textures": {"all": "silicio:blocks/lamp/cyan_on"}}],
-    "color=green,on=false": [{"textures": {"all": "silicio:blocks/lamp/green_off"}}],
-    "color=green,on=true": [{"textures": {"all": "silicio:blocks/lamp/green_on"}}],
-    "color=orange,on=false": [{"textures": {"all": "silicio:blocks/lamp/orange_off"}}],
-    "color=orange,on=true": [{"textures": {"all": "silicio:blocks/lamp/orange_on"}}],
-    "color=pink,on=false": [{"textures": {"all": "silicio:blocks/lamp/pink_off"}}],
-    "color=pink,on=true": [{"textures": {"all": "silicio:blocks/lamp/pink_on"}}],
-    "color=purple,on=false": [{"textures": {"all": "silicio:blocks/lamp/purple_off"}}],
-    "color=purple,on=true": [{"textures": {"all": "silicio:blocks/lamp/purple_on"}}],
-    "color=red,on=false": [{"textures": {"all": "silicio:blocks/lamp/red_off"}}],
-    "color=red,on=true": [{"textures": {"all": "silicio:blocks/lamp/red_on"}}],
-    "color=yellow,on=false": [{"textures": {"all": "silicio:blocks/lamp/yellow_off"}}],
-    "color=yellow,on=true": [{"textures": {"all": "silicio:blocks/lamp/yellow_on"}}]
+    "color=blue,on=false": [{"model": "silicio:lamp/blue_off"}],
+    "color=blue,on=true": [{"model": "silicio:lamp/blue_on"}],
+    "color=cyan,on=false": [{"model": "silicio:lamp/cyan_off"}],
+    "color=cyan,on=true": [{"model": "silicio:lamp/cyan_on"}],
+    "color=green,on=false": [{"model": "silicio:lamp/green_off"}],
+    "color=green,on=true": [{"model": "silicio:lamp/green_on"}],
+    "color=yellow,on=false": [{"model": "silicio:lamp/yellow_off"}],
+    "color=yellow,on=true": [{"model": "silicio:lamp/yellow_on"}],
+    "color=orange,on=false": [{"model": "silicio:lamp/orange_off"}],
+    "color=orange,on=true": [{"model": "silicio:lamp/orange_on"}],
+    "color=red,on=false": [{"model": "silicio:lamp/red_off"}],
+    "color=red,on=true": [{"model": "silicio:lamp/red_on"}],
+    "color=pink,on=false": [{"model": "silicio:lamp/pink_off"}],
+    "color=pink,on=true": [{"model": "silicio:lamp/pink_on"}],
+    "color=purple,on=false": [{"model": "silicio:lamp/purple_off"}],
+    "color=purple,on=true": [{"model": "silicio:lamp/purple_on"}]
   }
 }

@@ -7,9 +7,11 @@ import com.feed_the_beast.ftbl.api.recipes.LMRecipes;
 import com.feed_the_beast.ftbl.util.EnumDyeColorHelper;
 import com.latmod.silicio.Silicio;
 import com.latmod.silicio.api.IModule;
+import com.latmod.silicio.item.xsuit.ItemXSuitBelt;
+import com.latmod.silicio.item.xsuit.ItemXSuitTool;
+import com.latmod.silicio.item.xsuit.ItemXSuitVisor;
 import com.latmod.silicio.modules.ModuleTimer;
 import net.minecraft.init.Items;
-import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.EnumDyeColor;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.relauncher.Side;
@@ -23,8 +25,9 @@ public class SilItems
 {
     public static final ItemSilMaterials MAT = Silicio.register("mat", new ItemSilMaterials());
 
-    public static final ItemXSuit XSUIT_HELM = Silicio.register("xsuit_helm", new ItemXSuit(EntityEquipmentSlot.HEAD));
-    public static final ItemXSuit XSUIT_BODY = Silicio.register("xsuit_body", new ItemXSuit(EntityEquipmentSlot.CHEST));
+    public static final ItemXSuitTool XSUIT_TOOL = Silicio.register("xsuit_tool", new ItemXSuitTool());
+    public static final ItemXSuitBelt XSUIT_BELT = Silicio.register("xsuit_belt", new ItemXSuitBelt());
+    public static final ItemXSuitVisor XSUIT_VISOR = Silicio.register("xsuit_visor", new ItemXSuitVisor());
 
     public static final IMaterial BLUE_GOO = new MaterialItem(3, "blue_goo");
     public static final IMaterial LASER_LENS = new MaterialItem(4, "laser_lens");
@@ -116,6 +119,9 @@ public class SilItems
     public static void initModels()
     {
         MAT.loadModels();
+        XSUIT_TOOL.addDefaultModel();
+        XSUIT_BELT.addDefaultModel();
+        XSUIT_VISOR.addDefaultModel();
 
         for(ItemModule m : Modules.moduleItems)
         {

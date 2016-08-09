@@ -15,6 +15,7 @@ import net.minecraft.util.DamageSource;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.AxisAlignedBB;
+import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -31,6 +32,13 @@ public class TileTurret extends TileLM implements ITickable
     public byte cooldown = 0;
     public Entity target = null;
     public AxisAlignedBB scanArea;
+
+    @Override
+    public void onLoad()
+    {
+        super.onLoad();
+        System.out.println("EffectiveSide: " + FMLCommonHandler.instance().getEffectiveSide() + ", World: " + worldObj);
+    }
 
     @Override
     public void writeTileData(NBTTagCompound tag)

@@ -1,7 +1,7 @@
 {
   "forge_marker": 1,
   "defaults": {
-    "model": "silicio:silicon_frame",
+    "model": "silicio:blocks/silicon_frame",
     "textures": {
       "particle": "silicio:blocks/module_socket_center",
       "texture": "silicio:blocks/module_socket_center",

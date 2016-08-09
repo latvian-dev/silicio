@@ -2,7 +2,7 @@
   "parent": "block/block",
   "textures": {
     "particle": "silicio:blocks/esu",
-    "tex": "silicio:blocks/esu", b
+    "tex": "silicio:blocks/esu",
     "tex_base": "silicio:blocks/dense_silicon"
   },
   "elements": [

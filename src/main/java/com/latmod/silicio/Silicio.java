@@ -4,7 +4,7 @@ import com.feed_the_beast.ftbl.util.CreativeTabLM;
 import com.feed_the_beast.ftbl.util.FTBLib;
 import com.latmod.silicio.api.SilCapabilities;
 import com.latmod.silicio.api.SilNet;
-import com.latmod.silicio.block.BlockSilMachines;
+import com.latmod.silicio.block.EnumSilMachines;
 import com.latmod.silicio.block.SilBlocks;
 import com.latmod.silicio.item.SilItems;
 import net.minecraft.util.ResourceLocation;
@@ -44,7 +44,7 @@ public class Silicio
         SilBlocks.init();
         SilSounds.init();
 
-        tab.addIcon(BlockSilMachines.EnumVariant.CONTROLLER.getStack(1));
+        tab.addIcon(EnumSilMachines.CONTROLLER.getStack(1));
 
         SilCapabilities.enable();
 

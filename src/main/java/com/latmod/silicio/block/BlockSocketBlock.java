@@ -12,6 +12,7 @@ import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.inventory.InventoryHelper;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
@@ -83,10 +84,11 @@ public class BlockSocketBlock extends BlockSil
     {
         boolean modD = false, modU = false, modN = false, modS = false, modW = false, modE = false;
 
-        TileSocketBlock tile = (TileSocketBlock) w.getTileEntity(pos);
+        TileEntity te = w.getTileEntity(pos);
 
-        if(tile != null)
+        if(te instanceof TileSocketBlock)
         {
+            TileSocketBlock tile = (TileSocketBlock) te;
             modD = tile.modules.containsKey(EnumFacing.DOWN);
             modU = tile.modules.containsKey(EnumFacing.UP);
             modN = tile.modules.containsKey(EnumFacing.NORTH);
@@ -157,5 +159,24 @@ public class BlockSocketBlock extends BlockSil
         }
 
         return false;
+    }
+
+    @Override
+    public void breakBlock(World worldIn, BlockPos pos, IBlockState state)
+    {
+        if(!worldIn.isRemote)
+        {
+            TileEntity te = worldIn.getTileEntity(pos);
+
+            if(te instanceof TileSocketBlock)
+            {
+                for(IModuleContainer c : ((TileSocketBlock) te).modules.values())
+                {
+                    InventoryHelper.spawnItemStack(worldIn, pos.getX(), pos.getY(), pos.getZ(), c.getItem());
+                }
+            }
+        }
+
+        super.breakBlock(worldIn, pos, state);
     }
 }

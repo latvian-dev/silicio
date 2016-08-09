@@ -6,6 +6,7 @@ import com.latmod.silicio.api.impl.ModuleContainer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.ITickable;
 import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.common.util.INBTSerializable;
 
@@ -16,7 +17,7 @@ import java.util.Map;
 /**
  * Created by LatvianModder on 04.03.2016.
  */
-public class TileSocketBlock extends TileSilNet
+public class TileSocketBlock extends TileSilNet implements ITickable
 {
     public final Map<EnumFacing, IModuleContainer> modules;
 
@@ -29,6 +30,12 @@ public class TileSocketBlock extends TileSilNet
     public EnumSync getSync()
     {
         return EnumSync.RERENDER;
+    }
+
+    @Override
+    public void markDirty()
+    {
+        sendDirtyUpdate();
     }
 
     @Override
@@ -69,5 +76,22 @@ public class TileSocketBlock extends TileSilNet
         }
 
         tag.setTag("Modules", list);
+    }
+
+    @Override
+    public void update()
+    {
+        if(!worldObj.isRemote)
+        {
+            if(!modules.isEmpty())
+            {
+                for(IModuleContainer m : modules.values())
+                {
+                    m.update();
+                }
+            }
+        }
+
+        checkIfDirty();
     }
 }
