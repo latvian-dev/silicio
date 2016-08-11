@@ -1,6 +1,6 @@
 package com.latmod.silicio.block;
 
-import com.feed_the_beast.ftbl.util.MathHelperMC;
+import com.latmod.lib.math.MathHelperLM;
 import com.latmod.silicio.tile.TileConnector;
 import net.minecraft.block.BlockDirectional;
 import net.minecraft.block.material.Material;
@@ -26,7 +26,7 @@ import javax.annotation.Nonnull;
  */
 public class BlockConnector extends BlockSil
 {
-    public static final AxisAlignedBB[] BOXES = MathHelperMC.getRotatedBoxes(new AxisAlignedBB(2D / 16D, 0D, 2D / 16D, 14D / 16D, 2D / 16D, 14D / 16D));
+    public static final AxisAlignedBB[] BOXES = MathHelperLM.getRotatedBoxes(new AxisAlignedBB(2D / 16D, 0D, 2D / 16D, 14D / 16D, 2D / 16D, 14D / 16D));
     public static final PropertyEnum<EnumFacing> FACING = PropertyDirection.create("facing", EnumFacing.class);
 
     public BlockConnector()

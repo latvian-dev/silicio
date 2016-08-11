@@ -107,6 +107,7 @@ public class SilItems
     public static void init()
     {
         MAT.addAll(SilItems.class);
+        MAT.setDefaultMaterial(BLUE_GOO);
 
         OreDictionary.registerOre(SilItems.ORE_ELEMITE_DUST, SilItems.ELEMITE_DUST.getStack(1));
         OreDictionary.registerOre(SilItems.ORE_ELEMITE_INGOT, SilItems.ELEMITE_INGOT.getStack(1));

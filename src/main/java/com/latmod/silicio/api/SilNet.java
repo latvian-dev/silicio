@@ -1,7 +1,7 @@
 package com.latmod.silicio.api;
 
-import com.feed_the_beast.ftbl.util.BlockDimPos;
 import com.feed_the_beast.ftbl.util.FTBLib;
+import com.latmod.lib.math.BlockDimPos;
 import net.minecraft.tileentity.TileEntity;
 
 import java.util.Collection;

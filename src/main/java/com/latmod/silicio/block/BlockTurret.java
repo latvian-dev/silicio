@@ -1,6 +1,6 @@
 package com.latmod.silicio.block;
 
-import com.feed_the_beast.ftbl.util.MathHelperMC;
+import com.latmod.lib.math.MathHelperLM;
 import com.latmod.silicio.tile.TileTurret;
 import net.minecraft.block.BlockDirectional;
 import net.minecraft.block.material.Material;
@@ -23,7 +23,7 @@ import javax.annotation.Nonnull;
  */
 public class BlockTurret extends BlockSil
 {
-    public static final AxisAlignedBB[] BOXES = MathHelperMC.getRotatedBoxes(new AxisAlignedBB(1D / 16D, 0D, 1D / 16D, 15D / 16D, 10D / 16D, 15D / 16D));
+    public static final AxisAlignedBB[] BOXES = MathHelperLM.getRotatedBoxes(new AxisAlignedBB(1D / 16D, 0D, 1D / 16D, 15D / 16D, 10D / 16D, 15D / 16D));
 
     public BlockTurret()
     {

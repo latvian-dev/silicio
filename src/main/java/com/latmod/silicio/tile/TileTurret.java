@@ -2,8 +2,8 @@ package com.latmod.silicio.tile;
 
 import com.feed_the_beast.ftbl.api.tile.TileLM;
 import com.feed_the_beast.ftbl.util.FTBLib;
-import com.feed_the_beast.ftbl.util.LMNBTUtils;
-import com.feed_the_beast.ftbl.util.MathHelperMC;
+import com.latmod.lib.math.MathHelperLM;
+import com.latmod.lib.util.LMNBTUtils;
 import com.latmod.silicio.SilSounds;
 import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.block.BlockDirectional;
@@ -28,7 +28,7 @@ import javax.annotation.ParametersAreNonnullByDefault;
 @MethodsReturnNonnullByDefault
 public class TileTurret extends TileLM implements ITickable
 {
-    public static final AxisAlignedBB[] SCAN_AREAS = MathHelperMC.getRotatedBoxes(new AxisAlignedBB(-5D, 0D, -5D, 6D, 10D, 6D));
+    public static final AxisAlignedBB[] SCAN_AREAS = MathHelperLM.getRotatedBoxes(new AxisAlignedBB(-5D, 0D, -5D, 6D, 10D, 6D));
     public byte cooldown = 0;
     public Entity target = null;
     public AxisAlignedBB scanArea;
