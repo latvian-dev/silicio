@@ -14,7 +14,6 @@ import com.latmod.silicio.tile.TileLamp;
 import com.latmod.silicio.tile.TileSocketBlock;
 import com.latmod.silicio.tile.TileTurret;
 import net.minecraft.block.material.Material;
-import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -84,7 +83,7 @@ public class SilBlocks
 
         for(BlockLamp.EnumLampColor color : BlockLamp.EnumLampColor.VALUES)
         {
-            ModelLoader.setCustomModelResourceLocation(item, color.ordinal(), new ModelResourceLocation(LAMP.getRegistryName(), BlockStateSerializer.getString(LAMP.getBlockState().getBaseState().withProperty(BlockLamp.ON, true).withProperty(BlockLamp.COLOR, color))));
+            ModelLoader.setCustomModelResourceLocation(item, color.ordinal(), BlockStateSerializer.INSTANCE.get(LAMP.getDefaultState().withProperty(BlockLamp.ON, true).withProperty(BlockLamp.COLOR, color)));
         }
 
         ClientRegistry.bindTileEntitySpecialRenderer(TileTurret.class, new RenderTurret());

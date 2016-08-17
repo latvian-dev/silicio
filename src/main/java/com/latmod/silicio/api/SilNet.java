@@ -30,7 +30,7 @@ public class SilNet
         if(tile.hasWorldObj() && !tile.getWorld().isRemote && tile.hasCapability(SilCapabilities.SILNET_TILE, null))
         {
             NET.put(new BlockDimPos(tile.getPos(), tile.getWorld().provider.getDimension()), tile);
-            FTBLib.dev_logger.info("Added " + tile.getPos());
+            FTBLib.DEV_LOGGER.info("Added " + tile.getPos());
         }
     }
 
@@ -39,7 +39,7 @@ public class SilNet
         if(tile.hasWorldObj() && !tile.getWorld().isRemote && tile.hasCapability(SilCapabilities.SILNET_TILE, null))
         {
             NET.remove(new BlockDimPos(tile.getPos(), tile.getWorld().provider.getDimension()));
-            FTBLib.dev_logger.info("Removed " + tile.getPos());
+            FTBLib.DEV_LOGGER.info("Removed " + tile.getPos());
         }
     }
 
