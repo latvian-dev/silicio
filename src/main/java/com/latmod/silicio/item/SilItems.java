@@ -3,13 +3,11 @@ package com.latmod.silicio.item;
 import com.feed_the_beast.ftbl.api.item.IMaterial;
 import com.feed_the_beast.ftbl.api.item.MaterialItem;
 import com.feed_the_beast.ftbl.api.item.ODItems;
-import com.feed_the_beast.ftbl.api.recipes.LMRecipes;
-import com.feed_the_beast.ftbl.util.EnumDyeColorHelper;
+import com.feed_the_beast.ftbl.api.recipes.IRecipeHandler;
+import com.feed_the_beast.ftbl.api.recipes.IRecipes;
 import com.latmod.silicio.Silicio;
 import com.latmod.silicio.api.IModule;
-import com.latmod.silicio.item.xsuit.ItemXSuitBelt;
-import com.latmod.silicio.item.xsuit.ItemXSuitTool;
-import com.latmod.silicio.item.xsuit.ItemXSuitVisor;
+import com.latmod.silicio.item.xsuit.ItemMultiTool;
 import com.latmod.silicio.modules.ModuleTimer;
 import net.minecraft.init.Items;
 import net.minecraft.item.EnumDyeColor;
@@ -25,9 +23,9 @@ public class SilItems
 {
     public static final ItemSilMaterials MAT = Silicio.register("mat", new ItemSilMaterials());
 
-    public static final ItemXSuitTool XSUIT_TOOL = Silicio.register("xsuit_tool", new ItemXSuitTool());
-    public static final ItemXSuitBelt XSUIT_BELT = Silicio.register("xsuit_belt", new ItemXSuitBelt());
-    public static final ItemXSuitVisor XSUIT_VISOR = Silicio.register("xsuit_visor", new ItemXSuitVisor());
+    public static final ItemMultiTool MULTITOOL = Silicio.register("multitool", new ItemMultiTool());
+    //public static final ItemXSuitBelt XSUIT_BELT = Silicio.register("xsuit_belt", new ItemXSuitBelt());
+    //public static final ItemXSuitVisor XSUIT_VISOR = Silicio.register("xsuit_visor", new ItemXSuitVisor());
 
     public static final IMaterial BLUE_GOO = new MaterialItem(3, "blue_goo");
     public static final IMaterial LASER_LENS = new MaterialItem(4, "laser_lens");
@@ -102,6 +100,24 @@ public class SilItems
         public static void init()
         {
         }
+
+        public static class Recipes implements IRecipeHandler
+        {
+            @Override
+            public boolean isActive()
+            {
+                return true;
+            }
+
+            @Override
+            public void loadRecipes(IRecipes recipes)
+            {
+                for(ItemModule m : Modules.moduleItems)
+                {
+                    m.module.addRecipes(new ItemStack(m), recipes);
+                }
+            }
+        }
     }
 
     public static void init()
@@ -109,9 +125,9 @@ public class SilItems
         MAT.addAll(SilItems.class);
         MAT.setDefaultMaterial(BLUE_GOO);
 
-        OreDictionary.registerOre(SilItems.ORE_ELEMITE_DUST, SilItems.ELEMITE_DUST.getStack(1));
-        OreDictionary.registerOre(SilItems.ORE_ELEMITE_INGOT, SilItems.ELEMITE_INGOT.getStack(1));
-        OreDictionary.registerOre(SilItems.ORE_ELEMITE_NUGGET, SilItems.ELEMITE_NUGGET.getStack(1));
+        OreDictionary.registerOre(ORE_ELEMITE_DUST, ELEMITE_DUST.getStack(1));
+        OreDictionary.registerOre(ORE_ELEMITE_INGOT, ELEMITE_INGOT.getStack(1));
+        OreDictionary.registerOre(ORE_ELEMITE_NUGGET, ELEMITE_NUGGET.getStack(1));
 
         Modules.init();
     }
@@ -120,9 +136,9 @@ public class SilItems
     public static void initModels()
     {
         MAT.loadModels();
-        XSUIT_TOOL.addDefaultModel();
-        XSUIT_BELT.addDefaultModel();
-        XSUIT_VISOR.addDefaultModel();
+        MULTITOOL.addDefaultModel();
+        //XSUIT_BELT.addDefaultModel();
+        //XSUIT_VISOR.addDefaultModel();
 
         for(ItemModule m : Modules.moduleItems)
         {
@@ -130,40 +146,47 @@ public class SilItems
         }
     }
 
-    public static void loadRecipes()
+    public static class Recipes implements IRecipeHandler
     {
-        LMRecipes.INSTANCE.addShapelessRecipe(SilItems.BLUE_GOO.getStack(1), ODItems.SLIMEBALL, ODItems.LAPIS, ODItems.IRON);
-        LMRecipes.INSTANCE.addRecipe(SilItems.XSUIT_PLATE.getStack(1), "EEE", "ESE", "EEE", 'E', SilItems.ORE_ELEMITE_INGOT, 'S', SilItems.ANTIMATTER);
-
-        LMRecipes.INSTANCE.addRecipe(SilItems.ELEMITE_INGOT.getStack(1), "EEE", "EEE", "EEE", 'E', SilItems.ORE_ELEMITE_NUGGET);
-        LMRecipes.INSTANCE.addShapelessRecipe(SilItems.ELEMITE_NUGGET.getStack(9), SilItems.ORE_ELEMITE_INGOT);
-
-        LMRecipes.INSTANCE.addSmelting(SilItems.ELEMITE_INGOT.getStack(1), SilItems.ELEMITE_DUST.getStack(1));
-        LMRecipes.INSTANCE.addSmelting(SilItems.ELEMITE_INGOT.getStack(1), SilItems.BLUE_GOO.getStack(1));
-
-        LMRecipes.INSTANCE.addRecipe(SilItems.WIRE.getStack(8), "WWW", "NNN", "WWW", 'N', SilItems.ORE_ELEMITE_NUGGET, 'W', ODItems.STRING);
-        LMRecipes.INSTANCE.addRecipe(SilItems.RESISTOR.getStack(4), "WCW", 'C', Items.BRICK, 'W', SilItems.WIRE);
-        LMRecipes.INSTANCE.addRecipe(SilItems.CAPACITOR.getStack(4), "WCW", 'C', Items.CLAY_BALL, 'W', SilItems.WIRE);
-        LMRecipes.INSTANCE.addRecipe(SilItems.DIODE.getStack(4), "WCW", 'C', ODItems.SILICON, 'W', SilItems.WIRE);
-        LMRecipes.INSTANCE.addRecipe(SilItems.TRANSISTOR.getStack(3), "DDD", "WWW", 'D', SilItems.DIODE, 'W', SilItems.WIRE);
-        LMRecipes.INSTANCE.addRecipe(SilItems.CHIP.getStack(1), "TT", "TT", "TT", 'T', SilItems.TRANSISTOR);
-        LMRecipes.INSTANCE.addRecipe(SilItems.PROCESSOR.getStack(1), "CCC", "CSC", "CCC", 'C', SilItems.CHIP, 'S', ODItems.SILICON);
-        LMRecipes.INSTANCE.addShapelessRecipe(SilItems.CIRCUIT.getStack(1), SilItems.PROCESSOR, SilItems.WIRE, SilItems.RESISTOR, SilItems.CAPACITOR, SilItems.TRANSISTOR, SilItems.PROCESSOR, SilItems.WIRE, SilItems.WIRE, SilItems.ORE_ELEMITE_NUGGET);
-        LMRecipes.INSTANCE.addRecipe(SilItems.CIRCUIT_WIFI.getStack(1), "NEN", "ECE", "NEN", 'C', SilItems.CIRCUIT, 'E', Items.ENDER_PEARL, 'N', SilItems.ORE_ELEMITE_NUGGET);
-        LMRecipes.INSTANCE.addShapelessRecipe(SilItems.LED_RED.getStack(3), SilItems.DIODE, EnumDyeColorHelper.get(EnumDyeColor.RED).dyeName, ODItems.GLOWSTONE);
-        LMRecipes.INSTANCE.addShapelessRecipe(SilItems.LED_GREEN.getStack(3), SilItems.DIODE, EnumDyeColorHelper.get(EnumDyeColor.GREEN).dyeName, ODItems.GLOWSTONE);
-        LMRecipes.INSTANCE.addShapelessRecipe(SilItems.LED_BLUE.getStack(3), SilItems.DIODE, EnumDyeColorHelper.get(EnumDyeColor.BLUE).dyeName, ODItems.GLOWSTONE);
-        LMRecipes.INSTANCE.addShapelessRecipe(SilItems.LED_RGB.getStack(3), SilItems.LED_RED, SilItems.LED_GREEN, SilItems.LED_BLUE);
-        LMRecipes.INSTANCE.addRecipe(SilItems.LED_MATRIX.getStack(1), "LLL", "LLL", "LLL", 'L', SilItems.LED_RGB);
-
-        LMRecipes.INSTANCE.addRecipe(SilItems.MODULE_EMPTY.getStack(1), "III", "ICI", "III", 'I', ODItems.IRON, 'C', SilItems.PROCESSOR);
-        LMRecipes.INSTANCE.addShapelessRecipe(SilItems.MODULE_INPUT.getStack(1), SilItems.MODULE_EMPTY, EnumDyeColorHelper.get(EnumDyeColor.LIGHT_BLUE).dyeName);
-        LMRecipes.INSTANCE.addShapelessRecipe(SilItems.MODULE_OUTPUT.getStack(1), SilItems.MODULE_EMPTY, EnumDyeColorHelper.get(EnumDyeColor.ORANGE).dyeName);
-        LMRecipes.INSTANCE.addShapelessRecipe(SilItems.MODULE_LOGIC.getStack(1), SilItems.MODULE_EMPTY, ODItems.REDSTONE);
-
-        for(ItemModule m : Modules.moduleItems)
+        @Override
+        public boolean isActive()
         {
-            m.module.addRecipes(new ItemStack(m));
+            return true;
+        }
+
+        @Override
+        public void loadRecipes(IRecipes recipes)
+        {
+            recipes.addShapelessRecipe(BLUE_GOO.getStack(1), ODItems.SLIMEBALL, ODItems.LAPIS, ODItems.IRON);
+            recipes.addRecipe(XSUIT_PLATE.getStack(1), "EEE", "ESE", "EEE", 'E', ORE_ELEMITE_INGOT, 'S', ANTIMATTER);
+
+            recipes.addRecipe(ELEMITE_INGOT.getStack(1), "EEE", "EEE", "EEE", 'E', ORE_ELEMITE_NUGGET);
+            recipes.addShapelessRecipe(ELEMITE_NUGGET.getStack(9), ORE_ELEMITE_INGOT);
+
+            recipes.addSmelting(ELEMITE_INGOT.getStack(1), ELEMITE_DUST.getStack(1), 0F);
+            recipes.addSmelting(ELEMITE_INGOT.getStack(1), BLUE_GOO.getStack(1), 0F);
+
+            recipes.addRecipe(WIRE.getStack(8), "WWW", "NNN", "WWW", 'N', ORE_ELEMITE_NUGGET, 'W', ODItems.STRING);
+            recipes.addRecipe(RESISTOR.getStack(4), "WCW", 'C', Items.BRICK, 'W', WIRE);
+            recipes.addRecipe(CAPACITOR.getStack(4), "WCW", 'C', Items.CLAY_BALL, 'W', WIRE);
+            recipes.addRecipe(DIODE.getStack(4), "WCW", 'C', ODItems.SILICON, 'W', WIRE);
+            recipes.addRecipe(TRANSISTOR.getStack(3), "DDD", "WWW", 'D', DIODE, 'W', WIRE);
+            recipes.addRecipe(CHIP.getStack(1), "TT", "TT", "TT", 'T', TRANSISTOR);
+            recipes.addRecipe(PROCESSOR.getStack(1), "CCC", "CSC", "CCC", 'C', CHIP, 'S', ODItems.SILICON);
+            recipes.addShapelessRecipe(CIRCUIT.getStack(1), PROCESSOR, WIRE, RESISTOR, CAPACITOR, TRANSISTOR, PROCESSOR, WIRE, WIRE, ORE_ELEMITE_NUGGET);
+            recipes.addRecipe(CIRCUIT_WIFI.getStack(1), "NEN", "ECE", "NEN", 'C', CIRCUIT, 'E', Items.ENDER_PEARL, 'N', ORE_ELEMITE_NUGGET);
+            recipes.addShapelessRecipe(LED_RED.getStack(3), DIODE, EnumDyeColor.RED, ODItems.GLOWSTONE);
+            recipes.addShapelessRecipe(LED_GREEN.getStack(3), DIODE, EnumDyeColor.GREEN, ODItems.GLOWSTONE);
+            recipes.addShapelessRecipe(LED_BLUE.getStack(3), DIODE, EnumDyeColor.BLUE, ODItems.GLOWSTONE);
+            recipes.addShapelessRecipe(LED_RGB.getStack(3), LED_RED, LED_GREEN, LED_BLUE);
+            recipes.addRecipe(LED_MATRIX.getStack(1), "LLL", "LLL", "LLL", 'L', LED_RGB);
+
+            recipes.addRecipe(MODULE_EMPTY.getStack(1), "III", "ICI", "III", 'I', ODItems.IRON, 'C', PROCESSOR);
+            recipes.addShapelessRecipe(MODULE_INPUT.getStack(1), MODULE_EMPTY, EnumDyeColor.LIGHT_BLUE);
+            recipes.addShapelessRecipe(MODULE_OUTPUT.getStack(1), MODULE_EMPTY, EnumDyeColor.ORANGE);
+            recipes.addShapelessRecipe(MODULE_LOGIC.getStack(1), MODULE_EMPTY, ODItems.REDSTONE);
+
+            recipes.addRecipe(new ItemStack(MULTITOOL), "CII", " AI", "  I", 'C', LASER_LENS, 'A', ANTIMATTER, 'I', ORE_ELEMITE_INGOT);
         }
     }
 }

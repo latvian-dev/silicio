@@ -33,12 +33,8 @@ public abstract class TileSilNet extends TileLM implements ISilNetTile
     @Override
     public boolean hasCapability(@Nonnull Capability<?> capability, @Nonnull EnumFacing facing)
     {
-        if(capability == SilCapabilities.SILNET_TILE)
-        {
-            return true;
-        }
+        return capability == SilCapabilities.SILNET_TILE || super.hasCapability(capability, facing);
 
-        return super.hasCapability(capability, facing);
     }
 
     @Nonnull

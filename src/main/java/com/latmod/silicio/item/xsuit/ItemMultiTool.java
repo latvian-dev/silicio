@@ -10,9 +10,9 @@ import net.minecraft.item.ItemStack;
 /**
  * Created by LatvianModder on 09.08.2016.
  */
-public class ItemXSuitTool extends ItemSil
+public class ItemMultiTool extends ItemSil
 {
-    public ItemXSuitTool()
+    public ItemMultiTool()
     {
         setMaxStackSize(1);
         setFull3D();

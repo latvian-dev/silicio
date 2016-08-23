@@ -1,5 +1,6 @@
 package com.latmod.silicio.modules;
 
+import com.feed_the_beast.ftbl.api.recipes.IRecipes;
 import com.latmod.silicio.api.EnumSignalSlot;
 import com.latmod.silicio.api.IModule;
 import com.latmod.silicio.api.IModuleContainer;
@@ -17,7 +18,7 @@ public class ModuleChatOutput implements IModule
     }
 
     @Override
-    public void addRecipes(ItemStack stack)
+    public void addRecipes(ItemStack stack, IRecipes recipes)
     {
     }
 

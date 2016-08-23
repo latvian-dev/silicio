@@ -124,7 +124,7 @@ public class BlockSocketBlock extends BlockSil
 
                         if(c.getItem() != null)
                         {
-                            LMInvUtils.giveItem(playerIn, c.getItem(), playerIn.inventory.currentItem);
+                            LMInvUtils.giveItem(playerIn, c.getItem());
                         }
 
                         socketBlock.modules.remove(side);

@@ -1,5 +1,6 @@
 package com.latmod.silicio;
 
+import com.feed_the_beast.ftbl.api.FTBLibAPI;
 import com.feed_the_beast.ftbl.util.CreativeTabLM;
 import com.feed_the_beast.ftbl.util.FTBLib;
 import com.latmod.silicio.api.SilCapabilities;
@@ -10,7 +11,6 @@ import com.latmod.silicio.item.SilItems;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.SidedProxy;
-import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLServerStoppedEvent;
 import net.minecraftforge.fml.common.registry.IForgeRegistryEntry;
@@ -49,13 +49,10 @@ public class Silicio
         SilCapabilities.enable();
 
         proxy.preInit();
-    }
 
-    @Mod.EventHandler
-    public void onPostInit(FMLPostInitializationEvent event)
-    {
-        SilBlocks.loadRecipes();
-        SilItems.loadRecipes();
+        FTBLibAPI.get().getRegistries().recipeHandlers().register(new ResourceLocation(MOD_ID, "blocks"), new SilBlocks.Recipes());
+        FTBLibAPI.get().getRegistries().recipeHandlers().register(new ResourceLocation(MOD_ID, "items"), new SilItems.Recipes());
+        FTBLibAPI.get().getRegistries().recipeHandlers().register(new ResourceLocation(MOD_ID, "modules"), new SilItems.Modules.Recipes());
     }
 
     @Mod.EventHandler
