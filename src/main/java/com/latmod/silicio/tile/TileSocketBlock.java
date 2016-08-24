@@ -39,13 +39,31 @@ public class TileSocketBlock extends TileSilNet implements ITickable
     }
 
     @Override
-    public void readTileData(@Nonnull NBTTagCompound tag)
+    public void writeTileData(@Nonnull NBTTagCompound nbt)
     {
-        super.readTileData(tag);
+        super.writeTileData(nbt);
+
+        NBTTagList list = new NBTTagList();
+
+        for(IModuleContainer m : modules.values())
+        {
+            if(m instanceof INBTSerializable<?>)
+            {
+                list.appendTag(((INBTSerializable<?>) m).serializeNBT());
+            }
+        }
+
+        nbt.setTag("Modules", list);
+    }
+
+    @Override
+    public void readTileData(@Nonnull NBTTagCompound nbt)
+    {
+        super.readTileData(nbt);
 
         modules.clear();
 
-        NBTTagList list = tag.getTagList("Modules", Constants.NBT.TAG_COMPOUND);
+        NBTTagList list = nbt.getTagList("Modules", Constants.NBT.TAG_COMPOUND);
 
         for(int i = 0; i < list.tagCount(); i++)
         {
@@ -61,9 +79,9 @@ public class TileSocketBlock extends TileSilNet implements ITickable
     }
 
     @Override
-    public void writeTileData(@Nonnull NBTTagCompound tag)
+    public void writeTileClientData(@Nonnull NBTTagCompound nbt)
     {
-        super.writeTileData(tag);
+        super.writeTileClientData(nbt);
 
         NBTTagList list = new NBTTagList();
 
@@ -75,7 +93,29 @@ public class TileSocketBlock extends TileSilNet implements ITickable
             }
         }
 
-        tag.setTag("Modules", list);
+        nbt.setTag("M", list);
+    }
+
+    @Override
+    public void readTileClientData(@Nonnull NBTTagCompound nbt)
+    {
+        super.readTileClientData(nbt);
+
+        modules.clear();
+
+        NBTTagList list = nbt.getTagList("M", Constants.NBT.TAG_COMPOUND);
+
+        for(int i = 0; i < list.tagCount(); i++)
+        {
+            ModuleContainer c = new ModuleContainer(this);
+            c.deserializeNBT(list.getCompoundTagAt(i));
+
+            if(c.getModule() != null)
+            {
+                modules.put(c.getFacing(), c);
+                c.getModule().init(c);
+            }
+        }
     }
 
     @Override

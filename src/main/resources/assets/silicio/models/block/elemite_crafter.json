@@ -1,0 +1,7 @@
+{
+  "parent": "block/cube_all",
+  "textures": {
+    "all": "silicio:blocks/blocks/dense_silicon",
+    "up": "silicio:blocks/machines/elemite_crafter"
+  }
+}

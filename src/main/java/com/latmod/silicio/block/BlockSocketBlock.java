@@ -15,11 +15,14 @@ import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.inventory.InventoryHelper;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -35,12 +38,11 @@ public class BlockSocketBlock extends BlockSil
     public static final PropertyBool MODULE_S = PropertyBool.create("south");
     public static final PropertyBool MODULE_W = PropertyBool.create("west");
     public static final PropertyBool MODULE_E = PropertyBool.create("east");
-    public static final PropertyBool CENTER = PropertyBool.create("center");
 
     public BlockSocketBlock()
     {
         super(Material.IRON);
-        setDefaultState(blockState.getBaseState().withProperty(MODULE_D, false).withProperty(MODULE_U, false).withProperty(MODULE_N, false).withProperty(MODULE_S, false).withProperty(MODULE_W, false).withProperty(MODULE_E, false).withProperty(CENTER, true));
+        setDefaultState(blockState.getBaseState().withProperty(MODULE_D, false).withProperty(MODULE_U, false).withProperty(MODULE_N, false).withProperty(MODULE_S, false).withProperty(MODULE_W, false).withProperty(MODULE_E, false));
     }
 
     @Override
@@ -74,7 +76,7 @@ public class BlockSocketBlock extends BlockSil
     @Override
     protected BlockStateContainer createBlockState()
     {
-        return new BlockStateContainer(this, MODULE_D, MODULE_U, MODULE_N, MODULE_S, MODULE_W, MODULE_E, CENTER);
+        return new BlockStateContainer(this, MODULE_D, MODULE_U, MODULE_N, MODULE_S, MODULE_W, MODULE_E);
     }
 
     @Nonnull
@@ -97,7 +99,7 @@ public class BlockSocketBlock extends BlockSil
             modE = tile.modules.containsKey(EnumFacing.EAST);
         }
 
-        return state.withProperty(MODULE_D, modD).withProperty(MODULE_U, modU).withProperty(MODULE_N, modN).withProperty(MODULE_S, modS).withProperty(MODULE_W, modW).withProperty(MODULE_E, modE).withProperty(CENTER, true);
+        return state.withProperty(MODULE_D, modD).withProperty(MODULE_U, modU).withProperty(MODULE_N, modN).withProperty(MODULE_S, modS).withProperty(MODULE_W, modW).withProperty(MODULE_E, modE);
     }
 
     @Override
@@ -178,5 +180,13 @@ public class BlockSocketBlock extends BlockSil
         }
 
         super.breakBlock(worldIn, pos, state);
+    }
+
+    @Nonnull
+    @Override
+    @SideOnly(Side.CLIENT)
+    public BlockRenderLayer getBlockLayer()
+    {
+        return BlockRenderLayer.CUTOUT;
     }
 }

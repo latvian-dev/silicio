@@ -41,36 +41,40 @@ public class TileTurret extends TileLM implements ITickable
     }
 
     @Override
-    public void writeTileData(NBTTagCompound tag)
+    public void writeTileData(NBTTagCompound nbt)
     {
-        tag.setByte("Cooldown", cooldown);
+        super.writeTileData(nbt);
+        nbt.setByte("Cooldown", cooldown);
 
         if(target != null)
         {
-            LMNBTUtils.setUUID(tag, "Target", target.getUniqueID(), true);
+            LMNBTUtils.setUUID(nbt, "Target", target.getUniqueID(), true);
         }
     }
 
     @Override
-    public void readTileData(NBTTagCompound tag)
+    public void readTileData(NBTTagCompound nbt)
     {
-        cooldown = tag.getByte("Cooldown");
-        target = FTBLib.getEntityByUUID(worldObj, LMNBTUtils.getUUID(tag, "Target", true));
+        super.readTileData(nbt);
+        cooldown = nbt.getByte("Cooldown");
+        target = FTBLib.getEntityByUUID(worldObj, LMNBTUtils.getUUID(nbt, "Target", true));
     }
 
     @Override
-    public void writeTileClientData(NBTTagCompound tag)
+    public void writeTileClientData(NBTTagCompound nbt)
     {
+        super.writeTileClientData(nbt);
         if(target != null)
         {
-            tag.setInteger("EID", target.getEntityId());
+            nbt.setInteger("EID", target.getEntityId());
         }
     }
 
     @Override
-    public void readTileClientData(NBTTagCompound tag)
+    public void readTileClientData(NBTTagCompound nbt)
     {
-        target = tag.hasKey("EID") ? worldObj.getEntityByID(tag.getInteger("EID")) : null;
+        super.readTileClientData(nbt);
+        target = nbt.hasKey("EID") ? worldObj.getEntityByID(nbt.getInteger("EID")) : null;
         updateScanArea();
     }
 

@@ -1,64 +1,15 @@
 {
   "forge_marker": 1,
   "defaults": {
-    "model": "silicio:blocks/silicon_frame",
-    "textures": {
-      "particle": "silicio:blocks/module_socket_center",
-      "texture": "silicio:blocks/module_socket_center",
-      "texture_plate": "silicio:blocks/module_socket",
-      "frame": "silicio:blocks/silicon_frame"
-    },
+    "model": "silicio:socket_block",
     "transform": "forge:default-block"
   },
   "variants": {
-    "center": {
-      "true": {
-        "submodel": {"center": {"model": "silicio:socket_center"}}
-      },
-      "false": {
-      }
-    },
-    "up": {
-      "true": {
-        "submodel": {"up": {"model": "silicio:socket_plate", "x": 90}}
-      },
-      "false": {
-      }
-    },
-    "down": {
-      "true": {
-        "submodel": {"down": {"model": "silicio:socket_plate", "x": 270}}
-      },
-      "false": {
-      }
-    },
-    "north": {
-      "true": {
-        "submodel": {"north": {"model": "silicio:socket_plate", "y": 180}}
-      },
-      "false": {
-      }
-    },
-    "south": {
-      "true": {
-        "submodel": {"south": {"model": "silicio:socket_plate"}}
-      },
-      "false": {
-      }
-    },
-    "west": {
-      "true": {
-        "submodel": {"west": {"model": "silicio:socket_plate", "y": 90}}
-      },
-      "false": {
-      }
-    },
-    "east": {
-      "true": {
-        "submodel": {"east": {"model": "silicio:socket_plate", "y": 270}}
-      },
-      "false": {
-      }
-    }
+    "up": {"true": {"submodel": {"up": {"model": "silicio:socket_plate", "x": 180, "y": 0}}}, "false": {}},
+    "down": {"true": {"submodel": {"down": {"model": "silicio:socket_plate", "x": 0, "y": 0}}}, "false": {}},
+    "north": {"true": {"submodel": {"north": {"model": "silicio:socket_plate", "x": 90, "y": 180}}}, "false": {}},
+    "south": {"true": {"submodel": {"south": {"model": "silicio:socket_plate", "x": 90, "y": 0}}}, "false": {}},
+    "west": {"true": {"submodel": {"west": {"model": "silicio:socket_plate", "x": 90, "y": 90}}}, "false": {}},
+    "east": {"true": {"submodel": {"east": {"model": "silicio:socket_plate", "x": 90, "y": 270}}}, "false": {}}
   }
 }

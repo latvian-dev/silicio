@@ -5,13 +5,21 @@
   },
   "variants": {
     "variant": {
-      "dense_silicon": {"model": "silicio:blocks/dense_silicon"},
-      "elemite": {"model": "silicio:blocks/elemite"},
-      "silicon_frame": {"model": "silicio:blocks/silicon_frame"},
-      "silicon_block": {"model": "silicio:blocks/silicon_block"},
-      "silicon_glass": {"model": "silicio:blocks/silicon_glass"},
-      "hex": {"model": "silicio:blocks/hex"},
-      "hex_color": {"model": "silicio:blocks/hex_color"}
+      "dense_silicon": {"model": "silicio:dense_silicon"},
+      "elemite_block": {"model": "silicio:elemite_block"},
+      "silicon_frame": {"model": "silicio:silicon_frame"},
+      "silicon_block": {"model": "silicio:silicon_block"},
+      "silicon_glass": {"model": "silicio:silicon_glass"},
+      "opal_block": {"model": "silicio:opal_block"},
+      "opal_glass": {"model": "silicio:opal_glass"},
+      "quartz_frame": {"model": "silicio:quartz_frame"},
+      "controller": {"model": "silicio:controller"},
+      "elemite_crafter": {"model": "silicio:elemite_crafter"},
+      "module_copier": {"model": "silicio:module_copier"},
+      "esu": {"model": "silicio:esu"},
+      "computer_io": {"model": "silicio:computer_io"},
+      "reactor_core": {"model": "silicio:reactor_core"},
+      "lamp": {"model": "silicio:lamp"}
     }
   }
 }

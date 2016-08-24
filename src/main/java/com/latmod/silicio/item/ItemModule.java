@@ -1,11 +1,10 @@
 package com.latmod.silicio.item;
 
+import com.latmod.lib.LangKey;
 import com.latmod.silicio.api.IModule;
 import com.latmod.silicio.api.IModuleProvider;
 import com.latmod.silicio.api.SilCapabilities;
-import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
@@ -23,12 +22,14 @@ import java.util.List;
  */
 public class ItemModule extends ItemSil
 {
+    private static final LangKey DESC = new LangKey("silicio.item.module_desc");
+
     private class ModuleCapProvider implements IModuleProvider, ICapabilityProvider
     {
         @Override
         public IModule getModule()
         {
-            return module;
+            return ItemModule.this.getModule();
         }
 
         @Override
@@ -49,13 +50,18 @@ public class ItemModule extends ItemSil
         }
     }
 
-    public IModule module;
+    private final IModule module;
 
     public ItemModule(IModule m)
     {
         module = m;
         setMaxStackSize(1);
         setMaxDamage(0);
+    }
+
+    public IModule getModule()
+    {
+        return module;
     }
 
     @Nonnull
@@ -67,14 +73,8 @@ public class ItemModule extends ItemSil
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void getSubItems(@Nonnull Item itemIn, CreativeTabs tab, List<ItemStack> subItems)
+    public void addInformation(ItemStack stack, EntityPlayer playerIn, List<String> tooltip, boolean advanced)
     {
-        subItems.add(new ItemStack(itemIn));
-    }
-
-    @Override
-    @SideOnly(Side.CLIENT)
-    public void addInformation(ItemStack is, EntityPlayer ep, List<String> l, boolean b)
-    {
+        tooltip.add(DESC.translate());
     }
 }

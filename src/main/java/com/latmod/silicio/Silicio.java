@@ -5,8 +5,9 @@ import com.feed_the_beast.ftbl.util.CreativeTabLM;
 import com.feed_the_beast.ftbl.util.FTBLib;
 import com.latmod.silicio.api.SilCapabilities;
 import com.latmod.silicio.api.SilNet;
-import com.latmod.silicio.block.EnumSilMachines;
+import com.latmod.silicio.block.EnumSilBlocks;
 import com.latmod.silicio.block.SilBlocks;
+import com.latmod.silicio.gui.SilGuis;
 import com.latmod.silicio.item.SilItems;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.Mod;
@@ -22,12 +23,12 @@ public class Silicio
     public static final String MOD_ID = "silicio";
 
     @Mod.Instance(MOD_ID)
-    public static Silicio inst;
+    public static Silicio INST;
 
     @SidedProxy(clientSide = "com.latmod.silicio.client.SilClient", serverSide = "com.latmod.silicio.SilCommon")
     public static SilCommon proxy;
 
-    public static CreativeTabLM tab;
+    public CreativeTabLM tab;
 
     public static <K extends IForgeRegistryEntry<?>> K register(String id, K obj)
     {
@@ -44,9 +45,10 @@ public class Silicio
         SilBlocks.init();
         SilSounds.init();
 
-        tab.addIcon(EnumSilMachines.CONTROLLER.getStack(1));
+        tab.addIcon(EnumSilBlocks.CONTROLLER.getStack(1));
 
         SilCapabilities.enable();
+        SilGuis.init();
 
         proxy.preInit();
 

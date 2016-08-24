@@ -9,6 +9,8 @@ import java.util.Collection;
  */
 public interface ISilNetController extends ISilNetTile
 {
+    void onSilNetUpdate();
+
     ISignalBus getSignalBus();
 
     Collection<TileEntity> getNetwork();

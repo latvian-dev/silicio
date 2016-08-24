@@ -1,7 +1,6 @@
 package com.latmod.silicio.item;
 
-import com.feed_the_beast.ftbl.api.item.IMaterial;
-import com.feed_the_beast.ftbl.api.item.MaterialItem;
+import com.feed_the_beast.ftbl.api.item.ItemMaterialsLM;
 import com.feed_the_beast.ftbl.api.item.ODItems;
 import com.feed_the_beast.ftbl.api.recipes.IRecipeHandler;
 import com.feed_the_beast.ftbl.api.recipes.IRecipes;
@@ -17,52 +16,27 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.oredict.OreDictionary;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+
+import static com.latmod.silicio.item.EnumMat.*;
 
 public class SilItems
 {
-    public static final ItemSilMaterials MAT = Silicio.register("mat", new ItemSilMaterials());
+    public static final ItemMaterialsLM MAT = Silicio.register("mat", new ItemMaterialsLM());
+    public static final ItemIDCard ID_CARD = Silicio.register("id_card", new ItemIDCard());
 
     public static final ItemMultiTool MULTITOOL = Silicio.register("multitool", new ItemMultiTool());
     //public static final ItemXSuitBelt XSUIT_BELT = Silicio.register("xsuit_belt", new ItemXSuitBelt());
     //public static final ItemXSuitVisor XSUIT_VISOR = Silicio.register("xsuit_visor", new ItemXSuitVisor());
 
-    public static final IMaterial BLUE_GOO = new MaterialItem(3, "blue_goo");
-    public static final IMaterial LASER_LENS = new MaterialItem(4, "laser_lens");
-    public static final IMaterial XSUIT_PLATE = new MaterialItem(5, "xsuit_plate");
-    public static final IMaterial ANTIMATTER = new MaterialItem(6, "antimatter");
-
-    public static final IMaterial ELEMITE_INGOT = new MaterialItem(10, "elemite_ingot");
-    public static final IMaterial ELEMITE_NUGGET = new MaterialItem(11, "elemite_nugget");
-    public static final IMaterial ELEMITE_DUST = new MaterialItem(12, "elemite_dust");
-
     public static final String ORE_ELEMITE_INGOT = "ingotElemite";
     public static final String ORE_ELEMITE_NUGGET = "nuggetElemite";
     public static final String ORE_ELEMITE_DUST = "dustElemite";
 
-    public static final IMaterial WIRE = new MaterialItem(20, "wire");
-    public static final IMaterial RESISTOR = new MaterialItem(21, "resistor");
-    public static final IMaterial CAPACITOR = new MaterialItem(22, "capacitor");
-    public static final IMaterial DIODE = new MaterialItem(23, "diode");
-    public static final IMaterial TRANSISTOR = new MaterialItem(24, "transistor");
-    public static final IMaterial CHIP = new MaterialItem(25, "chip");
-    public static final IMaterial PROCESSOR = new MaterialItem(26, "processor");
-    public static final IMaterial CIRCUIT = new MaterialItem(27, "circuit");
-    public static final IMaterial CIRCUIT_WIFI = new MaterialItem(28, "circuit_wifi");
-    public static final IMaterial LED_RED = new MaterialItem(29, "led_red");
-    public static final IMaterial LED_GREEN = new MaterialItem(30, "led_green");
-    public static final IMaterial LED_BLUE = new MaterialItem(31, "led_blue");
-    public static final IMaterial LED_RGB = new MaterialItem(32, "led_rgb");
-    public static final IMaterial LED_MATRIX = new MaterialItem(33, "led_matrix");
-
-    public static final IMaterial MODULE_EMPTY = new MaterialItem(60, "module_empty");
-    public static final IMaterial MODULE_INPUT = new MaterialItem(61, "module_input");
-    public static final IMaterial MODULE_OUTPUT = new MaterialItem(62, "module_output");
-    public static final IMaterial MODULE_LOGIC = new MaterialItem(63, "module_logic");
-
     public static class Modules
     {
-        private static final List<ItemModule> moduleItems = new ArrayList<>();
+        private static final List<ItemModule> MODULE_LIST = new ArrayList<>();
 
         //public static final ItemModule COMMAND_BLOCK;
         //public static final ItemModule LIGHT_SENSOR;
@@ -93,7 +67,7 @@ public class SilItems
         private static ItemModule register(String s, IModule m)
         {
             ItemModule im = new ItemModule(m);
-            moduleItems.add(im);
+            MODULE_LIST.add(im);
             return Silicio.register("module_" + s, im);
         }
 
@@ -112,9 +86,9 @@ public class SilItems
             @Override
             public void loadRecipes(IRecipes recipes)
             {
-                for(ItemModule m : Modules.moduleItems)
+                for(ItemModule m : Modules.MODULE_LIST)
                 {
-                    m.module.addRecipes(new ItemStack(m), recipes);
+                    m.getModule().addRecipes(new ItemStack(m), recipes);
                 }
             }
         }
@@ -122,12 +96,14 @@ public class SilItems
 
     public static void init()
     {
-        MAT.addAll(SilItems.class);
-        MAT.setDefaultMaterial(BLUE_GOO);
+        MAT.setCreativeTab(Silicio.INST.tab);
+        MAT.setFolder("materials");
+        MAT.addAll(Arrays.asList(EnumMat.values()));
+        MAT.setDefaultMaterial(EnumMat.BLUE_GOO);
 
-        OreDictionary.registerOre(ORE_ELEMITE_DUST, ELEMITE_DUST.getStack(1));
-        OreDictionary.registerOre(ORE_ELEMITE_INGOT, ELEMITE_INGOT.getStack(1));
-        OreDictionary.registerOre(ORE_ELEMITE_NUGGET, ELEMITE_NUGGET.getStack(1));
+        OreDictionary.registerOre(ORE_ELEMITE_DUST, EnumMat.ELEMITE_DUST.getStack(1));
+        OreDictionary.registerOre(ORE_ELEMITE_INGOT, EnumMat.ELEMITE_INGOT.getStack(1));
+        OreDictionary.registerOre(ORE_ELEMITE_NUGGET, EnumMat.ELEMITE_NUGGET.getStack(1));
 
         Modules.init();
     }
@@ -136,13 +112,14 @@ public class SilItems
     public static void initModels()
     {
         MAT.loadModels();
-        MULTITOOL.addDefaultModel();
-        //XSUIT_BELT.addDefaultModel();
-        //XSUIT_VISOR.addDefaultModel();
+        ID_CARD.registerDefaultModel();
+        MULTITOOL.registerDefaultModel();
+        //XSUIT_BELT.registerDefaultModel();
+        //XSUIT_VISOR.registerDefaultModel();
 
-        for(ItemModule m : Modules.moduleItems)
+        for(ItemModule m : Modules.MODULE_LIST)
         {
-            m.addDefaultModel();
+            m.registerDefaultModel();
         }
     }
 
@@ -186,7 +163,8 @@ public class SilItems
             recipes.addShapelessRecipe(MODULE_OUTPUT.getStack(1), MODULE_EMPTY, EnumDyeColor.ORANGE);
             recipes.addShapelessRecipe(MODULE_LOGIC.getStack(1), MODULE_EMPTY, ODItems.REDSTONE);
 
-            recipes.addRecipe(new ItemStack(MULTITOOL), "CII", " AI", "  I", 'C', LASER_LENS, 'A', ANTIMATTER, 'I', ORE_ELEMITE_INGOT);
+            recipes.addRecipe(new ItemStack(ID_CARD), " P ", "PWP", " P ", 'P', ODItems.PAPER, 'W', CIRCUIT_WIFI);
+            recipes.addRecipe(new ItemStack(MULTITOOL), "CII", " AI", "  I", 'C', LASER_LENS, 'A', ANTIMATTER, 'I', XSUIT_PLATE);
         }
     }
 }

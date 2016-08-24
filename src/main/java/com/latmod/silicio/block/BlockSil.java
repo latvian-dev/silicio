@@ -9,6 +9,6 @@ public abstract class BlockSil extends BlockLM
     public BlockSil(Material m)
     {
         super(m);
-        setCreativeTab(Silicio.tab);
+        setCreativeTab(Silicio.INST.tab);
     }
 }
