@@ -1,9 +1,11 @@
 package com.latmod.silicio.tile;
 
 import com.feed_the_beast.ftbl.api.tile.EnumSync;
+import com.latmod.lib.math.MathHelperLM;
 import com.latmod.lib.util.LMTroveUtils;
 import com.latmod.silicio.api.ISilNetController;
 import gnu.trove.impl.Constants;
+import gnu.trove.map.TIntByteMap;
 import gnu.trove.map.TIntIntMap;
 import gnu.trove.map.hash.TIntIntHashMap;
 import net.minecraft.nbt.NBTTagCompound;
@@ -70,14 +72,28 @@ public class TileLamp extends TileSilNet
     }
 
     @Override
-    public void onSignalChanged(@Nonnull ISilNetController c, int ch, boolean on)
+    public void onSignalsChanged(@Nonnull ISilNetController controller, TIntByteMap channels)
     {
+        currentColor = Color.HSBtoRGB(MathHelperLM.RAND.nextFloat(), 1F, 1F);
+        markDirty();
+
+        channels.forEachEntry((channel, on) ->
+        {
+            int newColor = colorMap.get(channel);
+
+            if(newColor != NONE)
+            {
+                currentColor = newColor;
+                markDirty();
+                return false;
+            }
+
+            return true;
+        });
     }
 
     public int getCurrentColor()
     {
-        float hue = (worldObj.getTotalWorldTime() + (pos.getX() + pos.getY() + pos.getZ()) * 10) * 0.01F;
-        currentColor = Color.HSBtoRGB(hue, 1F, 1F);
         return currentColor;
     }
 

@@ -1,10 +1,13 @@
-package com.latmod.silicio.api.impl;
+package com.latmod.silicio.api_impl;
 
 import com.latmod.silicio.api.EnumSignalSlot;
 import com.latmod.silicio.api.IModule;
 import com.latmod.silicio.api.IModuleContainer;
-import com.latmod.silicio.api.SilCapabilities;
+import com.latmod.silicio.api.IModuleProperty;
+import com.latmod.silicio.api.IModulePropertyKey;
+import com.latmod.silicio.api.SilicioAPI;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
@@ -26,6 +29,7 @@ public final class ModuleContainer implements IModuleContainer, INBTSerializable
     private IModule module;
     private Map<EnumSignalSlot, Integer> connections;
     private long tick;
+    private Map<IModulePropertyKey<?>, IModuleProperty> configMap;
 
     public ModuleContainer(TileEntity t)
     {
@@ -104,17 +108,49 @@ public final class ModuleContainer implements IModuleContainer, INBTSerializable
     }
 
     @Override
+    public void addProperty(IModulePropertyKey config)
+    {
+        if(configMap == null)
+        {
+            configMap = new HashMap<>();
+        }
+
+        configMap.put(config, null);
+    }
+
+    @Override
+    public <N extends IModuleProperty> N getProperty(IModulePropertyKey<N> config)
+    {
+        IModuleProperty base = configMap == null ? null : configMap.get(config);
+        return base == null ? config.getDefValue() : (N) base;
+    }
+
+    @Override
     public NBTTagCompound serializeNBT()
     {
-        NBTTagCompound tag = new NBTTagCompound();
-        tag.setByte("Side", (byte) facing.ordinal());
-        tag.setLong("Tick", tick);
+        NBTTagCompound nbt = new NBTTagCompound();
+        nbt.setByte("Side", (byte) facing.ordinal());
+        nbt.setLong("Tick", tick);
 
         NBTTagCompound tag2 = new NBTTagCompound();
         item.writeToNBT(tag2);
-        tag.setTag("Item", tag2);
+        nbt.setTag("Item", tag2);
 
-        return tag;
+        NBTTagCompound configTag = new NBTTagCompound();
+
+        if(configMap != null && !configMap.isEmpty())
+        {
+            for(Map.Entry<IModulePropertyKey<?>, IModuleProperty> entry : configMap.entrySet())
+            {
+                if(entry.getValue() != null)
+                {
+                    configTag.setTag(entry.getKey().getName(), entry.getValue().serializeNBT());
+                }
+            }
+        }
+
+        nbt.setTag("Config", configTag);
+        return nbt;
     }
 
     @Override
@@ -124,9 +160,24 @@ public final class ModuleContainer implements IModuleContainer, INBTSerializable
         item = ItemStack.loadItemStackFromNBT(nbt.getCompoundTag("Item"));
         tick = nbt.getLong("Tick");
 
-        if(item.hasCapability(SilCapabilities.MODULE_PROVIDER, null))
+        if(item.hasCapability(SilicioAPI.MODULE_PROVIDER, null))
         {
-            module = item.getCapability(SilCapabilities.MODULE_PROVIDER, null).getModule();
+            module = item.getCapability(SilicioAPI.MODULE_PROVIDER, null).getModule();
+        }
+
+        if(configMap != null && !configMap.isEmpty())
+        {
+            NBTTagCompound configTag = nbt.getCompoundTag("Config");
+
+            for(Map.Entry<IModulePropertyKey<?>, IModuleProperty> entry : configMap.entrySet())
+            {
+                NBTBase base = configTag.getTag(entry.getKey().getName());
+
+                if(base != null)
+                {
+                    entry.getValue().deserializeNBT(base);
+                }
+            }
         }
     }
 }

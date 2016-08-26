@@ -4,6 +4,7 @@ import com.feed_the_beast.ftbl.api.FTBLibAPI;
 import com.feed_the_beast.ftbl.api.gui.IGuiHandler;
 import com.latmod.silicio.Silicio;
 import com.latmod.silicio.tile.TileElemiteCrafter;
+import com.latmod.silicio.tile.TileModuleIO;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;
@@ -23,24 +24,48 @@ import javax.annotation.Nullable;
 public class SilGuis
 {
     public static final ResourceLocation ELEMITE_CRAFTER = new ResourceLocation(Silicio.MOD_ID, "elemite_crafter");
+    public static final ResourceLocation MODULE_IO = new ResourceLocation(Silicio.MOD_ID, "module_io");
+
+    private static TileEntity getTile(@Nonnull EntityPlayer player, @Nullable NBTTagCompound data)
+    {
+        return player.worldObj.getTileEntity(new BlockPos(data.getInteger("X"), data.getInteger("Y"), data.getInteger("Z")));
+    }
 
     public static void init()
     {
         FTBLibAPI.get().getRegistries().guis().register(ELEMITE_CRAFTER, new IGuiHandler()
         {
             @Override
-            public Container getContainer(@Nonnull EntityPlayer ep, @Nullable NBTTagCompound data)
+            public Container getContainer(@Nonnull EntityPlayer player, @Nullable NBTTagCompound data)
             {
-                TileEntity te = ep.worldObj.getTileEntity(new BlockPos(data.getInteger("X"), data.getInteger("Y"), data.getInteger("Z")));
-                return (te instanceof TileElemiteCrafter) ? new ContainerElemiteCrafter(ep, (TileElemiteCrafter) te) : null;
+                TileEntity te = getTile(player, data);
+                return (te instanceof TileElemiteCrafter) ? new ContainerElemiteCrafter(player, (TileElemiteCrafter) te) : null;
             }
 
             @Override
             @SideOnly(Side.CLIENT)
-            public GuiScreen getGui(@Nonnull EntityPlayer ep, @Nullable NBTTagCompound data)
+            public GuiScreen getGui(@Nonnull EntityPlayer player, @Nullable NBTTagCompound data)
             {
-                TileEntity te = ep.worldObj.getTileEntity(new BlockPos(data.getInteger("X"), data.getInteger("Y"), data.getInteger("Z")));
-                return (te instanceof TileElemiteCrafter) ? new GuiElemiteCrafter(new ContainerElemiteCrafter(ep, (TileElemiteCrafter) te)).getWrapper() : null;
+                TileEntity te = getTile(player, data);
+                return (te instanceof TileElemiteCrafter) ? new GuiElemiteCrafter(new ContainerElemiteCrafter(player, (TileElemiteCrafter) te)).getWrapper() : null;
+            }
+        });
+
+        FTBLibAPI.get().getRegistries().guis().register(MODULE_IO, new IGuiHandler()
+        {
+            @Override
+            public Container getContainer(@Nonnull EntityPlayer player, @Nullable NBTTagCompound data)
+            {
+                TileEntity te = getTile(player, data);
+                return (te instanceof TileModuleIO) ? new ContainerModuleIO(player, (TileModuleIO) te) : null;
+            }
+
+            @Override
+            @SideOnly(Side.CLIENT)
+            public GuiScreen getGui(@Nonnull EntityPlayer player, @Nullable NBTTagCompound data)
+            {
+                TileEntity te = getTile(player, data);
+                return (te instanceof TileModuleIO) ? new GuiModuleIO(new ContainerModuleIO(player, (TileModuleIO) te), GuiModuleIO.EnumMode.CHANNELS).getWrapper() : null;
             }
         });
     }

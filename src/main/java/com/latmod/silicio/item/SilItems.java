@@ -6,7 +6,7 @@ import com.feed_the_beast.ftbl.api.recipes.IRecipeHandler;
 import com.feed_the_beast.ftbl.api.recipes.IRecipes;
 import com.latmod.silicio.Silicio;
 import com.latmod.silicio.api.IModule;
-import com.latmod.silicio.item.xsuit.ItemMultiTool;
+import com.latmod.silicio.modules.ModuleChatOutput;
 import com.latmod.silicio.modules.ModuleTimer;
 import net.minecraft.init.Items;
 import net.minecraft.item.EnumDyeColor;
@@ -41,7 +41,7 @@ public class SilItems
         //public static final ItemModule COMMAND_BLOCK;
         //public static final ItemModule LIGHT_SENSOR;
         //public static final ItemModule SIGN_OUT;
-        public static final ItemModule CHAT_OUT = register("chat_out", new ModuleTimer());
+        public static final ItemModule CHAT_OUT = register("chat_out", new ModuleChatOutput());
         public static final ItemModule TIMER = register("timer", new ModuleTimer());
         //public static final ItemModule SEQUENCER;
         //public static final ItemModule CRAFTING;

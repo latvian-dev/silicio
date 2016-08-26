@@ -2,7 +2,9 @@ package com.latmod.silicio.tile;
 
 import com.feed_the_beast.ftbl.api.tile.EnumSync;
 import com.latmod.silicio.api.IModuleContainer;
-import com.latmod.silicio.api.impl.ModuleContainer;
+import com.latmod.silicio.api.ISilNetController;
+import com.latmod.silicio.api_impl.ModuleContainer;
+import gnu.trove.map.TIntByteMap;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.EnumFacing;
@@ -133,5 +135,29 @@ public class TileSocketBlock extends TileSilNet implements ITickable
         }
 
         checkIfDirty();
+    }
+
+    @Override
+    public void provideSignals(@Nonnull ISilNetController controller)
+    {
+        if(!modules.isEmpty())
+        {
+            for(IModuleContainer m : modules.values())
+            {
+                m.getModule().provideSignals(m, controller);
+            }
+        }
+    }
+
+    @Override
+    public void onSignalsChanged(@Nonnull ISilNetController controller, TIntByteMap channels)
+    {
+        if(!modules.isEmpty())
+        {
+            for(IModuleContainer m : modules.values())
+            {
+                m.getModule().onSignalsChanged(m, controller, channels);
+            }
+        }
     }
 }

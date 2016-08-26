@@ -12,14 +12,25 @@ import net.minecraft.item.ItemStack;
 /**
  * Created by LatvianModder on 05.03.2016.
  */
-public class ModuleTimer implements IModule
+public class ModuleSequencer implements IModule
 {
     private static final ModulePropertyKey<PropertyShort> TIMER = new ModulePropertyKey<>("timer", new PropertyShort(20), null);
+
+    private final int outputs;
+
+    public ModuleSequencer(int out)
+    {
+        outputs = out;
+    }
 
     @Override
     public void init(IModuleContainer container)
     {
-        container.addConnection(EnumSignalSlot.OUT_1);
+        for(int i = 0; i < outputs; i++)
+        {
+            container.addConnection(EnumSignalSlot.OUTPUT[i]);
+        }
+
         container.addProperty(TIMER);
     }
 
@@ -31,9 +42,12 @@ public class ModuleTimer implements IModule
     @Override
     public void provideSignals(IModuleContainer container, ISilNetController controller)
     {
-        if(container.getTick() % container.getProperty(TIMER).getLong() == 0L)
+        long timer = container.getProperty(TIMER).getLong();
+
+        if(container.getTick() % (timer / outputs) == 0L)
         {
-            controller.provideSignal(container.getChannel(EnumSignalSlot.OUT_1));
+            int i = (int) ((container.getTick() / timer) % outputs);
+            controller.provideSignal(container.getChannel(EnumSignalSlot.OUTPUT[i]));
         }
     }
 }

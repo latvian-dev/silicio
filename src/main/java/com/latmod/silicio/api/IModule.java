@@ -1,6 +1,7 @@
 package com.latmod.silicio.api;
 
 import com.feed_the_beast.ftbl.api.recipes.IRecipes;
+import gnu.trove.map.TIntByteMap;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
 
@@ -27,11 +28,11 @@ public interface IModule
     {
     }
 
-    default void provideSignals(IModuleContainer container, ISignalBus channels)
+    default void provideSignals(IModuleContainer container, ISilNetController controller)
     {
     }
 
-    default void onSignalChanged(IModuleContainer container, int channel, boolean on)
+    default void onSignalsChanged(IModuleContainer container, ISilNetController controller, TIntByteMap channels)
     {
     }
 }

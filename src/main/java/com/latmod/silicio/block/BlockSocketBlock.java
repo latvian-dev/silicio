@@ -3,8 +3,8 @@ package com.latmod.silicio.block;
 import com.feed_the_beast.ftbl.api.item.LMInvUtils;
 import com.latmod.silicio.api.IModule;
 import com.latmod.silicio.api.IModuleContainer;
-import com.latmod.silicio.api.SilCapabilities;
-import com.latmod.silicio.api.impl.ModuleContainer;
+import com.latmod.silicio.api.SilicioAPI;
+import com.latmod.silicio.api_impl.ModuleContainer;
 import com.latmod.silicio.tile.TileSocketBlock;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyBool;
@@ -136,11 +136,11 @@ public class BlockSocketBlock extends BlockSil
 
                 return true;
             }
-            else if(heldItem != null && heldItem.hasCapability(SilCapabilities.MODULE_PROVIDER, null))
+            else if(heldItem != null && heldItem.hasCapability(SilicioAPI.MODULE_PROVIDER, null))
             {
                 if(!worldIn.isRemote)
                 {
-                    IModule module = heldItem.getCapability(SilCapabilities.MODULE_PROVIDER, null).getModule();
+                    IModule module = heldItem.getCapability(SilicioAPI.MODULE_PROVIDER, null).getModule();
 
                     if(module != null)
                     {

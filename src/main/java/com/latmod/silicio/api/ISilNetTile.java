@@ -1,5 +1,6 @@
 package com.latmod.silicio.api;
 
+import gnu.trove.map.TIntByteMap;
 import net.minecraft.entity.player.EntityPlayer;
 
 import javax.annotation.Nonnull;
@@ -16,7 +17,7 @@ public interface ISilNetTile
 
     void setControllerID(@Nullable UUID id, @Nonnull EntityPlayer playerIn);
 
-    void provideSignals(@Nonnull ISilNetController c);
+    void provideSignals(@Nonnull ISilNetController controller);
 
-    void onSignalChanged(@Nonnull ISilNetController c, int channel, boolean on);
+    void onSignalsChanged(@Nonnull ISilNetController controller, TIntByteMap channels);
 }

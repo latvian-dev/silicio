@@ -1,7 +1,6 @@
-package com.latmod.silicio.item.xsuit;
+package com.latmod.silicio.item;
 
 import com.google.common.collect.Multimap;
-import com.latmod.silicio.item.ItemSil;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.inventory.EntityEquipmentSlot;

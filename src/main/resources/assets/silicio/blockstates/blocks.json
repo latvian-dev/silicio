@@ -15,7 +15,7 @@
       "quartz_frame": {"model": "silicio:quartz_frame"},
       "controller": {"model": "silicio:controller"},
       "elemite_crafter": {"model": "silicio:elemite_crafter"},
-      "module_copier": {"model": "silicio:module_copier"},
+      "module_io": {"model": "silicio:module_io"},
       "esu": {"model": "silicio:esu"},
       "computer_io": {"model": "silicio:computer_io"},
       "reactor_core": {"model": "silicio:reactor_core"},

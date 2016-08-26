@@ -1,10 +1,13 @@
 package com.latmod.silicio.tile;
 
 import com.feed_the_beast.ftbl.api.tile.EnumSync;
-import com.latmod.silicio.api.ISignalBus;
 import com.latmod.silicio.api.ISilNetController;
-import com.latmod.silicio.api.SilNet;
-import com.latmod.silicio.api.impl.SignalBus;
+import com.latmod.silicio.api.SilicioAPI;
+import gnu.trove.TIntCollection;
+import gnu.trove.impl.Constants;
+import gnu.trove.map.TIntByteMap;
+import gnu.trove.map.hash.TIntByteHashMap;
+import gnu.trove.set.hash.TIntHashSet;
 import net.darkhax.tesla.api.implementation.BaseTeslaContainer;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
@@ -22,17 +25,12 @@ import java.util.UUID;
  */
 public class TileSilNetController extends TileSilNet implements ITickable, ISilNetController
 {
-    public final BaseTeslaContainer energyTank;
-    private final SignalBus signalBus;
-    private Collection<TileEntity> network;
+    public final BaseTeslaContainer energyTank = new BaseTeslaContainer(0, 500000, 200, 0);
+    private final TIntCollection signals = new TIntHashSet();
+    private final TIntCollection signalsPrev = new TIntHashSet();
+    private final TIntByteMap changedSignals = new TIntByteHashMap(3, Constants.DEFAULT_LOAD_FACTOR, 0, (byte) -1);
+    private Collection<TileEntity> network = new ArrayList<>();
     private boolean updateNetwork = true;
-
-    public TileSilNetController()
-    {
-        energyTank = new BaseTeslaContainer(0, 500000, 200, 0);
-        signalBus = new SignalBus();
-        network = new ArrayList<>();
-    }
 
     @Override
     public EnumSync getSync()
@@ -61,28 +59,34 @@ public class TileSilNetController extends TileSilNet implements ITickable, ISilN
     public void readTileData(@Nonnull NBTTagCompound nbt)
     {
         super.readTileData(nbt);
-        signalBus.read(nbt, "Signals");
+        signals.clear();
+        signalsPrev.clear();
+        signals.addAll(nbt.getIntArray("Signals"));
+        signalsPrev.addAll(nbt.getIntArray("PrevSignals"));
     }
 
     @Override
     public void writeTileData(@Nonnull NBTTagCompound nbt)
     {
         super.writeTileData(nbt);
-        signalBus.write(nbt, "Signals");
+        nbt.setIntArray("Signals", signals.toArray());
+        nbt.setIntArray("PrevSignals", signalsPrev.toArray());
     }
 
     @Override
     public void readTileClientData(@Nonnull NBTTagCompound nbt)
     {
         super.readTileClientData(nbt);
-        signalBus.read(nbt, "S");
+        signals.clear();
+        signalsPrev.clear();
+        signals.addAll(nbt.getIntArray("S"));
     }
 
     @Override
     public void writeTileClientData(@Nonnull NBTTagCompound nbt)
     {
         super.writeTileClientData(nbt);
-        signalBus.write(nbt, "S");
+        nbt.setIntArray("S", signals.toArray());
     }
 
     @Override
@@ -93,59 +97,48 @@ public class TileSilNetController extends TileSilNet implements ITickable, ISilN
             return;
         }
 
-        if(updateNetwork)
+        getNetwork();
+
+        if(!network.isEmpty())
         {
-            network.clear();
-            signalBus.clear();
-            SilNet.findNetwork(network, getControllerID());
-            network.remove(this);
-            updateNetwork = false;
-        }
+            signalsPrev.clear();
+            signalsPrev.addAll(signals);
 
-        /*
-        Map<Integer, Boolean> diffMap = new HashMap<>();
-        Collection<SignalChannel> signalList0 = new HashSet<>(signalList.size());
-        signalList0.addAll(signalList);
-        signalList.clear();
-
-        if(!modules.isEmpty())
-        {
-            Collection<SignalChannel> signalList1 = new HashSet<>();
-
-            for(ModuleContainer c : modules)
+            for(TileEntity tile : network)
             {
-                c.onUpdate();
-
-                if(c.module.getFlag(Module.FLAG_PROVIDE_SIGNALS))
+                if(tile.hasCapability(SilicioAPI.SILNET_TILE, null))
                 {
-                    c.module.provideSignals(c, signalList1);
+                    tile.getCapability(SilicioAPI.SILNET_TILE, null).provideSignals(this);
+                }
+            }
 
-                    for(int i = 0; i < signalList1.size(); i++)
+            if(!signalsPrev.isEmpty())
+            {
+                signalsPrev.forEach(id ->
+                {
+                    if(!signals.contains(id))
                     {
-                        int id = signalList1.get(i);
-                        if(id != 0 && !signalList.contains(id))
-                        {
-                            signalList.add(id);
-                        }
+                        changedSignals.put(id, (byte) 0);
                     }
 
-                    signalList1.clear();
-                }
+                    return true;
+                });
             }
-        }
 
-        if(!diffMap.isEmpty())
-        {
-            FTBLib.printChat(null, "Signals: " + diffMap);
-
-            if(!modules.isEmpty())
+            if(!changedSignals.isEmpty())
             {
-                for(Map.Entry<Integer, Boolean> e : diffMap.entrySet())
+                for(TileEntity tile : network)
                 {
+                    if(tile.hasCapability(SilicioAPI.SILNET_TILE, null))
+                    {
+                        tile.getCapability(SilicioAPI.SILNET_TILE, null).onSignalsChanged(this, changedSignals);
+                    }
                 }
             }
+
+            signals.clear();
+            changedSignals.clear();
         }
-        */
 
         checkIfDirty();
     }
@@ -157,14 +150,36 @@ public class TileSilNetController extends TileSilNet implements ITickable, ISilN
     }
 
     @Override
-    public ISignalBus getSignalBus()
+    public Collection<TileEntity> getNetwork()
     {
-        return signalBus;
+        if(updateNetwork)
+        {
+            network.clear();
+            SilicioAPI.get().findSilNetTiles(network, getControllerID());
+            network.remove(this);
+            updateNetwork = false;
+        }
+
+        return network;
     }
 
     @Override
-    public Collection<TileEntity> getNetwork()
+    public boolean getSignal(int id)
     {
-        return network;
+        return id != 0 && signals.contains(id);
+    }
+
+    @Override
+    public void provideSignal(int id)
+    {
+        if(id != 0)
+        {
+            signals.add(id);
+
+            if(!signalsPrev.contains(id))
+            {
+                changedSignals.put(id, (byte) 1);
+            }
+        }
     }
 }

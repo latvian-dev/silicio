@@ -3,8 +3,8 @@ package com.latmod.silicio;
 import com.feed_the_beast.ftbl.api.FTBLibAPI;
 import com.feed_the_beast.ftbl.util.CreativeTabLM;
 import com.feed_the_beast.ftbl.util.FTBLib;
-import com.latmod.silicio.api.SilCapabilities;
-import com.latmod.silicio.api.SilNet;
+import com.latmod.silicio.api.SilicioAPI;
+import com.latmod.silicio.api_impl.SilicioAPI_Impl;
 import com.latmod.silicio.block.EnumSilBlocks;
 import com.latmod.silicio.block.SilBlocks;
 import com.latmod.silicio.gui.SilGuis;
@@ -16,7 +16,7 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLServerStoppedEvent;
 import net.minecraftforge.fml.common.registry.IForgeRegistryEntry;
 
-@Mod(modid = Silicio.MOD_ID, name = "Silicio", version = "@VERSION@", dependencies = "required-after:ftbl;required-after:tesla;required-after:mcmultipart")
+@Mod(modid = Silicio.MOD_ID, name = "Silicio 2", version = "@VERSION@", dependencies = "required-after:ftbl;required-after:tesla;required-after:mcmultipart")
 //;required-after:mcmultipart
 public class Silicio
 {
@@ -39,6 +39,7 @@ public class Silicio
     public void onPreInit(FMLPreInitializationEvent event)
     {
         tab = new CreativeTabLM("silicio");
+        SilicioAPI.setAPI(SilicioAPI_Impl.get());
         //SilConfig.load();
 
         SilItems.init();
@@ -47,7 +48,7 @@ public class Silicio
 
         tab.addIcon(EnumSilBlocks.CONTROLLER.getStack(1));
 
-        SilCapabilities.enable();
+        SilicioAPI_Impl.get().init();
         SilGuis.init();
 
         proxy.preInit();
@@ -60,6 +61,6 @@ public class Silicio
     @Mod.EventHandler
     public void onServerStopped(FMLServerStoppedEvent event)
     {
-        SilNet.clear();
+        SilicioAPI_Impl.get().clear();
     }
 }

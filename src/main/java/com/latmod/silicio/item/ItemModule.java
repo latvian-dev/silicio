@@ -3,7 +3,7 @@ package com.latmod.silicio.item;
 import com.latmod.lib.LangKey;
 import com.latmod.silicio.api.IModule;
 import com.latmod.silicio.api.IModuleProvider;
-import com.latmod.silicio.api.SilCapabilities;
+import com.latmod.silicio.api.SilicioAPI;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -35,13 +35,13 @@ public class ItemModule extends ItemSil
         @Override
         public boolean hasCapability(Capability<?> capability, @Nullable EnumFacing facing)
         {
-            return capability == SilCapabilities.MODULE_PROVIDER;
+            return capability == SilicioAPI.MODULE_PROVIDER;
         }
 
         @Override
         public <T> T getCapability(Capability<T> capability, @Nullable EnumFacing facing)
         {
-            if(capability == SilCapabilities.MODULE_PROVIDER)
+            if(capability == SilicioAPI.MODULE_PROVIDER)
             {
                 return (T) this;
             }

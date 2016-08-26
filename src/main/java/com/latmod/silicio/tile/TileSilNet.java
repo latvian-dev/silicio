@@ -4,8 +4,8 @@ import com.feed_the_beast.ftbl.api.tile.TileLM;
 import com.latmod.lib.util.LMStringUtils;
 import com.latmod.silicio.api.ISilNetController;
 import com.latmod.silicio.api.ISilNetTile;
-import com.latmod.silicio.api.SilCapabilities;
-import com.latmod.silicio.api.SilNet;
+import com.latmod.silicio.api.SilicioAPI;
+import gnu.trove.map.TIntByteMap;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
@@ -26,13 +26,13 @@ public abstract class TileSilNet extends TileLM implements ISilNetTile
     public void onLoad()
     {
         super.onLoad();
-        SilNet.add(this);
+        SilicioAPI.get().addSilNetTile(this);
     }
 
     @Override
     public void invalidate()
     {
-        SilNet.remove(this);
+        SilicioAPI.get().removeSilNetTile(this);
         super.invalidate();
     }
 
@@ -69,14 +69,14 @@ public abstract class TileSilNet extends TileLM implements ISilNetTile
     @Override
     public boolean hasCapability(@Nonnull Capability<?> capability, @Nonnull EnumFacing facing)
     {
-        return capability == SilCapabilities.SILNET_TILE || super.hasCapability(capability, facing);
+        return capability == SilicioAPI.SILNET_TILE || super.hasCapability(capability, facing);
     }
 
     @Nonnull
     @Override
     public <T> T getCapability(@Nonnull Capability<T> capability, @Nonnull EnumFacing facing)
     {
-        if(capability == SilCapabilities.SILNET_TILE)
+        if(capability == SilicioAPI.SILNET_TILE)
         {
             return (T) this;
         }
@@ -96,7 +96,7 @@ public abstract class TileSilNet extends TileLM implements ISilNetTile
     {
         if(!playerIn.worldObj.isRemote)
         {
-            ISilNetController c = SilNet.findController(controllerID);
+            ISilNetController c = SilicioAPI.get().findSilNetController(controllerID);
 
             controllerID = id;
 
@@ -105,7 +105,7 @@ public abstract class TileSilNet extends TileLM implements ISilNetTile
                 c.onSilNetUpdate();
             }
 
-            c = SilNet.findController(controllerID);
+            c = SilicioAPI.get().findSilNetController(controllerID);
 
             if(c != null)
             {
@@ -115,12 +115,12 @@ public abstract class TileSilNet extends TileLM implements ISilNetTile
     }
 
     @Override
-    public void provideSignals(@Nonnull ISilNetController c)
+    public void provideSignals(@Nonnull ISilNetController controller)
     {
     }
 
     @Override
-    public void onSignalChanged(@Nonnull ISilNetController c, int channel, boolean on)
+    public void onSignalsChanged(@Nonnull ISilNetController controller, TIntByteMap channels)
     {
     }
 }

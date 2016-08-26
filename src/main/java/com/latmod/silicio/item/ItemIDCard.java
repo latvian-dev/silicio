@@ -3,7 +3,7 @@ package com.latmod.silicio.item;
 import com.latmod.lib.util.LMStringUtils;
 import com.latmod.silicio.api.ISilNetController;
 import com.latmod.silicio.api.ISilNetTile;
-import com.latmod.silicio.api.SilCapabilities;
+import com.latmod.silicio.api.SilicioAPI;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -25,6 +25,8 @@ import java.util.UUID;
  */
 public class ItemIDCard extends ItemSil
 {
+    private static final String TAG_KEY = "ControllerID";
+
     public ItemIDCard()
     {
         setMaxStackSize(1);
@@ -34,16 +36,16 @@ public class ItemIDCard extends ItemSil
     @SideOnly(Side.CLIENT)
     public boolean hasEffect(ItemStack stack)
     {
-        return stack.hasTagCompound() && stack.getTagCompound().hasKey("ControllerID");
+        return stack.hasTagCompound() && stack.getTagCompound().hasKey(TAG_KEY);
     }
 
     @Override
     @SideOnly(Side.CLIENT)
     public void addInformation(ItemStack stack, EntityPlayer playerIn, List<String> tooltip, boolean advanced)
     {
-        if(stack.hasTagCompound() && stack.getTagCompound().hasKey("ControllerID"))
+        if(stack.hasTagCompound() && stack.getTagCompound().hasKey(TAG_KEY))
         {
-            tooltip.add(stack.getTagCompound().getString("ControllerID"));
+            tooltip.add(stack.getTagCompound().getString(TAG_KEY));
         }
     }
 
@@ -55,9 +57,9 @@ public class ItemIDCard extends ItemSil
         {
             TileEntity tile = worldIn.getTileEntity(pos);
 
-            if(tile != null && tile.hasCapability(SilCapabilities.SILNET_TILE, facing))
+            if(tile != null && tile.hasCapability(SilicioAPI.SILNET_TILE, facing))
             {
-                ISilNetTile silNetTile = tile.getCapability(SilCapabilities.SILNET_TILE, facing);
+                ISilNetTile silNetTile = tile.getCapability(SilicioAPI.SILNET_TILE, facing);
 
                 if(silNetTile instanceof ISilNetController)
                 {
@@ -66,11 +68,11 @@ public class ItemIDCard extends ItemSil
                         stack.setTagCompound(new NBTTagCompound());
                     }
 
-                    stack.getTagCompound().setString("ControllerID", LMStringUtils.fromUUID(silNetTile.getControllerID()));
+                    stack.getTagCompound().setString(TAG_KEY, LMStringUtils.fromUUID(silNetTile.getControllerID()));
                 }
-                else if(stack.hasTagCompound() && stack.getTagCompound().hasKey("ControllerID"))
+                else if(stack.hasTagCompound() && stack.getTagCompound().hasKey(TAG_KEY))
                 {
-                    UUID id = LMStringUtils.fromString(stack.getTagCompound().getString("ControllerID"));
+                    UUID id = LMStringUtils.fromString(stack.getTagCompound().getString(TAG_KEY));
                     silNetTile.setControllerID(id, playerIn);
                 }
             }

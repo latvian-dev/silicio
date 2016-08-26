@@ -25,4 +25,8 @@ public interface IModuleContainer extends ITickable
     boolean isChannelEnabled(EnumSignalSlot slot);
 
     int getChannel(EnumSignalSlot slot);
+
+    void addProperty(IModulePropertyKey<?> config);
+
+    <N extends IModuleProperty> N getProperty(IModulePropertyKey<N> config);
 }
