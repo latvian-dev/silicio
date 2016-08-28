@@ -1,18 +1,15 @@
 package com.latmod.silicio.tile;
 
 import com.feed_the_beast.ftbl.api.tile.EnumSync;
-import com.latmod.silicio.api.IModuleContainer;
-import com.latmod.silicio.api.ISilNetController;
-import com.latmod.silicio.api_impl.ModuleContainer;
+import com.latmod.silicio.api.module.impl.ModuleContainer;
+import com.latmod.silicio.api.tile.ISilNetController;
 import gnu.trove.map.TIntByteMap;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
 import net.minecraftforge.common.util.Constants;
-import net.minecraftforge.common.util.INBTSerializable;
 
-import javax.annotation.Nonnull;
 import java.util.EnumMap;
 import java.util.Map;
 
@@ -21,7 +18,7 @@ import java.util.Map;
  */
 public class TileSocketBlock extends TileSilNet implements ITickable
 {
-    public final Map<EnumFacing, IModuleContainer> modules;
+    public final Map<EnumFacing, ModuleContainer> modules;
 
     public TileSocketBlock()
     {
@@ -41,25 +38,22 @@ public class TileSocketBlock extends TileSilNet implements ITickable
     }
 
     @Override
-    public void writeTileData(@Nonnull NBTTagCompound nbt)
+    public void writeTileData(NBTTagCompound nbt)
     {
         super.writeTileData(nbt);
 
         NBTTagList list = new NBTTagList();
 
-        for(IModuleContainer m : modules.values())
+        for(ModuleContainer m : modules.values())
         {
-            if(m instanceof INBTSerializable<?>)
-            {
-                list.appendTag(((INBTSerializable<?>) m).serializeNBT());
-            }
+            list.appendTag(m.serializeNBT());
         }
 
         nbt.setTag("Modules", list);
     }
 
     @Override
-    public void readTileData(@Nonnull NBTTagCompound nbt)
+    public void readTileData(NBTTagCompound nbt)
     {
         super.readTileData(nbt);
 
@@ -75,31 +69,27 @@ public class TileSocketBlock extends TileSilNet implements ITickable
             if(c.getModule() != null)
             {
                 modules.put(c.getFacing(), c);
-                c.getModule().init(c);
             }
         }
     }
 
     @Override
-    public void writeTileClientData(@Nonnull NBTTagCompound nbt)
+    public void writeTileClientData(NBTTagCompound nbt)
     {
         super.writeTileClientData(nbt);
 
         NBTTagList list = new NBTTagList();
 
-        for(IModuleContainer m : modules.values())
+        for(ModuleContainer m : modules.values())
         {
-            if(m instanceof INBTSerializable<?>)
-            {
-                list.appendTag(((INBTSerializable<?>) m).serializeNBT());
-            }
+            list.appendTag(m.serializeNBT());
         }
 
         nbt.setTag("M", list);
     }
 
     @Override
-    public void readTileClientData(@Nonnull NBTTagCompound nbt)
+    public void readTileClientData(NBTTagCompound nbt)
     {
         super.readTileClientData(nbt);
 
@@ -127,7 +117,7 @@ public class TileSocketBlock extends TileSilNet implements ITickable
         {
             if(!modules.isEmpty())
             {
-                for(IModuleContainer m : modules.values())
+                for(ModuleContainer m : modules.values())
                 {
                     m.update();
                 }
@@ -138,11 +128,11 @@ public class TileSocketBlock extends TileSilNet implements ITickable
     }
 
     @Override
-    public void provideSignals(@Nonnull ISilNetController controller)
+    public void provideSignals(ISilNetController controller)
     {
         if(!modules.isEmpty())
         {
-            for(IModuleContainer m : modules.values())
+            for(ModuleContainer m : modules.values())
             {
                 m.getModule().provideSignals(m, controller);
             }
@@ -150,11 +140,11 @@ public class TileSocketBlock extends TileSilNet implements ITickable
     }
 
     @Override
-    public void onSignalsChanged(@Nonnull ISilNetController controller, TIntByteMap channels)
+    public void onSignalsChanged(ISilNetController controller, TIntByteMap channels)
     {
         if(!modules.isEmpty())
         {
-            for(IModuleContainer m : modules.values())
+            for(ModuleContainer m : modules.values())
             {
                 m.getModule().onSignalsChanged(m, controller, channels);
             }

@@ -4,8 +4,6 @@ import com.feed_the_beast.ftbl.api.item.IMaterial;
 import com.latmod.lib.EnumNameMap;
 import net.minecraft.item.Item;
 
-import javax.annotation.Nonnull;
-
 /**
  * Created by LatvianModder on 25.08.2016.
  */
@@ -50,7 +48,6 @@ public enum EnumMat implements IMaterial
         meta = id;
     }
 
-    @Nonnull
     @Override
     public String getName()
     {

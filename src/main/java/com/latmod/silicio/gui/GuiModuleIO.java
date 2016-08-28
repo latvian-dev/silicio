@@ -22,6 +22,7 @@ public class GuiModuleIO extends GuiLM
 
     public enum EnumMode
     {
+        BOTH,
         CHANNELS,
         CONFIG;
 
@@ -56,22 +57,22 @@ public class GuiModuleIO extends GuiLM
     }
 
     private final ContainerModuleIO container;
-    private EnumMode mode;
     private final ButtonLM buttonMode;
+    private EnumMode mode = EnumMode.BOTH;
 
-    public GuiModuleIO(ContainerModuleIO c, EnumMode m)
+    public GuiModuleIO(ContainerModuleIO c)
     {
-        super(176, 166);
+        super(176, 158);
         container = c;
-        mode = m;
 
-        buttonMode = new ButtonLM(8, 29, 16, 16)
+        buttonMode = new ButtonLM(13, 54, 16, 16)
         {
             @Override
             public void onClicked(GuiLM gui, IMouseButton button)
             {
                 playClickSound();
-                mc.displayGuiScreen(new GuiModuleIO(container, mode.next(button.isLeft())).getWrapper());
+                mode = mode.next(button.isLeft());
+                gui.refreshWidgets();
             }
         };
 

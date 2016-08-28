@@ -1,9 +1,9 @@
 package com.latmod.silicio.item;
 
 import com.latmod.lib.util.LMStringUtils;
-import com.latmod.silicio.api.ISilNetController;
-import com.latmod.silicio.api.ISilNetTile;
 import com.latmod.silicio.api.SilicioAPI;
+import com.latmod.silicio.api.tile.ISilNetController;
+import com.latmod.silicio.api.tile.ISilNetTile;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -16,7 +16,6 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-import javax.annotation.Nonnull;
 import java.util.List;
 import java.util.UUID;
 
@@ -50,7 +49,6 @@ public class ItemIDCard extends ItemSil
     }
 
     @Override
-    @Nonnull
     public EnumActionResult onItemUse(ItemStack stack, EntityPlayer playerIn, World worldIn, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ)
     {
         if(!worldIn.isRemote)

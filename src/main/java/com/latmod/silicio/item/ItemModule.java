@@ -1,9 +1,9 @@
 package com.latmod.silicio.item;
 
 import com.latmod.lib.LangKey;
-import com.latmod.silicio.api.IModule;
-import com.latmod.silicio.api.IModuleProvider;
 import com.latmod.silicio.api.SilicioAPI;
+import com.latmod.silicio.api.module.IModule;
+import com.latmod.silicio.api.module.IModuleProvider;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -13,7 +13,6 @@ import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.List;
 
@@ -64,7 +63,6 @@ public class ItemModule extends ItemSil
         return module;
     }
 
-    @Nonnull
     @Override
     public ICapabilityProvider initCapabilities(final ItemStack stack, final NBTTagCompound nbt)
     {

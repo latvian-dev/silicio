@@ -1,11 +1,10 @@
-package com.latmod.silicio.api_impl;
+package com.latmod.silicio.api.module.impl;
 
-import com.latmod.silicio.api.EnumSignalSlot;
-import com.latmod.silicio.api.IModule;
-import com.latmod.silicio.api.IModuleContainer;
-import com.latmod.silicio.api.IModuleProperty;
-import com.latmod.silicio.api.IModulePropertyKey;
 import com.latmod.silicio.api.SilicioAPI;
+import com.latmod.silicio.api.module.IModule;
+import com.latmod.silicio.api.module.IModuleContainer;
+import com.latmod.silicio.api.module.IModuleProperty;
+import com.latmod.silicio.api.module.IModulePropertyKey;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagCompound;
@@ -13,7 +12,9 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraftforge.common.util.INBTSerializable;
 
+import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -27,14 +28,12 @@ public final class ModuleContainer implements IModuleContainer, INBTSerializable
     private EnumFacing facing;
     private ItemStack item;
     private IModule module;
-    private Map<EnumSignalSlot, Integer> connections;
     private long tick;
-    private Map<IModulePropertyKey<?>, IModuleProperty> configMap;
+    private Map<IModulePropertyKey, IModuleProperty> properties;
 
     public ModuleContainer(TileEntity t)
     {
         tile = t;
-        connections = new HashMap<>();
     }
 
     @Override
@@ -51,12 +50,13 @@ public final class ModuleContainer implements IModuleContainer, INBTSerializable
     }
 
     @Override
+    @Nullable
     public EnumFacing getFacing()
     {
         return facing;
     }
 
-    public void setFacing(EnumFacing f)
+    public void setFacing(@Nullable EnumFacing f)
     {
         facing = f;
     }
@@ -90,46 +90,40 @@ public final class ModuleContainer implements IModuleContainer, INBTSerializable
     }
 
     @Override
-    public void addConnection(EnumSignalSlot slot)
-    {
-        connections.put(slot, null);
-    }
-
-    @Override
-    public boolean isChannelEnabled(EnumSignalSlot slot)
-    {
-        return connections.get(slot) != null;
-    }
-
-    @Override
-    public int getChannel(EnumSignalSlot slot)
-    {
-        return isChannelEnabled(slot) ? connections.get(slot) : 0;
-    }
-
-    @Override
     public void addProperty(IModulePropertyKey config)
     {
-        if(configMap == null)
+        if(properties == null)
         {
-            configMap = new HashMap<>();
+            properties = new HashMap<>();
         }
 
-        configMap.put(config, null);
+        properties.put(config, config.getDefValue().copy());
     }
 
     @Override
-    public <N extends IModuleProperty> N getProperty(IModulePropertyKey<N> config)
+    public IModuleProperty getProperty(IModulePropertyKey config)
     {
-        IModuleProperty base = configMap == null ? null : configMap.get(config);
-        return base == null ? config.getDefValue() : (N) base;
+        IModuleProperty base = properties == null ? null : properties.get(config);
+        return base == null ? config.getDefValue() : base;
+    }
+
+    @Override
+    public Map<IModulePropertyKey, IModuleProperty> getProperties()
+    {
+        if(properties == null)
+        {
+            return Collections.emptyMap();
+        }
+
+        return properties;
     }
 
     @Override
     public NBTTagCompound serializeNBT()
     {
         NBTTagCompound nbt = new NBTTagCompound();
-        nbt.setByte("Side", (byte) facing.ordinal());
+
+        nbt.setByte("Side", facing == null ? -1 : (byte) facing.ordinal());
         nbt.setLong("Tick", tick);
 
         NBTTagCompound tag2 = new NBTTagCompound();
@@ -138,9 +132,9 @@ public final class ModuleContainer implements IModuleContainer, INBTSerializable
 
         NBTTagCompound configTag = new NBTTagCompound();
 
-        if(configMap != null && !configMap.isEmpty())
+        if(properties != null && !properties.isEmpty())
         {
-            for(Map.Entry<IModulePropertyKey<?>, IModuleProperty> entry : configMap.entrySet())
+            for(Map.Entry<IModulePropertyKey, IModuleProperty> entry : properties.entrySet())
             {
                 if(entry.getValue() != null)
                 {
@@ -156,20 +150,23 @@ public final class ModuleContainer implements IModuleContainer, INBTSerializable
     @Override
     public void deserializeNBT(NBTTagCompound nbt)
     {
-        facing = EnumFacing.VALUES[nbt.getByte("Side")];
+        facing = nbt.getByte("Side") == -1 ? null : EnumFacing.VALUES[nbt.getByte("Side")];
         item = ItemStack.loadItemStackFromNBT(nbt.getCompoundTag("Item"));
         tick = nbt.getLong("Tick");
+        properties = null;
 
-        if(item.hasCapability(SilicioAPI.MODULE_PROVIDER, null))
+        module = item.hasCapability(SilicioAPI.MODULE_PROVIDER, null) ? item.getCapability(SilicioAPI.MODULE_PROVIDER, null).getModule() : null;
+
+        if(module != null)
         {
-            module = item.getCapability(SilicioAPI.MODULE_PROVIDER, null).getModule();
+            module.init(this);
         }
 
-        if(configMap != null && !configMap.isEmpty())
+        if(properties != null && !properties.isEmpty())
         {
             NBTTagCompound configTag = nbt.getCompoundTag("Config");
 
-            for(Map.Entry<IModulePropertyKey<?>, IModuleProperty> entry : configMap.entrySet())
+            for(Map.Entry<IModulePropertyKey, IModuleProperty> entry : properties.entrySet())
             {
                 NBTBase base = configTag.getTag(entry.getKey().getName());
 

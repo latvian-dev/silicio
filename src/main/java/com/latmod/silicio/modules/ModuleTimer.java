@@ -1,12 +1,13 @@
 package com.latmod.silicio.modules;
 
 import com.feed_the_beast.ftbl.api.recipes.IRecipes;
-import com.latmod.silicio.api.EnumSignalSlot;
-import com.latmod.silicio.api.IModule;
-import com.latmod.silicio.api.IModuleContainer;
-import com.latmod.silicio.api.ISilNetController;
-import com.latmod.silicio.api_impl.properties.ModulePropertyKey;
-import com.latmod.silicio.api_impl.properties.PropertyShort;
+import com.latmod.silicio.api.module.EnumSignalSlot;
+import com.latmod.silicio.api.module.IModule;
+import com.latmod.silicio.api.module.IModuleContainer;
+import com.latmod.silicio.api.module.impl.ModuleConnection;
+import com.latmod.silicio.api.module.impl.ModulePropertyKey;
+import com.latmod.silicio.api.module.impl.PropertyShort;
+import com.latmod.silicio.api.tile.ISilNetController;
 import net.minecraft.item.ItemStack;
 
 /**
@@ -14,12 +15,13 @@ import net.minecraft.item.ItemStack;
  */
 public class ModuleTimer implements IModule
 {
-    private static final ModulePropertyKey<PropertyShort> TIMER = new ModulePropertyKey<>("timer", new PropertyShort(20), null);
+    private static final ModuleConnection OUT_1 = new ModuleConnection(EnumSignalSlot.OUT_1, null);
+    private static final ModulePropertyKey TIMER = new ModulePropertyKey("timer", new PropertyShort(20), null);
 
     @Override
     public void init(IModuleContainer container)
     {
-        container.addConnection(EnumSignalSlot.OUT_1);
+        container.addProperty(OUT_1);
         container.addProperty(TIMER);
     }
 
@@ -31,9 +33,9 @@ public class ModuleTimer implements IModule
     @Override
     public void provideSignals(IModuleContainer container, ISilNetController controller)
     {
-        if(container.getTick() % container.getProperty(TIMER).getLong() == 0L)
+        if(container.getTick() % container.getProperty(TIMER).getInt() == 0L)
         {
-            controller.provideSignal(container.getChannel(EnumSignalSlot.OUT_1));
+            controller.provideSignal(container.getProperty(OUT_1).getInt());
         }
     }
 }

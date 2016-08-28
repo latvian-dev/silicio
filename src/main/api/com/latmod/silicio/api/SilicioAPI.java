@@ -1,10 +1,14 @@
 package com.latmod.silicio.api;
 
 import com.latmod.lib.math.BlockDimPos;
+import com.latmod.silicio.api.module.IModuleProvider;
+import com.latmod.silicio.api.tile.ISilNetController;
+import com.latmod.silicio.api.tile.ISilNetTile;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.CapabilityInject;
 
+import javax.annotation.Nullable;
 import java.util.Collection;
 import java.util.UUID;
 
@@ -39,5 +43,6 @@ public abstract class SilicioAPI
 
     public abstract void findSilNetTiles(Collection<TileEntity> tiles, UUID uuid);
 
-    public abstract ISilNetController findSilNetController(UUID controllerID);
+    @Nullable
+    public abstract ISilNetController findSilNetController(@Nullable UUID controllerID);
 }

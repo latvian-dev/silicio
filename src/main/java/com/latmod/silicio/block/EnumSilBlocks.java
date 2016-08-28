@@ -26,7 +26,6 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.world.World;
 
-import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 /**
@@ -58,7 +57,6 @@ public enum EnumSilBlocks implements BlockWithVariants.IBlockVariant
         meta = id;
     }
 
-    @Nonnull
     @Override
     public String getName()
     {
@@ -122,7 +120,6 @@ public enum EnumSilBlocks implements BlockWithVariants.IBlockVariant
     }
 
     @Override
-    @Nonnull
     public Material getMaterial()
     {
         switch(this)
@@ -131,15 +128,20 @@ public enum EnumSilBlocks implements BlockWithVariants.IBlockVariant
             case OPAL_GLASS:
                 return Material.GLASS;
             case ELEMITE_BLOCK:
-
+            case CONTROLLER:
+            case ELEMITE_CRAFTER:
+            case MODULE_IO:
+            case ESU:
+            case REACTOR_CORE:
                 return Material.IRON;
+            case LAMP:
+                return Material.REDSTONE_LIGHT;
             default:
                 return Material.ROCK;
         }
     }
 
     @Override
-    @Nonnull
     public BlockRenderLayer getLayer()
     {
         switch(this)
@@ -165,7 +167,6 @@ public enum EnumSilBlocks implements BlockWithVariants.IBlockVariant
     }
 
     @Override
-    @Nonnull
     public MapColor getMapColor()
     {
         switch(this)

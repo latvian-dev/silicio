@@ -13,18 +13,16 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-import javax.annotation.Nonnull;
-
 /**
  * Created by LatvianModder on 08.03.2016.
  */
 @SideOnly(Side.CLIENT)
 public class RenderTurret extends TileEntitySpecialRenderer<TileTurret>
 {
-    public static final ResourceLocation TEXTURE = new ResourceLocation(Silicio.MOD_ID, "textures/tile/turret_beam.png");
+    private static final ResourceLocation TEXTURE = new ResourceLocation(Silicio.MOD_ID, "textures/tile/turret_beam.png");
 
     @Override
-    public void renderTileEntityAt(@Nonnull TileTurret te, double x, double y, double z, float partialTicks, int destroyStage)
+    public void renderTileEntityAt(TileTurret te, double x, double y, double z, float partialTicks, int destroyStage)
     {
         if(te.target == null || te.target.isDead/* || te.getWorld().getTotalWorldTime() % 3 != 0*/)
         {

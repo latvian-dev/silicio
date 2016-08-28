@@ -1,12 +1,9 @@
-package com.latmod.silicio.api;
-
-import javax.annotation.Nullable;
+package com.latmod.silicio.api.module;
 
 /**
  * Created by LatvianModder on 06.08.2016.
  */
 public interface IModuleProvider
 {
-    @Nullable
     IModule getModule();
 }

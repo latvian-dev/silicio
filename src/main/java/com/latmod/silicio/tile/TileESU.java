@@ -5,8 +5,6 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
 import net.minecraftforge.common.capabilities.Capability;
 
-import javax.annotation.Nonnull;
-
 /**
  * Created by LatvianModder on 01.05.2016.
  */
@@ -23,14 +21,13 @@ public class TileESU extends TileLM implements ITickable
     }
 
     @Override
-    public boolean hasCapability(@Nonnull Capability<?> capability, @Nonnull EnumFacing facing)
+    public boolean hasCapability(Capability<?> capability, EnumFacing facing)
     {
         return super.hasCapability(capability, facing);
     }
 
-    @Nonnull
     @Override
-    public <T> T getCapability(@Nonnull Capability<T> capability, @Nonnull EnumFacing facing)
+    public <T> T getCapability(Capability<T> capability, EnumFacing facing)
     {
         return super.getCapability(capability, facing);
     }

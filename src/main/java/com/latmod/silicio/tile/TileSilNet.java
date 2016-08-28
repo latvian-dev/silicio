@@ -1,17 +1,15 @@
 package com.latmod.silicio.tile;
 
 import com.feed_the_beast.ftbl.api.tile.TileLM;
-import com.latmod.lib.util.LMStringUtils;
-import com.latmod.silicio.api.ISilNetController;
-import com.latmod.silicio.api.ISilNetTile;
 import com.latmod.silicio.api.SilicioAPI;
+import com.latmod.silicio.api.tile.ISilNetController;
+import com.latmod.silicio.api.tile.ISilNetTile;
 import gnu.trove.map.TIntByteMap;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 import net.minecraftforge.common.capabilities.Capability;
 
-import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.UUID;
 
@@ -37,44 +35,50 @@ public abstract class TileSilNet extends TileLM implements ISilNetTile
     }
 
     @Override
-    public void writeTileData(@Nonnull NBTTagCompound nbt)
+    public void writeTileData(NBTTagCompound nbt)
     {
+        super.writeTileData(nbt);
+
         if(controllerID != null)
         {
-            nbt.setString("ControllerID", LMStringUtils.fromUUID(controllerID));
+            nbt.setUniqueId("ControllerID", controllerID);
         }
     }
 
     @Override
-    public void readTileData(@Nonnull NBTTagCompound nbt)
+    public void readTileData(NBTTagCompound nbt)
     {
-        controllerID = nbt.hasKey("ControllerID") ? LMStringUtils.fromString(nbt.getString("ControllerID")) : null;
+        super.readTileData(nbt);
+        controllerID = nbt.hasUniqueId("ControllerID") ? nbt.getUniqueId("ControllerID") : null;
     }
 
     @Override
-    public void writeTileClientData(@Nonnull NBTTagCompound nbt)
+    public void writeTileClientData(NBTTagCompound nbt)
     {
+        super.writeTileClientData(nbt);
+
         if(controllerID != null)
         {
-            nbt.setString("CID", LMStringUtils.fromUUID(controllerID));
+            nbt.setLong("CIDM", controllerID.getMostSignificantBits());
+            nbt.setLong("CIDL", controllerID.getLeastSignificantBits());
         }
     }
 
     @Override
-    public void readTileClientData(@Nonnull NBTTagCompound nbt)
+    public void readTileClientData(NBTTagCompound nbt)
     {
-        controllerID = nbt.hasKey("CID") ? LMStringUtils.fromString(nbt.getString("CID")) : null;
+        super.readTileClientData(nbt);
+        controllerID = nbt.hasKey("CIDM") ? new UUID(nbt.getLong("CIDM"), nbt.getLong("CIDL")) : null;
     }
 
     @Override
-    public boolean hasCapability(@Nonnull Capability<?> capability, @Nonnull EnumFacing facing)
+    public boolean hasCapability(Capability<?> capability, EnumFacing facing)
     {
         return capability == SilicioAPI.SILNET_TILE || super.hasCapability(capability, facing);
     }
 
-    @Nonnull
     @Override
-    public <T> T getCapability(@Nonnull Capability<T> capability, @Nonnull EnumFacing facing)
+    public <T> T getCapability(Capability<T> capability, EnumFacing facing)
     {
         if(capability == SilicioAPI.SILNET_TILE)
         {
@@ -97,7 +101,6 @@ public abstract class TileSilNet extends TileLM implements ISilNetTile
         if(!playerIn.worldObj.isRemote)
         {
             ISilNetController c = SilicioAPI.get().findSilNetController(controllerID);
-
             controllerID = id;
 
             if(c != null)
@@ -115,12 +118,12 @@ public abstract class TileSilNet extends TileLM implements ISilNetTile
     }
 
     @Override
-    public void provideSignals(@Nonnull ISilNetController controller)
+    public void provideSignals(ISilNetController controller)
     {
     }
 
     @Override
-    public void onSignalsChanged(@Nonnull ISilNetController controller, TIntByteMap channels)
+    public void onSignalsChanged(ISilNetController controller, TIntByteMap channels)
     {
     }
 }

@@ -1,12 +1,13 @@
 package com.latmod.silicio.modules;
 
 import com.feed_the_beast.ftbl.api.recipes.IRecipes;
-import com.latmod.silicio.api.EnumSignalSlot;
-import com.latmod.silicio.api.IModule;
-import com.latmod.silicio.api.IModuleContainer;
-import com.latmod.silicio.api.ISilNetController;
-import com.latmod.silicio.api_impl.properties.ModulePropertyKey;
-import com.latmod.silicio.api_impl.properties.PropertyShort;
+import com.latmod.silicio.api.module.EnumSignalSlot;
+import com.latmod.silicio.api.module.IModule;
+import com.latmod.silicio.api.module.IModuleContainer;
+import com.latmod.silicio.api.module.impl.ModuleConnection;
+import com.latmod.silicio.api.module.impl.ModulePropertyKey;
+import com.latmod.silicio.api.module.impl.PropertyShort;
+import com.latmod.silicio.api.tile.ISilNetController;
 import net.minecraft.item.ItemStack;
 
 /**
@@ -14,21 +15,26 @@ import net.minecraft.item.ItemStack;
  */
 public class ModuleSequencer implements IModule
 {
-    private static final ModulePropertyKey<PropertyShort> TIMER = new ModulePropertyKey<>("timer", new PropertyShort(20), null);
+    private static final ModulePropertyKey TIMER = new ModulePropertyKey("timer", new PropertyShort(20), null);
 
-    private final int outputs;
+    private final ModuleConnection[] outputs;
 
     public ModuleSequencer(int out)
     {
-        outputs = out;
+        outputs = new ModuleConnection[out];
+
+        for(int i = 0; i < out; i++)
+        {
+            outputs[i] = new ModuleConnection(EnumSignalSlot.OUTPUT.get(i), null);
+        }
     }
 
     @Override
     public void init(IModuleContainer container)
     {
-        for(int i = 0; i < outputs; i++)
+        for(ModuleConnection c : outputs)
         {
-            container.addConnection(EnumSignalSlot.OUTPUT[i]);
+            container.addProperty(c);
         }
 
         container.addProperty(TIMER);
@@ -42,12 +48,12 @@ public class ModuleSequencer implements IModule
     @Override
     public void provideSignals(IModuleContainer container, ISilNetController controller)
     {
-        long timer = container.getProperty(TIMER).getLong();
+        int timer = container.getProperty(TIMER).getInt();
 
-        if(container.getTick() % (timer / outputs) == 0L)
+        if(container.getTick() % (timer / 4) == 0L)
         {
-            int i = (int) ((container.getTick() / timer) % outputs);
-            controller.provideSignal(container.getChannel(EnumSignalSlot.OUTPUT[i]));
+            int i = (int) ((container.getTick() / timer) % 4);
+            controller.provideSignal(container.getProperty(outputs[i]).getInt());
         }
     }
 }

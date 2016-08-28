@@ -11,8 +11,6 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-import javax.annotation.Nonnull;
-
 public class BlockBlueGoo extends BlockSil
 {
     public BlockBlueGoo()
@@ -22,7 +20,6 @@ public class BlockBlueGoo extends BlockSil
         setSoundType(SoundType.SLIME);
     }
 
-    @Nonnull
     @Override
     @Deprecated
     public MapColor getMapColor(IBlockState state)
@@ -30,7 +27,6 @@ public class BlockBlueGoo extends BlockSil
         return MapColor.LIGHT_BLUE;
     }
 
-    @Nonnull
     @Override
     @SideOnly(Side.CLIENT)
     public BlockRenderLayer getBlockLayer()

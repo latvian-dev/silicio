@@ -19,9 +19,9 @@ public class ContainerModuleIO extends ContainerLM
     {
         super(ep);
         tile = t;
-
-        addSlotToContainer(new SlotItemHandler(t.itemHandler, 0, 8, 8));
-        addPlayerSlots(8, 84, false);
+        addSlotToContainer(new SlotItemHandler(t.itemHandler, 0, 13, 11));
+        addSlotToContainer(new SlotItemHandler(t.itemHandler, 1, 13, 33));
+        addPlayerSlots(8, 76, false);
     }
 
     @Nullable

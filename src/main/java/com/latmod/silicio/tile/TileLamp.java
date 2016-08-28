@@ -3,7 +3,7 @@ package com.latmod.silicio.tile;
 import com.feed_the_beast.ftbl.api.tile.EnumSync;
 import com.latmod.lib.math.MathHelperLM;
 import com.latmod.lib.util.LMTroveUtils;
-import com.latmod.silicio.api.ISilNetController;
+import com.latmod.silicio.api.tile.ISilNetController;
 import gnu.trove.impl.Constants;
 import gnu.trove.map.TIntByteMap;
 import gnu.trove.map.TIntIntMap;
@@ -13,7 +13,6 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-import javax.annotation.Nonnull;
 import java.awt.*;
 
 /**
@@ -34,7 +33,7 @@ public class TileLamp extends TileSilNet
     }
 
     @Override
-    public void writeTileData(@Nonnull NBTTagCompound nbt)
+    public void writeTileData(NBTTagCompound nbt)
     {
         super.writeTileData(nbt);
         nbt.setIntArray("Colors", LMTroveUtils.toIntList(colorMap).toArray());
@@ -42,7 +41,7 @@ public class TileLamp extends TileSilNet
     }
 
     @Override
-    public void readTileData(@Nonnull NBTTagCompound nbt)
+    public void readTileData(NBTTagCompound nbt)
     {
         super.readTileData(nbt);
         colorMap = LMTroveUtils.fromArray(nbt.getIntArray("Colors"));
@@ -50,7 +49,7 @@ public class TileLamp extends TileSilNet
     }
 
     @Override
-    public void writeTileClientData(@Nonnull NBTTagCompound nbt)
+    public void writeTileClientData(NBTTagCompound nbt)
     {
         super.writeTileClientData(nbt);
         nbt.setIntArray("Colors", LMTroveUtils.toIntList(colorMap).toArray());
@@ -58,7 +57,7 @@ public class TileLamp extends TileSilNet
     }
 
     @Override
-    public void readTileClientData(@Nonnull NBTTagCompound nbt)
+    public void readTileClientData(NBTTagCompound nbt)
     {
         super.readTileClientData(nbt);
         colorMap = LMTroveUtils.fromArray(nbt.getIntArray("Colors"));
@@ -72,7 +71,7 @@ public class TileLamp extends TileSilNet
     }
 
     @Override
-    public void onSignalsChanged(@Nonnull ISilNetController controller, TIntByteMap channels)
+    public void onSignalsChanged(ISilNetController controller, TIntByteMap channels)
     {
         currentColor = Color.HSBtoRGB(MathHelperLM.RAND.nextFloat(), 1F, 1F);
         markDirty();
@@ -104,7 +103,6 @@ public class TileLamp extends TileSilNet
     }
 
     @Override
-    @Nonnull
     @SideOnly(Side.CLIENT)
     public AxisAlignedBB getRenderBoundingBox()
     {

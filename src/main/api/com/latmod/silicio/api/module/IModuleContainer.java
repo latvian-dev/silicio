@@ -1,9 +1,12 @@
-package com.latmod.silicio.api;
+package com.latmod.silicio.api.module;
 
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
+
+import javax.annotation.Nullable;
+import java.util.Map;
 
 /**
  * Created by LatvianModder on 06.08.2016.
@@ -12,6 +15,7 @@ public interface IModuleContainer extends ITickable
 {
     TileEntity getTile();
 
+    @Nullable
     EnumFacing getFacing();
 
     ItemStack getItem();
@@ -20,13 +24,9 @@ public interface IModuleContainer extends ITickable
 
     long getTick();
 
-    void addConnection(EnumSignalSlot slot);
+    void addProperty(IModulePropertyKey config);
 
-    boolean isChannelEnabled(EnumSignalSlot slot);
+    IModuleProperty getProperty(IModulePropertyKey config);
 
-    int getChannel(EnumSignalSlot slot);
-
-    void addProperty(IModulePropertyKey<?> config);
-
-    <N extends IModuleProperty> N getProperty(IModulePropertyKey<N> config);
+    Map<IModulePropertyKey, IModuleProperty> getProperties();
 }

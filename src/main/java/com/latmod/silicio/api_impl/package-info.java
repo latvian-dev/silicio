@@ -1,11 +1,3 @@
-/**
- * Created by LatvianModder on 26.08.2016.
- */
-
-@ParametersAreNonnullByDefault
-@MethodsReturnNonnullByDefault
+@javax.annotation.ParametersAreNonnullByDefault
+@mcp.MethodsReturnNonnullByDefault
 package com.latmod.silicio.api_impl;
-
-import mcp.MethodsReturnNonnullByDefault;
-
-import javax.annotation.ParametersAreNonnullByDefault;

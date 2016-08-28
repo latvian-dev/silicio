@@ -1,6 +1,7 @@
-package com.latmod.silicio.api;
+package com.latmod.silicio.api.module;
 
 import com.feed_the_beast.ftbl.api.recipes.IRecipes;
+import com.latmod.silicio.api.tile.ISilNetController;
 import gnu.trove.map.TIntByteMap;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;

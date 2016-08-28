@@ -4,8 +4,6 @@ import com.latmod.lib.math.MathHelperLM;
 import com.latmod.silicio.tile.TileConnector;
 import net.minecraft.block.BlockDirectional;
 import net.minecraft.block.material.Material;
-import net.minecraft.block.properties.PropertyDirection;
-import net.minecraft.block.properties.PropertyEnum;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
@@ -19,15 +17,12 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-import javax.annotation.Nonnull;
-
 /**
  * Created by LatvianModder on 02.05.2016.
  */
 public class BlockConnector extends BlockSil
 {
     public static final AxisAlignedBB[] BOXES = MathHelperLM.getRotatedBoxes(new AxisAlignedBB(2D / 16D, 0D, 2D / 16D, 14D / 16D, 2D / 16D, 14D / 16D));
-    public static final PropertyEnum<EnumFacing> FACING = PropertyDirection.create("facing", EnumFacing.class);
 
     public BlockConnector()
     {
@@ -41,14 +36,12 @@ public class BlockConnector extends BlockSil
         return true;
     }
 
-    @Nonnull
     @Override
-    public TileEntity createTileEntity(@Nonnull World w, @Nonnull IBlockState state)
+    public TileEntity createTileEntity(World w, IBlockState state)
     {
         return new TileConnector();
     }
 
-    @Nonnull
     @Override
     @SideOnly(Side.CLIENT)
     public BlockRenderLayer getBlockLayer()
@@ -63,25 +56,23 @@ public class BlockConnector extends BlockSil
         return false;
     }
 
-    @Nonnull
     @Override
     @Deprecated
     public IBlockState getStateFromMeta(int meta)
     {
-        return getDefaultState().withProperty(FACING, EnumFacing.VALUES[meta % 6]);
+        return getDefaultState().withProperty(BlockDirectional.FACING, EnumFacing.VALUES[meta % 6]);
     }
 
     @Override
     public int getMetaFromState(IBlockState state)
     {
-        return state.getValue(FACING).ordinal();
+        return state.getValue(BlockDirectional.FACING).ordinal();
     }
 
-    @Nonnull
     @Override
     protected BlockStateContainer createBlockState()
     {
-        return new BlockStateContainer(this, FACING);
+        return new BlockStateContainer(this, BlockDirectional.FACING);
     }
 
     @Override
@@ -90,20 +81,18 @@ public class BlockConnector extends BlockSil
         return 0;
     }
 
-    @Nonnull
     @Override
     @Deprecated
     public IBlockState onBlockPlaced(World worldIn, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer)
     {
-        return getDefaultState().withProperty(FACING, facing.getOpposite());
+        return getDefaultState().withProperty(BlockDirectional.FACING, facing.getOpposite());
     }
 
-    @Nonnull
     @Override
     @Deprecated
     public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos)
     {
-        return BOXES[state.getValue(FACING).ordinal()];
+        return BOXES[state.getValue(BlockDirectional.FACING).ordinal()];
     }
 
     @Override

@@ -1,7 +1,7 @@
-package com.latmod.silicio.api_impl.properties;
+package com.latmod.silicio.api.module.impl;
 
-import com.latmod.silicio.api.IModuleProperty;
-import com.latmod.silicio.api.IModulePropertyKey;
+import com.latmod.silicio.api.module.IModuleProperty;
+import com.latmod.silicio.api.module.IModulePropertyKey;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentString;
 
@@ -10,13 +10,13 @@ import javax.annotation.Nullable;
 /**
  * Created by LatvianModder on 26.08.2016.
  */
-public class ModulePropertyKey<N extends IModuleProperty> implements IModulePropertyKey<N>
+public class ModulePropertyKey implements IModulePropertyKey
 {
     private final String ID;
-    private final N defValue;
+    private final IModuleProperty defValue;
     private final ITextComponent displayName;
 
-    public ModulePropertyKey(String id, N def, @Nullable ITextComponent dn)
+    public ModulePropertyKey(String id, IModuleProperty def, @Nullable ITextComponent dn)
     {
         ID = id;
         defValue = def;
@@ -30,7 +30,7 @@ public class ModulePropertyKey<N extends IModuleProperty> implements IModuleProp
     }
 
     @Override
-    public N getDefValue()
+    public IModuleProperty getDefValue()
     {
         return defValue;
     }

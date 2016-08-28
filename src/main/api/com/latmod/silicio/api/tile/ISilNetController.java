@@ -1,8 +1,10 @@
-package com.latmod.silicio.api;
+package com.latmod.silicio.api.tile;
 
 import net.minecraft.tileentity.TileEntity;
 
 import java.util.Collection;
+import java.util.Map;
+import java.util.UUID;
 
 /**
  * Created by LatvianModder on 05.03.2016.
@@ -16,4 +18,6 @@ public interface ISilNetController extends ISilNetTile
     void provideSignal(int id);
 
     Collection<TileEntity> getNetwork();
+
+    Map<UUID, ISilNetConnector> getConnectors();
 }

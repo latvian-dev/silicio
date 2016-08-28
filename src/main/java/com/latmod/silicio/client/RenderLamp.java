@@ -9,8 +9,6 @@ import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-import javax.annotation.Nonnull;
-
 /**
  * Created by LatvianModder on 23.08.2016.
  */
@@ -20,7 +18,7 @@ public class RenderLamp extends TileEntitySpecialRenderer<TileLamp>
     private static final CubeRenderer LAMP_MASK = new CubeRenderer(false, true);
 
     @Override
-    public void renderTileEntityAt(@Nonnull TileLamp te, double x, double y, double z, float partialTicks, int destroyStage)
+    public void renderTileEntityAt(TileLamp te, double x, double y, double z, float partialTicks, int destroyStage)
     {
         GlStateManager.disableTexture2D();
         GlStateManager.color(1F, 1F, 1F, 1F);

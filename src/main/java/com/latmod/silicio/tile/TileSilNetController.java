@@ -1,8 +1,10 @@
 package com.latmod.silicio.tile;
 
 import com.feed_the_beast.ftbl.api.tile.EnumSync;
-import com.latmod.silicio.api.ISilNetController;
 import com.latmod.silicio.api.SilicioAPI;
+import com.latmod.silicio.api.tile.ISilNetConnector;
+import com.latmod.silicio.api.tile.ISilNetController;
+import com.latmod.silicio.api.tile.ISilNetTile;
 import gnu.trove.TIntCollection;
 import gnu.trove.impl.Constants;
 import gnu.trove.map.TIntByteMap;
@@ -14,10 +16,11 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ITickable;
 
-import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 
 /**
@@ -30,6 +33,7 @@ public class TileSilNetController extends TileSilNet implements ITickable, ISilN
     private final TIntCollection signalsPrev = new TIntHashSet();
     private final TIntByteMap changedSignals = new TIntByteHashMap(3, Constants.DEFAULT_LOAD_FACTOR, 0, (byte) -1);
     private Collection<TileEntity> network = new ArrayList<>();
+    private Map<UUID, ISilNetConnector> connectedTiles = new HashMap<>();
     private boolean updateNetwork = true;
 
     @Override
@@ -51,12 +55,12 @@ public class TileSilNetController extends TileSilNet implements ITickable, ISilN
     }
 
     @Override
-    public void setControllerID(@Nullable UUID id, @Nonnull EntityPlayer playerIn)
+    public void setControllerID(@Nullable UUID id, EntityPlayer playerIn)
     {
     }
 
     @Override
-    public void readTileData(@Nonnull NBTTagCompound nbt)
+    public void readTileData(NBTTagCompound nbt)
     {
         super.readTileData(nbt);
         signals.clear();
@@ -66,7 +70,7 @@ public class TileSilNetController extends TileSilNet implements ITickable, ISilN
     }
 
     @Override
-    public void writeTileData(@Nonnull NBTTagCompound nbt)
+    public void writeTileData(NBTTagCompound nbt)
     {
         super.writeTileData(nbt);
         nbt.setIntArray("Signals", signals.toArray());
@@ -74,7 +78,7 @@ public class TileSilNetController extends TileSilNet implements ITickable, ISilN
     }
 
     @Override
-    public void readTileClientData(@Nonnull NBTTagCompound nbt)
+    public void readTileClientData(NBTTagCompound nbt)
     {
         super.readTileClientData(nbt);
         signals.clear();
@@ -83,7 +87,7 @@ public class TileSilNetController extends TileSilNet implements ITickable, ISilN
     }
 
     @Override
-    public void writeTileClientData(@Nonnull NBTTagCompound nbt)
+    public void writeTileClientData(NBTTagCompound nbt)
     {
         super.writeTileClientData(nbt);
         nbt.setIntArray("S", signals.toArray());
@@ -157,10 +161,30 @@ public class TileSilNetController extends TileSilNet implements ITickable, ISilN
             network.clear();
             SilicioAPI.get().findSilNetTiles(network, getControllerID());
             network.remove(this);
+
+            connectedTiles.clear();
+
+            for(TileEntity tile : network)
+            {
+                ISilNetTile tile1 = tile.getCapability(SilicioAPI.SILNET_TILE, null);
+
+                if(tile1 instanceof ISilNetConnector)
+                {
+                    connectedTiles.put(((ISilNetConnector) tile1).getConnectorID(), (ISilNetConnector) tile1);
+                }
+            }
+
             updateNetwork = false;
         }
 
         return network;
+    }
+
+    @Override
+    public Map<UUID, ISilNetConnector> getConnectors()
+    {
+        getNetwork();
+        return connectedTiles;
     }
 
     @Override

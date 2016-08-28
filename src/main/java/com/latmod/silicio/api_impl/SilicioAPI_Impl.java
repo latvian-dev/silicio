@@ -2,13 +2,14 @@ package com.latmod.silicio.api_impl;
 
 import com.feed_the_beast.ftbl.util.EmptyCapStorage;
 import com.latmod.lib.math.BlockDimPos;
-import com.latmod.silicio.api.IModuleProvider;
-import com.latmod.silicio.api.ISilNetController;
-import com.latmod.silicio.api.ISilNetTile;
 import com.latmod.silicio.api.SilicioAPI;
+import com.latmod.silicio.api.module.IModuleProvider;
+import com.latmod.silicio.api.tile.ISilNetController;
+import com.latmod.silicio.api.tile.ISilNetTile;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.common.capabilities.CapabilityManager;
 
+import javax.annotation.Nullable;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
@@ -75,25 +76,37 @@ public class SilicioAPI_Impl extends SilicioAPI
     {
         for(TileEntity tile : NET.values())
         {
-            ISilNetTile tile1 = tile.getCapability(SilicioAPI.SILNET_TILE, null);
-
-            if(tile1.getControllerID() != null && tile1.getControllerID().equals(uuid))
+            if(!tile.isInvalid() && tile.hasCapability(SilicioAPI.SILNET_TILE, null))
             {
-                tiles.add(tile);
+                ISilNetTile tile1 = tile.getCapability(SilicioAPI.SILNET_TILE, null);
+
+                if(tile1.getControllerID() != null && tile1.getControllerID().equals(uuid))
+                {
+                    tiles.add(tile);
+                }
             }
         }
     }
 
     @Override
-    public ISilNetController findSilNetController(UUID controllerID)
+    @Nullable
+    public ISilNetController findSilNetController(@Nullable UUID controllerID)
     {
+        if(controllerID == null)
+        {
+            return null;
+        }
+
         for(TileEntity tile : NET.values())
         {
-            ISilNetTile tile1 = tile.getCapability(SilicioAPI.SILNET_TILE, null);
-
-            if(tile1 instanceof ISilNetController && tile1.getControllerID().equals(controllerID))
+            if(!tile.isInvalid() && tile.hasCapability(SilicioAPI.SILNET_TILE, null))
             {
-                return (ISilNetController) tile1;
+                ISilNetTile tile1 = tile.getCapability(SilicioAPI.SILNET_TILE, null);
+
+                if(tile1 instanceof ISilNetController && tile1.getControllerID().equals(controllerID))
+                {
+                    return (ISilNetController) tile1;
+                }
             }
         }
 

@@ -1,10 +1,10 @@
 package com.latmod.silicio.block;
 
 import com.feed_the_beast.ftbl.api.item.LMInvUtils;
-import com.latmod.silicio.api.IModule;
-import com.latmod.silicio.api.IModuleContainer;
 import com.latmod.silicio.api.SilicioAPI;
-import com.latmod.silicio.api_impl.ModuleContainer;
+import com.latmod.silicio.api.module.IModule;
+import com.latmod.silicio.api.module.IModuleContainer;
+import com.latmod.silicio.api.module.impl.ModuleContainer;
 import com.latmod.silicio.tile.TileSocketBlock;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyBool;
@@ -24,7 +24,6 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 /**
@@ -32,12 +31,12 @@ import javax.annotation.Nullable;
  */
 public class BlockSocketBlock extends BlockSil
 {
-    public static final PropertyBool MODULE_D = PropertyBool.create("down");
-    public static final PropertyBool MODULE_U = PropertyBool.create("up");
-    public static final PropertyBool MODULE_N = PropertyBool.create("north");
-    public static final PropertyBool MODULE_S = PropertyBool.create("south");
-    public static final PropertyBool MODULE_W = PropertyBool.create("west");
-    public static final PropertyBool MODULE_E = PropertyBool.create("east");
+    private static final PropertyBool MODULE_D = PropertyBool.create("down");
+    private static final PropertyBool MODULE_U = PropertyBool.create("up");
+    private static final PropertyBool MODULE_N = PropertyBool.create("north");
+    private static final PropertyBool MODULE_S = PropertyBool.create("south");
+    private static final PropertyBool MODULE_W = PropertyBool.create("west");
+    private static final PropertyBool MODULE_E = PropertyBool.create("east");
 
     public BlockSocketBlock()
     {
@@ -51,14 +50,12 @@ public class BlockSocketBlock extends BlockSil
         return true;
     }
 
-    @Nonnull
     @Override
-    public TileEntity createTileEntity(@Nonnull World w, @Nonnull IBlockState state)
+    public TileEntity createTileEntity(World w, IBlockState state)
     {
         return new TileSocketBlock();
     }
 
-    @Nonnull
     @Override
     @Deprecated
     public IBlockState getStateFromMeta(int meta)
@@ -72,17 +69,15 @@ public class BlockSocketBlock extends BlockSil
         return 0;
     }
 
-    @Nonnull
     @Override
     protected BlockStateContainer createBlockState()
     {
         return new BlockStateContainer(this, MODULE_D, MODULE_U, MODULE_N, MODULE_S, MODULE_W, MODULE_E);
     }
 
-    @Nonnull
     @Override
     @Deprecated
-    public IBlockState getActualState(@Nonnull IBlockState state, IBlockAccess w, BlockPos pos)
+    public IBlockState getActualState(IBlockState state, IBlockAccess w, BlockPos pos)
     {
         boolean modD = false, modU = false, modN = false, modS = false, modW = false, modE = false;
 
@@ -142,18 +137,15 @@ public class BlockSocketBlock extends BlockSil
                 {
                     IModule module = heldItem.getCapability(SilicioAPI.MODULE_PROVIDER, null).getModule();
 
-                    if(module != null)
-                    {
-                        ModuleContainer c = new ModuleContainer(socketBlock);
-                        c.setFacing(side);
-                        c.setItem(LMInvUtils.singleCopy(heldItem));
-                        c.setModule(module);
+                    ModuleContainer c = new ModuleContainer(socketBlock);
+                    c.setFacing(side);
+                    c.setItem(LMInvUtils.singleCopy(heldItem));
+                    c.setModule(module);
 
-                        socketBlock.modules.put(c.getFacing(), c);
-                        heldItem.stackSize--;
-                        c.getModule().onAdded(c, (EntityPlayerMP) playerIn);
-                        socketBlock.markDirty();
-                    }
+                    socketBlock.modules.put(c.getFacing(), c);
+                    heldItem.stackSize--;
+                    c.getModule().onAdded(c, (EntityPlayerMP) playerIn);
+                    socketBlock.markDirty();
                 }
 
                 return true;
@@ -182,7 +174,6 @@ public class BlockSocketBlock extends BlockSil
         super.breakBlock(worldIn, pos, state);
     }
 
-    @Nonnull
     @Override
     @SideOnly(Side.CLIENT)
     public BlockRenderLayer getBlockLayer()

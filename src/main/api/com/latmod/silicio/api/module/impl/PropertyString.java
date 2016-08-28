@@ -1,6 +1,6 @@
-package com.latmod.silicio.api_impl.properties;
+package com.latmod.silicio.api.module.impl;
 
-import com.latmod.silicio.api.IModuleProperty;
+import com.latmod.silicio.api.module.IModuleProperty;
 import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagString;
 
@@ -16,19 +16,33 @@ public class PropertyString implements IModuleProperty
         value = v;
     }
 
-    public String getString()
-    {
-        return value;
-    }
-
     public void set(String v)
     {
         value = v;
     }
 
-    public String toString()
+    @Override
+    public String getString()
     {
-        return String.valueOf(getString());
+        return String.valueOf(value);
+    }
+
+    @Override
+    public boolean getBoolean()
+    {
+        return getString().equals("true");
+    }
+
+    @Override
+    public int getInt()
+    {
+        return Integer.parseInt(getString());
+    }
+
+    @Override
+    public IModuleProperty copy()
+    {
+        return new PropertyString(getString());
     }
 
     @Override

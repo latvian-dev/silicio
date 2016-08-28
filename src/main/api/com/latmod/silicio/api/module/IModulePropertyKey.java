@@ -1,4 +1,4 @@
-package com.latmod.silicio.api;
+package com.latmod.silicio.api.module;
 
 import net.minecraft.util.IStringSerializable;
 import net.minecraft.util.text.ITextComponent;
@@ -6,9 +6,9 @@ import net.minecraft.util.text.ITextComponent;
 /**
  * Created by LatvianModder on 26.08.2016.
  */
-public interface IModulePropertyKey<N extends IModuleProperty> extends IStringSerializable
+public interface IModulePropertyKey extends IStringSerializable
 {
-    N getDefValue();
+    IModuleProperty getDefValue();
 
     ITextComponent getDisplayName();
 }

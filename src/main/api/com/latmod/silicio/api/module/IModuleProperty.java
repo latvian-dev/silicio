@@ -1,4 +1,4 @@
-package com.latmod.silicio.api;
+package com.latmod.silicio.api.module;
 
 import net.minecraft.nbt.NBTBase;
 import net.minecraftforge.common.util.INBTSerializable;
@@ -8,4 +8,11 @@ import net.minecraftforge.common.util.INBTSerializable;
  */
 public interface IModuleProperty extends INBTSerializable<NBTBase>
 {
+    String getString();
+
+    boolean getBoolean();
+
+    int getInt();
+
+    IModuleProperty copy();
 }
