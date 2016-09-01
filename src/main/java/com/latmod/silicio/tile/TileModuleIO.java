@@ -34,7 +34,7 @@ public class TileModuleIO extends TileInvLM
                 {
                     return null;
                 }
-                else if(!stack.hasCapability(SilicioAPI.MODULE_PROVIDER, null))
+                else if(!stack.hasCapability(SilicioAPI.MODULE_CONTAINER, null))
                 {
                     return stack;
                 }
@@ -42,5 +42,11 @@ public class TileModuleIO extends TileInvLM
                 return super.insertItem(slot, stack, simulate);
             }
         };
+    }
+
+    @Override
+    public void markDirty()
+    {
+        sendDirtyUpdate();
     }
 }

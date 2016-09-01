@@ -1,5 +1,6 @@
 package com.latmod.silicio.api.module.impl;
 
+import com.latmod.lib.EnumNameMap;
 import com.latmod.silicio.api.module.EnumSignalSlot;
 import com.latmod.silicio.api.module.ISignalConnectionProperty;
 import net.minecraft.util.text.ITextComponent;
@@ -35,7 +36,7 @@ public class ModuleConnection extends ModulePropertyKey implements ISignalConnec
 
     public ModuleConnection(EnumSignalSlot s, @Nullable ITextComponent dn)
     {
-        super(s.name(), EMPTY, dn);
+        super(EnumNameMap.createName(s), EMPTY, dn);
         slot = s;
     }
 

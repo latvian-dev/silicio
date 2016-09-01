@@ -1,15 +1,19 @@
 package com.latmod.silicio.tile;
 
 import com.feed_the_beast.ftbl.api.tile.EnumSync;
-import com.latmod.silicio.api.module.impl.ModuleContainer;
+import com.latmod.silicio.api.SilicioAPI;
+import com.latmod.silicio.api.module.impl.SocketBlock;
 import com.latmod.silicio.api.tile.ISilNetController;
 import gnu.trove.map.TIntByteMap;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
+import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.Constants;
+import net.minecraftforge.items.CapabilityItemHandler;
 
+import javax.annotation.Nullable;
 import java.util.EnumMap;
 import java.util.Map;
 
@@ -18,11 +22,18 @@ import java.util.Map;
  */
 public class TileSocketBlock extends TileSilNet implements ITickable
 {
-    public final Map<EnumFacing, ModuleContainer> modules;
+    private final Map<EnumFacing, SocketBlock> modules;
 
     public TileSocketBlock()
     {
         modules = new EnumMap<>(EnumFacing.class);
+
+        for(EnumFacing f : EnumFacing.VALUES)
+        {
+            SocketBlock sb = new SocketBlock(this);
+            sb.setFacing(f);
+            modules.put(f, sb);
+        }
     }
 
     @Override
@@ -32,9 +43,20 @@ public class TileSocketBlock extends TileSilNet implements ITickable
     }
 
     @Override
-    public void markDirty()
+    public boolean hasCapability(Capability<?> capability, @Nullable EnumFacing facing)
     {
-        sendDirtyUpdate();
+        return (capability == SilicioAPI.SOCKET_BLOCK && modules.get(facing).hasContainer()) || capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY || super.hasCapability(capability, facing);
+    }
+
+    @Override
+    public <T> T getCapability(Capability<T> capability, @Nullable EnumFacing facing)
+    {
+        if(capability == SilicioAPI.SOCKET_BLOCK || capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY)
+        {
+            return (T) modules.get(facing);
+        }
+
+        return super.getCapability(capability, facing);
     }
 
     @Override
@@ -44,9 +66,9 @@ public class TileSocketBlock extends TileSilNet implements ITickable
 
         NBTTagList list = new NBTTagList();
 
-        for(ModuleContainer m : modules.values())
+        for(SocketBlock sb : modules.values())
         {
-            list.appendTag(m.serializeNBT());
+            list.appendTag(sb.serializeNBT());
         }
 
         nbt.setTag("Modules", list);
@@ -57,19 +79,12 @@ public class TileSocketBlock extends TileSilNet implements ITickable
     {
         super.readTileData(nbt);
 
-        modules.clear();
-
         NBTTagList list = nbt.getTagList("Modules", Constants.NBT.TAG_COMPOUND);
 
         for(int i = 0; i < list.tagCount(); i++)
         {
-            ModuleContainer c = new ModuleContainer(this);
-            c.deserializeNBT(list.getCompoundTagAt(i));
-
-            if(c.getModule() != null)
-            {
-                modules.put(c.getFacing(), c);
-            }
+            NBTTagCompound nbt1 = list.getCompoundTagAt(i);
+            modules.get(EnumFacing.VALUES[nbt1.getByte("Side")]).deserializeNBT(nbt1);
         }
     }
 
@@ -80,9 +95,9 @@ public class TileSocketBlock extends TileSilNet implements ITickable
 
         NBTTagList list = new NBTTagList();
 
-        for(ModuleContainer m : modules.values())
+        for(SocketBlock sb : modules.values())
         {
-            list.appendTag(m.serializeNBT());
+            list.appendTag(sb.serializeNBT());
         }
 
         nbt.setTag("M", list);
@@ -93,20 +108,12 @@ public class TileSocketBlock extends TileSilNet implements ITickable
     {
         super.readTileClientData(nbt);
 
-        modules.clear();
-
         NBTTagList list = nbt.getTagList("M", Constants.NBT.TAG_COMPOUND);
 
         for(int i = 0; i < list.tagCount(); i++)
         {
-            ModuleContainer c = new ModuleContainer(this);
-            c.deserializeNBT(list.getCompoundTagAt(i));
-
-            if(c.getModule() != null)
-            {
-                modules.put(c.getFacing(), c);
-                c.getModule().init(c);
-            }
+            NBTTagCompound nbt1 = list.getCompoundTagAt(i);
+            modules.get(EnumFacing.VALUES[nbt1.getByte("Side")]).deserializeNBT(nbt1);
         }
     }
 
@@ -115,11 +122,11 @@ public class TileSocketBlock extends TileSilNet implements ITickable
     {
         if(!worldObj.isRemote)
         {
-            if(!modules.isEmpty())
+            for(SocketBlock m : modules.values())
             {
-                for(ModuleContainer m : modules.values())
+                if(m.hasContainer())
                 {
-                    m.update();
+                    m.getContainer().tick(m);
                 }
             }
         }
@@ -130,11 +137,11 @@ public class TileSocketBlock extends TileSilNet implements ITickable
     @Override
     public void provideSignals(ISilNetController controller)
     {
-        if(!modules.isEmpty())
+        for(SocketBlock m : modules.values())
         {
-            for(ModuleContainer m : modules.values())
+            if(m.hasContainer())
             {
-                m.getModule().provideSignals(m, controller);
+                m.getContainer().getModule().provideSignals(m, controller);
             }
         }
     }
@@ -142,11 +149,11 @@ public class TileSocketBlock extends TileSilNet implements ITickable
     @Override
     public void onSignalsChanged(ISilNetController controller, TIntByteMap channels)
     {
-        if(!modules.isEmpty())
+        for(SocketBlock m : modules.values())
         {
-            for(ModuleContainer m : modules.values())
+            if(m.hasContainer())
             {
-                m.getModule().onSignalsChanged(m, controller, channels);
+                m.getContainer().getModule().onSignalsChanged(m, controller, channels);
             }
         }
     }

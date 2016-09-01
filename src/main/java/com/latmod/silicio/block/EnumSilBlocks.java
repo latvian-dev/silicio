@@ -230,6 +230,7 @@ public enum EnumSilBlocks implements BlockWithVariants.IBlockVariant
 
                 if(tile instanceof TileSilNetController)
                 {
+                    ((TileSilNetController) tile).onSilNetUpdate();
                     playerIn.addChatMessage(new TextComponentString("SilNet: " + ((TileSilNetController) tile).getNetwork().size()));
                 }
             }

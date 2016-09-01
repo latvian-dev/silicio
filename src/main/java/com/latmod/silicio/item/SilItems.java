@@ -9,9 +9,12 @@ import com.latmod.silicio.api.module.IModule;
 import com.latmod.silicio.modules.ModuleChatOutput;
 import com.latmod.silicio.modules.ModuleSequencer;
 import com.latmod.silicio.modules.ModuleTimer;
+import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.init.Items;
 import net.minecraft.item.EnumDyeColor;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.oredict.OreDictionary;
@@ -120,7 +123,8 @@ public class SilItems
 
         for(ItemModule m : Modules.MODULE_LIST)
         {
-            m.registerDefaultModel();
+            ResourceLocation rl = new ResourceLocation(m.getRegistryName().getResourceDomain(), "modules/" + m.getRegistryName().getResourcePath().substring(7));
+            ModelLoader.setCustomModelResourceLocation(m, 0, new ModelResourceLocation(rl, "inventory"));
         }
     }
 
@@ -152,7 +156,7 @@ public class SilItems
             recipes.addRecipe(CHIP.getStack(1), "TT", "TT", "TT", 'T', TRANSISTOR);
             recipes.addRecipe(PROCESSOR.getStack(1), "CCC", "CSC", "CCC", 'C', CHIP, 'S', ODItems.SILICON);
             recipes.addShapelessRecipe(CIRCUIT.getStack(1), PROCESSOR, WIRE, RESISTOR, CAPACITOR, TRANSISTOR, PROCESSOR, WIRE, WIRE, ORE_ELEMITE_NUGGET);
-            recipes.addRecipe(CIRCUIT_WIFI.getStack(1), "NEN", "ECE", "NEN", 'C', CIRCUIT, 'E', Items.ENDER_PEARL, 'N', ORE_ELEMITE_NUGGET);
+            recipes.addRecipe(CIRCUIT_WIFI.getStack(8), "CCC", "CEC", "CCC", 'C', CIRCUIT, 'E', Items.ENDER_PEARL);
             recipes.addShapelessRecipe(LED_RED.getStack(3), DIODE, EnumDyeColor.RED, ODItems.GLOWSTONE);
             recipes.addShapelessRecipe(LED_GREEN.getStack(3), DIODE, EnumDyeColor.GREEN, ODItems.GLOWSTONE);
             recipes.addShapelessRecipe(LED_BLUE.getStack(3), DIODE, EnumDyeColor.BLUE, ODItems.GLOWSTONE);

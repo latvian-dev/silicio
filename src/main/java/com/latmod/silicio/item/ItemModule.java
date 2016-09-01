@@ -3,17 +3,16 @@ package com.latmod.silicio.item;
 import com.latmod.lib.LangKey;
 import com.latmod.silicio.api.SilicioAPI;
 import com.latmod.silicio.api.module.IModule;
-import com.latmod.silicio.api.module.IModuleProvider;
+import com.latmod.silicio.api.module.IModuleContainer;
+import com.latmod.silicio.api.module.IModulePropertyKey;
+import com.latmod.silicio.api.module.impl.ModuleContainer;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.EnumFacing;
-import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-import javax.annotation.Nullable;
 import java.util.List;
 
 /**
@@ -22,32 +21,6 @@ import java.util.List;
 public class ItemModule extends ItemSil
 {
     private static final LangKey DESC = new LangKey("silicio.item.module_desc");
-
-    private class ModuleCapProvider implements IModuleProvider, ICapabilityProvider
-    {
-        @Override
-        public IModule getModule()
-        {
-            return ItemModule.this.getModule();
-        }
-
-        @Override
-        public boolean hasCapability(Capability<?> capability, @Nullable EnumFacing facing)
-        {
-            return capability == SilicioAPI.MODULE_PROVIDER;
-        }
-
-        @Override
-        public <T> T getCapability(Capability<T> capability, @Nullable EnumFacing facing)
-        {
-            if(capability == SilicioAPI.MODULE_PROVIDER)
-            {
-                return (T) this;
-            }
-
-            return null;
-        }
-    }
 
     private final IModule module;
 
@@ -66,7 +39,7 @@ public class ItemModule extends ItemSil
     @Override
     public ICapabilityProvider initCapabilities(final ItemStack stack, final NBTTagCompound nbt)
     {
-        return new ModuleCapProvider();
+        return new ModuleContainer(getModule());
     }
 
     @Override
@@ -74,5 +47,17 @@ public class ItemModule extends ItemSil
     public void addInformation(ItemStack stack, EntityPlayer playerIn, List<String> tooltip, boolean advanced)
     {
         tooltip.add(DESC.translate());
+
+        if(advanced)
+        {
+            IModuleContainer moduleContainer = stack.getCapability(SilicioAPI.MODULE_CONTAINER, null);
+            tooltip.add("Tick: " + moduleContainer.getTick());
+            tooltip.add("Properties:");
+
+            for(IModulePropertyKey key : moduleContainer.getModule().getProperties())
+            {
+                tooltip.add("> " + key.getName() + ": " + moduleContainer.getProperty(key).getString());
+            }
+        }
     }
 }

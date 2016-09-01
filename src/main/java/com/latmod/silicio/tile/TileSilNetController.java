@@ -35,6 +35,7 @@ public class TileSilNetController extends TileSilNet implements ITickable, ISilN
     private Collection<TileEntity> network = new ArrayList<>();
     private Map<UUID, ISilNetConnector> connectedTiles = new HashMap<>();
     private boolean updateNetwork = true;
+    private NBTTagCompound variables = new NBTTagCompound();
 
     @Override
     public EnumSync getSync()
@@ -67,6 +68,7 @@ public class TileSilNetController extends TileSilNet implements ITickable, ISilN
         signalsPrev.clear();
         signals.addAll(nbt.getIntArray("Signals"));
         signalsPrev.addAll(nbt.getIntArray("PrevSignals"));
+        variables = nbt.getCompoundTag("Variables");
     }
 
     @Override
@@ -75,6 +77,7 @@ public class TileSilNetController extends TileSilNet implements ITickable, ISilN
         super.writeTileData(nbt);
         nbt.setIntArray("Signals", signals.toArray());
         nbt.setIntArray("PrevSignals", signalsPrev.toArray());
+        nbt.setTag("Variables", variables);
     }
 
     @Override
@@ -84,6 +87,7 @@ public class TileSilNetController extends TileSilNet implements ITickable, ISilN
         signals.clear();
         signalsPrev.clear();
         signals.addAll(nbt.getIntArray("S"));
+        variables = nbt.getCompoundTag("V");
     }
 
     @Override
@@ -91,6 +95,7 @@ public class TileSilNetController extends TileSilNet implements ITickable, ISilN
     {
         super.writeTileClientData(nbt);
         nbt.setIntArray("S", signals.toArray());
+        nbt.setTag("V", variables);
     }
 
     @Override
@@ -205,5 +210,11 @@ public class TileSilNetController extends TileSilNet implements ITickable, ISilN
                 changedSignals.put(id, (byte) 1);
             }
         }
+    }
+
+    @Override
+    public NBTTagCompound getVariables()
+    {
+        return variables;
     }
 }

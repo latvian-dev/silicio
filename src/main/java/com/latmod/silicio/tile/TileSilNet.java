@@ -72,13 +72,13 @@ public abstract class TileSilNet extends TileLM implements ISilNetTile
     }
 
     @Override
-    public boolean hasCapability(Capability<?> capability, EnumFacing facing)
+    public boolean hasCapability(Capability<?> capability, @Nullable EnumFacing facing)
     {
         return capability == SilicioAPI.SILNET_TILE || super.hasCapability(capability, facing);
     }
 
     @Override
-    public <T> T getCapability(Capability<T> capability, EnumFacing facing)
+    public <T> T getCapability(Capability<T> capability, @Nullable EnumFacing facing)
     {
         if(capability == SilicioAPI.SILNET_TILE)
         {

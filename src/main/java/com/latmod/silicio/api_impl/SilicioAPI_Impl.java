@@ -3,9 +3,10 @@ package com.latmod.silicio.api_impl;
 import com.feed_the_beast.ftbl.util.EmptyCapStorage;
 import com.latmod.lib.math.BlockDimPos;
 import com.latmod.silicio.api.SilicioAPI;
-import com.latmod.silicio.api.module.IModuleProvider;
+import com.latmod.silicio.api.module.IModuleContainer;
 import com.latmod.silicio.api.tile.ISilNetController;
 import com.latmod.silicio.api.tile.ISilNetTile;
+import com.latmod.silicio.api.tile.ISocketBlock;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.common.capabilities.CapabilityManager;
 
@@ -36,8 +37,9 @@ public class SilicioAPI_Impl extends SilicioAPI
 
     public void init()
     {
-        CapabilityManager.INSTANCE.register(IModuleProvider.class, new EmptyCapStorage<>(), () -> null);
+        CapabilityManager.INSTANCE.register(IModuleContainer.class, new EmptyCapStorage<>(), () -> null);
         CapabilityManager.INSTANCE.register(ISilNetTile.class, new EmptyCapStorage<>(), () -> null);
+        CapabilityManager.INSTANCE.register(ISocketBlock.class, new EmptyCapStorage<>(), () -> null);
     }
 
     public void clear()

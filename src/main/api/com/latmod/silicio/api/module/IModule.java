@@ -2,38 +2,29 @@ package com.latmod.silicio.api.module;
 
 import com.feed_the_beast.ftbl.api.recipes.IRecipes;
 import com.latmod.silicio.api.tile.ISilNetController;
+import com.latmod.silicio.api.tile.ISocketBlock;
 import gnu.trove.map.TIntByteMap;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
+
+import java.util.Collection;
 
 /**
  * Created by LatvianModder on 06.08.2016.
  */
 public interface IModule
 {
-    void init(IModuleContainer container);
+    Collection<IModulePropertyKey> getProperties();
 
-    default void addRecipes(ItemStack stack, IRecipes recipes)
-    {
-    }
+    void addRecipes(ItemStack stack, IRecipes recipes);
 
-    default void onAdded(IModuleContainer container, EntityPlayerMP player)
-    {
-    }
+    void onAdded(ISocketBlock socketBlock, EntityPlayerMP player);
 
-    default void onRemoved(IModuleContainer container, EntityPlayerMP player)
-    {
-    }
+    void onRemoved(ISocketBlock socketBlock, EntityPlayerMP player);
 
-    default void onUpdate(IModuleContainer container)
-    {
-    }
+    void onUpdate(ISocketBlock socketBlock);
 
-    default void provideSignals(IModuleContainer container, ISilNetController controller)
-    {
-    }
+    void provideSignals(ISocketBlock socketBlock, ISilNetController controller);
 
-    default void onSignalsChanged(IModuleContainer container, ISilNetController controller, TIntByteMap channels)
-    {
-    }
+    void onSignalsChanged(ISocketBlock socketBlock, ISilNetController controller, TIntByteMap channels);
 }

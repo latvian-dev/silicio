@@ -1,9 +1,10 @@
 package com.latmod.silicio.api;
 
 import com.latmod.lib.math.BlockDimPos;
-import com.latmod.silicio.api.module.IModuleProvider;
+import com.latmod.silicio.api.module.IModuleContainer;
 import com.latmod.silicio.api.tile.ISilNetController;
 import com.latmod.silicio.api.tile.ISilNetTile;
+import com.latmod.silicio.api.tile.ISocketBlock;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.CapabilityInject;
@@ -29,11 +30,14 @@ public abstract class SilicioAPI
         return API;
     }
 
-    @CapabilityInject(IModuleProvider.class)
-    public static Capability<IModuleProvider> MODULE_PROVIDER = null;
+    @CapabilityInject(IModuleContainer.class)
+    public static Capability<IModuleContainer> MODULE_CONTAINER = null;
 
     @CapabilityInject(ISilNetTile.class)
     public static Capability<ISilNetTile> SILNET_TILE = null;
+
+    @CapabilityInject(ISocketBlock.class)
+    public static Capability<ISocketBlock> SOCKET_BLOCK = null;
 
     public abstract TileEntity getSilNetTile(BlockDimPos pos);
 

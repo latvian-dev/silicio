@@ -25,14 +25,7 @@ import net.minecraftforge.oredict.OreDictionary;
 
 import javax.annotation.Nonnull;
 
-import static com.latmod.silicio.item.EnumMat.ANTIMATTER;
-import static com.latmod.silicio.item.EnumMat.BLUE_GOO;
-import static com.latmod.silicio.item.EnumMat.CIRCUIT_WIFI;
-import static com.latmod.silicio.item.EnumMat.ELEMITE_INGOT;
-import static com.latmod.silicio.item.EnumMat.LED_RGB;
-import static com.latmod.silicio.item.EnumMat.OPAL;
-import static com.latmod.silicio.item.EnumMat.PROCESSOR;
-import static com.latmod.silicio.item.EnumMat.WIRE;
+import static com.latmod.silicio.item.EnumMat.*;
 
 /**
  * Created by LatvianModder on 02.05.2016.
@@ -99,14 +92,15 @@ public class SilBlocks
             //recipes.addShapelessRecipe(SilItems.SILICON.getStack(4), EnumVariant.SILICON_BLOCK.getStack(1));
             recipes.addSmelting(EnumSilBlocks.SILICON_GLASS.getStack(1), EnumSilBlocks.SILICON_BLOCK.getStack(1), 0F);
             recipes.addRecipe(EnumSilBlocks.OPAL_BLOCK.getStack(1), "II", "II", 'I', OPAL);
+            recipes.addShapelessRecipe(OPAL.getStack(4), EnumSilBlocks.OPAL_BLOCK);
             recipes.addRecipe(EnumSilBlocks.OPAL_GLASS.getStack(4), " G ", "GIG", " G ", 'I', OPAL, 'G', ODItems.GLASS_ANY);
 
-            recipes.addRecipe(EnumSilBlocks.CONTROLLER.getStack(1), " E ", "DFD", " P ", 'N', SilItems.ORE_ELEMITE_NUGGET, 'E', CIRCUIT_WIFI, 'P', PROCESSOR, 'F', EnumSilBlocks.SILICON_FRAME, 'D', ODItems.DIAMOND);
-            recipes.addRecipe(EnumSilBlocks.REACTOR_CORE.getStack(1), " N ", "AFA", " G ", 'F', EnumSilBlocks.SILICON_FRAME, 'A', ANTIMATTER, 'N', Items.NETHER_STAR, 'G', ODItems.GLOWSTONE);
-            recipes.addRecipe(EnumSilBlocks.ELEMITE_CRAFTER.getStack(1), "EEE", "SCS", "SSS", 'S', EnumSilBlocks.SILICON_BLOCK, 'E', SilItems.ORE_ELEMITE_INGOT, 'C', "workbench");
+            recipes.addRecipe(EnumSilBlocks.CONTROLLER.getStack(1), "PEP", "DFD", "PRP", 'N', SilItems.ORE_ELEMITE_NUGGET, 'E', CIRCUIT_WIFI, 'P', PROCESSOR, 'F', EnumSilBlocks.SILICON_FRAME, 'D', ODItems.DIAMOND, 'R', CIRCUIT);
+            recipes.addRecipe(EnumSilBlocks.REACTOR_CORE.getStack(1), " N ", "AFA", " G ", 'F', EnumSilBlocks.SILICON_FRAME, 'A', OPAL, 'N', Items.NETHER_STAR, 'G', ODItems.GLOWSTONE);
+            recipes.addRecipe(EnumSilBlocks.ELEMITE_CRAFTER.getStack(1), " E ", "EFE", " C ", 'F', EnumSilBlocks.SILICON_FRAME, 'E', SilItems.ORE_ELEMITE_INGOT, 'C', "workbench");
 
             recipes.addRecipe(new ItemStack(SOCKET_BLOCK), " P ", "PFP", " P ", 'P', PROCESSOR, 'F', EnumSilBlocks.SILICON_FRAME);
-            recipes.addRecipe(new ItemStack(CONNECTOR), " C ", "WSW", 'W', WIRE, 'C', CIRCUIT_WIFI, 'S', ODItems.STONE);
+            recipes.addRecipe(new ItemStack(CONNECTOR), " C ", "WSW", 'W', WIRE, 'C', CIRCUIT_WIFI, 'S', Blocks.STONE_PRESSURE_PLATE);
             recipes.addRecipe(new ItemStack(BLUE_GOO_BLOCK), "GGG", "GGG", "GGG", 'G', BLUE_GOO);
             recipes.addShapelessRecipe(BLUE_GOO.getStack(9), BLUE_GOO_BLOCK);
             recipes.addRecipe(EnumSilBlocks.LAMP.getStack(1), " L ", "LFL", " L ", 'F', EnumSilBlocks.SILICON_FRAME, 'L', LED_RGB);

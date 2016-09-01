@@ -2,9 +2,8 @@ package com.latmod.silicio.block;
 
 import com.feed_the_beast.ftbl.api.item.LMInvUtils;
 import com.latmod.silicio.api.SilicioAPI;
-import com.latmod.silicio.api.module.IModule;
-import com.latmod.silicio.api.module.IModuleContainer;
-import com.latmod.silicio.api.module.impl.ModuleContainer;
+import com.latmod.silicio.api.module.impl.SocketBlock;
+import com.latmod.silicio.api.tile.ISocketBlock;
 import com.latmod.silicio.tile.TileSocketBlock;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyBool;
@@ -23,6 +22,7 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraftforge.items.CapabilityItemHandler;
 
 import javax.annotation.Nullable;
 
@@ -86,12 +86,12 @@ public class BlockSocketBlock extends BlockSil
         if(te instanceof TileSocketBlock)
         {
             TileSocketBlock tile = (TileSocketBlock) te;
-            modD = tile.modules.containsKey(EnumFacing.DOWN);
-            modU = tile.modules.containsKey(EnumFacing.UP);
-            modN = tile.modules.containsKey(EnumFacing.NORTH);
-            modS = tile.modules.containsKey(EnumFacing.SOUTH);
-            modW = tile.modules.containsKey(EnumFacing.WEST);
-            modE = tile.modules.containsKey(EnumFacing.EAST);
+            modD = tile.hasCapability(SilicioAPI.SOCKET_BLOCK, EnumFacing.DOWN);
+            modU = tile.hasCapability(SilicioAPI.SOCKET_BLOCK, EnumFacing.UP);
+            modN = tile.hasCapability(SilicioAPI.SOCKET_BLOCK, EnumFacing.NORTH);
+            modS = tile.hasCapability(SilicioAPI.SOCKET_BLOCK, EnumFacing.SOUTH);
+            modW = tile.hasCapability(SilicioAPI.SOCKET_BLOCK, EnumFacing.WEST);
+            modE = tile.hasCapability(SilicioAPI.SOCKET_BLOCK, EnumFacing.EAST);
         }
 
         return state.withProperty(MODULE_D, modD).withProperty(MODULE_U, modU).withProperty(MODULE_N, modN).withProperty(MODULE_S, modS).withProperty(MODULE_W, modW).withProperty(MODULE_E, modE);
@@ -102,54 +102,48 @@ public class BlockSocketBlock extends BlockSil
     {
         TileEntity te = worldIn.getTileEntity(pos);
 
-        if(te instanceof TileSocketBlock)
+        if(te == null)
         {
-            TileSocketBlock socketBlock = (TileSocketBlock) te;
+            return false;
+        }
 
-            if(socketBlock.modules.containsKey(side))
+        if(te.hasCapability(SilicioAPI.SOCKET_BLOCK, side))
+        {
+            if(!worldIn.isRemote)
             {
-                if(!worldIn.isRemote)
+                if(heldItem == null && playerIn.isSneaking())
                 {
-                    if(heldItem == null && playerIn.isSneaking())
+                    SocketBlock c = (SocketBlock) te.getCapability(SilicioAPI.SOCKET_BLOCK, side);
+
+                    if(c.hasContainer())
                     {
-                        IModuleContainer c = socketBlock.modules.get(side);
-
-                        if(c.getModule() != null)
-                        {
-                            c.getModule().onRemoved(c, (EntityPlayerMP) playerIn);
-                        }
-
-                        if(c.getItem() != null)
-                        {
-                            LMInvUtils.giveItem(playerIn, c.getItem());
-                        }
-
-                        socketBlock.modules.remove(side);
-                        socketBlock.markDirty();
+                        c.getContainer().getModule().onRemoved(c, (EntityPlayerMP) playerIn);
+                        LMInvUtils.giveItem(playerIn, c.getStack());
+                        c.setItem(null);
                     }
-                }
 
-                return true;
+                    te.markDirty();
+                }
             }
-            else if(heldItem != null && heldItem.hasCapability(SilicioAPI.MODULE_PROVIDER, null))
+
+            return true;
+        }
+        else if(heldItem != null && heldItem.hasCapability(SilicioAPI.MODULE_CONTAINER, null))
+        {
+            if(!worldIn.isRemote && te.hasCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, side))
             {
-                if(!worldIn.isRemote)
+                ItemStack itemStack = te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, side).insertItem(0, heldItem, false);
+
+                if(itemStack == null || itemStack.stackSize == heldItem.stackSize - 1)
                 {
-                    IModule module = heldItem.getCapability(SilicioAPI.MODULE_PROVIDER, null).getModule();
-
-                    ModuleContainer c = new ModuleContainer(socketBlock);
-                    c.setFacing(side);
-                    c.setItem(LMInvUtils.singleCopy(heldItem));
-                    c.setModule(module);
-
-                    socketBlock.modules.put(c.getFacing(), c);
                     heldItem.stackSize--;
-                    c.getModule().onAdded(c, (EntityPlayerMP) playerIn);
-                    socketBlock.markDirty();
+                    ISocketBlock socketBlock = te.getCapability(SilicioAPI.SOCKET_BLOCK, side);
+                    socketBlock.getContainer().getModule().onAdded(socketBlock, (EntityPlayerMP) playerIn);
+                    te.markDirty();
                 }
-
-                return true;
             }
+
+            return true;
         }
 
         return false;
@@ -164,9 +158,13 @@ public class BlockSocketBlock extends BlockSil
 
             if(te instanceof TileSocketBlock)
             {
-                for(IModuleContainer c : ((TileSocketBlock) te).modules.values())
+                for(EnumFacing facing : EnumFacing.VALUES)
                 {
-                    InventoryHelper.spawnItemStack(worldIn, pos.getX(), pos.getY(), pos.getZ(), c.getItem());
+                    if(te.hasCapability(SilicioAPI.SOCKET_BLOCK, facing))
+                    {
+                        ISocketBlock c = te.getCapability(SilicioAPI.SOCKET_BLOCK, facing);
+                        InventoryHelper.spawnItemStack(worldIn, pos.getX(), pos.getY(), pos.getZ(), c.getStack());
+                    }
                 }
             }
         }

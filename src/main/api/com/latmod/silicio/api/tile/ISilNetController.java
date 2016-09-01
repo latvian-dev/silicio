@@ -1,5 +1,6 @@
 package com.latmod.silicio.api.tile;
 
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 
 import java.util.Collection;
@@ -20,4 +21,6 @@ public interface ISilNetController extends ISilNetTile
     Collection<TileEntity> getNetwork();
 
     Map<UUID, ISilNetConnector> getConnectors();
+
+    NBTTagCompound getVariables();
 }

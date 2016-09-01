@@ -5,71 +5,32 @@ import com.latmod.silicio.api.module.IModule;
 import com.latmod.silicio.api.module.IModuleContainer;
 import com.latmod.silicio.api.module.IModuleProperty;
 import com.latmod.silicio.api.module.IModulePropertyKey;
-import net.minecraft.item.ItemStack;
+import com.latmod.silicio.api.tile.ISocketBlock;
 import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
+import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.common.util.INBTSerializable;
 
 import javax.annotation.Nullable;
-import javax.annotation.ParametersAreNonnullByDefault;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Created by LatvianModder on 04.03.2016.
+ * Created by LatvianModder on 1.09.2016.
  */
-@ParametersAreNonnullByDefault
-public final class ModuleContainer implements IModuleContainer, INBTSerializable<NBTTagCompound>
+public class ModuleContainer implements IModuleContainer, ICapabilityProvider, INBTSerializable<NBTTagCompound>
 {
-    private final TileEntity tile;
-    private EnumFacing facing;
-    private ItemStack item;
-    private IModule module;
+    private final IModule module;
     private long tick;
     private Map<IModulePropertyKey, IModuleProperty> properties;
 
-    public ModuleContainer(TileEntity t)
+    public ModuleContainer(IModule m)
     {
-        tile = t;
-    }
-
-    @Override
-    public void update()
-    {
-        module.onUpdate(this);
-        tick++;
-    }
-
-    @Override
-    public TileEntity getTile()
-    {
-        return tile;
-    }
-
-    @Override
-    @Nullable
-    public EnumFacing getFacing()
-    {
-        return facing;
-    }
-
-    public void setFacing(@Nullable EnumFacing f)
-    {
-        facing = f;
-    }
-
-    @Override
-    public ItemStack getItem()
-    {
-        return item;
-    }
-
-    public void setItem(ItemStack is)
-    {
-        item = is;
+        module = m;
     }
 
     @Override
@@ -78,26 +39,10 @@ public final class ModuleContainer implements IModuleContainer, INBTSerializable
         return module;
     }
 
-    public void setModule(IModule m)
-    {
-        module = m;
-    }
-
     @Override
     public long getTick()
     {
         return tick;
-    }
-
-    @Override
-    public void addProperty(IModulePropertyKey config)
-    {
-        if(properties == null)
-        {
-            properties = new HashMap<>();
-        }
-
-        properties.put(config, config.getDefValue().copy());
     }
 
     @Override
@@ -118,17 +63,47 @@ public final class ModuleContainer implements IModuleContainer, INBTSerializable
         return properties;
     }
 
+    public void loadProperties()
+    {
+        Collection<IModulePropertyKey> propertyKeys = getModule() == null ? null : module.getProperties();
+
+        if(propertyKeys == null || propertyKeys.isEmpty())
+        {
+            properties = null;
+        }
+        else
+        {
+            properties = new HashMap<>(propertyKeys.size());
+
+            for(IModulePropertyKey key : propertyKeys)
+            {
+                properties.put(key, key.getDefValue().copy());
+            }
+        }
+    }
+
+    @Override
+    public boolean hasCapability(Capability<?> capability, @Nullable EnumFacing facing)
+    {
+        return capability == SilicioAPI.MODULE_CONTAINER;
+    }
+
+    @Override
+    public <T> T getCapability(Capability<T> capability, @Nullable EnumFacing facing)
+    {
+        if(capability == SilicioAPI.MODULE_CONTAINER)
+        {
+            return (T) this;
+        }
+
+        return null;
+    }
+
     @Override
     public NBTTagCompound serializeNBT()
     {
         NBTTagCompound nbt = new NBTTagCompound();
-
-        nbt.setByte("Side", facing == null ? -1 : (byte) facing.ordinal());
         nbt.setLong("Tick", tick);
-
-        NBTTagCompound tag2 = new NBTTagCompound();
-        item.writeToNBT(tag2);
-        nbt.setTag("Item", tag2);
 
         NBTTagCompound configTag = new NBTTagCompound();
 
@@ -144,25 +119,19 @@ public final class ModuleContainer implements IModuleContainer, INBTSerializable
         }
 
         nbt.setTag("Config", configTag);
+
         return nbt;
     }
 
     @Override
     public void deserializeNBT(NBTTagCompound nbt)
     {
-        facing = nbt.getByte("Side") == -1 ? null : EnumFacing.VALUES[nbt.getByte("Side")];
-        item = ItemStack.loadItemStackFromNBT(nbt.getCompoundTag("Item"));
         tick = nbt.getLong("Tick");
         properties = null;
 
-        module = item.hasCapability(SilicioAPI.MODULE_PROVIDER, null) ? item.getCapability(SilicioAPI.MODULE_PROVIDER, null).getModule() : null;
+        loadProperties();
 
-        if(module != null)
-        {
-            module.init(this);
-        }
-
-        if(properties != null && !properties.isEmpty())
+        if(properties != null)
         {
             NBTTagCompound configTag = nbt.getCompoundTag("Config");
 
@@ -176,5 +145,12 @@ public final class ModuleContainer implements IModuleContainer, INBTSerializable
                 }
             }
         }
+    }
+
+    @Override
+    public void tick(ISocketBlock socketBlock)
+    {
+        module.onUpdate(socketBlock);
+        tick++;
     }
 }
