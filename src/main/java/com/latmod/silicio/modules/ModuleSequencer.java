@@ -1,9 +1,8 @@
 package com.latmod.silicio.modules;
 
 import com.feed_the_beast.ftbl.api.recipes.IRecipes;
-import com.latmod.silicio.api.module.EnumSignalSlot;
 import com.latmod.silicio.api.module.IModuleContainer;
-import com.latmod.silicio.api.module.impl.ModuleConnection;
+import com.latmod.silicio.api.module.impl.EnumSignalSlot;
 import com.latmod.silicio.api.module.impl.ModulePropertyKey;
 import com.latmod.silicio.api.module.impl.PropertyShort;
 import com.latmod.silicio.api.tile.ISilNetController;
@@ -20,7 +19,7 @@ public class ModuleSequencer extends ModuleBase
 {
     private static final ModulePropertyKey TIMER = new ModulePropertyKey("timer", new PropertyShort(20), null);
 
-    private final List<ModuleConnection> outputs;
+    private final List<EnumSignalSlot> outputs;
 
     public ModuleSequencer(int out)
     {
@@ -28,9 +27,8 @@ public class ModuleSequencer extends ModuleBase
 
         for(int i = 0; i < out; i++)
         {
-            ModuleConnection c = new ModuleConnection(EnumSignalSlot.OUTPUT.get(i), null);
-            outputs.add(c);
-            properties.add(c);
+            outputs.add(EnumSignalSlot.OUTPUT.get(i));
+            properties.add(EnumSignalSlot.OUTPUT.get(i));
         }
 
         properties.add(TIMER);

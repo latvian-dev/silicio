@@ -2,8 +2,10 @@ package com.latmod.silicio.gui;
 
 import com.feed_the_beast.ftbl.api.client.FTBLibClient;
 import com.feed_the_beast.ftbl.api.gui.GuiContainerWrapper;
+import com.feed_the_beast.ftbl.api.gui.GuiHelper;
 import com.feed_the_beast.ftbl.api.gui.GuiIcons;
 import com.feed_the_beast.ftbl.api.gui.GuiLM;
+import com.feed_the_beast.ftbl.api.gui.IGui;
 import com.feed_the_beast.ftbl.api.gui.IMouseButton;
 import com.feed_the_beast.ftbl.api.gui.widgets.ButtonLM;
 import com.latmod.lib.TextureCoords;
@@ -18,8 +20,6 @@ import net.minecraft.inventory.IContainerListener;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,7 +27,6 @@ import java.util.List;
 /**
  * Created by LatvianModder on 25.08.2016.
  */
-@SideOnly(Side.CLIENT)
 public class GuiModuleIO extends GuiLM implements IContainerListener
 {
     private static final ResourceLocation TEXTURE = new ResourceLocation(Silicio.MOD_ID, "textures/gui/module_io.png");
@@ -82,13 +81,13 @@ public class GuiModuleIO extends GuiLM implements IContainerListener
         }
 
         @Override
-        public void onClicked(GuiLM gui, IMouseButton button)
+        public void onClicked(IGui gui, IMouseButton button)
         {
-            playClickSound();
+            GuiHelper.playClickSound();
         }
 
         @Override
-        public void renderWidget(GuiLM gui)
+        public void renderWidget(IGui gui)
         {
             render(GuiIcons.RS_HIGH);
         }
@@ -108,9 +107,9 @@ public class GuiModuleIO extends GuiLM implements IContainerListener
         buttonMode = new ButtonLM(13, 54, 16, 16)
         {
             @Override
-            public void onClicked(GuiLM gui, IMouseButton button)
+            public void onClicked(IGui gui, IMouseButton button)
             {
-                playClickSound();
+                GuiHelper.playClickSound();
                 mode = mode.next(button.isLeft());
                 gui.refreshWidgets();
             }
@@ -162,7 +161,7 @@ public class GuiModuleIO extends GuiLM implements IContainerListener
         FTBLibClient.setTexture(TEXTURE);
         int ax = getAX();
         int ay = getAY();
-        GuiScreen.drawModalRectWithCustomSizedTexture(ax, ay, 0F, 0F, width, height, 256F, 256F);
+        GuiScreen.drawModalRectWithCustomSizedTexture(ax, ay, 0F, 0F, getWidth(), getHeight(), 256F, 256F);
 
         buttonMode.render(mode.tex);
     }

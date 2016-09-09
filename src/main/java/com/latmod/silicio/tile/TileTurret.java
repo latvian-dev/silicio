@@ -1,9 +1,9 @@
 package com.latmod.silicio.tile;
 
 import com.feed_the_beast.ftbl.api.tile.TileLM;
-import com.feed_the_beast.ftbl.util.FTBLib;
 import com.latmod.lib.math.MathHelperLM;
 import com.latmod.lib.util.LMNBTUtils;
+import com.latmod.lib.util.LMServerUtils;
 import com.latmod.silicio.SilSounds;
 import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.block.BlockDirectional;
@@ -57,7 +57,7 @@ public class TileTurret extends TileLM implements ITickable
     {
         super.readTileData(nbt);
         cooldown = nbt.getByte("Cooldown");
-        target = FTBLib.getEntityByUUID(worldObj, LMNBTUtils.getUUID(nbt, "Target", true));
+        target = LMServerUtils.getEntityByUUID(worldObj, LMNBTUtils.getUUID(nbt, "Target", true));
     }
 
     @Override

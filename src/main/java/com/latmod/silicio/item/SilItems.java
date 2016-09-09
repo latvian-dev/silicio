@@ -9,14 +9,9 @@ import com.latmod.silicio.api.module.IModule;
 import com.latmod.silicio.modules.ModuleChatOutput;
 import com.latmod.silicio.modules.ModuleSequencer;
 import com.latmod.silicio.modules.ModuleTimer;
-import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.init.Items;
 import net.minecraft.item.EnumDyeColor;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.client.model.ModelLoader;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.oredict.OreDictionary;
 
 import java.util.ArrayList;
@@ -40,7 +35,7 @@ public class SilItems
 
     public static class Modules
     {
-        private static final List<ItemModule> MODULE_LIST = new ArrayList<>();
+        public static final List<ItemModule> MODULE_LIST = new ArrayList<>();
 
         //public static final ItemModule COMMAND_BLOCK;
         //public static final ItemModule LIGHT_SENSOR;
@@ -112,22 +107,6 @@ public class SilItems
         Modules.init();
     }
 
-    @SideOnly(Side.CLIENT)
-    public static void initModels()
-    {
-        MAT.loadModels();
-        ID_CARD.registerDefaultModel();
-        MULTITOOL.registerDefaultModel();
-        //XSUIT_BELT.registerDefaultModel();
-        //XSUIT_VISOR.registerDefaultModel();
-
-        for(ItemModule m : Modules.MODULE_LIST)
-        {
-            ResourceLocation rl = new ResourceLocation(m.getRegistryName().getResourceDomain(), "modules/" + m.getRegistryName().getResourcePath().substring(7));
-            ModelLoader.setCustomModelResourceLocation(m, 0, new ModelResourceLocation(rl, "inventory"));
-        }
-    }
-
     public static class Recipes implements IRecipeHandler
     {
         @Override
@@ -141,6 +120,7 @@ public class SilItems
         {
             recipes.addShapelessRecipe(BLUE_GOO.getStack(1), ODItems.SLIMEBALL, ODItems.LAPIS, ODItems.IRON);
             recipes.addRecipe(XSUIT_PLATE.getStack(1), "EEE", "ESE", "EEE", 'E', ORE_ELEMITE_INGOT, 'S', ANTIMATTER);
+            recipes.addRecipe(OPAL.getStack(4), "WSW", "SLS", "WSW", 'S', ODItems.SILICON, 'W', Items.WATER_BUCKET, 'L', Items.LAVA_BUCKET);
 
             recipes.addRecipe(ELEMITE_INGOT.getStack(1), "EEE", "EEE", "EEE", 'E', ORE_ELEMITE_NUGGET);
             recipes.addShapelessRecipe(ELEMITE_NUGGET.getStack(9), ORE_ELEMITE_INGOT);

@@ -93,3 +93,6 @@ silicio.item.module_gate_xor.name=XOR Gate
 
 silicio.item.module_timer.name=Timer Module
 silicio.item.module_sequencer.name=Sequencer Module
+
+silicio.lang.connection.input=Input #%d
+silicio.lang.connection.output=Output #%d

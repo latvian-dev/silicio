@@ -2,17 +2,15 @@ package com.latmod.silicio.client;
 
 import com.feed_the_beast.ftbl.api.client.CubeRenderer;
 import com.feed_the_beast.ftbl.api.client.FTBLibClient;
+import com.feed_the_beast.ftbl.client.FTBLibColors;
 import com.latmod.silicio.tile.TileLamp;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 
 /**
  * Created by LatvianModder on 23.08.2016.
  */
-@SideOnly(Side.CLIENT)
 public class RenderLamp extends TileEntitySpecialRenderer<TileLamp>
 {
     private static final CubeRenderer LAMP_MASK = new CubeRenderer(false, true);
@@ -25,7 +23,7 @@ public class RenderLamp extends TileEntitySpecialRenderer<TileLamp>
         GlStateManager.disableLighting();
         FTBLibClient.pushMaxBrightness();
         LAMP_MASK.setTessellator(Tessellator.getInstance());
-        LAMP_MASK.color.set(te.getCurrentColor(), 1F);
+        LAMP_MASK.color.set(FTBLibColors.get(te.getCurrentColor()), 1F);
         LAMP_MASK.setSize(TileLamp.LAMP_BOX);
         LAMP_MASK.offset(x, y, z);
         LAMP_MASK.renderAll();

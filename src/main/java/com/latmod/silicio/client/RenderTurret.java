@@ -10,13 +10,11 @@ import net.minecraft.client.renderer.VertexBuffer;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraft.util.math.MathHelper;
 
 /**
  * Created by LatvianModder on 08.03.2016.
  */
-@SideOnly(Side.CLIENT)
 public class RenderTurret extends TileEntitySpecialRenderer<TileTurret>
 {
     private static final ResourceLocation TEXTURE = new ResourceLocation(Silicio.MOD_ID, "textures/tile/turret_beam.png");
@@ -33,9 +31,9 @@ public class RenderTurret extends TileEntitySpecialRenderer<TileTurret>
         double startX = x + 0.5D;
         double startY = y + 0.5D;
         double startZ = z + 0.5D;
-        double endX = x + (te.target.posX - te.getPos().getX()) + MathHelperLM.randomDouble(MathHelperLM.RAND, -s, s);
+        double endX = x + (te.target.posX - te.getPos().getX()) + MathHelper.getRandomDoubleInRange(MathHelperLM.RAND, -s, s);
         double endY = y + (te.target.posY - te.getPos().getY()) + te.target.getEyeHeight() * MathHelperLM.RAND.nextFloat();
-        double endZ = z + (te.target.posZ - te.getPos().getZ()) + MathHelperLM.randomDouble(MathHelperLM.RAND, -s, s);
+        double endZ = z + (te.target.posZ - te.getPos().getZ()) + MathHelper.getRandomDoubleInRange(MathHelperLM.RAND, -s, s);
 
         GlStateManager.enableTexture2D();
         GlStateManager.disableLighting();

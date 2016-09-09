@@ -1,10 +1,9 @@
 package com.latmod.silicio.modules;
 
 import com.feed_the_beast.ftbl.api.recipes.IRecipes;
-import com.feed_the_beast.ftbl.util.FTBLib;
-import com.latmod.silicio.api.module.EnumSignalSlot;
+import com.latmod.lib.util.LMServerUtils;
 import com.latmod.silicio.api.module.IModuleContainer;
-import com.latmod.silicio.api.module.impl.ModuleConnection;
+import com.latmod.silicio.api.module.impl.EnumSignalSlot;
 import com.latmod.silicio.api.module.impl.ModulePropertyKey;
 import com.latmod.silicio.api.module.impl.PropertyString;
 import com.latmod.silicio.api.tile.ISilNetController;
@@ -18,12 +17,11 @@ import net.minecraft.util.text.TextComponentString;
  */
 public class ModuleChatOutput extends ModuleBase
 {
-    private static final ModuleConnection IN_1 = new ModuleConnection(EnumSignalSlot.IN_1, null);
     private static final ModulePropertyKey CHAT_MESSAGE = new ModulePropertyKey("message", new PropertyString("Text"), new TextComponentString("Chat Message")); //TODO: Lang
 
     public ModuleChatOutput()
     {
-        properties.add(IN_1);
+        properties.add(EnumSignalSlot.IN_1);
         properties.add(CHAT_MESSAGE);
     }
 
@@ -37,9 +35,9 @@ public class ModuleChatOutput extends ModuleBase
     {
         IModuleContainer container = socketBlock.getContainer();
 
-        if(channels.get(container.getProperty(IN_1).getInt()) == 1)
+        if(channels.get(container.getProperty(EnumSignalSlot.IN_1).getInt()) == 1)
         {
-            FTBLib.printChat(null, container.getProperty(CHAT_MESSAGE).getString());
+            LMServerUtils.printChat(null, container.getProperty(CHAT_MESSAGE).getString());
         }
     }
 }

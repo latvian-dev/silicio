@@ -1,7 +1,8 @@
 package com.latmod.silicio.block;
 
 import com.feed_the_beast.ftbl.api.FTBLibAPI;
-import com.feed_the_beast.ftbl.api.block.BlockWithVariants;
+import com.feed_the_beast.ftbl.api.block.IBlockVariant;
+import com.feed_the_beast.ftbl.api.gui.GuiHelper;
 import com.latmod.lib.EnumNameMap;
 import com.latmod.silicio.gui.SilGuis;
 import com.latmod.silicio.tile.TileESU;
@@ -14,6 +15,7 @@ import net.minecraft.block.material.MapColor;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -31,7 +33,7 @@ import javax.annotation.Nullable;
 /**
  * Created by LatvianModder on 09.08.2016.
  */
-public enum EnumSilBlocks implements BlockWithVariants.IBlockVariant
+public enum EnumSilBlocks implements IBlockVariant
 {
     SILICON_BLOCK(0),
     SILICON_GLASS(1),
@@ -217,7 +219,7 @@ public enum EnumSilBlocks implements BlockWithVariants.IBlockVariant
                 nbt.setInteger("X", pos.getX());
                 nbt.setInteger("Y", pos.getY());
                 nbt.setInteger("Z", pos.getZ());
-                FTBLibAPI.get().openGui(gui, playerIn, nbt);
+                FTBLibAPI.get().openGui(gui, (EntityPlayerMP) playerIn, GuiHelper.getPosData(pos));
             }
 
             return true;

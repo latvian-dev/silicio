@@ -9,6 +9,9 @@ import com.latmod.silicio.api.module.impl.ModuleContainer;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TextComponentString;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -56,7 +59,12 @@ public class ItemModule extends ItemSil
 
             for(IModulePropertyKey key : moduleContainer.getModule().getProperties())
             {
-                tooltip.add("> " + key.getName() + ": " + moduleContainer.getProperty(key).getString());
+                ITextComponent line = new TextComponentString("> ");
+                line.appendSibling(key.getDisplayName());
+                line.appendText(": ");
+                line.appendText(moduleContainer.getProperty(key).getString());
+                line.getStyle().setColor(TextFormatting.GRAY);
+                tooltip.add(line.getFormattedText());
             }
         }
     }

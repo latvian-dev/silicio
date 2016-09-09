@@ -2,18 +2,14 @@ package com.latmod.silicio.tile;
 
 import com.feed_the_beast.ftbl.api.tile.EnumSync;
 import com.latmod.lib.math.MathHelperLM;
-import com.latmod.lib.util.LMTroveUtils;
 import com.latmod.silicio.api.tile.ISilNetController;
 import gnu.trove.impl.Constants;
 import gnu.trove.map.TIntByteMap;
-import gnu.trove.map.TIntIntMap;
-import gnu.trove.map.hash.TIntIntHashMap;
+import gnu.trove.map.hash.TIntByteHashMap;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-
-import java.awt.*;
 
 /**
  * Created by LatvianModder on 03.03.2016.
@@ -21,47 +17,94 @@ import java.awt.*;
 public class TileLamp extends TileSilNet
 {
     public static final AxisAlignedBB LAMP_BOX = new AxisAlignedBB(1D / 16D, 1D / 16D, 1D / 16D, 15D / 16D, 15D / 16D, 15D / 16D);
-    private static final int NONE = 0xFFFFFFFF;
+    private static final byte NONE = -1;
 
-    private TIntIntMap colorMap;
-    private int currentColor;
+    private final TIntByteHashMap colorMap;
+    private byte currentColor;
 
     public TileLamp()
     {
-        colorMap = new TIntIntHashMap(1, Constants.DEFAULT_LOAD_FACTOR, 0, NONE);
-        currentColor = 0xFFFFFF;
+        colorMap = new TIntByteHashMap(1, Constants.DEFAULT_LOAD_FACTOR, 0, NONE);
+        currentColor = 0;
     }
 
     @Override
     public void writeTileData(NBTTagCompound nbt)
     {
         super.writeTileData(nbt);
-        nbt.setIntArray("Colors", LMTroveUtils.toIntList(colorMap).toArray());
-        nbt.setInteger("CurrentColor", currentColor);
+
+        int[] a = new int[colorMap.size() * 2];
+
+        final int[] i = {-1};
+
+        colorMap.forEachEntry((key, value) ->
+        {
+            a[++i[0]] = key;
+            a[++i[0]] = value;
+            return true;
+        });
+
+        nbt.setIntArray("Colors", a);
+        nbt.setByte("CurrentColor", currentColor);
     }
 
     @Override
     public void readTileData(NBTTagCompound nbt)
     {
         super.readTileData(nbt);
-        colorMap = LMTroveUtils.fromArray(nbt.getIntArray("Colors"));
-        currentColor = nbt.getInteger("CurrentColor");
+
+        colorMap.clear();
+
+        int[] a = nbt.getIntArray("Colors");
+        if(a.length > 0)
+        {
+            for(int i = 0; i < a.length; i += 2)
+            {
+                colorMap.put(a[i], (byte) a[i + 1]);
+            }
+        }
+
+        currentColor = nbt.getByte("CurrentColor");
     }
 
     @Override
     public void writeTileClientData(NBTTagCompound nbt)
     {
         super.writeTileClientData(nbt);
-        nbt.setIntArray("Colors", LMTroveUtils.toIntList(colorMap).toArray());
-        nbt.setInteger("CurrentColor", currentColor);
+
+        int[] a = new int[colorMap.size() * 2];
+
+        final int[] i = {-1};
+
+        colorMap.forEachEntry((key, value) ->
+        {
+            a[++i[0]] = key;
+            a[++i[0]] = value;
+            return true;
+        });
+
+        nbt.setIntArray("C", a);
+
+        nbt.setByte("CC", currentColor);
     }
 
     @Override
     public void readTileClientData(NBTTagCompound nbt)
     {
         super.readTileClientData(nbt);
-        colorMap = LMTroveUtils.fromArray(nbt.getIntArray("Colors"));
-        currentColor = nbt.getInteger("CurrentColor");
+
+        colorMap.clear();
+
+        int[] a = nbt.getIntArray("C");
+        if(a.length > 0)
+        {
+            for(int i = 0; i < a.length; i += 2)
+            {
+                colorMap.put(a[i], (byte) a[i + 1]);
+            }
+        }
+
+        currentColor = nbt.getByte("CC");
     }
 
     @Override
@@ -73,12 +116,9 @@ public class TileLamp extends TileSilNet
     @Override
     public void onSignalsChanged(ISilNetController controller, TIntByteMap channels)
     {
-        currentColor = Color.HSBtoRGB(MathHelperLM.RAND.nextFloat(), 1F, 1F);
-        markDirty();
-
         channels.forEachEntry((channel, on) ->
         {
-            int newColor = colorMap.get(channel);
+            byte newColor = colorMap.get(channel);
 
             if(newColor != NONE)
             {
@@ -91,8 +131,9 @@ public class TileLamp extends TileSilNet
         });
     }
 
-    public int getCurrentColor()
+    public byte getCurrentColor()
     {
+        currentColor = (byte) MathHelperLM.wrap((pos.getX() + pos.getY() + pos.getZ()), 128);
         return currentColor;
     }
 
@@ -106,7 +147,7 @@ public class TileLamp extends TileSilNet
     @SideOnly(Side.CLIENT)
     public AxisAlignedBB getRenderBoundingBox()
     {
-        return LAMP_BOX.offset(pos);
+        return LAMP_BOX.offset(getPos());
     }
 
     @Override

@@ -41,6 +41,6 @@ public class GuiElemiteCrafter extends GuiLM
         FTBLibClient.setTexture(TEXTURE);
         int ax = getAX();
         int ay = getAY();
-        GuiScreen.drawModalRectWithCustomSizedTexture(ax, ay, 0F, 0F, width, height, 256F, 256F);
+        GuiScreen.drawModalRectWithCustomSizedTexture(ax, ay, 0F, 0F, getWidth(), getHeight(), 256F, 256F);
     }
 }

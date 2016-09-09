@@ -5,22 +5,16 @@ import com.feed_the_beast.ftbl.api.block.BlockWithVariants;
 import com.feed_the_beast.ftbl.api.item.ODItems;
 import com.feed_the_beast.ftbl.api.recipes.IRecipeHandler;
 import com.feed_the_beast.ftbl.api.recipes.IRecipes;
-import com.feed_the_beast.ftbl.util.FTBLib;
+import com.latmod.lib.util.LMUtils;
 import com.latmod.silicio.Silicio;
-import com.latmod.silicio.client.RenderLamp;
-import com.latmod.silicio.client.RenderTurret;
 import com.latmod.silicio.item.SilItems;
 import com.latmod.silicio.tile.TileConnector;
-import com.latmod.silicio.tile.TileLamp;
 import com.latmod.silicio.tile.TileSocketBlock;
 import com.latmod.silicio.tile.TileTurret;
 import net.minecraft.block.material.Material;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
-import net.minecraftforge.fml.client.registry.ClientRegistry;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.oredict.OreDictionary;
 
 import javax.annotation.Nonnull;
@@ -53,22 +47,9 @@ public class SilBlocks
 
         BLOCKS.registerTileEntities();
 
-        FTBLib.addTile(TileSocketBlock.class, SOCKET_BLOCK.getRegistryName());
-        FTBLib.addTile(TileConnector.class, CONNECTOR.getRegistryName());
-        FTBLib.addTile(TileTurret.class, TURRET.getRegistryName());
-    }
-
-    @SideOnly(Side.CLIENT)
-    public static void initModels()
-    {
-        BLOCKS.registerModels();
-        SOCKET_BLOCK.registerDefaultModel();
-        CONNECTOR.registerDefaultModel();
-        BLUE_GOO_BLOCK.registerDefaultModel();
-        TURRET.registerDefaultModel();
-
-        ClientRegistry.bindTileEntitySpecialRenderer(TileTurret.class, new RenderTurret());
-        ClientRegistry.bindTileEntitySpecialRenderer(TileLamp.class, new RenderLamp());
+        LMUtils.addTile(TileSocketBlock.class, SOCKET_BLOCK.getRegistryName());
+        LMUtils.addTile(TileConnector.class, CONNECTOR.getRegistryName());
+        LMUtils.addTile(TileTurret.class, TURRET.getRegistryName());
     }
 
     public static class Recipes implements IRecipeHandler

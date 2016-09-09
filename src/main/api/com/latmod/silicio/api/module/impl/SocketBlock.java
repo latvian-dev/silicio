@@ -1,6 +1,6 @@
 package com.latmod.silicio.api.module.impl;
 
-import com.feed_the_beast.ftbl.api.item.LMInvUtils;
+import com.latmod.lib.util.LMInvUtils;
 import com.latmod.silicio.api.SilicioAPI;
 import com.latmod.silicio.api.module.IModuleContainer;
 import com.latmod.silicio.api.tile.ISocketBlock;
