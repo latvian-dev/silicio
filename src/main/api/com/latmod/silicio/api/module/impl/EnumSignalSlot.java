@@ -1,11 +1,14 @@
 package com.latmod.silicio.api.module.impl;
 
+import com.feed_the_beast.ftbl.api.config.IConfigValue;
+import com.feed_the_beast.ftbl.api.config.properties.PropertyInt;
 import com.latmod.lib.EnumNameMap;
 import com.latmod.lib.LangKey;
-import com.latmod.silicio.api.module.IModuleProperty;
+import com.latmod.lib.annotations.IInfoContainer;
 import com.latmod.silicio.api.module.ISignalSlot;
 import com.latmod.silicio.api.module.ISignalSlotPropertyKey;
 import net.minecraft.util.text.ITextComponent;
+import net.minecraftforge.common.util.Constants;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -40,12 +43,12 @@ public enum EnumSignalSlot implements ISignalSlotPropertyKey, ISignalSlot
     private static final LangKey LANG_KEY_OUTPUT = new LangKey("silicio.lang.connection.output");
 
     private final String name;
-    private final PropertyConnection defValue;
+    private final IConfigValue defValue;
 
     EnumSignalSlot()
     {
         name = EnumNameMap.createName(this);
-        defValue = new PropertyConnection();
+        defValue = new PropertyInt(Constants.NBT.TAG_SHORT, 0).setMin(0).setMax(Short.MAX_VALUE);
     }
 
     @Override
@@ -61,7 +64,7 @@ public enum EnumSignalSlot implements ISignalSlotPropertyKey, ISignalSlot
     }
 
     @Override
-    public IModuleProperty getDefValue()
+    public IConfigValue getDefValue()
     {
         return defValue;
     }
@@ -82,5 +85,27 @@ public enum EnumSignalSlot implements ISignalSlotPropertyKey, ISignalSlot
     public int getWrappedID()
     {
         return ordinal() % 8;
+    }
+
+    @Override
+    public String[] getInfo()
+    {
+        return IInfoContainer.NO_INFO;
+    }
+
+    @Override
+    public void setInfo(String[] s)
+    {
+    }
+
+    @Override
+    public int getFlags()
+    {
+        return 0;
+    }
+
+    @Override
+    public void setFlags(int flags)
+    {
     }
 }

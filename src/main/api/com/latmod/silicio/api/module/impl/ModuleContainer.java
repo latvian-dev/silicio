@@ -1,10 +1,10 @@
 package com.latmod.silicio.api.module.impl;
 
+import com.feed_the_beast.ftbl.api.config.IConfigKey;
+import com.feed_the_beast.ftbl.api.config.IConfigValue;
 import com.latmod.silicio.api.SilicioAPI;
 import com.latmod.silicio.api.module.IModule;
 import com.latmod.silicio.api.module.IModuleContainer;
-import com.latmod.silicio.api.module.IModuleProperty;
-import com.latmod.silicio.api.module.IModulePropertyKey;
 import com.latmod.silicio.api.tile.ISocketBlock;
 import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagCompound;
@@ -26,7 +26,7 @@ public class ModuleContainer implements IModuleContainer, ICapabilityProvider, I
 {
     private final IModule module;
     private long tick;
-    private Map<IModulePropertyKey, IModuleProperty> properties;
+    private Map<IConfigKey, IConfigValue> properties;
 
     public ModuleContainer(IModule m)
     {
@@ -46,14 +46,14 @@ public class ModuleContainer implements IModuleContainer, ICapabilityProvider, I
     }
 
     @Override
-    public IModuleProperty getProperty(IModulePropertyKey config)
+    public IConfigValue getProperty(IConfigKey config)
     {
-        IModuleProperty base = properties == null ? null : properties.get(config);
+        IConfigValue base = properties == null ? null : properties.get(config);
         return base == null ? config.getDefValue() : base;
     }
 
     @Override
-    public Map<IModulePropertyKey, IModuleProperty> getProperties()
+    public Map<IConfigKey, IConfigValue> getProperties()
     {
         if(properties == null)
         {
@@ -65,7 +65,7 @@ public class ModuleContainer implements IModuleContainer, ICapabilityProvider, I
 
     public void loadProperties()
     {
-        Collection<IModulePropertyKey> propertyKeys = getModule() == null ? null : module.getProperties();
+        Collection<IConfigKey> propertyKeys = getModule() == null ? null : module.getProperties();
 
         if(propertyKeys == null || propertyKeys.isEmpty())
         {
@@ -75,7 +75,7 @@ public class ModuleContainer implements IModuleContainer, ICapabilityProvider, I
         {
             properties = new HashMap<>(propertyKeys.size());
 
-            for(IModulePropertyKey key : propertyKeys)
+            for(IConfigKey key : propertyKeys)
             {
                 properties.put(key, key.getDefValue().copy());
             }
@@ -109,7 +109,7 @@ public class ModuleContainer implements IModuleContainer, ICapabilityProvider, I
 
         if(properties != null && !properties.isEmpty())
         {
-            for(Map.Entry<IModulePropertyKey, IModuleProperty> entry : properties.entrySet())
+            for(Map.Entry<IConfigKey, IConfigValue> entry : properties.entrySet())
             {
                 if(entry.getValue() != null)
                 {
@@ -135,7 +135,7 @@ public class ModuleContainer implements IModuleContainer, ICapabilityProvider, I
         {
             NBTTagCompound configTag = nbt.getCompoundTag("Config");
 
-            for(Map.Entry<IModulePropertyKey, IModuleProperty> entry : properties.entrySet())
+            for(Map.Entry<IConfigKey, IConfigValue> entry : properties.entrySet())
             {
                 NBTBase base = configTag.getTag(entry.getKey().getName());
 

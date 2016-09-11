@@ -1,5 +1,6 @@
 package com.latmod.silicio.api.module;
 
+import com.feed_the_beast.ftbl.api.config.IConfigKey;
 import com.feed_the_beast.ftbl.api.recipes.IRecipes;
 import com.latmod.silicio.api.tile.ISilNetController;
 import com.latmod.silicio.api.tile.ISocketBlock;
@@ -14,7 +15,7 @@ import java.util.Collection;
  */
 public interface IModule
 {
-    Collection<IModulePropertyKey> getProperties();
+    Collection<IConfigKey> getProperties();
 
     void addRecipes(ItemStack stack, IRecipes recipes);
 

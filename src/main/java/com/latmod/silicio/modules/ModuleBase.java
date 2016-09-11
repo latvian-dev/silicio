@@ -1,8 +1,8 @@
 package com.latmod.silicio.modules;
 
+import com.feed_the_beast.ftbl.api.config.IConfigKey;
 import com.feed_the_beast.ftbl.api.recipes.IRecipes;
 import com.latmod.silicio.api.module.IModule;
-import com.latmod.silicio.api.module.IModulePropertyKey;
 import com.latmod.silicio.api.tile.ISilNetController;
 import com.latmod.silicio.api.tile.ISocketBlock;
 import gnu.trove.map.TIntByteMap;
@@ -18,10 +18,10 @@ import java.util.Collections;
  */
 public class ModuleBase implements IModule
 {
-    protected final Collection<IModulePropertyKey> properties = new ArrayList<>();
+    protected final Collection<IConfigKey> properties = new ArrayList<>();
 
     @Override
-    public Collection<IModulePropertyKey> getProperties()
+    public Collection<IConfigKey> getProperties()
     {
         return properties.isEmpty() ? Collections.emptyList() : Collections.unmodifiableCollection(properties);
     }

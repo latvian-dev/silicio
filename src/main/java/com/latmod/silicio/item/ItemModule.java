@@ -1,10 +1,10 @@
 package com.latmod.silicio.item;
 
+import com.feed_the_beast.ftbl.api.config.IConfigKey;
 import com.latmod.lib.LangKey;
 import com.latmod.silicio.api.SilicioAPI;
 import com.latmod.silicio.api.module.IModule;
 import com.latmod.silicio.api.module.IModuleContainer;
-import com.latmod.silicio.api.module.IModulePropertyKey;
 import com.latmod.silicio.api.module.impl.ModuleContainer;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -57,7 +57,7 @@ public class ItemModule extends ItemSil
             tooltip.add("Tick: " + moduleContainer.getTick());
             tooltip.add("Properties:");
 
-            for(IModulePropertyKey key : moduleContainer.getModule().getProperties())
+            for(IConfigKey key : moduleContainer.getModule().getProperties())
             {
                 ITextComponent line = new TextComponentString("> ");
                 line.appendSibling(key.getDisplayName());

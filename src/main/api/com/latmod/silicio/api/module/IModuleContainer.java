@@ -1,5 +1,7 @@
 package com.latmod.silicio.api.module;
 
+import com.feed_the_beast.ftbl.api.config.IConfigKey;
+import com.feed_the_beast.ftbl.api.config.IConfigValue;
 import com.latmod.silicio.api.tile.ISocketBlock;
 
 import java.util.Map;
@@ -15,7 +17,7 @@ public interface IModuleContainer
 
     void tick(ISocketBlock socketBlock);
 
-    IModuleProperty getProperty(IModulePropertyKey config);
+    IConfigValue getProperty(IConfigKey config);
 
-    Map<IModulePropertyKey, IModuleProperty> getProperties();
+    Map<IConfigKey, IConfigValue> getProperties();
 }

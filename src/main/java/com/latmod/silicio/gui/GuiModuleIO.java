@@ -1,6 +1,8 @@
 package com.latmod.silicio.gui;
 
 import com.feed_the_beast.ftbl.api.client.FTBLibClient;
+import com.feed_the_beast.ftbl.api.config.IConfigKey;
+import com.feed_the_beast.ftbl.api.config.IConfigValue;
 import com.feed_the_beast.ftbl.api.gui.GuiContainerWrapper;
 import com.feed_the_beast.ftbl.api.gui.GuiHelper;
 import com.feed_the_beast.ftbl.api.gui.GuiIcons;
@@ -11,9 +13,7 @@ import com.feed_the_beast.ftbl.api.gui.widgets.ButtonLM;
 import com.latmod.lib.TextureCoords;
 import com.latmod.silicio.Silicio;
 import com.latmod.silicio.api.SilicioAPI;
-import com.latmod.silicio.api.module.IModule;
-import com.latmod.silicio.api.module.IModuleProperty;
-import com.latmod.silicio.api.module.IModulePropertyKey;
+import com.latmod.silicio.api.module.IModuleContainer;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.IContainerListener;
@@ -23,6 +23,7 @@ import net.minecraft.util.ResourceLocation;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by LatvianModder on 25.08.2016.
@@ -69,10 +70,10 @@ public class GuiModuleIO extends GuiLM implements IContainerListener
 
     private class ButtonProperty extends ButtonLM
     {
-        private final IModulePropertyKey key;
-        private final IModuleProperty value;
+        private final IConfigKey key;
+        private final IConfigValue value;
 
-        public ButtonProperty(IModulePropertyKey k, IModuleProperty v)
+        public ButtonProperty(IConfigKey k, IConfigValue v)
         {
             super(0, 0, 16, 16);
             key = k;
@@ -96,7 +97,7 @@ public class GuiModuleIO extends GuiLM implements IContainerListener
     private final ContainerModuleIO container;
     private final ButtonLM buttonMode;
     private EnumMode mode = EnumMode.BOTH;
-    private IModule module;
+    private IModuleContainer module;
     private final List<ButtonProperty> propertyList;
 
     public GuiModuleIO(ContainerModuleIO c)
@@ -136,15 +137,15 @@ public class GuiModuleIO extends GuiLM implements IContainerListener
 
         if(container.tile.itemHandler.getStackInSlot(0) != null && container.tile.itemHandler.getStackInSlot(0).hasCapability(SilicioAPI.MODULE_CONTAINER, null))
         {
-            module = container.tile.itemHandler.getStackInSlot(0).getCapability(SilicioAPI.MODULE_CONTAINER, null).getModule();
+            module = container.tile.itemHandler.getStackInSlot(0).getCapability(SilicioAPI.MODULE_CONTAINER, null);
         }
 
         if(module != null)
         {
             int i = 0;
-            for(IModulePropertyKey propertyKey : module.getProperties())
+            for(Map.Entry<IConfigKey, IConfigValue> entry : module.getProperties().entrySet())
             {
-                ButtonProperty b = new ButtonProperty(propertyKey, propertyKey.getDefValue().copy());
+                ButtonProperty b = new ButtonProperty(entry.getKey(), entry.getValue());
                 propertyList.add(b);
                 b.posX = 40 + 16 * (i % 8);
                 b.posY = 8 + 16 * (i / 8);
