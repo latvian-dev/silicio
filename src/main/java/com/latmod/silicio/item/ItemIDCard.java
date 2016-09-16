@@ -1,9 +1,9 @@
 package com.latmod.silicio.item;
 
 import com.latmod.lib.util.LMStringUtils;
-import com.latmod.silicio.api.SilicioAPI;
 import com.latmod.silicio.api.tile.ISilNetController;
 import com.latmod.silicio.api.tile.ISilNetTile;
+import com.latmod.silicio.api_impl.SilCaps;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -55,9 +55,9 @@ public class ItemIDCard extends ItemSil
         {
             TileEntity tile = worldIn.getTileEntity(pos);
 
-            if(tile != null && tile.hasCapability(SilicioAPI.SILNET_TILE, facing))
+            if(tile != null && tile.hasCapability(SilCaps.SILNET_TILE, facing))
             {
-                ISilNetTile silNetTile = tile.getCapability(SilicioAPI.SILNET_TILE, facing);
+                ISilNetTile silNetTile = tile.getCapability(SilCaps.SILNET_TILE, facing);
 
                 if(silNetTile instanceof ISilNetController)
                 {

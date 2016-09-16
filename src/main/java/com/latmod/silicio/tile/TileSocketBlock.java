@@ -1,9 +1,9 @@
 package com.latmod.silicio.tile;
 
 import com.feed_the_beast.ftbl.api.tile.EnumSync;
-import com.latmod.silicio.api.SilicioAPI;
 import com.latmod.silicio.api.module.impl.SocketBlock;
 import com.latmod.silicio.api.tile.ISilNetController;
+import com.latmod.silicio.api_impl.SilCaps;
 import gnu.trove.map.TIntByteMap;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
@@ -45,13 +45,13 @@ public class TileSocketBlock extends TileSilNet implements ITickable
     @Override
     public boolean hasCapability(Capability<?> capability, @Nullable EnumFacing facing)
     {
-        return (capability == SilicioAPI.SOCKET_BLOCK && modules.get(facing).hasContainer()) || capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY || super.hasCapability(capability, facing);
+        return (capability == SilCaps.SOCKET_BLOCK && modules.get(facing).hasContainer()) || capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY || super.hasCapability(capability, facing);
     }
 
     @Override
     public <T> T getCapability(Capability<T> capability, @Nullable EnumFacing facing)
     {
-        if(capability == SilicioAPI.SOCKET_BLOCK || capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY)
+        if(capability == SilCaps.SOCKET_BLOCK || capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY)
         {
             return (T) modules.get(facing);
         }

@@ -1,7 +1,7 @@
 package com.latmod.silicio.modules;
 
 import com.feed_the_beast.ftbl.api.config.ConfigKey;
-import com.feed_the_beast.ftbl.api.config.properties.PropertyInt;
+import com.feed_the_beast.ftbl.api.config.impl.PropertyInt;
 import com.feed_the_beast.ftbl.api.recipes.IRecipes;
 import com.latmod.silicio.api.module.IModuleContainer;
 import com.latmod.silicio.api.module.impl.EnumSignalSlot;

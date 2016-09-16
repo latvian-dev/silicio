@@ -1,9 +1,9 @@
 package com.latmod.silicio.block;
 
 import com.latmod.lib.util.LMInvUtils;
-import com.latmod.silicio.api.SilicioAPI;
 import com.latmod.silicio.api.module.impl.SocketBlock;
 import com.latmod.silicio.api.tile.ISocketBlock;
+import com.latmod.silicio.api_impl.SilCaps;
 import com.latmod.silicio.tile.TileSocketBlock;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyBool;
@@ -86,12 +86,12 @@ public class BlockSocketBlock extends BlockSil
         if(te instanceof TileSocketBlock)
         {
             TileSocketBlock tile = (TileSocketBlock) te;
-            modD = tile.hasCapability(SilicioAPI.SOCKET_BLOCK, EnumFacing.DOWN);
-            modU = tile.hasCapability(SilicioAPI.SOCKET_BLOCK, EnumFacing.UP);
-            modN = tile.hasCapability(SilicioAPI.SOCKET_BLOCK, EnumFacing.NORTH);
-            modS = tile.hasCapability(SilicioAPI.SOCKET_BLOCK, EnumFacing.SOUTH);
-            modW = tile.hasCapability(SilicioAPI.SOCKET_BLOCK, EnumFacing.WEST);
-            modE = tile.hasCapability(SilicioAPI.SOCKET_BLOCK, EnumFacing.EAST);
+            modD = tile.hasCapability(SilCaps.SOCKET_BLOCK, EnumFacing.DOWN);
+            modU = tile.hasCapability(SilCaps.SOCKET_BLOCK, EnumFacing.UP);
+            modN = tile.hasCapability(SilCaps.SOCKET_BLOCK, EnumFacing.NORTH);
+            modS = tile.hasCapability(SilCaps.SOCKET_BLOCK, EnumFacing.SOUTH);
+            modW = tile.hasCapability(SilCaps.SOCKET_BLOCK, EnumFacing.WEST);
+            modE = tile.hasCapability(SilCaps.SOCKET_BLOCK, EnumFacing.EAST);
         }
 
         return state.withProperty(MODULE_D, modD).withProperty(MODULE_U, modU).withProperty(MODULE_N, modN).withProperty(MODULE_S, modS).withProperty(MODULE_W, modW).withProperty(MODULE_E, modE);
@@ -107,13 +107,13 @@ public class BlockSocketBlock extends BlockSil
             return false;
         }
 
-        if(te.hasCapability(SilicioAPI.SOCKET_BLOCK, side))
+        if(te.hasCapability(SilCaps.SOCKET_BLOCK, side))
         {
             if(!worldIn.isRemote)
             {
                 if(heldItem == null && playerIn.isSneaking())
                 {
-                    SocketBlock c = (SocketBlock) te.getCapability(SilicioAPI.SOCKET_BLOCK, side);
+                    SocketBlock c = (SocketBlock) te.getCapability(SilCaps.SOCKET_BLOCK, side);
 
                     if(c.hasContainer())
                     {
@@ -128,7 +128,7 @@ public class BlockSocketBlock extends BlockSil
 
             return true;
         }
-        else if(heldItem != null && heldItem.hasCapability(SilicioAPI.MODULE_CONTAINER, null))
+        else if(heldItem != null && heldItem.hasCapability(SilCaps.MODULE_CONTAINER, null))
         {
             if(!worldIn.isRemote && te.hasCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, side))
             {
@@ -137,7 +137,7 @@ public class BlockSocketBlock extends BlockSil
                 if(itemStack == null || itemStack.stackSize == heldItem.stackSize - 1)
                 {
                     heldItem.stackSize--;
-                    ISocketBlock socketBlock = te.getCapability(SilicioAPI.SOCKET_BLOCK, side);
+                    ISocketBlock socketBlock = te.getCapability(SilCaps.SOCKET_BLOCK, side);
                     socketBlock.getContainer().getModule().onAdded(socketBlock, (EntityPlayerMP) playerIn);
                     te.markDirty();
                 }
@@ -160,9 +160,9 @@ public class BlockSocketBlock extends BlockSil
             {
                 for(EnumFacing facing : EnumFacing.VALUES)
                 {
-                    if(te.hasCapability(SilicioAPI.SOCKET_BLOCK, facing))
+                    if(te.hasCapability(SilCaps.SOCKET_BLOCK, facing))
                     {
-                        ISocketBlock c = te.getCapability(SilicioAPI.SOCKET_BLOCK, facing);
+                        ISocketBlock c = te.getCapability(SilCaps.SOCKET_BLOCK, facing);
                         InventoryHelper.spawnItemStack(worldIn, pos.getX(), pos.getY(), pos.getZ(), c.getStack());
                     }
                 }

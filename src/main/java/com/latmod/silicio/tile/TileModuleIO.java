@@ -1,7 +1,7 @@
 package com.latmod.silicio.tile;
 
 import com.feed_the_beast.ftbl.api.tile.TileInvLM;
-import com.latmod.silicio.api.SilicioAPI;
+import com.latmod.silicio.api_impl.SilCaps;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.items.ItemStackHandler;
 
@@ -34,7 +34,7 @@ public class TileModuleIO extends TileInvLM
                 {
                     return null;
                 }
-                else if(!stack.hasCapability(SilicioAPI.MODULE_CONTAINER, null))
+                else if(!stack.hasCapability(SilCaps.MODULE_CONTAINER, null))
                 {
                     return stack;
                 }

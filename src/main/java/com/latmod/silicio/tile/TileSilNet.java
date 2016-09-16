@@ -4,6 +4,7 @@ import com.feed_the_beast.ftbl.api.tile.TileLM;
 import com.latmod.silicio.api.SilicioAPI;
 import com.latmod.silicio.api.tile.ISilNetController;
 import com.latmod.silicio.api.tile.ISilNetTile;
+import com.latmod.silicio.api_impl.SilCaps;
 import gnu.trove.map.TIntByteMap;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
@@ -74,13 +75,13 @@ public abstract class TileSilNet extends TileLM implements ISilNetTile
     @Override
     public boolean hasCapability(Capability<?> capability, @Nullable EnumFacing facing)
     {
-        return capability == SilicioAPI.SILNET_TILE || super.hasCapability(capability, facing);
+        return capability == SilCaps.SILNET_TILE || super.hasCapability(capability, facing);
     }
 
     @Override
     public <T> T getCapability(Capability<T> capability, @Nullable EnumFacing facing)
     {
-        if(capability == SilicioAPI.SILNET_TILE)
+        if(capability == SilCaps.SILNET_TILE)
         {
             return (T) this;
         }

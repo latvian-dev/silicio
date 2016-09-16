@@ -1,12 +1,14 @@
 package com.latmod.silicio.api.module.impl;
 
 import com.feed_the_beast.ftbl.api.config.IConfigKey;
+import com.feed_the_beast.ftbl.api.config.IConfigTree;
 import com.feed_the_beast.ftbl.api.config.IConfigValue;
-import com.latmod.silicio.api.SilicioAPI;
+import com.feed_the_beast.ftbl.api.config.impl.ConfigTree;
+import com.feed_the_beast.ftbl.api.config.impl.EmptyConfigTree;
 import com.latmod.silicio.api.module.IModule;
 import com.latmod.silicio.api.module.IModuleContainer;
 import com.latmod.silicio.api.tile.ISocketBlock;
-import net.minecraft.nbt.NBTBase;
+import com.latmod.silicio.api_impl.SilCaps;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 import net.minecraftforge.common.capabilities.Capability;
@@ -15,9 +17,6 @@ import net.minecraftforge.common.util.INBTSerializable;
 
 import javax.annotation.Nullable;
 import java.util.Collection;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * Created by LatvianModder on 1.09.2016.
@@ -26,7 +25,7 @@ public class ModuleContainer implements IModuleContainer, ICapabilityProvider, I
 {
     private final IModule module;
     private long tick;
-    private Map<IConfigKey, IConfigValue> properties;
+    private IConfigTree properties;
 
     public ModuleContainer(IModule m)
     {
@@ -53,11 +52,11 @@ public class ModuleContainer implements IModuleContainer, ICapabilityProvider, I
     }
 
     @Override
-    public Map<IConfigKey, IConfigValue> getProperties()
+    public IConfigTree getProperties()
     {
         if(properties == null)
         {
-            return Collections.emptyMap();
+            return EmptyConfigTree.INSTANCE;
         }
 
         return properties;
@@ -65,19 +64,19 @@ public class ModuleContainer implements IModuleContainer, ICapabilityProvider, I
 
     public void loadProperties()
     {
-        Collection<IConfigKey> propertyKeys = getModule() == null ? null : module.getProperties();
+        Collection<IConfigKey> propertyKeys = module.getProperties();
 
-        if(propertyKeys == null || propertyKeys.isEmpty())
+        if(propertyKeys.isEmpty())
         {
             properties = null;
         }
         else
         {
-            properties = new HashMap<>(propertyKeys.size());
+            properties = new ConfigTree();
 
             for(IConfigKey key : propertyKeys)
             {
-                properties.put(key, key.getDefValue().copy());
+                properties.add(key);
             }
         }
     }
@@ -85,13 +84,13 @@ public class ModuleContainer implements IModuleContainer, ICapabilityProvider, I
     @Override
     public boolean hasCapability(Capability<?> capability, @Nullable EnumFacing facing)
     {
-        return capability == SilicioAPI.MODULE_CONTAINER;
+        return capability == SilCaps.MODULE_CONTAINER;
     }
 
     @Override
     public <T> T getCapability(Capability<T> capability, @Nullable EnumFacing facing)
     {
-        if(capability == SilicioAPI.MODULE_CONTAINER)
+        if(capability == SilCaps.MODULE_CONTAINER)
         {
             return (T) this;
         }
@@ -105,20 +104,10 @@ public class ModuleContainer implements IModuleContainer, ICapabilityProvider, I
         NBTTagCompound nbt = new NBTTagCompound();
         nbt.setLong("Tick", tick);
 
-        NBTTagCompound configTag = new NBTTagCompound();
-
         if(properties != null && !properties.isEmpty())
         {
-            for(Map.Entry<IConfigKey, IConfigValue> entry : properties.entrySet())
-            {
-                if(entry.getValue() != null)
-                {
-                    configTag.setTag(entry.getKey().getName(), entry.getValue().serializeNBT());
-                }
-            }
+            nbt.setTag("Config", properties.serializeNBT());
         }
-
-        nbt.setTag("Config", configTag);
 
         return nbt;
     }
@@ -133,17 +122,7 @@ public class ModuleContainer implements IModuleContainer, ICapabilityProvider, I
 
         if(properties != null)
         {
-            NBTTagCompound configTag = nbt.getCompoundTag("Config");
-
-            for(Map.Entry<IConfigKey, IConfigValue> entry : properties.entrySet())
-            {
-                NBTBase base = configTag.getTag(entry.getKey().getName());
-
-                if(base != null)
-                {
-                    entry.getValue().deserializeNBT(base);
-                }
-            }
+            properties.deserializeNBT(nbt.getCompoundTag("Config"));
         }
     }
 

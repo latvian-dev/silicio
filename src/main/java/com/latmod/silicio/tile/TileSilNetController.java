@@ -5,6 +5,7 @@ import com.latmod.silicio.api.SilicioAPI;
 import com.latmod.silicio.api.tile.ISilNetConnector;
 import com.latmod.silicio.api.tile.ISilNetController;
 import com.latmod.silicio.api.tile.ISilNetTile;
+import com.latmod.silicio.api_impl.SilCaps;
 import gnu.trove.TIntCollection;
 import gnu.trove.impl.Constants;
 import gnu.trove.map.TIntByteMap;
@@ -115,9 +116,9 @@ public class TileSilNetController extends TileSilNet implements ITickable, ISilN
 
             for(TileEntity tile : network)
             {
-                if(tile.hasCapability(SilicioAPI.SILNET_TILE, null))
+                if(tile.hasCapability(SilCaps.SILNET_TILE, null))
                 {
-                    tile.getCapability(SilicioAPI.SILNET_TILE, null).provideSignals(this);
+                    tile.getCapability(SilCaps.SILNET_TILE, null).provideSignals(this);
                 }
             }
 
@@ -138,9 +139,9 @@ public class TileSilNetController extends TileSilNet implements ITickable, ISilN
             {
                 for(TileEntity tile : network)
                 {
-                    if(tile.hasCapability(SilicioAPI.SILNET_TILE, null))
+                    if(tile.hasCapability(SilCaps.SILNET_TILE, null))
                     {
-                        tile.getCapability(SilicioAPI.SILNET_TILE, null).onSignalsChanged(this, changedSignals);
+                        tile.getCapability(SilCaps.SILNET_TILE, null).onSignalsChanged(this, changedSignals);
                     }
                 }
             }
@@ -171,7 +172,7 @@ public class TileSilNetController extends TileSilNet implements ITickable, ISilN
 
             for(TileEntity tile : network)
             {
-                ISilNetTile tile1 = tile.getCapability(SilicioAPI.SILNET_TILE, null);
+                ISilNetTile tile1 = tile.getCapability(SilCaps.SILNET_TILE, null);
 
                 if(tile1 instanceof ISilNetConnector)
                 {

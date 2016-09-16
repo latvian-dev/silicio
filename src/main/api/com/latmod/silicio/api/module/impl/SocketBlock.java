@@ -1,9 +1,9 @@
 package com.latmod.silicio.api.module.impl;
 
 import com.latmod.lib.util.LMInvUtils;
-import com.latmod.silicio.api.SilicioAPI;
 import com.latmod.silicio.api.module.IModuleContainer;
 import com.latmod.silicio.api.tile.ISocketBlock;
+import com.latmod.silicio.api_impl.SilCaps;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
@@ -30,7 +30,7 @@ public final class SocketBlock implements IItemHandler, ISocketBlock, INBTSerial
 
     public void updateModuleContainer()
     {
-        moduleContainer = stack != null && stack.hasCapability(SilicioAPI.MODULE_CONTAINER, null) ? stack.getCapability(SilicioAPI.MODULE_CONTAINER, null) : null;
+        moduleContainer = stack != null && stack.hasCapability(SilCaps.MODULE_CONTAINER, null) ? stack.getCapability(SilCaps.MODULE_CONTAINER, null) : null;
     }
 
     @Override
@@ -117,7 +117,7 @@ public final class SocketBlock implements IItemHandler, ISocketBlock, INBTSerial
     @Override
     public ItemStack insertItem(int slot, ItemStack is, boolean simulate)
     {
-        if(stack == null && is.hasCapability(SilicioAPI.MODULE_CONTAINER, null))
+        if(stack == null && is.hasCapability(SilCaps.MODULE_CONTAINER, null))
         {
             stack = LMInvUtils.singleCopy(is);
             updateModuleContainer();

@@ -12,8 +12,8 @@ import com.feed_the_beast.ftbl.api.gui.IMouseButton;
 import com.feed_the_beast.ftbl.api.gui.widgets.ButtonLM;
 import com.latmod.lib.TextureCoords;
 import com.latmod.silicio.Silicio;
-import com.latmod.silicio.api.SilicioAPI;
 import com.latmod.silicio.api.module.IModuleContainer;
+import com.latmod.silicio.api_impl.SilCaps;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.IContainerListener;
@@ -135,15 +135,15 @@ public class GuiModuleIO extends GuiLM implements IContainerListener
         module = null;
         propertyList.clear();
 
-        if(container.tile.itemHandler.getStackInSlot(0) != null && container.tile.itemHandler.getStackInSlot(0).hasCapability(SilicioAPI.MODULE_CONTAINER, null))
+        if(container.tile.itemHandler.getStackInSlot(0) != null && container.tile.itemHandler.getStackInSlot(0).hasCapability(SilCaps.MODULE_CONTAINER, null))
         {
-            module = container.tile.itemHandler.getStackInSlot(0).getCapability(SilicioAPI.MODULE_CONTAINER, null);
+            module = container.tile.itemHandler.getStackInSlot(0).getCapability(SilCaps.MODULE_CONTAINER, null);
         }
 
         if(module != null)
         {
             int i = 0;
-            for(Map.Entry<IConfigKey, IConfigValue> entry : module.getProperties().entrySet())
+            for(Map.Entry<IConfigKey, IConfigValue> entry : module.getProperties().getTree().entrySet())
             {
                 ButtonProperty b = new ButtonProperty(entry.getKey(), entry.getValue());
                 propertyList.add(b);
