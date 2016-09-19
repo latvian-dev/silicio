@@ -3,8 +3,8 @@ package com.latmod.silicio.api.module.impl;
 import com.feed_the_beast.ftbl.api.config.IConfigKey;
 import com.feed_the_beast.ftbl.api.config.IConfigTree;
 import com.feed_the_beast.ftbl.api.config.IConfigValue;
-import com.feed_the_beast.ftbl.api.config.impl.ConfigTree;
-import com.feed_the_beast.ftbl.api.config.impl.EmptyConfigTree;
+import com.feed_the_beast.ftbl.api_impl.config.ConfigTree;
+import com.feed_the_beast.ftbl.api_impl.config.EmptyConfigTree;
 import com.latmod.silicio.api.module.IModule;
 import com.latmod.silicio.api.module.IModuleContainer;
 import com.latmod.silicio.api.tile.ISocketBlock;
@@ -76,7 +76,7 @@ public class ModuleContainer implements IModuleContainer, ICapabilityProvider, I
 
             for(IConfigKey key : propertyKeys)
             {
-                properties.add(key);
+                properties.add(key, key.getDefValue().copy());
             }
         }
     }

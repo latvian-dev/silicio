@@ -1,8 +1,8 @@
 package com.latmod.silicio.modules;
 
-import com.feed_the_beast.ftbl.api.config.ConfigKey;
-import com.feed_the_beast.ftbl.api.config.impl.PropertyString;
 import com.feed_the_beast.ftbl.api.recipes.IRecipes;
+import com.feed_the_beast.ftbl.api_impl.config.ConfigKey;
+import com.feed_the_beast.ftbl.api_impl.config.PropertyString;
 import com.latmod.lib.util.LMServerUtils;
 import com.latmod.silicio.api.module.IModuleContainer;
 import com.latmod.silicio.api.module.impl.EnumSignalSlot;
@@ -10,14 +10,13 @@ import com.latmod.silicio.api.tile.ISilNetController;
 import com.latmod.silicio.api.tile.ISocketBlock;
 import gnu.trove.map.TIntByteMap;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.text.TextComponentString;
 
 /**
  * Created by LatvianModder on 04.03.2016.
  */
 public class ModuleChatOutput extends ModuleBase
 {
-    private static final ConfigKey CHAT_MESSAGE = new ConfigKey("message", new PropertyString("Text"), new TextComponentString("Chat Message")); //TODO: Lang
+    private static final ConfigKey CHAT_MESSAGE = new ConfigKey("message", new PropertyString("Text"), "Chat Message", false); //TODO: Lang
 
     public ModuleChatOutput()
     {

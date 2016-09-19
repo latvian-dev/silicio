@@ -1,10 +1,9 @@
 package com.latmod.silicio.api.module.impl;
 
 import com.feed_the_beast.ftbl.api.config.IConfigValue;
-import com.feed_the_beast.ftbl.api.config.impl.PropertyInt;
+import com.feed_the_beast.ftbl.api_impl.config.PropertyInt;
 import com.latmod.lib.EnumNameMap;
 import com.latmod.lib.LangKey;
-import com.latmod.lib.annotations.IInfoContainer;
 import com.latmod.silicio.api.module.ISignalSlot;
 import com.latmod.silicio.api.module.ISignalSlotPropertyKey;
 import net.minecraft.util.text.ITextComponent;
@@ -72,7 +71,7 @@ public enum EnumSignalSlot implements ISignalSlotPropertyKey, ISignalSlot
 
     @Override
     @Nullable
-    public ITextComponent getRawDisplayName()
+    public String getRawDisplayName()
     {
         return null;
     }
@@ -96,13 +95,13 @@ public enum EnumSignalSlot implements ISignalSlotPropertyKey, ISignalSlot
     }
 
     @Override
-    public String[] getInfo()
+    public String getInfo()
     {
-        return IInfoContainer.NO_INFO;
+        return "";
     }
 
     @Override
-    public void setInfo(String[] s)
+    public void setInfo(String s)
     {
     }
 

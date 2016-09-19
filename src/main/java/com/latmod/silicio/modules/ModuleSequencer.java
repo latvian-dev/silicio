@@ -1,8 +1,8 @@
 package com.latmod.silicio.modules;
 
-import com.feed_the_beast.ftbl.api.config.ConfigKey;
-import com.feed_the_beast.ftbl.api.config.impl.PropertyInt;
 import com.feed_the_beast.ftbl.api.recipes.IRecipes;
+import com.feed_the_beast.ftbl.api_impl.config.ConfigKey;
+import com.feed_the_beast.ftbl.api_impl.config.PropertyInt;
 import com.latmod.silicio.api.module.IModuleContainer;
 import com.latmod.silicio.api.module.impl.EnumSignalSlot;
 import com.latmod.silicio.api.tile.ISilNetController;
@@ -18,7 +18,7 @@ import java.util.List;
  */
 public class ModuleSequencer extends ModuleBase
 {
-    private static final ConfigKey TIMER = new ConfigKey("timer", new PropertyInt(Constants.NBT.TAG_SHORT, 20).setMin(0).setMax(32000), null);
+    private static final ConfigKey TIMER = new ConfigKey("timer", new PropertyInt(Constants.NBT.TAG_SHORT, 20).setMin(0).setMax(32000));
 
     private final List<EnumSignalSlot> outputs;
 
