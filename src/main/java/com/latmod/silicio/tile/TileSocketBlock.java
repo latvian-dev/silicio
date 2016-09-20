@@ -1,9 +1,9 @@
 package com.latmod.silicio.tile;
 
 import com.feed_the_beast.ftbl.api.tile.EnumSync;
-import com.latmod.silicio.api.module.impl.SocketBlock;
 import com.latmod.silicio.api.tile.ISilNetController;
 import com.latmod.silicio.api_impl.SilCaps;
+import com.latmod.silicio.api_impl.module.SocketBlock;
 import gnu.trove.map.TIntByteMap;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;

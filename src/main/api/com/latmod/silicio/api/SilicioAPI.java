@@ -11,28 +11,16 @@ import java.util.UUID;
 /**
  * Created by LatvianModder on 26.08.2016.
  */
-public abstract class SilicioAPI
+public interface SilicioAPI
 {
-    private static SilicioAPI API;
+    TileEntity getSilNetTile(BlockDimPos pos);
 
-    public static void setAPI(SilicioAPI api)
-    {
-        API = api;
-    }
+    void addSilNetTile(TileEntity tile);
 
-    public static SilicioAPI get()
-    {
-        return API;
-    }
+    void removeSilNetTile(TileEntity tile);
 
-    public abstract TileEntity getSilNetTile(BlockDimPos pos);
-
-    public abstract void addSilNetTile(TileEntity tile);
-
-    public abstract void removeSilNetTile(TileEntity tile);
-
-    public abstract void findSilNetTiles(Collection<TileEntity> tiles, UUID uuid);
+    void findSilNetTiles(Collection<TileEntity> tiles, UUID uuid);
 
     @Nullable
-    public abstract ISilNetController findSilNetController(@Nullable UUID controllerID);
+    ISilNetController findSilNetController(@Nullable UUID controllerID);
 }

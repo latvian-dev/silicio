@@ -4,9 +4,9 @@ import com.feed_the_beast.ftbl.api.recipes.IRecipes;
 import com.feed_the_beast.ftbl.api_impl.config.ConfigKey;
 import com.feed_the_beast.ftbl.api_impl.config.PropertyInt;
 import com.latmod.silicio.api.module.IModuleContainer;
-import com.latmod.silicio.api.module.impl.EnumSignalSlot;
 import com.latmod.silicio.api.tile.ISilNetController;
 import com.latmod.silicio.api.tile.ISocketBlock;
+import com.latmod.silicio.api_impl.module.EnumSignalSlot;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.util.Constants;
 

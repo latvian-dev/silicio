@@ -30,4 +30,10 @@ public class ContainerModuleIO extends ContainerLM
     {
         return tile.itemHandler;
     }
+
+    @Override
+    public void detectAndSendChanges()
+    {
+        super.detectAndSendChanges();
+    }
 }

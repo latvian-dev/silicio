@@ -5,9 +5,9 @@ import com.feed_the_beast.ftbl.api_impl.config.ConfigKey;
 import com.feed_the_beast.ftbl.api_impl.config.PropertyString;
 import com.latmod.lib.util.LMServerUtils;
 import com.latmod.silicio.api.module.IModuleContainer;
-import com.latmod.silicio.api.module.impl.EnumSignalSlot;
 import com.latmod.silicio.api.tile.ISilNetController;
 import com.latmod.silicio.api.tile.ISocketBlock;
+import com.latmod.silicio.api_impl.module.EnumSignalSlot;
 import gnu.trove.map.TIntByteMap;
 import net.minecraft.item.ItemStack;
 

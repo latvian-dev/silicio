@@ -1,4 +1,4 @@
-package com.latmod.silicio.api.module.impl;
+package com.latmod.silicio.api_impl.module;
 
 import com.feed_the_beast.ftbl.api.config.IConfigKey;
 import com.feed_the_beast.ftbl.api.config.IConfigTree;

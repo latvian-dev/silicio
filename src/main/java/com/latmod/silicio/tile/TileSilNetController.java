@@ -1,21 +1,24 @@
 package com.latmod.silicio.tile;
 
 import com.feed_the_beast.ftbl.api.tile.EnumSync;
-import com.latmod.silicio.api.SilicioAPI;
 import com.latmod.silicio.api.tile.ISilNetConnector;
 import com.latmod.silicio.api.tile.ISilNetController;
 import com.latmod.silicio.api.tile.ISilNetTile;
 import com.latmod.silicio.api_impl.SilCaps;
+import com.latmod.silicio.api_impl.SilicioAPI_Impl;
 import gnu.trove.TIntCollection;
 import gnu.trove.impl.Constants;
 import gnu.trove.map.TIntByteMap;
 import gnu.trove.map.hash.TIntByteHashMap;
 import gnu.trove.set.hash.TIntHashSet;
-import net.darkhax.tesla.api.implementation.BaseTeslaContainer;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
+import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.energy.CapabilityEnergy;
+import net.minecraftforge.energy.IEnergyStorage;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
@@ -27,9 +30,9 @@ import java.util.UUID;
 /**
  * Created by LatvianModder on 05.03.2016.
  */
-public class TileSilNetController extends TileSilNet implements ITickable, ISilNetController
+public class TileSilNetController extends TileSilNet implements ITickable, ISilNetController, IEnergyStorage
 {
-    public final BaseTeslaContainer energyTank = new BaseTeslaContainer(0, 500000, 200, 0);
+    private int energyStored;
     private final TIntCollection signals = new TIntHashSet();
     private final TIntCollection signalsPrev = new TIntHashSet();
     private final TIntByteMap changedSignals = new TIntByteHashMap(3, Constants.DEFAULT_LOAD_FACTOR, 0, (byte) -1);
@@ -70,6 +73,7 @@ public class TileSilNetController extends TileSilNet implements ITickable, ISilN
         signals.addAll(nbt.getIntArray("Signals"));
         signalsPrev.addAll(nbt.getIntArray("PrevSignals"));
         variables = nbt.getCompoundTag("Variables");
+        energyStored = nbt.getInteger("Energy");
     }
 
     @Override
@@ -79,6 +83,7 @@ public class TileSilNetController extends TileSilNet implements ITickable, ISilN
         nbt.setIntArray("Signals", signals.toArray());
         nbt.setIntArray("PrevSignals", signalsPrev.toArray());
         nbt.setTag("Variables", variables);
+        nbt.setInteger("Energy", energyStored);
     }
 
     @Override
@@ -89,6 +94,7 @@ public class TileSilNetController extends TileSilNet implements ITickable, ISilN
         signalsPrev.clear();
         signals.addAll(nbt.getIntArray("S"));
         variables = nbt.getCompoundTag("V");
+        energyStored = nbt.getInteger("E");
     }
 
     @Override
@@ -97,6 +103,24 @@ public class TileSilNetController extends TileSilNet implements ITickable, ISilN
         super.writeTileClientData(nbt);
         nbt.setIntArray("S", signals.toArray());
         nbt.setTag("V", variables);
+        nbt.setInteger("E", energyStored);
+    }
+
+    @Override
+    public boolean hasCapability(Capability<?> capability, @Nullable EnumFacing facing)
+    {
+        return capability == CapabilityEnergy.ENERGY || super.hasCapability(capability, facing);
+    }
+
+    @Override
+    public <T> T getCapability(Capability<T> capability, @Nullable EnumFacing facing)
+    {
+        if(capability == CapabilityEnergy.ENERGY)
+        {
+            return (T) this;
+        }
+
+        return super.getCapability(capability, facing);
     }
 
     @Override
@@ -165,7 +189,7 @@ public class TileSilNetController extends TileSilNet implements ITickable, ISilN
         if(updateNetwork)
         {
             network.clear();
-            SilicioAPI.get().findSilNetTiles(network, getControllerID());
+            SilicioAPI_Impl.INSTANCE.findSilNetTiles(network, getControllerID());
             network.remove(this);
 
             connectedTiles.clear();
@@ -217,5 +241,55 @@ public class TileSilNetController extends TileSilNet implements ITickable, ISilN
     public NBTTagCompound getVariables()
     {
         return variables;
+    }
+
+    @Override
+    public int receiveEnergy(int maxReceive, boolean simulate)
+    {
+        int energyReceived = Math.min(getMaxEnergyStored() - energyStored, Math.min(2500, maxReceive));
+
+        if(!simulate)
+        {
+            energyStored += energyReceived;
+        }
+
+        return energyReceived;
+    }
+
+    @Override
+    public int extractEnergy(int maxExtract, boolean simulate)
+    {
+        int energyExtracted = Math.min(energyStored, Math.min(2500, maxExtract));
+
+        if(!simulate)
+        {
+            energyStored -= energyExtracted;
+        }
+
+        return energyExtracted;
+    }
+
+    @Override
+    public int getEnergyStored()
+    {
+        return energyStored;
+    }
+
+    @Override
+    public int getMaxEnergyStored()
+    {
+        return 500000;
+    }
+
+    @Override
+    public boolean canExtract()
+    {
+        return true;
+    }
+
+    @Override
+    public boolean canReceive()
+    {
+        return true;
     }
 }

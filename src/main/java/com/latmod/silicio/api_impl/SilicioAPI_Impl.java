@@ -1,10 +1,13 @@
 package com.latmod.silicio.api_impl;
 
 import com.latmod.lib.math.BlockDimPos;
+import com.latmod.silicio.api.ISilicioAddon;
 import com.latmod.silicio.api.SilicioAPI;
+import com.latmod.silicio.api.SilicioAddon;
 import com.latmod.silicio.api.tile.ISilNetController;
 import com.latmod.silicio.api.tile.ISilNetTile;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraftforge.fml.common.discovery.ASMDataTable;
 
 import javax.annotation.Nullable;
 import java.util.Collection;
@@ -15,8 +18,27 @@ import java.util.UUID;
 /**
  * Created by LatvianModder on 26.08.2016.
  */
-public class SilicioAPI_Impl extends SilicioAPI
+public enum SilicioAPI_Impl implements SilicioAPI
 {
+    INSTANCE;
+
+    public void init(ASMDataTable table)
+    {
+        for(ASMDataTable.ASMData data : table.getAll(SilicioAddon.class.getName()))
+        {
+            try
+            {
+                Class<?> clazz = Class.forName(data.getClassName());
+                Class<? extends ISilicioAddon> clazzAddon = clazz.asSubclass(ISilicioAddon.class);
+                clazzAddon.newInstance().onSilicioLoaded(this);
+            }
+            catch(Exception ex)
+            {
+                ex.printStackTrace();
+            }
+        }
+    }
+
     private static final Map<BlockDimPos, TileEntity> NET = new HashMap<>();
 
     public static void clear()

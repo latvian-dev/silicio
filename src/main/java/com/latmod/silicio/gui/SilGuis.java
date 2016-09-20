@@ -1,6 +1,6 @@
 package com.latmod.silicio.gui;
 
-import com.feed_the_beast.ftbl.api.FTBLibAPI;
+import com.feed_the_beast.ftbl.api.IFTBLibRegistries;
 import com.feed_the_beast.ftbl.api.gui.GuiHelper;
 import com.feed_the_beast.ftbl.api.gui.IGuiHandler;
 import com.latmod.silicio.Silicio;
@@ -23,9 +23,9 @@ public class SilGuis
     public static final ResourceLocation ELEMITE_CRAFTER = new ResourceLocation(Silicio.MOD_ID, "elemite_crafter");
     public static final ResourceLocation MODULE_IO = new ResourceLocation(Silicio.MOD_ID, "module_io");
 
-    public static void init()
+    public static void init(IFTBLibRegistries reg)
     {
-        FTBLibAPI.get().getRegistries().guis().register(ELEMITE_CRAFTER, new IGuiHandler()
+        reg.guis().register(ELEMITE_CRAFTER, new IGuiHandler()
         {
             @Override
             @Nullable
@@ -44,7 +44,7 @@ public class SilGuis
             }
         });
 
-        FTBLibAPI.get().getRegistries().guis().register(MODULE_IO, new IGuiHandler()
+        reg.guis().register(MODULE_IO, new IGuiHandler()
         {
             @Override
             @Nullable

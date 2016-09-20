@@ -1,14 +1,11 @@
 package com.latmod.silicio;
 
-import com.feed_the_beast.ftbl.api.FTBLibAPI;
 import com.latmod.lib.CreativeTabLM;
 import com.latmod.lib.util.LMUtils;
-import com.latmod.silicio.api.SilicioAPI;
 import com.latmod.silicio.api_impl.SilCaps;
 import com.latmod.silicio.api_impl.SilicioAPI_Impl;
 import com.latmod.silicio.block.EnumSilBlocks;
 import com.latmod.silicio.block.SilBlocks;
-import com.latmod.silicio.gui.SilGuis;
 import com.latmod.silicio.item.SilItems;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.Mod;
@@ -40,23 +37,15 @@ public class Silicio
     public void onPreInit(FMLPreInitializationEvent event)
     {
         tab = new CreativeTabLM("silicio");
-        SilicioAPI.setAPI(new SilicioAPI_Impl());
-        //SilConfig.load();
+        SilicioAPI_Impl.INSTANCE.init(event.getAsmData());
 
         SilItems.init();
         SilBlocks.init();
         SilSounds.init();
+        SilCaps.init();
 
         tab.addIcon(EnumSilBlocks.CONTROLLER.getStack(1));
-
-        SilCaps.init();
-        SilGuis.init();
-
         proxy.preInit();
-
-        FTBLibAPI.get().getRegistries().recipeHandlers().register(new ResourceLocation(MOD_ID, "blocks"), new SilBlocks.Recipes());
-        FTBLibAPI.get().getRegistries().recipeHandlers().register(new ResourceLocation(MOD_ID, "items"), new SilItems.Recipes());
-        FTBLibAPI.get().getRegistries().recipeHandlers().register(new ResourceLocation(MOD_ID, "modules"), new SilItems.Modules.Recipes());
     }
 
     @Mod.EventHandler

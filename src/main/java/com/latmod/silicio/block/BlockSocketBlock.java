@@ -1,9 +1,9 @@
 package com.latmod.silicio.block;
 
 import com.latmod.lib.util.LMInvUtils;
-import com.latmod.silicio.api.module.impl.SocketBlock;
 import com.latmod.silicio.api.tile.ISocketBlock;
 import com.latmod.silicio.api_impl.SilCaps;
+import com.latmod.silicio.api_impl.module.SocketBlock;
 import com.latmod.silicio.tile.TileSocketBlock;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyBool;
@@ -83,15 +83,14 @@ public class BlockSocketBlock extends BlockSil
 
         TileEntity te = w.getTileEntity(pos);
 
-        if(te instanceof TileSocketBlock)
+        if(te != null)
         {
-            TileSocketBlock tile = (TileSocketBlock) te;
-            modD = tile.hasCapability(SilCaps.SOCKET_BLOCK, EnumFacing.DOWN);
-            modU = tile.hasCapability(SilCaps.SOCKET_BLOCK, EnumFacing.UP);
-            modN = tile.hasCapability(SilCaps.SOCKET_BLOCK, EnumFacing.NORTH);
-            modS = tile.hasCapability(SilCaps.SOCKET_BLOCK, EnumFacing.SOUTH);
-            modW = tile.hasCapability(SilCaps.SOCKET_BLOCK, EnumFacing.WEST);
-            modE = tile.hasCapability(SilCaps.SOCKET_BLOCK, EnumFacing.EAST);
+            modD = te.hasCapability(SilCaps.SOCKET_BLOCK, EnumFacing.DOWN);
+            modU = te.hasCapability(SilCaps.SOCKET_BLOCK, EnumFacing.UP);
+            modN = te.hasCapability(SilCaps.SOCKET_BLOCK, EnumFacing.NORTH);
+            modS = te.hasCapability(SilCaps.SOCKET_BLOCK, EnumFacing.SOUTH);
+            modW = te.hasCapability(SilCaps.SOCKET_BLOCK, EnumFacing.WEST);
+            modE = te.hasCapability(SilCaps.SOCKET_BLOCK, EnumFacing.EAST);
         }
 
         return state.withProperty(MODULE_D, modD).withProperty(MODULE_U, modU).withProperty(MODULE_N, modN).withProperty(MODULE_S, modS).withProperty(MODULE_W, modW).withProperty(MODULE_E, modE);

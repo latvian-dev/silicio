@@ -1,9 +1,9 @@
 package com.latmod.silicio.block;
 
-import com.feed_the_beast.ftbl.api.FTBLibAPI;
 import com.feed_the_beast.ftbl.api.block.IBlockVariant;
 import com.feed_the_beast.ftbl.api.gui.GuiHelper;
 import com.latmod.lib.EnumNameMap;
+import com.latmod.silicio.FTBLibIntegration;
 import com.latmod.silicio.gui.SilGuis;
 import com.latmod.silicio.tile.TileESU;
 import com.latmod.silicio.tile.TileElemiteCrafter;
@@ -219,7 +219,7 @@ public enum EnumSilBlocks implements IBlockVariant
                 nbt.setInteger("X", pos.getX());
                 nbt.setInteger("Y", pos.getY());
                 nbt.setInteger("Z", pos.getZ());
-                FTBLibAPI.get().openGui(gui, (EntityPlayerMP) playerIn, GuiHelper.getPosData(pos));
+                FTBLibIntegration.API.openGui(gui, (EntityPlayerMP) playerIn, GuiHelper.getPosData(pos));
             }
 
             return true;

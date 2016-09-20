@@ -1,3 +1,3 @@
 @javax.annotation.ParametersAreNonnullByDefault
 @mcp.MethodsReturnNonnullByDefault
-package com.latmod.silicio.api.module.impl;
+package com.latmod.silicio.api_impl.module;

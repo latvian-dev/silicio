@@ -1,10 +1,10 @@
 package com.latmod.silicio.tile;
 
 import com.feed_the_beast.ftbl.api.tile.TileLM;
-import com.latmod.silicio.api.SilicioAPI;
 import com.latmod.silicio.api.tile.ISilNetController;
 import com.latmod.silicio.api.tile.ISilNetTile;
 import com.latmod.silicio.api_impl.SilCaps;
+import com.latmod.silicio.api_impl.SilicioAPI_Impl;
 import gnu.trove.map.TIntByteMap;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
@@ -25,13 +25,13 @@ public abstract class TileSilNet extends TileLM implements ISilNetTile
     public void onLoad()
     {
         super.onLoad();
-        SilicioAPI.get().addSilNetTile(this);
+        SilicioAPI_Impl.INSTANCE.addSilNetTile(this);
     }
 
     @Override
     public void invalidate()
     {
-        SilicioAPI.get().removeSilNetTile(this);
+        SilicioAPI_Impl.INSTANCE.removeSilNetTile(this);
         super.invalidate();
     }
 
@@ -101,7 +101,7 @@ public abstract class TileSilNet extends TileLM implements ISilNetTile
     {
         if(!playerIn.worldObj.isRemote)
         {
-            ISilNetController c = SilicioAPI.get().findSilNetController(controllerID);
+            ISilNetController c = SilicioAPI_Impl.INSTANCE.findSilNetController(controllerID);
             controllerID = id;
 
             if(c != null)
@@ -109,7 +109,7 @@ public abstract class TileSilNet extends TileLM implements ISilNetTile
                 c.onSilNetUpdate();
             }
 
-            c = SilicioAPI.get().findSilNetController(controllerID);
+            c = SilicioAPI_Impl.INSTANCE.findSilNetController(controllerID);
 
             if(c != null)
             {
