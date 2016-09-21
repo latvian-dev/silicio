@@ -101,18 +101,8 @@ public enum EnumSignalSlot implements ISignalSlotPropertyKey, ISignalSlot
     }
 
     @Override
-    public void setInfo(String s)
-    {
-    }
-
-    @Override
-    public int getFlags()
+    public byte getFlags()
     {
         return 0;
-    }
-
-    @Override
-    public void setFlags(int flags)
-    {
     }
 }
