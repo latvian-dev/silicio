@@ -10,7 +10,7 @@ import com.feed_the_beast.ftbl.api.gui.GuiLM;
 import com.feed_the_beast.ftbl.api.gui.IGui;
 import com.feed_the_beast.ftbl.api.gui.IMouseButton;
 import com.feed_the_beast.ftbl.api.gui.widgets.ButtonLM;
-import com.latmod.lib.TextureCoords;
+import com.latmod.lib.client.TextureCoords;
 import com.latmod.silicio.Silicio;
 import com.latmod.silicio.api.module.IModuleContainer;
 import com.latmod.silicio.api_impl.SilCaps;

@@ -1,15 +1,14 @@
 package com.latmod.silicio.api_impl.module;
 
 import com.feed_the_beast.ftbl.api.config.IConfigValue;
-import com.feed_the_beast.ftbl.api_impl.config.PropertyInt;
 import com.latmod.lib.EnumNameMap;
 import com.latmod.lib.LangKey;
+import com.latmod.lib.config.PropertyInt;
 import com.latmod.silicio.api.module.ISignalSlot;
 import com.latmod.silicio.api.module.ISignalSlotPropertyKey;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraftforge.common.util.Constants;
 
-import javax.annotation.Nullable;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -70,10 +69,9 @@ public enum EnumSignalSlot implements ISignalSlotPropertyKey, ISignalSlot
     }
 
     @Override
-    @Nullable
     public String getRawDisplayName()
     {
-        return null;
+        return "";
     }
 
     @Override
