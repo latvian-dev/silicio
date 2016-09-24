@@ -28,9 +28,9 @@ public class Silicio
 
     public CreativeTabLM tab;
 
-    public static <K extends IForgeRegistryEntry<?>> K register(String id, K obj)
+    public static <K extends IForgeRegistryEntry<?>> void register(String id, K obj)
     {
-        return LMUtils.register(new ResourceLocation(MOD_ID, id), obj);
+        LMUtils.register(new ResourceLocation(MOD_ID, id), obj);
     }
 
     @Mod.EventHandler

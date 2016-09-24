@@ -6,8 +6,12 @@ import com.latmod.silicio.api.module.IModule;
 import com.latmod.silicio.api.tile.ISilNetController;
 import com.latmod.silicio.api.tile.ISocketBlock;
 import gnu.trove.map.TIntByteMap;
+import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.client.model.ModelLoader;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -29,6 +33,12 @@ public class ModuleBase implements IModule
     @Override
     public void addRecipes(ItemStack stack, IRecipes recipes)
     {
+    }
+
+    @Override
+    public void addModel(Item item, String id)
+    {
+        ModelLoader.setCustomModelResourceLocation(item, 0, new ModelResourceLocation(new ResourceLocation(item.getRegistryName().getResourceDomain(), "modules/" + id), "inventory"));
     }
 
     @Override

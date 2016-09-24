@@ -5,6 +5,7 @@ import com.feed_the_beast.ftbl.api.block.BlockWithVariants;
 import com.feed_the_beast.ftbl.api.item.ODItems;
 import com.feed_the_beast.ftbl.api.recipes.IRecipeHandler;
 import com.feed_the_beast.ftbl.api.recipes.IRecipes;
+import com.feed_the_beast.ftbl.api.recipes.RecipeHandler;
 import com.latmod.lib.util.LMUtils;
 import com.latmod.silicio.Silicio;
 import com.latmod.silicio.item.SilItems;
@@ -15,6 +16,7 @@ import net.minecraft.block.material.Material;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.oredict.OreDictionary;
 
 import javax.annotation.Nonnull;
@@ -26,7 +28,7 @@ import static com.latmod.silicio.item.EnumMat.*;
  */
 public class SilBlocks
 {
-    public static final BlockWithVariants<EnumSilBlocks> BLOCKS = Silicio.register("blocks", new BlockWithVariants<EnumSilBlocks>(Material.ROCK, Silicio.INST.tab)
+    public static final BlockWithVariants<EnumSilBlocks> BLOCKS = new BlockWithVariants<EnumSilBlocks>(Material.ROCK, Silicio.INST.tab)
     {
         @Nonnull
         @Override
@@ -34,15 +36,21 @@ public class SilBlocks
         {
             return new BlockVariantLookup<>("variant", EnumSilBlocks.class, EnumSilBlocks.SILICON_BLOCK);
         }
-    });
+    };
 
-    public static final BlockSocketBlock SOCKET_BLOCK = Silicio.register("socket_block", new BlockSocketBlock());
-    public static final BlockConnector CONNECTOR = Silicio.register("connector", new BlockConnector());
-    public static final BlockBlueGoo BLUE_GOO_BLOCK = Silicio.register("blue_goo", new BlockBlueGoo());
-    public static final BlockTurret TURRET = Silicio.register("turret", new BlockTurret());
+    public static final BlockSocketBlock SOCKET_BLOCK = new BlockSocketBlock();
+    public static final BlockConnector CONNECTOR = new BlockConnector();
+    public static final BlockBlueGoo BLUE_GOO_BLOCK = new BlockBlueGoo();
+    public static final BlockTurret TURRET = new BlockTurret();
 
     public static void init()
     {
+        Silicio.register("blocks", BLOCKS);
+        Silicio.register("socket_block", SOCKET_BLOCK);
+        Silicio.register("connector", CONNECTOR);
+        Silicio.register("blue_goo", BLUE_GOO_BLOCK);
+        Silicio.register("turret", TURRET);
+
         OreDictionary.registerOre(ODItems.GLASS, EnumSilBlocks.SILICON_GLASS.getStack(1));
 
         BLOCKS.registerTileEntities();
@@ -52,8 +60,15 @@ public class SilBlocks
         LMUtils.addTile(TileTurret.class, TURRET.getRegistryName());
     }
 
-    public static class Recipes implements IRecipeHandler
+    @RecipeHandler
+    public static final IRecipeHandler RECIPES = new IRecipeHandler()
     {
+        @Override
+        public ResourceLocation getID()
+        {
+            return new ResourceLocation(Silicio.MOD_ID, "blocks");
+        }
+
         @Override
         public boolean isActive()
         {
@@ -86,5 +101,5 @@ public class SilBlocks
             recipes.addShapelessRecipe(BLUE_GOO.getStack(9), BLUE_GOO_BLOCK);
             recipes.addRecipe(EnumSilBlocks.LAMP.getStack(1), " L ", "LFL", " L ", 'F', EnumSilBlocks.SILICON_FRAME, 'L', LED_RGB);
         }
-    }
+    };
 }

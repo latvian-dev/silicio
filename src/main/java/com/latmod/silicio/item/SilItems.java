@@ -4,6 +4,7 @@ import com.feed_the_beast.ftbl.api.item.ItemMaterialsLM;
 import com.feed_the_beast.ftbl.api.item.ODItems;
 import com.feed_the_beast.ftbl.api.recipes.IRecipeHandler;
 import com.feed_the_beast.ftbl.api.recipes.IRecipes;
+import com.feed_the_beast.ftbl.api.recipes.RecipeHandler;
 import com.latmod.silicio.Silicio;
 import com.latmod.silicio.api.module.IModule;
 import com.latmod.silicio.modules.ModuleChatOutput;
@@ -12,20 +13,21 @@ import com.latmod.silicio.modules.ModuleTimer;
 import net.minecraft.init.Items;
 import net.minecraft.item.EnumDyeColor;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.oredict.OreDictionary;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 import static com.latmod.silicio.item.EnumMat.*;
 
 public class SilItems
 {
-    public static final ItemMaterialsLM MAT = Silicio.register("mat", new ItemMaterialsLM());
-    public static final ItemIDCard ID_CARD = Silicio.register("id_card", new ItemIDCard());
+    public static final ItemMaterialsLM MAT = new ItemMaterialsLM();
+    public static final ItemIDCard ID_CARD = new ItemIDCard();
+    public static final ItemMultiTool MULTITOOL = new ItemMultiTool();
 
-    public static final ItemMultiTool MULTITOOL = Silicio.register("multitool", new ItemMultiTool());
     //public static final ItemXSuitBelt XSUIT_BELT = Silicio.register("xsuit_belt", new ItemXSuitBelt());
     //public static final ItemXSuitVisor XSUIT_VISOR = Silicio.register("xsuit_visor", new ItemXSuitVisor());
 
@@ -35,14 +37,14 @@ public class SilItems
 
     public static class Modules
     {
-        public static final List<ItemModule> MODULE_LIST = new ArrayList<>();
+        public static final Map<String, ItemModule> MODULE_LIST = new HashMap<>();
 
         //public static final ItemModule COMMAND_BLOCK;
         //public static final ItemModule LIGHT_SENSOR;
         //public static final ItemModule SIGN_OUT;
-        public static final ItemModule CHAT_OUT = register("chat_out", new ModuleChatOutput());
-        public static final ItemModule TIMER = register("timer", new ModuleTimer());
-        public static final ItemModule SEQUENCER = register("sequencer", new ModuleSequencer(4));
+        public static final ItemModule CHAT_OUT = create("chat_out", new ModuleChatOutput());
+        public static final ItemModule TIMER = create("timer", new ModuleTimer());
+        public static final ItemModule SEQUENCER = create("sequencer", new ModuleSequencer(4));
         //public static final ItemModule CRAFTING;
 
         //public static final ItemModule RS_IN;
@@ -63,19 +65,22 @@ public class SilItems
         //public static final ItemModule GATE_OR;
         //public static final ItemModule GATE_XOR;
 
-        private static ItemModule register(String s, IModule m)
+        private static ItemModule create(String s, IModule m)
         {
             ItemModule im = new ItemModule(m);
-            MODULE_LIST.add(im);
-            return Silicio.register("module_" + s, im);
+            MODULE_LIST.put(s, im);
+            return im;
         }
 
-        public static void init()
+        @RecipeHandler
+        public static final IRecipeHandler RECIPES = new IRecipeHandler()
         {
-        }
+            @Override
+            public ResourceLocation getID()
+            {
+                return new ResourceLocation(Silicio.MOD_ID, "modules");
+            }
 
-        public static class Recipes implements IRecipeHandler
-        {
             @Override
             public boolean isActive()
             {
@@ -85,16 +90,17 @@ public class SilItems
             @Override
             public void loadRecipes(IRecipes recipes)
             {
-                for(ItemModule m : Modules.MODULE_LIST)
-                {
-                    m.getModule().addRecipes(new ItemStack(m), recipes);
-                }
+                Modules.MODULE_LIST.forEach((key, value) -> value.getModule().addRecipes(new ItemStack(value), recipes));
             }
-        }
+        };
     }
 
     public static void init()
     {
+        Silicio.register("mat", MAT);
+        Silicio.register("id_card", ID_CARD);
+        Silicio.register("multitool", MULTITOOL);
+
         MAT.setCreativeTab(Silicio.INST.tab);
         MAT.setFolder("materials");
         MAT.addAll(Arrays.asList(EnumMat.values()));
@@ -104,11 +110,18 @@ public class SilItems
         OreDictionary.registerOre(ORE_ELEMITE_INGOT, EnumMat.ELEMITE_INGOT.getStack(1));
         OreDictionary.registerOre(ORE_ELEMITE_NUGGET, EnumMat.ELEMITE_NUGGET.getStack(1));
 
-        Modules.init();
+        Modules.MODULE_LIST.forEach((key, value) -> Silicio.register("module_" + key, value));
     }
 
-    public static class Recipes implements IRecipeHandler
+    @RecipeHandler
+    public static final IRecipeHandler RECIPES = new IRecipeHandler()
     {
+        @Override
+        public ResourceLocation getID()
+        {
+            return new ResourceLocation(Silicio.MOD_ID, "items");
+        }
+
         @Override
         public boolean isActive()
         {
@@ -151,5 +164,5 @@ public class SilItems
             recipes.addRecipe(new ItemStack(ID_CARD), " P ", "PWP", " P ", 'P', ODItems.PAPER, 'W', CIRCUIT_WIFI);
             recipes.addRecipe(new ItemStack(MULTITOOL), "CII", " AI", "  I", 'C', LASER_LENS, 'A', ANTIMATTER, 'I', XSUIT_PLATE);
         }
-    }
+    };
 }

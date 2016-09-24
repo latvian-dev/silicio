@@ -6,6 +6,7 @@ import com.latmod.silicio.api.tile.ISilNetController;
 import com.latmod.silicio.api.tile.ISocketBlock;
 import gnu.trove.map.TIntByteMap;
 import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 
 import java.util.Collection;
@@ -18,6 +19,8 @@ public interface IModule
     Collection<IConfigKey> getProperties();
 
     void addRecipes(ItemStack stack, IRecipes recipes);
+
+    void addModel(Item item, String id);
 
     void onAdded(ISocketBlock socketBlock, EntityPlayerMP player);
 
