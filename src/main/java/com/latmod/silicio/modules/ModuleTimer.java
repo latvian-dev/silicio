@@ -2,26 +2,23 @@ package com.latmod.silicio.modules;
 
 import com.feed_the_beast.ftbl.api.recipes.IRecipes;
 import com.latmod.lib.config.ConfigKey;
-import com.latmod.lib.config.PropertyInt;
-import com.latmod.silicio.Silicio;
+import com.latmod.lib.config.PropertyShort;
 import com.latmod.silicio.api.module.IModuleContainer;
 import com.latmod.silicio.api.tile.ISilNetController;
 import com.latmod.silicio.api.tile.ISocketBlock;
 import com.latmod.silicio.api_impl.module.EnumSignalSlot;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.common.util.Constants;
 
 /**
  * Created by LatvianModder on 05.03.2016.
  */
-public class ModuleTimer extends ModuleBase
+public class ModuleTimer extends ModuleSil
 {
-    private static final ConfigKey TIMER = new ConfigKey("timer", new PropertyInt(Constants.NBT.TAG_SHORT, 20).setMin(0).setMax(32000));
+    private static final ConfigKey TIMER = new ConfigKey("timer", new PropertyShort(20, 0, 32000));
 
     public ModuleTimer()
     {
-        super(new ResourceLocation(Silicio.MOD_ID, "timer"));
+        super("timer");
         properties.add(EnumSignalSlot.OUT_1);
         properties.add(TIMER);
     }
@@ -38,7 +35,7 @@ public class ModuleTimer extends ModuleBase
 
         if(container.getTick() % container.getProperty(TIMER).getInt() == 0L)
         {
-            controller.provideSignal(container.getProperty(EnumSignalSlot.OUT_1).getInt());
+            controller.provideSignal((short) container.getProperty(EnumSignalSlot.OUT_1).getInt());
         }
     }
 }

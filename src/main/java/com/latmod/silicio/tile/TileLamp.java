@@ -1,10 +1,9 @@
 package com.latmod.silicio.tile;
 
 import com.feed_the_beast.ftbl.api.tile.EnumSync;
-import com.latmod.lib.math.MathHelperLM;
 import com.latmod.silicio.api.tile.ISilNetController;
 import gnu.trove.impl.Constants;
-import gnu.trove.map.TIntByteMap;
+import gnu.trove.map.TShortByteMap;
 import gnu.trove.map.hash.TIntByteHashMap;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.math.AxisAlignedBB;
@@ -17,7 +16,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class TileLamp extends TileSilNet
 {
     public static final AxisAlignedBB LAMP_BOX = new AxisAlignedBB(1D / 16D, 1D / 16D, 1D / 16D, 15D / 16D, 15D / 16D, 15D / 16D);
-    private static final byte NONE = -1;
+    private static final byte NONE = 0;
 
     private final TIntByteHashMap colorMap;
     private byte currentColor;
@@ -114,7 +113,7 @@ public class TileLamp extends TileSilNet
     }
 
     @Override
-    public void onSignalsChanged(ISilNetController controller, TIntByteMap channels)
+    public void onSignalsChanged(ISilNetController controller, TShortByteMap channels)
     {
         channels.forEachEntry((channel, on) ->
         {
@@ -133,7 +132,6 @@ public class TileLamp extends TileSilNet
 
     public byte getCurrentColor()
     {
-        currentColor = (byte) MathHelperLM.wrap((pos.getX() + pos.getY() + pos.getZ()), 128);
         return currentColor;
     }
 
@@ -147,7 +145,7 @@ public class TileLamp extends TileSilNet
     @SideOnly(Side.CLIENT)
     public AxisAlignedBB getRenderBoundingBox()
     {
-        return LAMP_BOX.offset(getPos());
+        return LAMP_BOX.addCoord(pos.getX(), pos.getY(), pos.getZ());
     }
 
     @Override

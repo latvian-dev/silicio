@@ -3,11 +3,10 @@ package com.latmod.silicio.api_impl.module;
 import com.feed_the_beast.ftbl.api.config.IConfigValue;
 import com.latmod.lib.EnumNameMap;
 import com.latmod.lib.LangKey;
-import com.latmod.lib.config.PropertyInt;
+import com.latmod.lib.config.PropertyShort;
 import com.latmod.silicio.api.module.ISignalSlot;
 import com.latmod.silicio.api.module.ISignalSlotPropertyKey;
 import net.minecraft.util.text.ITextComponent;
-import net.minecraftforge.common.util.Constants;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -46,7 +45,7 @@ public enum EnumSignalSlot implements ISignalSlotPropertyKey, ISignalSlot
     EnumSignalSlot()
     {
         name = EnumNameMap.createName(this);
-        defValue = new PropertyInt(Constants.NBT.TAG_SHORT, 0).setMin(0).setMax(Short.MAX_VALUE);
+        defValue = new PropertyShort(0).setMin((short) 0);
         displayName = (isInput() ? new LangKey("silicio.lang.connection.input") : new LangKey("silicio.lang.connection.output")).textComponent(getWrappedID() + 1);
     }
 

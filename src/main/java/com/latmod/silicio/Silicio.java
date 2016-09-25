@@ -6,7 +6,6 @@ import com.latmod.silicio.api_impl.SilCaps;
 import com.latmod.silicio.api_impl.SilicioAPI_Impl;
 import com.latmod.silicio.block.EnumSilBlocks;
 import com.latmod.silicio.block.SilBlocks;
-import com.latmod.silicio.item.ItemModule;
 import com.latmod.silicio.item.SilItems;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.Mod;
@@ -16,7 +15,6 @@ import net.minecraftforge.fml.common.event.FMLServerStoppedEvent;
 import net.minecraftforge.fml.common.registry.IForgeRegistryEntry;
 
 @Mod(modid = Silicio.MOD_ID, name = "Silicio 2", version = "@VERSION@", dependencies = "required-after:ftbl;required-after:mcmultipart")
-//;required-after:mcmultipart
 public class Silicio
 {
     public static final String MOD_ID = "silicio";
@@ -45,7 +43,7 @@ public class Silicio
         SilSounds.init();
         SilCaps.init();
 
-        ItemModule.findModules(event.getAsmData());
+        SilItems.MODULE.findModules(event.getAsmData());
 
         tab.addIcon(EnumSilBlocks.CONTROLLER.getStack(1));
         proxy.preInit();

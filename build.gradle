@@ -41,15 +41,13 @@ minecraft {
 }
 
 repositories {
-    maven { url 'http://maven.epoxide.xyz' }
     maven { url 'http://maven.amadornes.com' }
     maven { url "http://dvs1.progwml6.com/files/maven" }
 }
 
 dependencies {
     compile fileTree(dir: 'libs', include: '*.jar')
-    compile "net.darkhax.tesla:Tesla:1.10.2-1.2.1.42"
-    deobfCompile "MCMultiPart:MCMultiPart:1.2.0:universal"
+    deobfCompile "MCMultiPart:MCMultiPart:1.2.1:universal"
     deobfCompile "mezz.jei:jei_1.10.2:3.9.0.246:api"
 }
 

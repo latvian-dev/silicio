@@ -4,7 +4,7 @@ import com.feed_the_beast.ftbl.api.tile.EnumSync;
 import com.latmod.silicio.api.tile.ISilNetController;
 import com.latmod.silicio.api_impl.SilCaps;
 import com.latmod.silicio.api_impl.module.SocketBlock;
-import gnu.trove.map.TIntByteMap;
+import gnu.trove.map.TShortByteMap;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.EnumFacing;
@@ -147,7 +147,7 @@ public class TileSocketBlock extends TileSilNet implements ITickable
     }
 
     @Override
-    public void onSignalsChanged(ISilNetController controller, TIntByteMap channels)
+    public void onSignalsChanged(ISilNetController controller, TShortByteMap channels)
     {
         for(SocketBlock m : modules.values())
         {

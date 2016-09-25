@@ -14,9 +14,9 @@ public interface ISilNetController extends ISilNetTile
 {
     void onSilNetUpdate();
 
-    boolean getSignal(int id);
+    boolean getSignal(short id);
 
-    void provideSignal(int id);
+    void provideSignal(short id);
 
     Collection<TileEntity> getNetwork();
 

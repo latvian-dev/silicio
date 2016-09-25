@@ -2,15 +2,12 @@ package com.latmod.silicio.modules;
 
 import com.feed_the_beast.ftbl.api.recipes.IRecipes;
 import com.latmod.lib.config.ConfigKey;
-import com.latmod.lib.config.PropertyInt;
-import com.latmod.silicio.Silicio;
+import com.latmod.lib.config.PropertyShort;
 import com.latmod.silicio.api.module.IModuleContainer;
 import com.latmod.silicio.api.tile.ISilNetController;
 import com.latmod.silicio.api.tile.ISocketBlock;
 import com.latmod.silicio.api_impl.module.EnumSignalSlot;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.common.util.Constants;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,15 +15,15 @@ import java.util.List;
 /**
  * Created by LatvianModder on 05.03.2016.
  */
-public class ModuleSequencer extends ModuleBase
+public class ModuleSequencer extends ModuleSil
 {
-    private static final ConfigKey TIMER = new ConfigKey("timer", new PropertyInt(Constants.NBT.TAG_SHORT, 20).setMin(0).setMax(32000));
+    private static final ConfigKey TIMER = new ConfigKey("timer", new PropertyShort(20, 0, 32000));
 
     private final List<EnumSignalSlot> outputs;
 
     public ModuleSequencer(int out)
     {
-        super(new ResourceLocation(Silicio.MOD_ID, "sequencer"));
+        super("sequencer");
         outputs = new ArrayList<>(out);
 
         for(int i = 0; i < out; i++)
@@ -53,7 +50,7 @@ public class ModuleSequencer extends ModuleBase
         if(container.getTick() % (timer / 4) == 0L)
         {
             int i = (int) ((container.getTick() / timer) % 4);
-            controller.provideSignal(container.getProperty(outputs.get(i)).getInt());
+            controller.provideSignal((short) container.getProperty(outputs.get(i)).getInt());
         }
     }
 }

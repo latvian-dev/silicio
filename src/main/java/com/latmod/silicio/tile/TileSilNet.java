@@ -5,7 +5,7 @@ import com.latmod.silicio.api.tile.ISilNetController;
 import com.latmod.silicio.api.tile.ISilNetTile;
 import com.latmod.silicio.api_impl.SilCaps;
 import com.latmod.silicio.api_impl.SilicioAPI_Impl;
-import gnu.trove.map.TIntByteMap;
+import gnu.trove.map.TShortByteMap;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
@@ -124,7 +124,7 @@ public abstract class TileSilNet extends TileLM implements ISilNetTile
     }
 
     @Override
-    public void onSignalsChanged(ISilNetController controller, TIntByteMap channels)
+    public void onSignalsChanged(ISilNetController controller, TShortByteMap channels)
     {
     }
 }

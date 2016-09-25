@@ -5,6 +5,7 @@ import com.feed_the_beast.ftbl.api.gui.GuiHelper;
 import com.latmod.lib.EnumNameMap;
 import com.latmod.silicio.FTBLibIntegration;
 import com.latmod.silicio.gui.ContainerElemiteCrafter;
+import com.latmod.silicio.gui.ContainerLamp;
 import com.latmod.silicio.gui.ContainerModuleIO;
 import com.latmod.silicio.tile.TileESU;
 import com.latmod.silicio.tile.TileElemiteCrafter;
@@ -202,6 +203,8 @@ public enum EnumSilBlocks implements IBlockVariant
                 return ContainerModuleIO.ID;
             case ELEMITE_CRAFTER:
                 return ContainerElemiteCrafter.ID;
+            case LAMP:
+                return ContainerLamp.ID;
             default:
                 return null;
         }

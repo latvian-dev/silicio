@@ -18,17 +18,33 @@ public class RenderLamp extends TileEntitySpecialRenderer<TileLamp>
     @Override
     public void renderTileEntityAt(TileLamp te, double x, double y, double z, float partialTicks, int destroyStage)
     {
+        byte colID = te.getCurrentColor();
+
         GlStateManager.disableTexture2D();
         GlStateManager.color(1F, 1F, 1F, 1F);
-        GlStateManager.disableLighting();
-        FTBLibClient.pushMaxBrightness();
+
+        if(colID != 0)
+        {
+            GlStateManager.disableLighting();
+            FTBLibClient.pushMaxBrightness();
+            LAMP_MASK.color.set(LMColorUtils.getColorFromID(colID), 255);
+        }
+        else
+        {
+            LAMP_MASK.color.set(0, 0, 0, 255);
+        }
+
         LAMP_MASK.setTessellator(Tessellator.getInstance());
-        LAMP_MASK.color.set(LMColorUtils.getColorFromID(te.getCurrentColor()), 1F);
         LAMP_MASK.setSize(TileLamp.LAMP_BOX);
         LAMP_MASK.offset(x, y, z);
         LAMP_MASK.renderAll();
-        FTBLibClient.popMaxBrightness();
-        GlStateManager.enableLighting();
+
+        if(colID != 0)
+        {
+            FTBLibClient.popMaxBrightness();
+            GlStateManager.enableLighting();
+        }
+
         GlStateManager.enableTexture2D();
     }
 }

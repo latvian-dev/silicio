@@ -9,14 +9,16 @@ import com.latmod.lib.config.ConfigTree;
 import com.latmod.lib.config.EmptyConfigTree;
 import com.latmod.lib.util.LMUtils;
 import com.latmod.silicio.Silicio;
-import com.latmod.silicio.api.SilicioAPI;
-import com.latmod.silicio.api.SilicioAddon;
 import com.latmod.silicio.api.module.IModule;
 import com.latmod.silicio.api.module.IModuleContainer;
+import com.latmod.silicio.api.module.SilNetModule;
 import com.latmod.silicio.api.tile.ISocketBlock;
 import com.latmod.silicio.api_impl.SilCaps;
+import net.minecraft.client.renderer.block.model.ModelBakery;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
+import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
@@ -46,7 +48,7 @@ public class ItemModule extends ItemSil
 {
     private static final LangKey DESC = new LangKey("silicio.item.module_desc");
     private static final Map<String, IModule> MODULE_MAP = new HashMap<>();
-    private static Map<String, ItemStack> MODULE_STACK_MAP = new HashMap<>();
+    private static final Map<String, ItemStack> MODULE_STACK_MAP = new HashMap<>();
 
     private static class ModuleContainer implements IModuleContainer, ICapabilityProvider, INBTSerializable<NBTTagCompound>
     {
@@ -54,11 +56,6 @@ public class ItemModule extends ItemSil
         private IModule module;
         private IConfigTree properties;
 
-        public ModuleContainer()
-        {
-        }
-
-        @Override
         public IModule getModule()
         {
             return module;
@@ -171,10 +168,16 @@ public class ItemModule extends ItemSil
         }
     }
 
-    public static void findModules(ASMDataTable table)
+    public void findModules(ASMDataTable table)
     {
-        LMUtils.findAnnotatedObjects(table, SilicioAPI.class, SilicioAddon.class, (obj, data) ->
+        LMUtils.findAnnotatedObjects(table, IModule.class, SilNetModule.class, (obj, data) ->
         {
+            String key = obj.getID().toString();
+            MODULE_MAP.put(key, obj);
+            ItemStack itemStack = new ItemStack(this);
+            IModuleContainer container = itemStack.getCapability(SilCaps.MODULE_CONTAINER, null);
+            ((ModuleContainer) container).module = obj;
+            MODULE_STACK_MAP.put(key, itemStack);
             return null;
         });
     }
@@ -194,10 +197,7 @@ public class ItemModule extends ItemSil
 
     public void registerModels()
     {
-        MODULE_MAP.forEach((key, value) ->
-        {
-
-        });
+        MODULE_MAP.forEach((key, value) -> ModelBakery.registerItemVariants(this, value.getModelLocation()));
 
         ModelLoader.setCustomMeshDefinition(this, stack ->
         {
@@ -228,6 +228,13 @@ public class ItemModule extends ItemSil
 
     @Override
     @SideOnly(Side.CLIENT)
+    public void getSubItems(Item itemIn, CreativeTabs tab, List<ItemStack> subItems)
+    {
+        subItems.addAll(MODULE_STACK_MAP.values());
+    }
+
+    @Override
+    @SideOnly(Side.CLIENT)
     public void addInformation(ItemStack stack, EntityPlayer playerIn, List<String> tooltip, boolean advanced)
     {
         tooltip.add(DESC.translate());
@@ -235,6 +242,14 @@ public class ItemModule extends ItemSil
         if(advanced)
         {
             IModuleContainer moduleContainer = stack.getCapability(SilCaps.MODULE_CONTAINER, null);
+
+            if(moduleContainer.getModule() == null)
+            {
+                tooltip.add("ID: unknown");
+                return;
+            }
+
+            tooltip.add("ID: " + moduleContainer.getModule().getID());
             tooltip.add("Tick: " + moduleContainer.getTick());
             tooltip.add("Properties:");
 

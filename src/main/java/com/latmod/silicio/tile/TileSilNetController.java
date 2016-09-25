@@ -6,11 +6,9 @@ import com.latmod.silicio.api.tile.ISilNetController;
 import com.latmod.silicio.api.tile.ISilNetTile;
 import com.latmod.silicio.api_impl.SilCaps;
 import com.latmod.silicio.api_impl.SilicioAPI_Impl;
-import gnu.trove.TIntCollection;
 import gnu.trove.impl.Constants;
-import gnu.trove.map.TIntByteMap;
-import gnu.trove.map.hash.TIntByteHashMap;
-import gnu.trove.set.hash.TIntHashSet;
+import gnu.trove.map.hash.TShortByteHashMap;
+import gnu.trove.set.hash.TShortHashSet;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
@@ -33,9 +31,9 @@ import java.util.UUID;
 public class TileSilNetController extends TileSilNet implements ITickable, ISilNetController, IEnergyStorage
 {
     private int energyStored;
-    private final TIntCollection signals = new TIntHashSet();
-    private final TIntCollection signalsPrev = new TIntHashSet();
-    private final TIntByteMap changedSignals = new TIntByteHashMap(3, Constants.DEFAULT_LOAD_FACTOR, 0, (byte) -1);
+    private final TShortHashSet signals = new TShortHashSet();
+    private final TShortHashSet signalsPrev = new TShortHashSet();
+    private final TShortByteHashMap changedSignals = new TShortByteHashMap(3, Constants.DEFAULT_LOAD_FACTOR, (short) 0, (byte) -1);
     private Collection<TileEntity> network = new ArrayList<>();
     private Map<UUID, ISilNetConnector> connectedTiles = new HashMap<>();
     private boolean updateNetwork = true;
@@ -64,24 +62,45 @@ public class TileSilNetController extends TileSilNet implements ITickable, ISilN
     {
     }
 
+    private void readSet(TShortHashSet set, NBTTagCompound nbt, String id)
+    {
+        set.clear();
+
+        for(int i : nbt.getIntArray(id))
+        {
+            set.add((short) i);
+        }
+    }
+
     @Override
     public void readTileData(NBTTagCompound nbt)
     {
         super.readTileData(nbt);
-        signals.clear();
-        signalsPrev.clear();
-        signals.addAll(nbt.getIntArray("Signals"));
-        signalsPrev.addAll(nbt.getIntArray("PrevSignals"));
+        readSet(signals, nbt, "Signals");
+        readSet(signalsPrev, nbt, "PrevSignals");
         variables = nbt.getCompoundTag("Variables");
         energyStored = nbt.getInteger("Energy");
+    }
+
+    private void writeSet(TShortHashSet set, NBTTagCompound nbt, String id)
+    {
+        int[] ai = new int[set.size()];
+        int idx = -1;
+
+        for(short s : set.toArray())
+        {
+            ai[++idx] = s;
+        }
+
+        nbt.setIntArray(id, ai);
     }
 
     @Override
     public void writeTileData(NBTTagCompound nbt)
     {
         super.writeTileData(nbt);
-        nbt.setIntArray("Signals", signals.toArray());
-        nbt.setIntArray("PrevSignals", signalsPrev.toArray());
+        writeSet(signals, nbt, "Signals");
+        writeSet(signalsPrev, nbt, "PrevSignals");
         nbt.setTag("Variables", variables);
         nbt.setInteger("Energy", energyStored);
     }
@@ -90,9 +109,8 @@ public class TileSilNetController extends TileSilNet implements ITickable, ISilN
     public void readTileClientData(NBTTagCompound nbt)
     {
         super.readTileClientData(nbt);
-        signals.clear();
         signalsPrev.clear();
-        signals.addAll(nbt.getIntArray("S"));
+        readSet(signals, nbt, "S");
         variables = nbt.getCompoundTag("V");
         energyStored = nbt.getInteger("E");
     }
@@ -101,7 +119,7 @@ public class TileSilNetController extends TileSilNet implements ITickable, ISilN
     public void writeTileClientData(NBTTagCompound nbt)
     {
         super.writeTileClientData(nbt);
-        nbt.setIntArray("S", signals.toArray());
+        writeSet(signals, nbt, "S");
         nbt.setTag("V", variables);
         nbt.setInteger("E", energyStored);
     }
@@ -218,13 +236,13 @@ public class TileSilNetController extends TileSilNet implements ITickable, ISilN
     }
 
     @Override
-    public boolean getSignal(int id)
+    public boolean getSignal(short id)
     {
         return id != 0 && signals.contains(id);
     }
 
     @Override
-    public void provideSignal(int id)
+    public void provideSignal(short id)
     {
         if(id != 0)
         {

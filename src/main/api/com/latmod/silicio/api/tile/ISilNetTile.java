@@ -1,6 +1,6 @@
 package com.latmod.silicio.api.tile;
 
-import gnu.trove.map.TIntByteMap;
+import gnu.trove.map.TShortByteMap;
 import net.minecraft.entity.player.EntityPlayer;
 
 import javax.annotation.Nullable;
@@ -18,5 +18,5 @@ public interface ISilNetTile
 
     void provideSignals(ISilNetController controller);
 
-    void onSignalsChanged(ISilNetController controller, TIntByteMap channels);
+    void onSignalsChanged(ISilNetController controller, TShortByteMap channels);
 }

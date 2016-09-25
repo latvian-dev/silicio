@@ -4,13 +4,14 @@ import com.feed_the_beast.ftbl.api.config.IConfigKey;
 import com.feed_the_beast.ftbl.api.recipes.IRecipes;
 import com.latmod.silicio.api.tile.ISilNetController;
 import com.latmod.silicio.api.tile.ISocketBlock;
-import gnu.trove.map.TIntByteMap;
+import gnu.trove.map.TShortByteMap;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 
 import java.util.Collection;
+import java.util.Collections;
 
 /**
  * Created by LatvianModder on 06.08.2016.
@@ -19,19 +20,37 @@ public interface IModule
 {
     ResourceLocation getID();
 
-    Collection<IConfigKey> getProperties();
+    default Collection<IConfigKey> getProperties()
+    {
+        return Collections.emptyList();
+    }
 
-    void addRecipes(ItemStack stack, IRecipes recipes);
+    default void addRecipes(ItemStack stack, IRecipes recipes)
+    {
+    }
 
-    ModelResourceLocation getModelLocation();
+    default ModelResourceLocation getModelLocation()
+    {
+        return new ModelResourceLocation(new ResourceLocation(getID().getResourceDomain(), "modules/" + getID().getResourcePath()), "inventory");
+    }
 
-    void onAdded(ISocketBlock socketBlock, EntityPlayerMP player);
+    default void onAdded(ISocketBlock socketBlock, EntityPlayerMP player)
+    {
+    }
 
-    void onRemoved(ISocketBlock socketBlock, EntityPlayerMP player);
+    default void onRemoved(ISocketBlock socketBlock, EntityPlayerMP player)
+    {
+    }
 
-    void onUpdate(ISocketBlock socketBlock);
+    default void onUpdate(ISocketBlock socketBlock)
+    {
+    }
 
-    void provideSignals(ISocketBlock socketBlock, ISilNetController controller);
+    default void provideSignals(ISocketBlock socketBlock, ISilNetController controller)
+    {
+    }
 
-    void onSignalsChanged(ISocketBlock socketBlock, ISilNetController controller, TIntByteMap channels);
+    default void onSignalsChanged(ISocketBlock socketBlock, ISilNetController controller, TShortByteMap channels)
+    {
+    }
 }
