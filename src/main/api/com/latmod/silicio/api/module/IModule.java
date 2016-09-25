@@ -34,6 +34,12 @@ public interface IModule
         return new ModelResourceLocation(new ResourceLocation(getID().getResourceDomain(), "modules/" + getID().getResourcePath()), "inventory");
     }
 
+    default String getUnlocalizedName()
+    {
+        ResourceLocation id = getID();
+        return id.getResourceDomain() + ".item.module." + id.getResourcePath();
+    }
+
     default void onAdded(ISocketBlock socketBlock, EntityPlayerMP player)
     {
     }

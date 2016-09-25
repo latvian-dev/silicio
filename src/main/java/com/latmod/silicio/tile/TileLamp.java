@@ -4,7 +4,7 @@ import com.feed_the_beast.ftbl.api.tile.EnumSync;
 import com.latmod.silicio.api.tile.ISilNetController;
 import gnu.trove.impl.Constants;
 import gnu.trove.map.TShortByteMap;
-import gnu.trove.map.hash.TIntByteHashMap;
+import gnu.trove.map.hash.TShortByteHashMap;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraftforge.fml.relauncher.Side;
@@ -18,12 +18,12 @@ public class TileLamp extends TileSilNet
     public static final AxisAlignedBB LAMP_BOX = new AxisAlignedBB(1D / 16D, 1D / 16D, 1D / 16D, 15D / 16D, 15D / 16D, 15D / 16D);
     private static final byte NONE = 0;
 
-    private final TIntByteHashMap colorMap;
+    private final TShortByteHashMap colorMap;
     private byte currentColor;
 
     public TileLamp()
     {
-        colorMap = new TIntByteHashMap(1, Constants.DEFAULT_LOAD_FACTOR, 0, NONE);
+        colorMap = new TShortByteHashMap(1, Constants.DEFAULT_LOAD_FACTOR, (short) 0, NONE);
         currentColor = 0;
     }
 
@@ -32,18 +32,16 @@ public class TileLamp extends TileSilNet
     {
         super.writeTileData(nbt);
 
-        int[] a = new int[colorMap.size() * 2];
-
+        final int[] ai = new int[colorMap.size()];
         final int[] i = {-1};
 
         colorMap.forEachEntry((key, value) ->
         {
-            a[++i[0]] = key;
-            a[++i[0]] = value;
+            ai[++i[0]] = key | (value << 16);
             return true;
         });
 
-        nbt.setIntArray("Colors", a);
+        nbt.setIntArray("Colors", ai);
         nbt.setByte("CurrentColor", currentColor);
     }
 
@@ -54,13 +52,9 @@ public class TileLamp extends TileSilNet
 
         colorMap.clear();
 
-        int[] a = nbt.getIntArray("Colors");
-        if(a.length > 0)
+        for(int i : nbt.getIntArray("Colors"))
         {
-            for(int i = 0; i < a.length; i += 2)
-            {
-                colorMap.put(a[i], (byte) a[i + 1]);
-            }
+            colorMap.put((short) (i & 0xFFFF), (byte) ((i >> 16) & 0xFF));
         }
 
         currentColor = nbt.getByte("CurrentColor");
@@ -71,18 +65,16 @@ public class TileLamp extends TileSilNet
     {
         super.writeTileClientData(nbt);
 
-        int[] a = new int[colorMap.size() * 2];
-
+        final int[] ai = new int[colorMap.size()];
         final int[] i = {-1};
 
         colorMap.forEachEntry((key, value) ->
         {
-            a[++i[0]] = key;
-            a[++i[0]] = value;
+            ai[++i[0]] = key | (value << 16);
             return true;
         });
 
-        nbt.setIntArray("C", a);
+        nbt.setIntArray("C", ai);
 
         nbt.setByte("CC", currentColor);
     }
@@ -94,13 +86,9 @@ public class TileLamp extends TileSilNet
 
         colorMap.clear();
 
-        int[] a = nbt.getIntArray("C");
-        if(a.length > 0)
+        for(int i : nbt.getIntArray("C"))
         {
-            for(int i = 0; i < a.length; i += 2)
-            {
-                colorMap.put(a[i], (byte) a[i + 1]);
-            }
+            colorMap.put((short) (i & 0xFFFF), (byte) ((i >> 16) & 0xFF));
         }
 
         currentColor = nbt.getByte("CC");

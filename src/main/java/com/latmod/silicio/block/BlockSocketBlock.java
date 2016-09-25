@@ -1,6 +1,10 @@
 package com.latmod.silicio.block;
 
+import com.feed_the_beast.ftbl.api.config.IConfigContainer;
+import com.feed_the_beast.ftbl.api.config.IConfigTree;
+import com.google.gson.JsonObject;
 import com.latmod.lib.util.LMInvUtils;
+import com.latmod.silicio.FTBLibIntegration;
 import com.latmod.silicio.api.tile.ISocketBlock;
 import com.latmod.silicio.api_impl.SilCaps;
 import com.latmod.silicio.api_impl.module.SocketBlock;
@@ -9,15 +13,19 @@ import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyBool;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.command.ICommandSender;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.inventory.InventoryHelper;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TextComponentString;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
@@ -122,6 +130,47 @@ public class BlockSocketBlock extends BlockSil
                     }
 
                     te.markDirty();
+                }
+                else
+                {
+                    ISocketBlock c = te.getCapability(SilCaps.SOCKET_BLOCK, side);
+
+                    IConfigContainer configContainer = new IConfigContainer()
+                    {
+                        @Override
+                        public IConfigTree getConfigTree()
+                        {
+                            return c.getContainer().getProperties();
+                        }
+
+                        @Override
+                        public ITextComponent getTitle()
+                        {
+                            return new TextComponentString("Module Config"); // TODO: Lang
+                        }
+
+                        @Override
+                        public void saveConfig(ICommandSender sender, @Nullable NBTTagCompound nbt, JsonObject json)
+                        {
+                            TileEntity te = sender.getEntityWorld().getTileEntity(new BlockPos(nbt.getInteger("X"), nbt.getInteger("Y"), nbt.getInteger("Z")));
+                            EnumFacing facing = EnumFacing.VALUES[nbt.getByte("F")];
+
+                            if(te != null && te.hasCapability(SilCaps.SOCKET_BLOCK, facing))
+                            {
+                                te.getCapability(SilCaps.SOCKET_BLOCK, facing).getContainer().getProperties().fromJson(json);
+
+                                System.out.println(te.getCapability(SilCaps.SOCKET_BLOCK, facing).getContainer().getProperties().getTree());
+                            }
+                        }
+                    };
+
+                    NBTTagCompound nbt = new NBTTagCompound();
+                    nbt.setInteger("X", pos.getX());
+                    nbt.setInteger("Y", pos.getY());
+                    nbt.setInteger("Z", pos.getZ());
+                    nbt.setByte("F", (byte) side.ordinal());
+
+                    FTBLibIntegration.API.editServerConfig((EntityPlayerMP) playerIn, nbt, configContainer);
                 }
             }
 

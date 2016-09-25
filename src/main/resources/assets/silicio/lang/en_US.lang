@@ -66,33 +66,33 @@ silicio.item.multitool.name=Multitool
 # Modules #
 silicio.item.module_desc=SilNet Module
 
-silicio.item.module_command_block.name=Command Block
-silicio.item.module_light_sensor.name=Light Sensor
-silicio.item.module_sign_out.name=Sign Output
-silicio.item.module_chat_out.name=Chat Output
-silicio.item.module_crafting.name=Item Crafting
-silicio.item.module_painter.name=Cable Painter
+silicio.item.module.command_block.name=Command Block
+silicio.item.module.light_sensor.name=Light Sensor
+silicio.item.module.sign_out.name=Sign Output
+silicio.item.module.chat_out.name=Chat Output
+silicio.item.module.crafting.name=Item Crafting
+silicio.item.module.painter.name=Cable Painter
 
-silicio.item.module_rs_in.name=Redstone Input
-silicio.item.module_rs_out.name=Redstone Output
-silicio.item.module_energy_in.name=Energy Input
-silicio.item.module_energy_out.name=Energy Output
+silicio.item.module.rs_in.name=Redstone Input
+silicio.item.module.rs_out.name=Redstone Output
+silicio.item.module.energy_in.name=Energy Input
+silicio.item.module.energy_out.name=Energy Output
 
-silicio.item.module_item_storage.name=Item Storage
-silicio.item.module_item_in.name=Item Input
-silicio.item.module_item_out.name=Item Output
+silicio.item.module.item_storage.name=Item Storage
+silicio.item.module.item_in.name=Item Input
+silicio.item.module.item_out.name=Item Output
 
-silicio.item.module_fluid_storage.name=Fluid Storage
-silicio.item.module_fluid_in.name=Fluid Input
-silicio.item.module_fluid_out.name=Fluid Output
+silicio.item.module.fluid_storage.name=Fluid Storage
+silicio.item.module.fluid_in.name=Fluid Input
+silicio.item.module.fluid_out.name=Fluid Output
 
-silicio.item.module_gate_not.name=NOT Gate
-silicio.item.module_gate_and.name=AND Gate
-silicio.item.module_gate_or.name=OR Gate
-silicio.item.module_gate_xor.name=XOR Gate
+silicio.item.module.gate_not.name=NOT Gate
+silicio.item.module.gate_and.name=AND Gate
+silicio.item.module.gate_or.name=OR Gate
+silicio.item.module.gate_xor.name=XOR Gate
 
-silicio.item.module_timer.name=Timer Module
-silicio.item.module_sequencer.name=Sequencer Module
+silicio.item.module.timer.name=Timer Module
+silicio.item.module.sequencer.name=Sequencer Module
 
 silicio.lang.connection.input=Input #%d
 silicio.lang.connection.output=Output #%d

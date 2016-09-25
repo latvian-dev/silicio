@@ -56,6 +56,8 @@ public class ItemModule extends ItemSil
         private IModule module;
         private IConfigTree properties;
 
+        @Nullable
+        @Override
         public IModule getModule()
         {
             return module;
@@ -201,14 +203,11 @@ public class ItemModule extends ItemSil
 
         ModelLoader.setCustomMeshDefinition(this, stack ->
         {
-            if(stack.hasCapability(SilCaps.MODULE_CONTAINER, null))
-            {
-                IModuleContainer c = stack.getCapability(SilCaps.MODULE_CONTAINER, null);
+            IModule module = stack.getCapability(SilCaps.MODULE_CONTAINER, null).getModule();
 
-                if(c.getModule() != null)
-                {
-                    return c.getModule().getModelLocation();
-                }
+            if(module != null)
+            {
+                return module.getModelLocation();
             }
 
             if(defaultModel == null)
@@ -234,6 +233,19 @@ public class ItemModule extends ItemSil
     }
 
     @Override
+    public String getUnlocalizedName(ItemStack stack)
+    {
+        IModule module = stack.getCapability(SilCaps.MODULE_CONTAINER, null).getModule();
+
+        if(module != null)
+        {
+            return module.getUnlocalizedName();
+        }
+
+        return super.getUnlocalizedName(stack);
+    }
+
+    @Override
     @SideOnly(Side.CLIENT)
     public void addInformation(ItemStack stack, EntityPlayer playerIn, List<String> tooltip, boolean advanced)
     {
@@ -242,18 +254,19 @@ public class ItemModule extends ItemSil
         if(advanced)
         {
             IModuleContainer moduleContainer = stack.getCapability(SilCaps.MODULE_CONTAINER, null);
+            IModule module = moduleContainer.getModule();
 
-            if(moduleContainer.getModule() == null)
+            if(module == null)
             {
                 tooltip.add("ID: unknown");
                 return;
             }
 
-            tooltip.add("ID: " + moduleContainer.getModule().getID());
+            tooltip.add("ID: " + module.getID());
             tooltip.add("Tick: " + moduleContainer.getTick());
             tooltip.add("Properties:");
 
-            for(IConfigKey key : moduleContainer.getModule().getProperties())
+            for(IConfigKey key : module.getProperties())
             {
                 ITextComponent line = new TextComponentString("> ");
                 line.appendSibling(key.getDisplayName());

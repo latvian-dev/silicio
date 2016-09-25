@@ -54,6 +54,8 @@ public class ContainerElemiteCrafter extends ContainerLM
     {
         super(ep);
         tile = t;
+
+        addPlayerSlots(8, 84, false);
     }
 
     @Nullable
