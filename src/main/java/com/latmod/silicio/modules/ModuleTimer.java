@@ -3,11 +3,13 @@ package com.latmod.silicio.modules;
 import com.feed_the_beast.ftbl.api.recipes.IRecipes;
 import com.latmod.lib.config.ConfigKey;
 import com.latmod.lib.config.PropertyInt;
+import com.latmod.silicio.Silicio;
 import com.latmod.silicio.api.module.IModuleContainer;
 import com.latmod.silicio.api.tile.ISilNetController;
 import com.latmod.silicio.api.tile.ISocketBlock;
 import com.latmod.silicio.api_impl.module.EnumSignalSlot;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.util.Constants;
 
 /**
@@ -19,6 +21,7 @@ public class ModuleTimer extends ModuleBase
 
     public ModuleTimer()
     {
+        super(new ResourceLocation(Silicio.MOD_ID, "timer"));
         properties.add(EnumSignalSlot.OUT_1);
         properties.add(TIMER);
     }

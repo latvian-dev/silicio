@@ -6,6 +6,7 @@ import com.latmod.silicio.api_impl.SilCaps;
 import com.latmod.silicio.api_impl.SilicioAPI_Impl;
 import com.latmod.silicio.block.EnumSilBlocks;
 import com.latmod.silicio.block.SilBlocks;
+import com.latmod.silicio.item.ItemModule;
 import com.latmod.silicio.item.SilItems;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.Mod;
@@ -43,6 +44,8 @@ public class Silicio
         SilBlocks.init();
         SilSounds.init();
         SilCaps.init();
+
+        ItemModule.findModules(event.getAsmData());
 
         tab.addIcon(EnumSilBlocks.CONTROLLER.getStack(1));
         proxy.preInit();

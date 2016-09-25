@@ -5,9 +5,10 @@ import com.feed_the_beast.ftbl.api.recipes.IRecipes;
 import com.latmod.silicio.api.tile.ISilNetController;
 import com.latmod.silicio.api.tile.ISocketBlock;
 import gnu.trove.map.TIntByteMap;
+import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.entity.player.EntityPlayerMP;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.ResourceLocation;
 
 import java.util.Collection;
 
@@ -16,11 +17,13 @@ import java.util.Collection;
  */
 public interface IModule
 {
+    ResourceLocation getID();
+
     Collection<IConfigKey> getProperties();
 
     void addRecipes(ItemStack stack, IRecipes recipes);
 
-    void addModel(Item item, String id);
+    ModelResourceLocation getModelLocation();
 
     void onAdded(ISocketBlock socketBlock, EntityPlayerMP player);
 

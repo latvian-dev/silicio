@@ -8,10 +8,8 @@ import com.latmod.silicio.api.tile.ISocketBlock;
 import gnu.trove.map.TIntByteMap;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.entity.player.EntityPlayerMP;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.client.model.ModelLoader;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -22,7 +20,21 @@ import java.util.Collections;
  */
 public class ModuleBase implements IModule
 {
-    protected final Collection<IConfigKey> properties = new ArrayList<>();
+    private final ResourceLocation ID;
+    protected final Collection<IConfigKey> properties;
+    private ModelResourceLocation model;
+
+    public ModuleBase(ResourceLocation id)
+    {
+        ID = id;
+        properties = new ArrayList<>();
+    }
+
+    @Override
+    public ResourceLocation getID()
+    {
+        return ID;
+    }
 
     @Override
     public Collection<IConfigKey> getProperties()
@@ -36,9 +48,14 @@ public class ModuleBase implements IModule
     }
 
     @Override
-    public void addModel(Item item, String id)
+    public ModelResourceLocation getModelLocation()
     {
-        ModelLoader.setCustomModelResourceLocation(item, 0, new ModelResourceLocation(new ResourceLocation(item.getRegistryName().getResourceDomain(), "modules/" + id), "inventory"));
+        if(model == null)
+        {
+            model = new ModelResourceLocation(new ResourceLocation(getID().getResourceDomain(), "modules/" + getID().getResourcePath()), "inventory");
+        }
+
+        return model;
     }
 
     @Override

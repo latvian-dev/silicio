@@ -29,6 +29,6 @@ public class SilClient extends SilCommon
         //SilItems.XSUIT_BELT.registerDefaultModel();
         //SilItems.XSUIT_VISOR.registerDefaultModel();
 
-        SilItems.Modules.MODULE_LIST.forEach((key, value) -> value.getModule().addModel(value, key));
+        SilItems.MODULE.registerModels();
     }
 }
