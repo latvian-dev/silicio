@@ -3,13 +3,18 @@ package com.latmod.silicio.tile;
 import com.feed_the_beast.ftbl.api.tile.TileInvLM;
 import com.latmod.silicio.api_impl.SilCaps;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.ITickable;
 import net.minecraftforge.items.ItemStackHandler;
 
 /**
  * Created by LatvianModder on 25.08.2016.
  */
-public class TileModuleIO extends TileInvLM
+public class TileModuleIO extends TileInvLM implements ITickable
 {
+    public byte progress;
+    public short energy;
+
     public TileModuleIO()
     {
         super(2);
@@ -45,8 +50,44 @@ public class TileModuleIO extends TileInvLM
     }
 
     @Override
-    public void markDirty()
+    public void writeTileData(NBTTagCompound nbt)
     {
-        sendDirtyUpdate();
+        super.writeTileData(nbt);
+        nbt.setByte("Progress", progress);
+        nbt.setShort("Energy", energy);
+    }
+
+    @Override
+    public void readTileData(NBTTagCompound nbt)
+    {
+        super.readTileData(nbt);
+        progress = nbt.getByte("Progress");
+        energy = nbt.getShort("Energy");
+    }
+
+    @Override
+    public void update()
+    {
+        if(!worldObj.isRemote)
+        {
+            progress++;
+            energy++;
+
+            if(progress >= 100)
+            {
+                progress = 0;
+            }
+
+            if(energy >= 3200)
+            {
+                energy = 0;
+            }
+
+            checkIfDirty();
+        }
+    }
+
+    public void startCopying()
+    {
     }
 }

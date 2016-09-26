@@ -70,6 +70,7 @@ silicio.item.module.command_block.name=Command Block
 silicio.item.module.light_sensor.name=Light Sensor
 silicio.item.module.sign_out.name=Sign Output
 silicio.item.module.chat_out.name=Chat Output
+silicio.item.module.chat_out.chat_message=Chat Message
 silicio.item.module.crafting.name=Item Crafting
 silicio.item.module.painter.name=Cable Painter
 

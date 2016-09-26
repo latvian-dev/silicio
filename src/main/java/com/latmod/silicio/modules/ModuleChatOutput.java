@@ -16,7 +16,7 @@ import net.minecraft.item.ItemStack;
  */
 public class ModuleChatOutput extends ModuleSil
 {
-    private static final ConfigKey CHAT_MESSAGE = new ConfigKey("message", new PropertyString("Text"), "Chat Message", false); //TODO: Lang
+    private static final ConfigKey CHAT_MESSAGE = new ConfigKey("message", new PropertyString("Text"), "silicio.item.module.chat_out.chat_message", true);
 
     public ModuleChatOutput()
     {
