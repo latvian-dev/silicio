@@ -1,6 +1,7 @@
 package com.latmod.silicio.tile;
 
 import com.feed_the_beast.ftbl.api.tile.TileInvLM;
+import com.latmod.silicio.api.module.IModuleContainer;
 import com.latmod.silicio.api_impl.SilCaps;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -70,17 +71,29 @@ public class TileModuleIO extends TileInvLM implements ITickable
     {
         if(!worldObj.isRemote)
         {
-            progress++;
-            energy++;
-
-            if(progress >= 100)
+            if(progress > 0)
             {
-                progress = 0;
-            }
+                progress++;
 
-            if(energy >= 3200)
-            {
-                energy = 0;
+                if(progress >= 100)
+                {
+                    ItemStack is0 = itemHandler.getStackInSlot(0);
+                    ItemStack is1 = itemHandler.getStackInSlot(1);
+
+                    if(is0 != null && is1 != null && is0.hasCapability(SilCaps.MODULE_CONTAINER, null) && is1.hasCapability(SilCaps.MODULE_CONTAINER, null))
+                    {
+                        IModuleContainer c0 = is0.getCapability(SilCaps.MODULE_CONTAINER, null);
+                        IModuleContainer c1 = is1.getCapability(SilCaps.MODULE_CONTAINER, null);
+
+                        if(c0.getModule() != null && c1.getModule() != null && c0.getModule().getID().equals(c1.getModule().getID()))
+                        {
+                            c1.getProperties().fromJson(c0.getProperties().getSerializableElement());
+                            markDirty();
+                        }
+                    }
+
+                    progress = 0;
+                }
             }
 
             checkIfDirty();
@@ -89,5 +102,22 @@ public class TileModuleIO extends TileInvLM implements ITickable
 
     public void startCopying()
     {
+        if(!worldObj.isRemote && progress == 0)
+        {
+            ItemStack is0 = itemHandler.getStackInSlot(0);
+            ItemStack is1 = itemHandler.getStackInSlot(1);
+
+            if(is0 != null && is1 != null && is0.hasCapability(SilCaps.MODULE_CONTAINER, null) && is1.hasCapability(SilCaps.MODULE_CONTAINER, null))
+            {
+                IModuleContainer c0 = is0.getCapability(SilCaps.MODULE_CONTAINER, null);
+                IModuleContainer c1 = is1.getCapability(SilCaps.MODULE_CONTAINER, null);
+
+                if(c0.getModule() != null && c1.getModule() != null && c0.getModule().getID().equals(c1.getModule().getID()))
+                {
+                    progress = 1;
+                    markDirty();
+                }
+            }
+        }
     }
 }
