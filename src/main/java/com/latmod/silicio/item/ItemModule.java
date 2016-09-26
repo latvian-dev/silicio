@@ -7,7 +7,7 @@ import com.feed_the_beast.ftbl.api.recipes.IRecipes;
 import com.latmod.lib.LangKey;
 import com.latmod.lib.config.ConfigTree;
 import com.latmod.lib.config.EmptyConfigTree;
-import com.latmod.lib.util.LMUtils;
+import com.latmod.lib.util.ASMUtils;
 import com.latmod.silicio.Silicio;
 import com.latmod.silicio.api.module.IModule;
 import com.latmod.silicio.api.module.IModuleContainer;
@@ -173,7 +173,7 @@ public class ItemModule extends ItemSil
 
     public void findModules(ASMDataTable table)
     {
-        LMUtils.findAnnotatedObjects(table, IModule.class, SilNetModule.class, (obj, data) ->
+        ASMUtils.findAnnotatedObjects(table, IModule.class, SilNetModule.class, (obj, field, info) ->
         {
             String key = obj.getID().toString();
             MODULE_MAP.put(key, obj);
@@ -181,7 +181,6 @@ public class ItemModule extends ItemSil
             IModuleContainer container = itemStack.getCapability(SilCaps.MODULE_CONTAINER, null);
             ((ModuleContainer) container).module = obj;
             MODULE_STACK_MAP.put(key, itemStack);
-            return null;
         });
     }
 

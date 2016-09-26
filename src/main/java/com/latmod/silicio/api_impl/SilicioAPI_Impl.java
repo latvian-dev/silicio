@@ -1,7 +1,7 @@
 package com.latmod.silicio.api_impl;
 
 import com.latmod.lib.math.BlockDimPos;
-import com.latmod.lib.util.LMUtils;
+import com.latmod.lib.util.ASMUtils;
 import com.latmod.silicio.api.SilicioAPI;
 import com.latmod.silicio.api.SilicioAddon;
 import com.latmod.silicio.api.tile.ISilNetController;
@@ -24,7 +24,8 @@ public enum SilicioAPI_Impl implements SilicioAPI
 
     public void init(ASMDataTable table)
     {
-        LMUtils.findAnnotatedObjects(table, SilicioAPI.class, SilicioAddon.class, (obj, data) -> this);
+        ASMUtils.findAnnotatedObjects(table, SilicioAPI.class, SilicioAddon.class, (obj, field, data) -> field.set(null, INSTANCE));
+        ASMUtils.findAnnotatedMethods(table, SilicioAddon.class, (method, params, data) -> method.invoke(null));
     }
 
     private static final Map<BlockDimPos, TileEntity> NET = new HashMap<>();
