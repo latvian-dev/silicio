@@ -46,7 +46,7 @@ public class GuiModuleIO extends GuiLM
 
             public void renderWidget(IGui gui)
             {
-                double size = (int) (container.tile.progress * 20D / 100D) / 20D;
+                double size = (int) (container.tile.progress * 21D / 100D) / 20D;
                 double minU = PROGRESS_BAR.getMinU();
                 double maxU = PROGRESS_BAR.getMaxU();
                 GuiHelper.drawTexturedRect(getAX(), getAY(), (int) (getWidth() * size), getHeight(), minU, PROGRESS_BAR.getMinV(), minU + (maxU - minU) * size, PROGRESS_BAR.getMaxV());
@@ -62,7 +62,7 @@ public class GuiModuleIO extends GuiLM
 
             public void renderWidget(IGui gui)
             {
-                double size = (int) (container.tile.energy * 33D / 3200D) / 33D;
+                double size = (int) (container.tile.energy * 34D / 3200D) / 33D;
                 double minU = ENERGY_BAR.getMinU();
                 double maxU = ENERGY_BAR.getMaxU();
                 GuiHelper.drawTexturedRect(getAX(), getAY(), (int) (getWidth() * size), getHeight(), minU, ENERGY_BAR.getMinV(), minU + (maxU - minU) * size, ENERGY_BAR.getMaxV());
