@@ -16,11 +16,18 @@ public class ModuleBase implements IModule
     private final ResourceLocation ID;
     protected final Collection<IConfigKey> properties;
     private ModelResourceLocation model;
+    private String unlocalizedName;
 
     public ModuleBase(ResourceLocation id)
     {
         ID = id;
         properties = new ArrayList<>();
+        unlocalizedName = id.getResourceDomain() + ".item.module." + id.getResourcePath();
+    }
+
+    protected void setUnlocalizedName(String s)
+    {
+        unlocalizedName = s;
     }
 
     @Override
@@ -44,5 +51,11 @@ public class ModuleBase implements IModule
         }
 
         return model;
+    }
+
+    @Override
+    public String getUnlocalizedName()
+    {
+        return unlocalizedName;
     }
 }

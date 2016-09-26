@@ -14,6 +14,7 @@ import com.latmod.silicio.api.module.IModuleContainer;
 import com.latmod.silicio.api.module.SilNetModule;
 import com.latmod.silicio.api.tile.ISocketBlock;
 import com.latmod.silicio.api_impl.SilCaps;
+import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.renderer.block.model.ModelBakery;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.creativetab.CreativeTabs;
@@ -251,7 +252,7 @@ public class ItemModule extends ItemSil
     {
         tooltip.add(DESC.translate());
 
-        if(advanced)
+        if(advanced || GuiScreen.isShiftKeyDown())
         {
             IModuleContainer moduleContainer = stack.getCapability(SilCaps.MODULE_CONTAINER, null);
             IModule module = moduleContainer.getModule();
