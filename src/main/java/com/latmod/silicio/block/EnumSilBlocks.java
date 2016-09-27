@@ -1,8 +1,8 @@
 package com.latmod.silicio.block;
 
 import com.feed_the_beast.ftbl.api.block.IBlockVariant;
-import com.feed_the_beast.ftbl.api.gui.GuiHelper;
-import com.latmod.lib.EnumNameMap;
+import com.feed_the_beast.ftbl.lib.EnumNameMap;
+import com.feed_the_beast.ftbl.lib.gui.GuiHelper;
 import com.latmod.silicio.FTBLibIntegration;
 import com.latmod.silicio.gui.ContainerElemiteCrafter;
 import com.latmod.silicio.gui.ContainerLamp;
@@ -138,8 +138,6 @@ public enum EnumSilBlocks implements IBlockVariant
             case ESU:
             case REACTOR_CORE:
                 return Material.IRON;
-            case LAMP:
-                return Material.REDSTONE_LIGHT;
             default:
                 return Material.ROCK;
         }

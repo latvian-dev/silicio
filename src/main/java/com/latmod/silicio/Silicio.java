@@ -1,7 +1,7 @@
 package com.latmod.silicio;
 
-import com.latmod.lib.CreativeTabLM;
-import com.latmod.lib.util.LMUtils;
+import com.feed_the_beast.ftbl.lib.CreativeTabLM;
+import com.feed_the_beast.ftbl.lib.util.LMUtils;
 import com.latmod.silicio.api_impl.SilCaps;
 import com.latmod.silicio.api_impl.SilicioAPI_Impl;
 import com.latmod.silicio.block.EnumSilBlocks;

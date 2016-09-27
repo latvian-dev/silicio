@@ -1,14 +1,14 @@
 package com.latmod.silicio.gui;
 
 import com.feed_the_beast.ftbl.api.client.FTBLibClient;
-import com.feed_the_beast.ftbl.api.gui.GuiContainerWrapper;
-import com.feed_the_beast.ftbl.api.gui.GuiHelper;
-import com.feed_the_beast.ftbl.api.gui.GuiLM;
 import com.feed_the_beast.ftbl.api.gui.IGui;
 import com.feed_the_beast.ftbl.api.gui.IMouseButton;
-import com.feed_the_beast.ftbl.api.gui.widgets.ButtonLM;
-import com.feed_the_beast.ftbl.api.gui.widgets.WidgetLM;
-import com.latmod.lib.client.TextureCoords;
+import com.feed_the_beast.ftbl.lib.client.TextureCoords;
+import com.feed_the_beast.ftbl.lib.gui.ButtonLM;
+import com.feed_the_beast.ftbl.lib.gui.GuiContainerWrapper;
+import com.feed_the_beast.ftbl.lib.gui.GuiHelper;
+import com.feed_the_beast.ftbl.lib.gui.GuiLM;
+import com.feed_the_beast.ftbl.lib.gui.WidgetLM;
 import com.latmod.silicio.Silicio;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.util.ResourceLocation;
@@ -39,11 +39,13 @@ public class GuiModuleIO extends GuiLM
                 mc.playerController.sendEnchantPacket(container.windowId, 0);
             }
 
+            @Override
             public String getTitle(IGui gui)
             {
                 return container.tile.progress + "%";
             }
 
+            @Override
             public void renderWidget(IGui gui)
             {
                 double size = (int) (container.tile.progress * 21D / 100D) / 20D;
@@ -55,11 +57,13 @@ public class GuiModuleIO extends GuiLM
 
         energyBar = new WidgetLM(9, 11, 33, 16)
         {
+            @Override
             public String getTitle(IGui gui)
             {
                 return (int) (container.tile.energy * 100F / 3200F) + "%";
             }
 
+            @Override
             public void renderWidget(IGui gui)
             {
                 double size = (int) (container.tile.energy * 34D / 3200D) / 33D;

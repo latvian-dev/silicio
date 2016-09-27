@@ -1,6 +1,6 @@
 package com.latmod.silicio.item;
 
-import com.latmod.lib.util.LMStringUtils;
+import com.feed_the_beast.ftbl.lib.util.LMStringUtils;
 import com.latmod.silicio.api.tile.ISilNetController;
 import com.latmod.silicio.api.tile.ISilNetTile;
 import com.latmod.silicio.api_impl.SilCaps;

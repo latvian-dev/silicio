@@ -1,9 +1,9 @@
 package com.latmod.silicio.item;
 
-import com.feed_the_beast.ftbl.api.item.ItemMaterialsLM;
-import com.feed_the_beast.ftbl.api.item.ODItems;
 import com.feed_the_beast.ftbl.api.recipes.IRecipeHandler;
 import com.feed_the_beast.ftbl.api.recipes.RecipeHandler;
+import com.feed_the_beast.ftbl.lib.item.ItemMaterialsLM;
+import com.feed_the_beast.ftbl.lib.item.ODItems;
 import com.latmod.silicio.Silicio;
 import com.latmod.silicio.api.module.SilNetModule;
 import com.latmod.silicio.modules.ModuleChatOutput;

@@ -1,6 +1,5 @@
 package com.latmod.silicio.tile;
 
-import com.feed_the_beast.ftbl.api.tile.EnumSync;
 import com.latmod.silicio.api.tile.ISilNetController;
 import com.latmod.silicio.api_impl.SilCaps;
 import com.latmod.silicio.api_impl.module.SocketBlock;
@@ -37,9 +36,9 @@ public class TileSocketBlock extends TileSilNet implements ITickable
     }
 
     @Override
-    public EnumSync getSync()
+    protected boolean rerenderBlock()
     {
-        return EnumSync.RERENDER;
+        return true;
     }
 
     @Override

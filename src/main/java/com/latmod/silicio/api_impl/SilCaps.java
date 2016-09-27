@@ -1,6 +1,6 @@
 package com.latmod.silicio.api_impl;
 
-import com.latmod.lib.EmptyCapStorage;
+import com.feed_the_beast.ftbl.lib.EmptyCapStorage;
 import com.latmod.silicio.api.module.IModuleContainer;
 import com.latmod.silicio.api.tile.ISilNetTile;
 import com.latmod.silicio.api.tile.ISocketBlock;

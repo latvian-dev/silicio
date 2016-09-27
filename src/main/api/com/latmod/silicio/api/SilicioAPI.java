@@ -1,6 +1,6 @@
 package com.latmod.silicio.api;
 
-import com.latmod.lib.math.BlockDimPos;
+import com.feed_the_beast.ftbl.lib.math.BlockDimPos;
 import com.latmod.silicio.api.tile.ISilNetController;
 import net.minecraft.tileentity.TileEntity;
 

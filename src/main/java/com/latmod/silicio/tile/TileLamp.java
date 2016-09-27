@@ -1,6 +1,5 @@
 package com.latmod.silicio.tile;
 
-import com.feed_the_beast.ftbl.api.tile.EnumSync;
 import com.latmod.silicio.api.tile.ISilNetController;
 import gnu.trove.impl.Constants;
 import gnu.trove.map.TShortByteMap;
@@ -75,7 +74,6 @@ public class TileLamp extends TileSilNet
         });
 
         nbt.setIntArray("C", ai);
-
         nbt.setByte("CC", currentColor);
     }
 
@@ -95,9 +93,9 @@ public class TileLamp extends TileSilNet
     }
 
     @Override
-    public EnumSync getSync()
+    protected boolean rerenderBlock()
     {
-        return EnumSync.SYNC;
+        return true;
     }
 
     @Override

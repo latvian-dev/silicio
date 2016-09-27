@@ -1,9 +1,9 @@
 package com.latmod.silicio.tile;
 
-import com.feed_the_beast.ftbl.api.tile.TileLM;
-import com.latmod.lib.math.MathHelperLM;
-import com.latmod.lib.util.LMNBTUtils;
-import com.latmod.lib.util.LMServerUtils;
+import com.feed_the_beast.ftbl.lib.math.MathHelperLM;
+import com.feed_the_beast.ftbl.lib.tile.TileLM;
+import com.feed_the_beast.ftbl.lib.util.LMNBTUtils;
+import com.feed_the_beast.ftbl.lib.util.LMServerUtils;
 import com.latmod.silicio.SilSounds;
 import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.block.BlockDirectional;

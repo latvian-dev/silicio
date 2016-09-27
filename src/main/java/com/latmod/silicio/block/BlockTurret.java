@@ -1,6 +1,6 @@
 package com.latmod.silicio.block;
 
-import com.latmod.lib.math.MathHelperLM;
+import com.feed_the_beast.ftbl.lib.math.MathHelperLM;
 import com.latmod.silicio.tile.TileTurret;
 import net.minecraft.block.BlockDirectional;
 import net.minecraft.block.material.Material;

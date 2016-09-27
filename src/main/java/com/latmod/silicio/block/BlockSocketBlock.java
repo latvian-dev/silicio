@@ -2,8 +2,8 @@ package com.latmod.silicio.block;
 
 import com.feed_the_beast.ftbl.api.config.IConfigContainer;
 import com.feed_the_beast.ftbl.api.config.IConfigTree;
+import com.feed_the_beast.ftbl.lib.util.LMInvUtils;
 import com.google.gson.JsonObject;
-import com.latmod.lib.util.LMInvUtils;
 import com.latmod.silicio.FTBLibIntegration;
 import com.latmod.silicio.api.tile.ISocketBlock;
 import com.latmod.silicio.api_impl.SilCaps;

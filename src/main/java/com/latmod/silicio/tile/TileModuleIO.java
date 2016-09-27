@@ -1,6 +1,6 @@
 package com.latmod.silicio.tile;
 
-import com.feed_the_beast.ftbl.api.tile.TileInvLM;
+import com.feed_the_beast.ftbl.lib.tile.TileInvLM;
 import com.latmod.silicio.api.module.IModuleContainer;
 import com.latmod.silicio.api_impl.SilCaps;
 import net.minecraft.item.ItemStack;

@@ -1,6 +1,6 @@
 package com.latmod.silicio.tile;
 
-import com.feed_the_beast.ftbl.api.tile.TileInvLM;
+import com.feed_the_beast.ftbl.lib.tile.TileInvLM;
 
 /**
  * Created by LatvianModder on 25.08.2016.

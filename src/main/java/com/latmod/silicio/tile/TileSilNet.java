@@ -1,6 +1,6 @@
 package com.latmod.silicio.tile;
 
-import com.feed_the_beast.ftbl.api.tile.TileLM;
+import com.feed_the_beast.ftbl.lib.tile.TileLM;
 import com.latmod.silicio.api.tile.ISilNetController;
 import com.latmod.silicio.api.tile.ISilNetTile;
 import com.latmod.silicio.api_impl.SilCaps;

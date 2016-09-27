@@ -1,9 +1,9 @@
 package com.latmod.silicio.gui;
 
-import com.feed_the_beast.ftbl.api.gui.ContainerLM;
 import com.feed_the_beast.ftbl.api.gui.GuiHandler;
-import com.feed_the_beast.ftbl.api.gui.GuiHelper;
 import com.feed_the_beast.ftbl.api.gui.IGuiHandler;
+import com.feed_the_beast.ftbl.lib.gui.ContainerLM;
+import com.feed_the_beast.ftbl.lib.gui.GuiHelper;
 import com.latmod.silicio.Silicio;
 import com.latmod.silicio.tile.TileElemiteCrafter;
 import net.minecraft.entity.player.EntityPlayer;

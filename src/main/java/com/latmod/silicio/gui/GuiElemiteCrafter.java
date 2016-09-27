@@ -1,8 +1,8 @@
 package com.latmod.silicio.gui;
 
 import com.feed_the_beast.ftbl.api.client.FTBLibClient;
-import com.feed_the_beast.ftbl.api.gui.GuiContainerWrapper;
-import com.feed_the_beast.ftbl.api.gui.GuiLM;
+import com.feed_the_beast.ftbl.lib.gui.GuiContainerWrapper;
+import com.feed_the_beast.ftbl.lib.gui.GuiLM;
 import com.latmod.silicio.Silicio;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.util.ResourceLocation;

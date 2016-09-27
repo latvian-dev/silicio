@@ -1,9 +1,9 @@
 package com.latmod.silicio.modules;
 
 import com.feed_the_beast.ftbl.api.recipes.IRecipes;
-import com.latmod.lib.config.ConfigKey;
-import com.latmod.lib.config.PropertyString;
-import com.latmod.lib.util.LMServerUtils;
+import com.feed_the_beast.ftbl.lib.config.ConfigKey;
+import com.feed_the_beast.ftbl.lib.config.PropertyString;
+import com.feed_the_beast.ftbl.lib.util.LMServerUtils;
 import com.latmod.silicio.api.module.IModuleContainer;
 import com.latmod.silicio.api.tile.ISilNetController;
 import com.latmod.silicio.api.tile.ISocketBlock;

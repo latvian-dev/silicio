@@ -1,6 +1,5 @@
 package com.latmod.silicio.tile;
 
-import com.feed_the_beast.ftbl.api.tile.EnumSync;
 import com.latmod.silicio.api.tile.ISilNetConnector;
 import com.latmod.silicio.api.tile.ISilNetController;
 import com.latmod.silicio.api.tile.ISilNetTile;
@@ -40,9 +39,9 @@ public class TileSilNetController extends TileSilNet implements ITickable, ISilN
     private NBTTagCompound variables = new NBTTagCompound();
 
     @Override
-    public EnumSync getSync()
+    protected boolean rerenderBlock()
     {
-        return EnumSync.RERENDER;
+        return true;
     }
 
     @Override

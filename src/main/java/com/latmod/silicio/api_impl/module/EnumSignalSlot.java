@@ -1,9 +1,9 @@
 package com.latmod.silicio.api_impl.module;
 
 import com.feed_the_beast.ftbl.api.config.IConfigValue;
-import com.latmod.lib.LangKey;
-import com.latmod.lib.config.PropertyShort;
-import com.latmod.lib.config.SimpleConfigKey;
+import com.feed_the_beast.ftbl.lib.LangKey;
+import com.feed_the_beast.ftbl.lib.config.PropertyShort;
+import com.feed_the_beast.ftbl.lib.config.SimpleConfigKey;
 import com.latmod.silicio.api.module.ISignalSlot;
 import com.latmod.silicio.api.module.ISignalSlotPropertyKey;
 import net.minecraft.util.text.ITextComponent;

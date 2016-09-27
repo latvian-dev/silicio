@@ -1,7 +1,7 @@
 package com.latmod.silicio.item;
 
 import com.feed_the_beast.ftbl.api.item.IMaterial;
-import com.latmod.lib.EnumNameMap;
+import com.feed_the_beast.ftbl.lib.EnumNameMap;
 import net.minecraft.item.Item;
 
 /**

@@ -1,7 +1,7 @@
 package com.latmod.silicio.api_impl;
 
-import com.latmod.lib.math.BlockDimPos;
-import com.latmod.lib.util.ASMUtils;
+import com.feed_the_beast.ftbl.lib.math.BlockDimPos;
+import com.feed_the_beast.ftbl.lib.util.ASMUtils;
 import com.latmod.silicio.api.SilicioAPI;
 import com.latmod.silicio.api.SilicioAddon;
 import com.latmod.silicio.api.tile.ISilNetController;

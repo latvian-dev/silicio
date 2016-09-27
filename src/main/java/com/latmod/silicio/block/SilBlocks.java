@@ -1,11 +1,11 @@
 package com.latmod.silicio.block;
 
-import com.feed_the_beast.ftbl.api.block.BlockVariantLookup;
-import com.feed_the_beast.ftbl.api.block.BlockWithVariants;
-import com.feed_the_beast.ftbl.api.item.ODItems;
 import com.feed_the_beast.ftbl.api.recipes.IRecipeHandler;
 import com.feed_the_beast.ftbl.api.recipes.RecipeHandler;
-import com.latmod.lib.util.LMUtils;
+import com.feed_the_beast.ftbl.lib.block.BlockVariantLookup;
+import com.feed_the_beast.ftbl.lib.block.BlockWithVariants;
+import com.feed_the_beast.ftbl.lib.item.ODItems;
+import com.feed_the_beast.ftbl.lib.util.LMUtils;
 import com.latmod.silicio.Silicio;
 import com.latmod.silicio.item.SilItems;
 import com.latmod.silicio.tile.TileConnector;
