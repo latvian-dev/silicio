@@ -32,7 +32,7 @@ silicio.tile.rednet_io.name=Circuit Board RedNetIO
 silicio.item.materials.silicon.name=Silicon
 silicio.item.materials.blue_goo.name=Blue Goo
 silicio.item.materials.laser_lens.name=Laser Lens
-silicio.item.materials.xsuit_plate.name=XSuit Plate
+silicio.item.materials.elemite_plate.name=Elemite Plate
 silicio.item.materials.antimatter.name=Antimatter
 silicio.item.materials.opal.name=Opal
 

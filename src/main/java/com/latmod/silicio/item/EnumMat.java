@@ -11,7 +11,7 @@ public enum EnumMat implements IMaterial
 {
     BLUE_GOO(3),
     LASER_LENS(4),
-    XSUIT_PLATE(5),
+    ELEMITE_PLATE(5),
     ANTIMATTER(6),
     OPAL(7),
     //

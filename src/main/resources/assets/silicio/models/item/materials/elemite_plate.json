@@ -1,0 +1,6 @@
+{
+  "parent": "item/generated",
+  "textures": {
+    "layer0": "silicio:items/materials/elemite_plate"
+  }
+}

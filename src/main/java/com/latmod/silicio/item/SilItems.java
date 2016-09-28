@@ -86,7 +86,7 @@ public class SilItems
     public static final IRecipeHandler RECIPES = recipes ->
     {
         recipes.addShapelessRecipe(BLUE_GOO.getStack(1), ODItems.SLIMEBALL, ODItems.LAPIS, ODItems.IRON);
-        recipes.addRecipe(XSUIT_PLATE.getStack(1), "EEE", "ESE", "EEE", 'E', ORE_ELEMITE_INGOT, 'S', ANTIMATTER);
+        recipes.addRecipe(ELEMITE_PLATE.getStack(1), "EEE", "ESE", "EEE", 'E', ORE_ELEMITE_INGOT, 'S', ANTIMATTER);
         recipes.addRecipe(OPAL.getStack(4), "WSW", "SLS", "WSW", 'S', ODItems.SILICON, 'W', Items.WATER_BUCKET, 'L', Items.LAVA_BUCKET);
 
         recipes.addRecipe(ELEMITE_INGOT.getStack(1), "EEE", "EEE", "EEE", 'E', ORE_ELEMITE_NUGGET);
@@ -116,7 +116,7 @@ public class SilItems
         recipes.addShapelessRecipe(MODULE_LOGIC.getStack(1), MODULE_EMPTY, ODItems.REDSTONE);
 
         recipes.addRecipe(new ItemStack(ID_CARD), " P ", "PWP", " P ", 'P', ODItems.PAPER, 'W', CIRCUIT_WIFI);
-        recipes.addRecipe(new ItemStack(MULTITOOL), "CII", " AI", "  I", 'C', LASER_LENS, 'A', ANTIMATTER, 'I', XSUIT_PLATE);
+        recipes.addRecipe(new ItemStack(MULTITOOL), "CII", " AI", "  I", 'C', LASER_LENS, 'A', ANTIMATTER, 'I', ELEMITE_PLATE);
 
         ItemModule.loadRecipes(recipes);
     };
