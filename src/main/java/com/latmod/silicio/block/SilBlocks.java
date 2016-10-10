@@ -1,7 +1,7 @@
 package com.latmod.silicio.block;
 
+import com.feed_the_beast.ftbl.api.RegistryObject;
 import com.feed_the_beast.ftbl.api.recipes.IRecipeHandler;
-import com.feed_the_beast.ftbl.api.recipes.RecipeHandler;
 import com.feed_the_beast.ftbl.lib.block.BlockVariantLookup;
 import com.feed_the_beast.ftbl.lib.block.BlockWithVariants;
 import com.feed_the_beast.ftbl.lib.item.ODItems;
@@ -19,7 +19,14 @@ import net.minecraftforge.oredict.OreDictionary;
 
 import javax.annotation.Nonnull;
 
-import static com.latmod.silicio.item.EnumMat.*;
+import static com.latmod.silicio.item.EnumMat.BLUE_GOO;
+import static com.latmod.silicio.item.EnumMat.CIRCUIT;
+import static com.latmod.silicio.item.EnumMat.CIRCUIT_WIFI;
+import static com.latmod.silicio.item.EnumMat.ELEMITE_INGOT;
+import static com.latmod.silicio.item.EnumMat.LED_RGB;
+import static com.latmod.silicio.item.EnumMat.OPAL;
+import static com.latmod.silicio.item.EnumMat.PROCESSOR;
+import static com.latmod.silicio.item.EnumMat.WIRE;
 
 /**
  * Created by LatvianModder on 02.05.2016.
@@ -58,7 +65,7 @@ public class SilBlocks
         LMUtils.addTile(TileTurret.class, TURRET.getRegistryName());
     }
 
-    @RecipeHandler
+    @RegistryObject
     public static final IRecipeHandler RECIPES = recipes ->
     {
         recipes.addRecipe(EnumSilBlocks.ELEMITE_BLOCK.getStack(1), "III", "III", "III", 'I', SilItems.ORE_ELEMITE_INGOT);

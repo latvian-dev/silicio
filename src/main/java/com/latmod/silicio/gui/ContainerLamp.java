@@ -1,6 +1,6 @@
 package com.latmod.silicio.gui;
 
-import com.feed_the_beast.ftbl.api.gui.GuiHandler;
+import com.feed_the_beast.ftbl.api.RegistryObject;
 import com.feed_the_beast.ftbl.api.gui.IGuiHandler;
 import com.feed_the_beast.ftbl.lib.gui.ContainerLM;
 import com.feed_the_beast.ftbl.lib.gui.GuiHelper;
@@ -22,7 +22,7 @@ public class ContainerLamp extends ContainerLM
 {
     public static final ResourceLocation ID = new ResourceLocation(Silicio.MOD_ID, "lamp");
 
-    @GuiHandler
+    @RegistryObject
     public static final IGuiHandler HANDLER = new IGuiHandler()
     {
         @Override

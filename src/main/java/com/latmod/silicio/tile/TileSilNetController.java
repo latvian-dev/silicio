@@ -143,7 +143,7 @@ public class TileSilNetController extends TileSilNet implements ITickable, ISilN
     @Override
     public void update()
     {
-        if(getSide().isClient())
+        if(!isServerSide())
         {
             return;
         }

@@ -113,7 +113,7 @@ public class TileTurret extends TileLM implements ITickable
     @Override
     public void update()
     {
-        if(getSide().isServer())
+        if(isServerSide())
         {
             if(cooldown > 0)
             {

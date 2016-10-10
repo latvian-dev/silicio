@@ -1,7 +1,7 @@
 package com.latmod.silicio.item;
 
+import com.feed_the_beast.ftbl.api.RegistryObject;
 import com.feed_the_beast.ftbl.api.recipes.IRecipeHandler;
-import com.feed_the_beast.ftbl.api.recipes.RecipeHandler;
 import com.feed_the_beast.ftbl.lib.item.ItemMaterialsLM;
 import com.feed_the_beast.ftbl.lib.item.ODItems;
 import com.latmod.silicio.Silicio;
@@ -82,7 +82,7 @@ public class SilItems
         OreDictionary.registerOre(ORE_ELEMITE_NUGGET, EnumMat.ELEMITE_NUGGET.getStack(1));
     }
 
-    @RecipeHandler
+    @RegistryObject
     public static final IRecipeHandler RECIPES = recipes ->
     {
         recipes.addShapelessRecipe(BLUE_GOO.getStack(1), ODItems.SLIMEBALL, ODItems.LAPIS, ODItems.IRON);
