@@ -7,13 +7,12 @@ import com.feed_the_beast.ftbl.api.recipes.IRecipes;
 import com.feed_the_beast.ftbl.lib.LangKey;
 import com.feed_the_beast.ftbl.lib.config.ConfigTree;
 import com.feed_the_beast.ftbl.lib.config.EmptyConfigTree;
-import com.feed_the_beast.ftbl.lib.util.ASMUtils;
 import com.latmod.silicio.Silicio;
 import com.latmod.silicio.api.module.IModule;
 import com.latmod.silicio.api.module.IModuleContainer;
-import com.latmod.silicio.api.module.SilNetModule;
 import com.latmod.silicio.api.tile.ISocketBlock;
 import com.latmod.silicio.api_impl.SilCaps;
+import com.latmod.silicio.api_impl.SilicioAPI_Impl;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.renderer.block.model.ModelBakery;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
@@ -31,7 +30,6 @@ import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.common.util.INBTSerializable;
-import net.minecraftforge.fml.common.discovery.ASMDataTable;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -171,9 +169,9 @@ public class ItemModule extends ItemSil
         }
     }
 
-    public void findModules(ASMDataTable table)
+    public void findModules()
     {
-        ASMUtils.findAnnotatedObjects(table, IModule.class, SilNetModule.class, (obj, field, info) ->
+        SilicioAPI_Impl.INSTANCE.asmData.findRegistryObjects(IModule.class, false, (obj, field, id) ->
         {
             String key = obj.getID().toString();
             MODULE_MAP.put(key, obj);

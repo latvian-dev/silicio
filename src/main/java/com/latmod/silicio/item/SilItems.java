@@ -5,7 +5,6 @@ import com.feed_the_beast.ftbl.api.recipes.IRecipeHandler;
 import com.feed_the_beast.ftbl.lib.item.ItemMaterialsLM;
 import com.feed_the_beast.ftbl.lib.item.ODItems;
 import com.latmod.silicio.Silicio;
-import com.latmod.silicio.api.module.SilNetModule;
 import com.latmod.silicio.modules.ModuleChatOutput;
 import com.latmod.silicio.modules.ModuleSequencer;
 import com.latmod.silicio.modules.ModuleTimer;
@@ -34,16 +33,19 @@ public class SilItems
 
     public static class Modules
     {
-
         //public static final IModule COMMAND_BLOCK;
         //public static final IModule LIGHT_SENSOR;
         //public static final IModule SIGN_OUT;
-        @SilNetModule
+
+        @RegistryObject
         public static final ModuleChatOutput CHAT_OUT = new ModuleChatOutput();
-        @SilNetModule
+
+        @RegistryObject
         public static final ModuleTimer TIMER = new ModuleTimer();
-        @SilNetModule
+
+        @RegistryObject
         public static final ModuleSequencer SEQUENCER = new ModuleSequencer(4);
+
         //public static final IModule CRAFTING;
 
         //public static final IModule RS_IN;

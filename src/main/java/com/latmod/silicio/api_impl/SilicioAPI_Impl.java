@@ -1,7 +1,7 @@
 package com.latmod.silicio.api_impl;
 
+import com.feed_the_beast.ftbl.lib.AsmData;
 import com.feed_the_beast.ftbl.lib.math.BlockDimPos;
-import com.feed_the_beast.ftbl.lib.util.ASMUtils;
 import com.latmod.silicio.api.SilicioAPI;
 import com.latmod.silicio.api.SilicioAddon;
 import com.latmod.silicio.api.tile.ISilNetController;
@@ -22,10 +22,13 @@ public enum SilicioAPI_Impl implements SilicioAPI
 {
     INSTANCE;
 
+    public AsmData asmData;
+
     public void init(ASMDataTable table)
     {
-        ASMUtils.findAnnotatedObjects(table, SilicioAPI.class, SilicioAddon.class, (obj, field, data) -> field.set(null, INSTANCE));
-        ASMUtils.findAnnotatedMethods(table, SilicioAddon.class, (method, params, data) -> method.invoke(null));
+        asmData = new AsmData(table);
+        asmData.findAnnotatedObjects(SilicioAPI.class, SilicioAddon.class, (obj, field, data) -> field.set(null, INSTANCE));
+        asmData.findAnnotatedMethods(SilicioAddon.class, (method, params, data) -> method.invoke(null));
     }
 
     private static final Map<BlockDimPos, TileEntity> NET = new HashMap<>();

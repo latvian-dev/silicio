@@ -1,5 +1,6 @@
 package com.latmod.silicio.api.module;
 
+import com.feed_the_beast.ftbl.api.IRegistryObject;
 import com.feed_the_beast.ftbl.api.config.IConfigKey;
 import com.feed_the_beast.ftbl.api.recipes.IRecipes;
 import com.latmod.silicio.api.tile.ISilNetController;
@@ -16,7 +17,7 @@ import java.util.Collections;
 /**
  * Created by LatvianModder on 06.08.2016.
  */
-public interface IModule
+public interface IModule extends IRegistryObject
 {
     ResourceLocation getID();
 

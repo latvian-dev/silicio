@@ -19,18 +19,24 @@ import javax.annotation.Nullable;
 public final class SocketBlock implements IItemHandler, ISocketBlock, INBTSerializable<NBTTagCompound>
 {
     private final TileEntity tile;
-    private EnumFacing facing;
+    private final EnumFacing facing;
     private ItemStack stack;
     private IModuleContainer moduleContainer;
 
-    public SocketBlock(TileEntity t)
+    public SocketBlock(TileEntity t, @Nullable EnumFacing f)
     {
         tile = t;
+        facing = f;
     }
 
     public void updateModuleContainer()
     {
         moduleContainer = stack != null && stack.hasCapability(SilCaps.MODULE_CONTAINER, null) ? stack.getCapability(SilCaps.MODULE_CONTAINER, null) : null;
+
+        if(moduleContainer != null && moduleContainer.getModule() == null)
+        {
+            moduleContainer = null;
+        }
     }
 
     @Override
@@ -46,14 +52,10 @@ public final class SocketBlock implements IItemHandler, ISocketBlock, INBTSerial
         return facing;
     }
 
+    @Override
     public boolean hasContainer()
     {
         return stack != null && moduleContainer != null;
-    }
-
-    public void setFacing(@Nullable EnumFacing f)
-    {
-        facing = f;
     }
 
     @Override
@@ -97,7 +99,6 @@ public final class SocketBlock implements IItemHandler, ISocketBlock, INBTSerial
     @Override
     public void deserializeNBT(NBTTagCompound nbt)
     {
-        facing = nbt.hasKey("Side") ? EnumFacing.VALUES[nbt.getByte("Side")] : null;
         stack = nbt.hasKey("Item") ? ItemStack.loadItemStackFromNBT(nbt.getCompoundTag("Item")) : null;
         updateModuleContainer();
     }

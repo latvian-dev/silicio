@@ -19,5 +19,7 @@ public interface ISocketBlock
 
     ItemStack getStack();
 
+    boolean hasContainer();
+
     IModuleContainer getContainer();
 }

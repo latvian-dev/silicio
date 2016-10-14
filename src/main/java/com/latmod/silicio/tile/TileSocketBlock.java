@@ -13,25 +13,21 @@ import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.items.CapabilityItemHandler;
 
 import javax.annotation.Nullable;
-import java.util.EnumMap;
-import java.util.Map;
 
 /**
  * Created by LatvianModder on 04.03.2016.
  */
 public class TileSocketBlock extends TileSilNet implements ITickable
 {
-    private final Map<EnumFacing, SocketBlock> modules;
+    private final SocketBlock[] modules;
 
     public TileSocketBlock()
     {
-        modules = new EnumMap<>(EnumFacing.class);
+        modules = new SocketBlock[EnumFacing.VALUES.length];
 
         for(EnumFacing f : EnumFacing.VALUES)
         {
-            SocketBlock sb = new SocketBlock(this);
-            sb.setFacing(f);
-            modules.put(f, sb);
+            modules[f.ordinal()] = new SocketBlock(this, f);
         }
     }
 
@@ -44,15 +40,15 @@ public class TileSocketBlock extends TileSilNet implements ITickable
     @Override
     public boolean hasCapability(Capability<?> capability, @Nullable EnumFacing facing)
     {
-        return (capability == SilCaps.SOCKET_BLOCK && modules.get(facing).hasContainer()) || capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY || super.hasCapability(capability, facing);
+        return (capability == SilCaps.SOCKET_BLOCK && facing != null && modules[facing.ordinal()].hasContainer()) || capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY || super.hasCapability(capability, facing);
     }
 
     @Override
     public <T> T getCapability(Capability<T> capability, @Nullable EnumFacing facing)
     {
-        if(capability == SilCaps.SOCKET_BLOCK || capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY)
+        if(capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY || (capability == SilCaps.SOCKET_BLOCK && facing != null))
         {
-            return (T) modules.get(facing);
+            return (T) modules[facing.ordinal()];
         }
 
         return super.getCapability(capability, facing);
@@ -65,9 +61,14 @@ public class TileSocketBlock extends TileSilNet implements ITickable
 
         NBTTagList list = new NBTTagList();
 
-        for(SocketBlock sb : modules.values())
+        for(SocketBlock m : modules)
         {
-            list.appendTag(sb.serializeNBT());
+            if(m.hasContainer())
+            {
+                NBTTagCompound nbt1 = m.serializeNBT();
+                nbt1.setByte("Side", (byte) m.getFacing().ordinal());
+                list.appendTag(nbt1);
+            }
         }
 
         nbt.setTag("Modules", list);
@@ -83,7 +84,7 @@ public class TileSocketBlock extends TileSilNet implements ITickable
         for(int i = 0; i < list.tagCount(); i++)
         {
             NBTTagCompound nbt1 = list.getCompoundTagAt(i);
-            modules.get(EnumFacing.VALUES[nbt1.getByte("Side")]).deserializeNBT(nbt1);
+            modules[nbt1.getByte("Side")].deserializeNBT(nbt1);
         }
     }
 
@@ -94,9 +95,14 @@ public class TileSocketBlock extends TileSilNet implements ITickable
 
         NBTTagList list = new NBTTagList();
 
-        for(SocketBlock sb : modules.values())
+        for(SocketBlock m : modules)
         {
-            list.appendTag(sb.serializeNBT());
+            if(m.hasContainer())
+            {
+                NBTTagCompound nbt1 = m.serializeNBT();
+                nbt1.setByte("Side", (byte) m.getFacing().ordinal());
+                list.appendTag(nbt1);
+            }
         }
 
         nbt.setTag("M", list);
@@ -112,7 +118,7 @@ public class TileSocketBlock extends TileSilNet implements ITickable
         for(int i = 0; i < list.tagCount(); i++)
         {
             NBTTagCompound nbt1 = list.getCompoundTagAt(i);
-            modules.get(EnumFacing.VALUES[nbt1.getByte("Side")]).deserializeNBT(nbt1);
+            modules[nbt1.getByte("Side")].deserializeNBT(nbt1);
         }
     }
 
@@ -121,7 +127,7 @@ public class TileSocketBlock extends TileSilNet implements ITickable
     {
         if(!worldObj.isRemote)
         {
-            for(SocketBlock m : modules.values())
+            for(SocketBlock m : modules)
             {
                 if(m.hasContainer())
                 {
@@ -136,7 +142,7 @@ public class TileSocketBlock extends TileSilNet implements ITickable
     @Override
     public void provideSignals(ISilNetController controller)
     {
-        for(SocketBlock m : modules.values())
+        for(SocketBlock m : modules)
         {
             if(m.hasContainer())
             {
@@ -148,7 +154,7 @@ public class TileSocketBlock extends TileSilNet implements ITickable
     @Override
     public void onSignalsChanged(ISilNetController controller, TShortByteMap channels)
     {
-        for(SocketBlock m : modules.values())
+        for(SocketBlock m : modules)
         {
             if(m.hasContainer())
             {

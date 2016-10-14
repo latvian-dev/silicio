@@ -1,20 +1,14 @@
-[
-{
-  "modid": "Silicio",
-  "name": "Silicio",
+[{
+  "modid": "silicio",
+  "name": "Silicio 2",
   "description": "",
   "version": "${version}",
   "url": "http://minecraft.curseforge.com/projects/silicio",
   "updateUrl": "",
-  "authorList": [
-    "LatvianModder"
-  ],
+  "authorList": ["LatvianModder"],
   "credits": "",
   "logoFile": "assets/silicio/textures/logo.png",
-  "screenshots": [
-  ],
+  "screenshots": [],
   "parent":"",
-  "dependencies": [
-  ]
-}
-]
+  "dependencies": ["ftbl"]
+}]

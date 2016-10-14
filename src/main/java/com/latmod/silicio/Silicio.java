@@ -14,7 +14,13 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLServerStoppedEvent;
 import net.minecraftforge.fml.common.registry.IForgeRegistryEntry;
 
-@Mod(modid = Silicio.MOD_ID, name = "Silicio 2", version = "@VERSION@", dependencies = "required-after:ftbl")
+@Mod(
+        modid = Silicio.MOD_ID,
+        name = "Silicio 2",
+        version = "0.0.0",
+        useMetadata = true,
+        dependencies = "required-after:ftbl"
+)
 public class Silicio
 {
     public static final String MOD_ID = "silicio";
@@ -43,7 +49,7 @@ public class Silicio
         SilSounds.init();
         SilCaps.init();
 
-        SilItems.MODULE.findModules(event.getAsmData());
+        SilItems.MODULE.findModules();
 
         tab.addIcon(EnumSilBlocks.CONTROLLER.getStack(1));
         proxy.preInit();
