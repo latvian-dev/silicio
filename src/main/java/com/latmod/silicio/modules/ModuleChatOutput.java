@@ -3,7 +3,6 @@ package com.latmod.silicio.modules;
 import com.feed_the_beast.ftbl.api.recipes.IRecipes;
 import com.feed_the_beast.ftbl.lib.config.ConfigKey;
 import com.feed_the_beast.ftbl.lib.config.PropertyString;
-import com.feed_the_beast.ftbl.lib.util.LMServerUtils;
 import com.latmod.silicio.api.module.IModuleContainer;
 import com.latmod.silicio.api.tile.ISilNetController;
 import com.latmod.silicio.api.tile.ISocketBlock;
@@ -37,7 +36,7 @@ public class ModuleChatOutput extends ModuleSil
 
         if(channels.get((short) container.getProperty(EnumSignalSlot.IN_1).getInt()) == 1)
         {
-            LMServerUtils.printChat(null, container.getProperty(CHAT_MESSAGE).getString());
+            //LMServerUtils.printChat(null, container.getProperty(CHAT_MESSAGE).getString());
         }
     }
 }
