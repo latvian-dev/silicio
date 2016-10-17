@@ -99,8 +99,7 @@ public final class SocketBlock implements IItemHandler, ISocketBlock, INBTSerial
     @Override
     public void deserializeNBT(NBTTagCompound nbt)
     {
-        stack = nbt.hasKey("Item") ? ItemStack.loadItemStackFromNBT(nbt.getCompoundTag("Item")) : null;
-        updateModuleContainer();
+        setItem(nbt.hasKey("Item") ? ItemStack.loadItemStackFromNBT(nbt.getCompoundTag("Item")) : null);
     }
 
     @Override
