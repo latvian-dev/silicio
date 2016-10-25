@@ -8,19 +8,14 @@ import com.latmod.silicio.block.EnumSilBlocks;
 import com.latmod.silicio.block.SilBlocks;
 import com.latmod.silicio.item.SilItems;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLServerStoppedEvent;
 import net.minecraftforge.fml.common.registry.IForgeRegistryEntry;
 
-@Mod(
-        modid = Silicio.MOD_ID,
-        name = "Silicio 2",
-        version = "0.0.0",
-        useMetadata = true,
-        dependencies = "required-after:ftbl"
-)
+@Mod(modid = Silicio.MOD_ID, name = "Silicio 2", version = "0.0.0", useMetadata = true, dependencies = "required-after:ftbl")
 public class Silicio
 {
     public static final String MOD_ID = "silicio";
@@ -44,6 +39,7 @@ public class Silicio
         tab = new CreativeTabLM("silicio");
         SilicioAPI_Impl.INSTANCE.init(event.getAsmData());
 
+        MinecraftForge.EVENT_BUS.register(new SilEventHandler());
         SilItems.init();
         SilBlocks.init();
         SilSounds.init();

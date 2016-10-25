@@ -1,8 +1,8 @@
 package com.latmod.silicio.api.module;
 
+import com.feed_the_beast.ftbl.api.IRecipes;
 import com.feed_the_beast.ftbl.api.IRegistryObject;
 import com.feed_the_beast.ftbl.api.config.IConfigKey;
-import com.feed_the_beast.ftbl.api.recipes.IRecipes;
 import com.latmod.silicio.api.tile.ISilNetController;
 import com.latmod.silicio.api.tile.ISocketBlock;
 import gnu.trove.map.TShortByteMap;
