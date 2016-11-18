@@ -16,6 +16,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class GuiElemiteCrafter extends GuiLM
 {
     private static final ResourceLocation TEXTURE = new ResourceLocation(Silicio.MOD_ID, "textures/gui/elemite_crafter.png");
+
     private final ContainerElemiteCrafter container;
 
     public GuiElemiteCrafter(ContainerElemiteCrafter c)

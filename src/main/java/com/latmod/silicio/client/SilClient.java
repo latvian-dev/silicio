@@ -12,6 +12,8 @@ public class SilClient extends SilCommon
     @Override
     public void preInit()
     {
+        super.preInit();
+
         //OBJLoader.instance.addDomain(Silicio.mod.getID());
 
         SilBlocks.BLOCKS.registerModels();

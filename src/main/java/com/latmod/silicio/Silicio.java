@@ -8,7 +8,6 @@ import com.latmod.silicio.block.EnumSilBlocks;
 import com.latmod.silicio.block.SilBlocks;
 import com.latmod.silicio.item.SilItems;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
@@ -24,7 +23,7 @@ public class Silicio
     public static Silicio INST;
 
     @SidedProxy(clientSide = "com.latmod.silicio.client.SilClient", serverSide = "com.latmod.silicio.SilCommon")
-    public static SilCommon proxy;
+    public static SilCommon PROXY;
 
     public CreativeTabLM tab;
 
@@ -39,16 +38,13 @@ public class Silicio
         tab = new CreativeTabLM("silicio");
         SilicioAPI_Impl.INSTANCE.init(event.getAsmData());
 
-        MinecraftForge.EVENT_BUS.register(new SilEventHandler());
         SilItems.init();
         SilBlocks.init();
         SilSounds.init();
         SilCaps.init();
 
-        SilItems.MODULE.findModules();
-
         tab.addIcon(EnumSilBlocks.CONTROLLER.getStack(1));
-        proxy.preInit();
+        PROXY.preInit();
     }
 
     @Mod.EventHandler

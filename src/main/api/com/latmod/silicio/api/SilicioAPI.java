@@ -13,6 +13,8 @@ import java.util.UUID;
  */
 public interface SilicioAPI
 {
+    Collection<ISilicioPlugin> getAllPlugins();
+
     TileEntity getSilNetTile(BlockDimPos pos);
 
     void addSilNetTile(TileEntity tile);

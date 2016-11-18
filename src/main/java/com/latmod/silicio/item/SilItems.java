@@ -1,8 +1,8 @@
 package com.latmod.silicio.item;
 
-import com.feed_the_beast.ftbl.api.RegistryObject;
 import com.feed_the_beast.ftbl.lib.item.ItemMaterialsLM;
 import com.latmod.silicio.Silicio;
+import com.latmod.silicio.api.module.IModule;
 import com.latmod.silicio.modules.ModuleChatOutput;
 import com.latmod.silicio.modules.ModuleSequencer;
 import com.latmod.silicio.modules.ModuleTimer;
@@ -30,14 +30,9 @@ public class SilItems
         //public static final IModule LIGHT_SENSOR;
         //public static final IModule SIGN_OUT;
 
-        @RegistryObject
-        public static final ModuleChatOutput CHAT_OUT = new ModuleChatOutput();
-
-        @RegistryObject
-        public static final ModuleTimer TIMER = new ModuleTimer();
-
-        @RegistryObject
-        public static final ModuleSequencer SEQUENCER = new ModuleSequencer(4);
+        public static final IModule CHAT_OUT = new ModuleChatOutput();
+        public static final IModule TIMER = new ModuleTimer();
+        public static final IModule SEQUENCER = new ModuleSequencer(4);
 
         //public static final IModule CRAFTING;
 

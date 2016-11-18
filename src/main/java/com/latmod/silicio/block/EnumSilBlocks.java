@@ -2,7 +2,6 @@ package com.latmod.silicio.block;
 
 import com.feed_the_beast.ftbl.api.block.IBlockVariant;
 import com.feed_the_beast.ftbl.lib.EnumNameMap;
-import com.feed_the_beast.ftbl.lib.gui.GuiHelper;
 import com.latmod.silicio.FTBLibIntegration;
 import com.latmod.silicio.gui.ContainerElemiteCrafter;
 import com.latmod.silicio.gui.ContainerLamp;
@@ -20,7 +19,6 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.EnumFacing;
@@ -217,11 +215,7 @@ public enum EnumSilBlocks implements IBlockVariant
         {
             if(!worldIn.isRemote)
             {
-                NBTTagCompound nbt = new NBTTagCompound();
-                nbt.setInteger("X", pos.getX());
-                nbt.setInteger("Y", pos.getY());
-                nbt.setInteger("Z", pos.getZ());
-                FTBLibIntegration.API.openGui(gui, (EntityPlayerMP) playerIn, GuiHelper.getPosData(pos));
+                FTBLibIntegration.API.openGui(gui, (EntityPlayerMP) playerIn, pos, null);
             }
 
             return true;

@@ -9,13 +9,14 @@ import com.latmod.silicio.api.tile.ISocketBlock;
 import com.latmod.silicio.api_impl.module.EnumSignalSlot;
 import gnu.trove.map.TShortByteMap;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.text.TextComponentTranslation;
 
 /**
  * Created by LatvianModder on 04.03.2016.
  */
 public class ModuleChatOutput extends ModuleSil
 {
-    private static final ConfigKey CHAT_MESSAGE = new ConfigKey("message", new PropertyString("Text"), "silicio.item.module.chat_out.chat_message", true);
+    private static final ConfigKey CHAT_MESSAGE = new ConfigKey("message", new PropertyString("Text"), new TextComponentTranslation("silicio.item.module.chat_out.chat_message"));
 
     public ModuleChatOutput()
     {

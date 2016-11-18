@@ -1,9 +1,10 @@
 package com.latmod.silicio.api_impl;
 
-import com.feed_the_beast.ftbl.lib.AsmData;
+import com.feed_the_beast.ftbl.lib.AsmHelper;
 import com.feed_the_beast.ftbl.lib.math.BlockDimPos;
+import com.latmod.silicio.api.ISilicioPlugin;
 import com.latmod.silicio.api.SilicioAPI;
-import com.latmod.silicio.api.SilicioAddon;
+import com.latmod.silicio.api.SilicioPlugin;
 import com.latmod.silicio.api.tile.ISilNetController;
 import com.latmod.silicio.api.tile.ISilNetTile;
 import net.minecraft.tileentity.TileEntity;
@@ -22,13 +23,16 @@ public enum SilicioAPI_Impl implements SilicioAPI
 {
     INSTANCE;
 
-    public AsmData asmData;
+    private Collection<ISilicioPlugin> plugins;
 
     public void init(ASMDataTable table)
     {
-        asmData = new AsmData(table);
-        asmData.findAnnotatedObjects(SilicioAPI.class, SilicioAddon.class, (obj, field, data) -> field.set(null, INSTANCE));
-        asmData.findAnnotatedMethods(SilicioAddon.class, (method, params, data) -> method.invoke(null));
+        plugins = AsmHelper.findPlugins(table, ISilicioPlugin.class, SilicioPlugin.class);
+
+        for(ISilicioPlugin p : plugins)
+        {
+            p.init(this);
+        }
     }
 
     private static final Map<BlockDimPos, TileEntity> NET = new HashMap<>();
@@ -36,6 +40,12 @@ public enum SilicioAPI_Impl implements SilicioAPI
     public static void clear()
     {
         NET.clear();
+    }
+
+    @Override
+    public Collection<ISilicioPlugin> getAllPlugins()
+    {
+        return plugins;
     }
 
     @Override
