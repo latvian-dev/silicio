@@ -1,14 +1,15 @@
 package com.latmod.silicio.gui;
 
-import com.feed_the_beast.ftbl.lib.gui.ContainerLM;
+import com.feed_the_beast.ftbl.lib.util.LMInvUtils;
 import com.latmod.silicio.Silicio;
 import com.latmod.silicio.tile.TileModuleIO;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.inventory.Container;
 import net.minecraft.inventory.IContainerListener;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.SlotItemHandler;
 
 import javax.annotation.Nullable;
@@ -16,7 +17,7 @@ import javax.annotation.Nullable;
 /**
  * Created by LatvianModder on 25.08.2016.
  */
-public class ContainerModuleIO extends ContainerLM
+public class ContainerModuleIO extends Container
 {
     public static final ResourceLocation ID = new ResourceLocation(Silicio.MOD_ID, "module_io");
 
@@ -26,18 +27,23 @@ public class ContainerModuleIO extends ContainerLM
 
     public ContainerModuleIO(EntityPlayer ep, TileModuleIO t)
     {
-        super(ep);
         tile = t;
         addSlotToContainer(new SlotItemHandler(t.itemHandler, 0, 59, 11));
         addSlotToContainer(new SlotItemHandler(t.itemHandler, 1, 116, 11));
-        addPlayerSlots(8, 39, false);
+        LMInvUtils.addPlayerSlots(this, ep, 8, 39, false);
+    }
+
+    @Override
+    public boolean canInteractWith(EntityPlayer ep)
+    {
+        return true;
     }
 
     @Nullable
     @Override
-    public IItemHandler getItemHandler()
+    public ItemStack transferStackInSlot(EntityPlayer playerIn, int index)
     {
-        return tile.itemHandler;
+        return LMInvUtils.transferStackInSlot(this, index, tile.itemHandler.getSlots());
     }
 
     @Override
