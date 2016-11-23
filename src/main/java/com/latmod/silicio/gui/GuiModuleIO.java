@@ -1,6 +1,5 @@
 package com.latmod.silicio.gui;
 
-import com.feed_the_beast.ftbl.api.client.FTBLibClient;
 import com.feed_the_beast.ftbl.api.gui.IGui;
 import com.feed_the_beast.ftbl.api.gui.IMouseButton;
 import com.feed_the_beast.ftbl.lib.client.TextureCoords;
@@ -84,7 +83,7 @@ public class GuiModuleIO extends GuiLM
     @Override
     public void drawBackground()
     {
-        FTBLibClient.setTexture(TEXTURE);
+        mc.getTextureManager().bindTexture(TEXTURE);
         int ax = getAX();
         int ay = getAY();
         GuiScreen.drawModalRectWithCustomSizedTexture(ax, ay, 0F, 0F, getWidth(), getHeight(), 256F, 256F);

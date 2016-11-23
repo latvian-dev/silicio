@@ -1,7 +1,7 @@
 package com.latmod.silicio.client;
 
-import com.feed_the_beast.ftbl.api.client.CubeRenderer;
-import com.feed_the_beast.ftbl.api.client.FTBLibClient;
+import com.feed_the_beast.ftbl.lib.client.CubeRenderer;
+import com.feed_the_beast.ftbl.lib.client.FTBLibClient;
 import com.feed_the_beast.ftbl.lib.util.LMColorUtils;
 import com.latmod.silicio.tile.TileLamp;
 import net.minecraft.client.renderer.GlStateManager;

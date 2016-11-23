@@ -1,6 +1,6 @@
 package com.latmod.silicio.client;
 
-import com.feed_the_beast.ftbl.api.client.FTBLibClient;
+import com.feed_the_beast.ftbl.lib.client.FTBLibClient;
 import com.feed_the_beast.ftbl.lib.math.MathHelperLM;
 import com.latmod.silicio.Silicio;
 import com.latmod.silicio.tile.TileTurret;

@@ -2,10 +2,10 @@ package com.latmod.silicio;
 
 import com.feed_the_beast.ftbl.api.FTBLibAPI;
 import com.feed_the_beast.ftbl.api.FTBLibPlugin;
+import com.feed_the_beast.ftbl.api.IFTBLibClientRegistry;
 import com.feed_the_beast.ftbl.api.IFTBLibPlugin;
 import com.feed_the_beast.ftbl.api.IFTBLibRegistry;
 import com.feed_the_beast.ftbl.api.IRecipes;
-import com.feed_the_beast.ftbl.api.client.IFTBLibClientRegistry;
 import com.feed_the_beast.ftbl.lib.item.ODItems;
 import com.latmod.silicio.block.EnumSilBlocks;
 import com.latmod.silicio.block.SilBlocks;
