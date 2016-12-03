@@ -5,7 +5,6 @@ import com.feed_the_beast.ftbl.lib.tile.TileLM;
 import com.feed_the_beast.ftbl.lib.util.LMNBTUtils;
 import com.feed_the_beast.ftbl.lib.util.LMServerUtils;
 import com.latmod.silicio.SilSounds;
-import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.block.BlockDirectional;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
@@ -19,19 +18,19 @@ import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-import javax.annotation.ParametersAreNonnullByDefault;
+import java.util.UUID;
 
 /**
  * Created by LatvianModder on 03.03.2016.
  */
-@ParametersAreNonnullByDefault
-@MethodsReturnNonnullByDefault
 public class TileTurret extends TileLM implements ITickable
 {
     public static final AxisAlignedBB[] SCAN_AREAS = MathHelperLM.getRotatedBoxes(new AxisAlignedBB(-5D, 0D, -5D, 6D, 10D, 6D));
     public byte cooldown = 0;
+    public UUID targetID = null;
     public Entity target = null;
     public AxisAlignedBB scanArea;
+    private boolean targetDirty = true;
 
     @Override
     public void onLoad()
@@ -46,9 +45,9 @@ public class TileTurret extends TileLM implements ITickable
         super.writeTileData(nbt);
         nbt.setByte("Cooldown", cooldown);
 
-        if(target != null)
+        if(targetID != null)
         {
-            LMNBTUtils.setUUID(nbt, "Target", target.getUniqueID(), true);
+            LMNBTUtils.setUUID(nbt, "Target", targetID, true);
         }
     }
 
@@ -57,16 +56,18 @@ public class TileTurret extends TileLM implements ITickable
     {
         super.readTileData(nbt);
         cooldown = nbt.getByte("Cooldown");
-        target = LMServerUtils.getEntityByUUID(worldObj, LMNBTUtils.getUUID(nbt, "Target", true));
+        targetID = LMNBTUtils.getUUID(nbt, "Target", true);
+        markDirty();
     }
 
     @Override
     public void writeTileClientData(NBTTagCompound nbt)
     {
         super.writeTileClientData(nbt);
-        if(target != null)
+
+        if(targetID != null)
         {
-            nbt.setInteger("EID", target.getEntityId());
+            LMNBTUtils.setUUID(nbt, "TID", targetID, true);
         }
     }
 
@@ -74,19 +75,13 @@ public class TileTurret extends TileLM implements ITickable
     public void readTileClientData(NBTTagCompound nbt)
     {
         super.readTileClientData(nbt);
-        target = nbt.hasKey("EID") ? worldObj.getEntityByID(nbt.getInteger("EID")) : null;
-        updateScanArea();
-    }
-
-    public void updateScanArea()
-    {
-        scanArea = SCAN_AREAS[getBlockState().getValue(BlockDirectional.FACING).ordinal()].addCoord(pos.getX(), pos.getY(), pos.getZ());
+        targetID = LMNBTUtils.getUUID(nbt, "TID", true);
+        markDirty();
     }
 
     private void searchForTarget()
     {
-        updateScanArea();
-
+        markDirty();
         target = null;
 
         double x = pos.getX() + 0.5D;
@@ -171,6 +166,20 @@ public class TileTurret extends TileLM implements ITickable
     }
 
     @Override
+    protected void sendDirtyUpdate()
+    {
+        super.sendDirtyUpdate();
+
+        scanArea = SCAN_AREAS[getBlockState().getValue(BlockDirectional.FACING).ordinal()].addCoord(pos.getX(), pos.getY(), pos.getZ());
+
+        if(targetDirty)
+        {
+            targetDirty = false;
+            target = (worldObj == null || targetID == null) ? null : LMServerUtils.getEntityByUUID(worldObj, targetID);
+        }
+    }
+
+    @Override
     @SideOnly(Side.CLIENT)
     public AxisAlignedBB getRenderBoundingBox()
     {
@@ -180,7 +189,7 @@ public class TileTurret extends TileLM implements ITickable
         }
         else if(scanArea == null)
         {
-            updateScanArea();
+            markDirty();
         }
         return scanArea;
     }
