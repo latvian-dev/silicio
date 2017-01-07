@@ -1,0 +1,36 @@
+{
+	"forge_marker": 1,
+	"defaults": {
+		"model": "silicio:pipe_empty",
+		"textures": {
+			"texture": "silicio:blocks/pipes/extraction",
+			"connection": "silicio:blocks/pipes/connection"
+		}
+	},
+	"variants": {
+		"up": {
+			"true": {"submodel": {"up": {"model": "silicio:pipe_con", "x": 180, "y": 0}}},
+			"false": {"submodel": {"up": {"model": "silicio:pipe_cen", "x": 180, "y": 0}}}
+		},
+		"down": {
+			"true": {"submodel": {"down": {"model": "silicio:pipe_con", "x": 0, "y": 0}}},
+			"false": {"submodel": {"down": {"model": "silicio:pipe_cen", "x": 0, "y": 0}}}
+		},
+		"north": {
+			"true": {"submodel": {"north": {"model": "silicio:pipe_con", "x": 90, "y": 180}}},
+			"false": {"submodel": {"north": {"model": "silicio:pipe_cen", "x": 90, "y": 180}}}
+		},
+		"south": {
+			"true": {"submodel": {"south": {"model": "silicio:pipe_con", "x": 90, "y": 0}}},
+			"false": {"submodel": {"south": {"model": "silicio:pipe_cen", "x": 90, "y": 0}}}
+		},
+		"west": {
+			"true": {"submodel": {"west": {"model": "silicio:pipe_con", "x": 90, "y": 90}}},
+			"false": {"submodel": {"west": {"model": "silicio:pipe_cen", "x": 90, "y": 90}}}
+		},
+		"east": {
+			"true": {"submodel": {"east": {"model": "silicio:pipe_con", "x": 90, "y": 270}}},
+			"false": {"submodel": {"east": {"model": "silicio:pipe_cen", "x": 90, "y": 270}}}
+		}
+	}
+}
